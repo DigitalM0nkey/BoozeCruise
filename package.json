@@ -1,0 +1,22 @@
+{
+  "name": "boozecruise",
+  "version": "1.0.0",
+  "description": "A Telegram Bot Game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DigitalM0nkey/BoozeCruise.git"
+  },
+  "author": "DigitalM0nkey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DigitalM0nkey/BoozeCruise/issues"
+  },
+  "homepage": "https://github.com/DigitalM0nkey/BoozeCruise#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
