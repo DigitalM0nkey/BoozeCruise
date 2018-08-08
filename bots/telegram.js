@@ -1,12 +1,4 @@
 var request = require('request');
-request('https://api.telegram.org/bot584028011:AAFXxyEv7S7Jsc3B7lkeCDzpJecIOVX9tcw/getUpdates', function (error, r, body) {
-
-      var response = JSON.parse(body).result;
-      console.log(body);
-      if(error) return;
-      if(!response) return;
-      //resolve();
-    });
 module.exports = function() {
   var bot = this;
 
