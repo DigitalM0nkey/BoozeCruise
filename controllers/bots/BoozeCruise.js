@@ -8,5 +8,6 @@ b.init(TOKEN).then(function() {
   b.setWebhook('BoozeCruise');
 });
 router.post('/', function (req, res, next) {
+  console.log(req.body.message);
 });
 module.exports = router;
