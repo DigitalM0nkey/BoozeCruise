@@ -21,7 +21,17 @@ module.exports = function() {
       });
     });
   };
-
+  bot.deleteWebhook = function(api) {
+    return new Promise(function (resolve, reject) {
+      var url = 'https://api.telegram.org/bot' + bot.token + '/deleteWebhook';
+      request(url, function (error, r, body) {
+        var response = JSON.parse(body).result;
+        if(error) return;
+        if(!response) return;
+        resolve();
+      });
+    });
+  };
   bot.setWebhook = function(api) {
     return new Promise(function (resolve, reject) {
       var url = 'https://api.telegram.org/bot' + bot.token + '/setWebhook?url=http://165.227.44.35/bots/' + api;
