@@ -11,14 +11,12 @@ b.init(TOKEN).then(function() {
 router.post('/', function (req, res, next) {
   console.log(req.body);
   b.sendKeyboard(req.body.message.chat.id,'test', {
-    //reply_to_message_id: '32936',
-    //reply_markup: {
       keyboard: [[
         { 'text': 'Good \ud83d\udc4d'},
         { 'text': 'Bad \ud83d\udc4e'},
         { 'text': 'Cat \ud83d\udc08'},
-      ]]
-    //}
+      ]],
+      resize_keyboard:true
   });
   res.sendStatus(200);
 });
@@ -27,13 +25,11 @@ router.get('/', function (req, res, next) {
   res.json({ message: 'get ok'});
 });
 b.sendKeyboard('510423667', 'test', {
-  //reply_to_message_id: '32936',
-  //reply_markup: {
     keyboard: [[
       { 'text': 'Good \ud83d\udc4d'},
       { 'text': 'Bad \ud83d\udc4e'},
       { 'text': 'Cat \ud83d\udc08'},
-    ]]
-  //}
+    ]],
+    resize_keyboard:true
 });
 module.exports = router;
