@@ -25,12 +25,23 @@ if (req.body.message.text == 'The City \ud83c\udf06' ) {
   b.sendKeyboard(req.body.message.chat.id, "Welcome To The City", {
       keyboard: [[
         { 'text': 'Good \ud83d\udc4d'},
-        { 'text': 'Bad \ud83d\udc4e'},
+      ]],
+      resize_keyboard:true
+  });
+} else if (req.body.message.text == 'Cocktail Lounge \ud83c\udf78') {
+  b.sendKeyboard(req.body.message.chat.id, "Welcome To The Cocktail Lounge", {
+      keyboard: [[
         { 'text': 'Cat \ud83d\udc08'},
       ]],
       resize_keyboard:true
   });
-
+} else if (req.body.message.text == 'Achievements \ud83c\udf87') {
+  b.sendKeyboard(req.body.message.chat.id, "Welcome To Achievements", {
+      keyboard: [[
+        { 'text': 'Bad \ud83d\udc4e'},
+      ]],
+      resize_keyboard:true
+  });
 }
   res.sendStatus(200);
 });
