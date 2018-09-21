@@ -13,7 +13,8 @@ router.post('/', function (req, res, next) {
   res.sendStatus(200);
 });
 router.get('/', function (req, res, next) {
+  b.sendMessage('510423667', 'Received Get');
   res.json({ message: 'get ok'});
 });
-b.sendMessage('510423667', 'Received Get');
+b.sendMessage('510423667', 'Received Bot Can Send!!!!');
 module.exports = router;
