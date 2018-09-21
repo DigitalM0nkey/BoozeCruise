@@ -11,11 +11,11 @@ b.init(TOKEN).then(function() {
 router.post('/', function (req, res, next) {
   console.log(req.body);
   if (req.body.message.text == "/start") {
-    b.sendKeyboard(req.body.message.chat.id,'test', {
+    b.sendKeyboard(req.body.message.chat.id,'Welcome. Where do you want to go?', {
         keyboard: [[
-          { 'text': 'Good \ud83d\udc4d'},
-          { 'text': 'Bad \ud83d\udc4e'},
-          { 'text': 'Cat \ud83d\udc08'},
+          { 'text': 'Coctail Lounge \ud83c\udf78'},
+          { 'text': 'The City \ud83c\udf06'},
+          { 'text': 'Achievements \ud83c\udf87'},
         ]],
         resize_keyboard:true
     });
