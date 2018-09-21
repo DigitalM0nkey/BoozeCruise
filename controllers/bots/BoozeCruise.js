@@ -9,7 +9,7 @@ b.init(TOKEN).then(function() {
   b.setWebhook('BoozeCruise');
 });
 router.post('/', function (req, res, next) {
-  console.log(req.body.message);
+  console.log(req.body);
   res.sendStatus(200);
 });
 router.get('/', function (req, res, next) {
@@ -20,8 +20,9 @@ b.sendKeyboard('510423667', 'test', {
   //reply_to_message_id: '32936',
   //reply_markup: {
     keyboard: [[
-      { 'text': '\ud83d\udc4d'},
-      { 'text': '\ud83d\udc4e'}
+      { 'text': 'Good \ud83d\udc4d'},
+      { 'text': 'Bad \ud83d\udc4e'},
+      { 'text': 'Cat \ud83d\udc08'},
     ]]
   //}
 });
