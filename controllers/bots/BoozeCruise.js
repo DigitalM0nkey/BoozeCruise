@@ -11,7 +11,8 @@ b.init(TOKEN).then(function() {
 router.post('/', function (req, res, next) {
   console.log(req.body);
   if (req.body.message.text == "/start") {
-    b.sendKeyboard(req.body.message.chat.id,'Welcome. Where do you want to go?', {
+    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
+    b.sendKeyboard(req.body.message.chat.id, {
         keyboard: [[
           { 'text': 'Coctail Lounge \ud83c\udf78'},
           { 'text': 'The City \ud83c\udf06'},
