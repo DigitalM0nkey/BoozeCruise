@@ -11,17 +11,27 @@ b.init(TOKEN).then(function() {
 router.post('/', function (req, res, next) {
   console.log(req.body);
   if (req.body.message.text == "/start") {
-    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
-    b.sendKeyboard(req.body.message.chat.id, "test", {
+//    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
+    b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", {
         keyboard: [[
-          { 'text': 'Coctail Lounge \ud83c\udf78'},
+          { 'text': 'Cocktail Lounge \ud83c\udf78'},
           { 'text': 'The City \ud83c\udf06'},
           { 'text': 'Achievements \ud83c\udf87'},
         ]],
         resize_keyboard:true
     });
   }
+if (req.body.message.text == 'The City \ud83c\udf06' ) {
+  b.sendKeyboard(req.body.message.chat.id, "Welcome To The City", {
+      keyboard: [[
+        { 'text': 'Good \ud83d\udc4d'},
+        { 'text': 'Bad \ud83d\udc4e'},
+        { 'text': 'Cat \ud83d\udc08'},
+      ]],
+      resize_keyboard:true
+  });
 
+}
   res.sendStatus(200);
 });
 router.get('/', function (req, res, next) {
