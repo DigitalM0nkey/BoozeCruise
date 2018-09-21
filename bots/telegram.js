@@ -34,7 +34,7 @@ module.exports = function() {
   };
   bot.setWebhook = function(api) {
     return new Promise(function (resolve, reject) {
-      var url = 'https://api.telegram.org/bot' + bot.token + '/setWebhook?url=http://165.227.44.35/bots/' + api;
+      var url = 'https://api.telegram.org/bot' + bot.token + '/setWebhook?url=https://boozecruise.punchmonkeyproductions.com/bots/' + api;
       request(url, function (error, r, body) {
         var response = JSON.parse(body).result;
         if(error) return;
