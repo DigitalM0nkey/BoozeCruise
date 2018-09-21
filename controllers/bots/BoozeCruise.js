@@ -10,14 +10,17 @@ b.init(TOKEN).then(function() {
 });
 router.post('/', function (req, res, next) {
   console.log(req.body);
-  b.sendKeyboard(req.body.message.chat.id,'test', {
-      keyboard: [[
-        { 'text': 'Good \ud83d\udc4d'},
-        { 'text': 'Bad \ud83d\udc4e'},
-        { 'text': 'Cat \ud83d\udc08'},
-      ]],
-      resize_keyboard:true
-  });
+  if (req.body.message.text == "/start") {
+    b.sendKeyboard(req.body.message.chat.id,'test', {
+        keyboard: [[
+          { 'text': 'Good \ud83d\udc4d'},
+          { 'text': 'Bad \ud83d\udc4e'},
+          { 'text': 'Cat \ud83d\udc08'},
+        ]],
+        resize_keyboard:true
+    });
+  }
+
   res.sendStatus(200);
 });
 router.get('/', function (req, res, next) {
