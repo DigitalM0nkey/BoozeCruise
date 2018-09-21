@@ -12,7 +12,7 @@ router.post('/', function (req, res, next) {
   console.log(req.body);
   if (req.body.message.text == "/start") {
     b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
-    b.sendKeyboard(req.body.message.chat.id, {
+    b.sendKeyboard(req.body.message.chat.id, "", {
         keyboard: [[
           { 'text': 'Coctail Lounge \ud83c\udf78'},
           { 'text': 'The City \ud83c\udf06'},
