@@ -10,8 +10,17 @@ b.init(TOKEN).then(function() {
   //b.deleteWebhook();
   b.setWebhook('BoozeCruise');
 });
+var events= [
+  "Event 1", "Event 2", "Event 3", "Event 4", "Event 5", "Event 6", "Event 7",
+]
 var dailyEvent = schedule.scheduleJob('0 0 8 * *', function(){
   console.log('The answer to life, the universe, and everything!');
+  Chat.findAll().then(function(chats){
+chats.forEach(function(chat){
+  b.sendMessage(chat.id,events[Math.random() * events.length])
+})
+
+  })
 });
 
 var keyboards = {
