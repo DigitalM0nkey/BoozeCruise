@@ -3,7 +3,7 @@ var schedule = require('node-schedule');
 var config = require('../../config');
 var TelegramBot = require('../../bots/telegram');
 var TOKEN = config.tokens.telegram.BoozeCruise;
-var Chat= require('../../modles/chat')
+var Chat= require('../../models/chat')
 var b = new TelegramBot();
 b.init(TOKEN).then(function() {
   b.introduceYourself();
