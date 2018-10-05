@@ -10,14 +10,32 @@ b.init(TOKEN).then(function() {
   //b.deleteWebhook();
   b.setWebhook('BoozeCruise');
 });
+var keyboards = {
+  home: {
+      keyboard: [[
+        { 'text': 'Cocktail Lounge \ud83c\udf78'},
+        { 'text': 'The City \ud83c\udf06'},
+        { 'text': 'Achievements \ud83c\udf87'},
+      ]],
+      resize_keyboard:true
+  }
+}
 var events= [
-  "Event 1", "Event 2", "Event 3", "Event 4", "Event 5", "Event 6", "Event 7",
+  {name: "Event 1", description: "this is a description", keyboard: keyboards.home},
+  {name: "Event 2", keyboard: keyboards.home},
+  {name: "Event 3", keyboard: keyboards.home},
+  {name: "Event 4", keyboard: keyboards.home},
+  {name: "Event 5", keyboard: keyboards.home},
+  {name: "Event 6", keyboard: keyboards.home},
+  {name: "Event 7", keyboard: keyboards.home},
+
 ]
 var dailyEvent = schedule.scheduleJob('0 0 8 * *', function(){
   console.log('The answer to life, the universe, and everything!');
   Chat.findAll().then(function(chats){
 chats.forEach(function(chat){
-  b.sendMessage(chat.id,events[Math.random() * events.length])
+  var randomEvent = events[Math.random() * events.length]
+  b.sendMessage(chat.id,randomEvent.name + ' ' + randomEvent.description)
 })
 
   })
