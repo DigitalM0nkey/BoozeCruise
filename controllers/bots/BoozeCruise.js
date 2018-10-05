@@ -8,18 +8,23 @@ b.init(TOKEN).then(function() {
   //b.deleteWebhook();
   b.setWebhook('BoozeCruise');
 });
+
+var keyboards = {
+  home: {
+      keyboard: [[
+        { 'text': 'Cocktail Lounge \ud83c\udf78'},
+        { 'text': 'The City \ud83c\udf06'},
+        { 'text': 'Achievements \ud83c\udf87'},
+      ]],
+      resize_keyboard:true
+  }
+}
+
 router.post('/', function (req, res, next) {
   console.log(req.body);
   if (req.body.message.text == "/start") {
 //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
-    b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", {
-        keyboard: [[
-          { 'text': 'Cocktail Lounge \ud83c\udf78'},
-          { 'text': 'The City \ud83c\udf06'},
-          { 'text': 'Achievements \ud83c\udf87'},
-        ]],
-        resize_keyboard:true
-    });
+    b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
   }
 if (req.body.message.text == 'The City \ud83c\udf06' ) {
   b.sendKeyboard(req.body.message.chat.id, "Welcome To The City", {
