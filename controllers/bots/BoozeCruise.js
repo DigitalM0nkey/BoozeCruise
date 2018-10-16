@@ -11,6 +11,20 @@ b.init(TOKEN).then(function() {
   //b.deleteWebhook();
   b.setWebhook('BoozeCruise');
 });
+
+router.post('/', function (req, res, next) {
+  console.log(req.body);
+Chat.findOne({
+  id: req.body.message.chat.id
+})
+.then(function(chat){
+  console.log(chat);
+  if (!chat){
+    var newChat=new Chat({id: req.body.message.chat.id});
+    newChat.save();
+  }
+})
+
 var keyboards = {
   home: {
       keyboard: [[
@@ -50,18 +64,7 @@ var keyboards = {
   }
 }
 
-router.post('/', function (req, res, next) {
-  console.log(req.body);
-Chat.findOne({
-  id: req.body.message.chat.id
-})
-.then(function(chat){
-  console.log(chat);
-  if (!chat){
-    var newChat=new Chat({id: req.body.message.chat.id});
-    newChat.save();
-  }
-})
+
   if (req.body.message.text == "/start") {
 //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
     b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
