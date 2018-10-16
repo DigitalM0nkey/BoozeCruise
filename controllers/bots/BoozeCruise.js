@@ -44,7 +44,8 @@ var events= [
   {name: "Event 6", keyboard: keyboards.home},
   {name: "Event 7", keyboard: keyboards.home},
 
-]
+];
+
 var dailyEvent = schedule.scheduleJob('30 * * * * *', function(){
   console.log('The answer to life, the universe, and everything!');
   Chat.findAll({}).then(function(chats){
