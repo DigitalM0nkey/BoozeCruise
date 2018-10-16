@@ -32,7 +32,7 @@ var events= [
 ]
 var dailyEvent = schedule.scheduleJob('30 * * * * *', function(){
   console.log('The answer to life, the universe, and everything!');
-  Chat.findAll().then(function(chats){
+  Chat.findAll({}).then(function(chats){
 chats.forEach(function(chat){
   var randomEvent = events[Math.random() * events.length]
   b.sendMessage(chat.id,randomEvent.name + ' ' + randomEvent.description)
