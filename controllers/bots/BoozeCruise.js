@@ -96,7 +96,7 @@ router.get('/', function (req, res, next) {
   b.sendMessage('510423667', 'Received Get');
   res.json({ message: 'get ok'});
 });
-b.sendKeyboard('510423667', 'test', {
+b.sendKeyboard('510423667', 'Server Restarted', {
     keyboard: [[
       { 'text': 'Good \ud83d\udc4d'},
       { 'text': 'Bad \ud83d\udc4e'},
