@@ -30,7 +30,7 @@ var events= [
   {name: "Event 7", keyboard: keyboards.home},
 
 ]
-var dailyEvent = schedule.scheduleJob('0 0 8 * *', function(){
+var dailyEvent = schedule.scheduleJob('30 * * * * *', function(){
   console.log('The answer to life, the universe, and everything!');
   Chat.findAll().then(function(chats){
 chats.forEach(function(chat){
