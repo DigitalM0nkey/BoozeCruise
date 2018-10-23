@@ -3,7 +3,7 @@ var guest = {};
 
 guest.pick = function(){
   var guestTypes = [
-    {name: "Event 1", description: "this is a description", keyboard: keyboards.home},
+  //  {name: "Event 1", description: "this is a description", keyboard: keyboards.home},
     "Pirate",
     "Stowaway",
     "Sailor",
