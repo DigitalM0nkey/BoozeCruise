@@ -15,7 +15,7 @@ b.init(TOKEN).then(function() {
 
 var dailyEvent = schedule.scheduleJob('30 * * * * *', function(){
   console.log('The answer to life, the universe, and everything!');
-  Chat.findAll({})
+  Chat.find({})
   .then(function(chats){
     chats.forEach(function(chat){
       var randomEvent = events[Math.random() * events.length]
