@@ -78,7 +78,7 @@ var events= [
 var moves = {
   cocktailLounge: {
       guests: function(){
-
+        guest.pick();
       }
   },
 }
@@ -95,37 +95,54 @@ router.post('/', function (req, res, next) {
     if (!chat){
       var newChat=new Chat({id: req.body.message.chat.id});
       newChat.save();
+    }else {
+    if (req.body.message.text == "/start") {
+  //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
+      b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
     }
+    else if (req.body.message.text == "/addGuest") {
+      var newGuest = guest.pick()
+      chat.guests.push({
+        type: newGuest
+      });
+      chat.save();
+      b.sendKeyboard(req.body.message.chat.id, newGuest, keyboards.home);
+    }
+    else if (req.body.message.text == "/removeGuest") {
+      var removedGuest = chat.guests.pop();
+      chat.save();
+      b.sendKeyboard(req.body.message.chat.id, removedGuest, keyboards.home);
+    }
+  else if (req.body.message.text == 'The City \ud83c\udf06' ) {
+    b.sendKeyboard(req.body.message.chat.id, "Welcome To The City", {
+        keyboard: [[
+          { 'text': 'Good \ud83d\udc4d'},
+        ]],
+        resize_keyboard:true
+    });
+  } else if (req.body.message.text == 'Cocktail Lounge \ud83c\udf78') {
+    b.sendKeyboard(req.body.message.chat.id, "Welcome To The Cocktail Lounge", {
+        keyboard: [[
+          { 'text': 'Cat \ud83d\udc08'},
+          { 'text': 'Guest List \ud83d\udcc4'},
+        ]],
+        resize_keyboard:true
+    });
+  } else if (req.body.message.text == 'Achievements \ud83c\udf87') {
+    b.sendKeyboard(req.body.message.chat.id, "Welcome To Achievements", {
+        keyboard: [[
+          { 'text': 'Bad \ud83d\udc4e'},
+        ]],
+        resize_keyboard:true
+    });
+  } else if (req.body.message.text == 'Guest List \ud83d\udcc4') {
+    b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest: " + chat.guests,keyboards.home);
+  } }
+    res.sendStatus(200);
   })
 
 
-  if (req.body.message.text == "/start") {
-//    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
-    b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
-  }
-if (req.body.message.text == 'The City \ud83c\udf06' ) {
-  b.sendKeyboard(req.body.message.chat.id, "Welcome To The City", {
-      keyboard: [[
-        { 'text': 'Good \ud83d\udc4d'},
-      ]],
-      resize_keyboard:true
-  });
-} else if (req.body.message.text == 'Cocktail Lounge \ud83c\udf78') {
-  b.sendKeyboard(req.body.message.chat.id, "Welcome To The Cocktail Lounge", {
-      keyboard: [[
-        { 'text': 'Cat \ud83d\udc08'},
-      ]],
-      resize_keyboard:true
-  });
-} else if (req.body.message.text == 'Achievements \ud83c\udf87') {
-  b.sendKeyboard(req.body.message.chat.id, "Welcome To Achievements", {
-      keyboard: [[
-        { 'text': 'Bad \ud83d\udc4e'},
-      ]],
-      resize_keyboard:true
-  });
-}
-  res.sendStatus(200);
+
 });
 
 
