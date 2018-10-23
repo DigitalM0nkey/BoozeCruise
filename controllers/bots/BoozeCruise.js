@@ -15,12 +15,11 @@ b.init(TOKEN).then(function() {
 
 var dailyEvent = schedule.scheduleJob('30 * * * * *', function(){
   console.log('The answer to life, the universe, and everything!');
+  var randomEvent = events[Math.floor(Math.random() * events.length)]
   Chat.find({})
   .then(function(chats){
     chats.forEach(function(chat){
-      var randomEvent = events[Math.floor(Math.random() * events.length)]
-      console.log (randomEvent);
-      b.sendMessage(chat.id,randomEvent.name + ' ' + randomEvent.description)
+      b.sendMessage(chat.id,'<b>'+ randomEvent.name + '</b> - ' + randomEvent.description)
     });
   });
 });
