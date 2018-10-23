@@ -4,7 +4,7 @@ var config = require('../../config');
 var TelegramBot = require('../../bots/telegram');
 var TOKEN = config.tokens.telegram.BoozeCruise;
 var Chat = require('../../models/chat');
-var Guest = require('../../classes/guest');
+var guest = require('../../types/guest');
 //console.log(Chat)
 var b = new TelegramBot();
 b.init(TOKEN).then(function() {
@@ -13,8 +13,7 @@ b.init(TOKEN).then(function() {
   b.setWebhook('BoozeCruise');
 });
 
-var randomguest=new Guest();
-randomguest.pick();
+console.log(guest.pick());
 
 //var dailyEvent = schedule.scheduleJob('30 * * * * *', function(){
 var dailyEvent = schedule.scheduleJob('0 0 0 * * *', function(){
