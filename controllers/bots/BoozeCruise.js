@@ -14,6 +14,7 @@ b.init(TOKEN).then(function() {
 
 
 var dailyEvent = schedule.scheduleJob('30 * * * * *', function(){
+//var dailyEvent = schedule.scheduleJob('0 0 0 * * *', function(){
   console.log('The answer to life, the universe, and everything!');
   var randomEvent = events[Math.floor(Math.random() * events.length)]
   Chat.find({})
@@ -34,13 +35,37 @@ var keyboards = {
         { 'text': 'Achievements \ud83c\udf87'},
       ]],
       resize_keyboard:true
+  },
+  event2: {
+      keyboard: [[
+        { 'text': 'rando1 \ud83c\udf78'},
+        { 'text': 'rando2 \ud83c\udf06'},
+        { 'text': 'rando3 \ud83c\udf87'},
+      ]],
+      resize_keyboard:true
+  },
+  event3: {
+      keyboard: [[
+        { 'text': 'hjbsfd Lounge \ud83c\udf78'},
+        { 'text': 'The fdsggCity \ud83c\udf06'},
+        { 'text': 'Achfgdgfdievements \ud83c\udf87'},
+      ]],
+      resize_keyboard:true
+  },
+  event4: {
+      keyboard: [[
+        { 'text': 'rando4 \ud83c\udf78'},
+        { 'text': 'rando4 \ud83c\udf06'},
+        { 'text': 'rando4 \ud83c\udf87'},
+      ]],
+      resize_keyboard:true
   }
 }
 var events= [
   {name: "Event 1", description: "this is a description", keyboard: keyboards.home},
-  {name: "Event 2", keyboard: keyboards.home},
-  {name: "Event 3", keyboard: keyboards.home},
-  {name: "Event 4", keyboard: keyboards.home},
+  {name: "Event 2", keyboard: keyboards.event2},
+  {name: "Event 3", keyboard: keyboards.event3},
+  {name: "Event 4", keyboard: keyboards.event4},
   {name: "Event 5", keyboard: keyboards.home},
   {name: "Event 6", keyboard: keyboards.home},
   {name: "Event 7", keyboard: keyboards.home},
