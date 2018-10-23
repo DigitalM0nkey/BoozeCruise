@@ -3,7 +3,8 @@ var schedule = require('node-schedule');
 var config = require('../../config');
 var TelegramBot = require('../../bots/telegram');
 var TOKEN = config.tokens.telegram.BoozeCruise;
-var Chat= require('../../models/chat');
+var Chat = require('../../models/chat');
+var Guest = require('../../classes/guest');
 //console.log(Chat)
 var b = new TelegramBot();
 b.init(TOKEN).then(function() {
@@ -12,9 +13,11 @@ b.init(TOKEN).then(function() {
   b.setWebhook('BoozeCruise');
 });
 
+var randomguest=new Guest();
+randomguest.pick();
 
-var dailyEvent = schedule.scheduleJob('30 * * * * *', function(){
-//var dailyEvent = schedule.scheduleJob('0 0 0 * * *', function(){
+//var dailyEvent = schedule.scheduleJob('30 * * * * *', function(){
+var dailyEvent = schedule.scheduleJob('0 0 0 * * *', function(){
   console.log('The answer to life, the universe, and everything!');
   var randomEvent = events[Math.floor(Math.random() * events.length)]
   Chat.find({})
@@ -69,8 +72,17 @@ var events= [
   {name: "Event 5", keyboard: keyboards.home},
   {name: "Event 6", keyboard: keyboards.home},
   {name: "Event 7", keyboard: keyboards.home},
-
 ];
+
+// Moves
+
+var moves = {
+  cocktailLounge: {
+      guests: function(){
+
+      }
+  },
+}
 
 // This post is everytime someone says something to the bot.
 
