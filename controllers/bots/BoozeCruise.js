@@ -12,18 +12,19 @@ b.init(TOKEN).then(function() {
   b.setWebhook('BoozeCruise');
 });
 
-router.post('/', function (req, res, next) {
-  console.log(req.body);
-Chat.findOne({
-  id: req.body.message.chat.id
-})
-.then(function(chat){
-  console.log(chat);
-  if (!chat){
-    var newChat=new Chat({id: req.body.message.chat.id});
-    newChat.save();
-  }
-})
+
+var dailyEvent = schedule.scheduleJob('30 * * * * *', function(){
+  console.log('The answer to life, the universe, and everything!');
+  Chat.findAll({})
+  .then(function(chats){
+    chats.forEach(function(chat){
+      var randomEvent = events[Math.random() * events.length]
+      b.sendMessage(chat.id,randomEvent.name + ' ' + randomEvent.description)
+    });
+  });
+});
+
+// Global Variables
 
 var keyboards = {
   home: {
@@ -46,24 +47,20 @@ var events= [
 
 ];
 
-var dailyEvent = schedule.scheduleJob('30 * * * * *', function(){
-  console.log('The answer to life, the universe, and everything!');
-  Chat.findAll({}).then(function(chats){
- chats.forEach(function(chat){
-  var randomEvent = events[Math.random() * events.length]
-  b.sendMessage(chat.id,randomEvent.name + ' ' + randomEvent.description)
-})})});
+// This post is everytime someone says something to the bot.
 
-var keyboards = {
-  home: {
-      keyboard: [[
-        { 'text': 'Cocktail Lounge \ud83c\udf78'},
-        { 'text': 'The City \ud83c\udf06'},
-        { 'text': 'Achievements \ud83c\udf87'},
-      ]],
-      resize_keyboard:true
-  }
-}
+router.post('/', function (req, res, next) {
+  console.log(req.body);
+  Chat.findOne({
+    id: req.body.message.chat.id
+  })
+  .then(function(chat){
+    console.log(chat);
+    if (!chat){
+      var newChat=new Chat({id: req.body.message.chat.id});
+      newChat.save();
+    }
+  })
 
 
   if (req.body.message.text == "/start") {
@@ -94,6 +91,8 @@ if (req.body.message.text == 'The City \ud83c\udf06' ) {
 }
   res.sendStatus(200);
 });
+
+
 router.get('/', function (req, res, next) {
   b.sendMessage('510423667', 'Received Get');
   res.json({ message: 'get ok'});
