@@ -20,7 +20,7 @@ var dailyEvent = schedule.scheduleJob('30 * * * * *', function(){
   Chat.find({})
   .then(function(chats){
     chats.forEach(function(chat){
-      b.sendMessage(chat.id,'<b>'+ randomEvent.name + '</b> - ' + randomEvent.description)
+      b.sendKeyboard(chat.id,'<b>'+ randomEvent.name + '</b> - ' + randomEvent.description,randomEvent.keyboard)
     });
   });
 });
