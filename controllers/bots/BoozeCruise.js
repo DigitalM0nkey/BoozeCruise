@@ -108,7 +108,7 @@ var keyboards = {
 }
 var events = [{
     name: "Embarcation / Debarcation Day",
-    description: "Your Cruise is over. Your current Guests will disembark your ship this morning, bringing with them stories from their cruise, the happier they are, the more more likley that they will cruise again and the more likley they will tell their friends to cruise. Guests that have had a negitive experence are not as likley to cruise again and are more than likley to discourage future guests from cruising. Use the time that your ship has no guests, to clean it and prepare it for the next cruise, which departs tonight",
+    description: "<b>Your Cruise is over.</b> Your current Guests will disembark your ship this morning, bringing with them stories from their cruise, the happier they are, the more more likley they will cruise again and the more likley they will tell their friends to cruise. Guests that have had a negitive experence are not likley to cruise again and are more than likley to discourage future guests from cruising. Use the time that your ship has no guests, to clean it and prepare it for the next cruise, which departs tonight.",
     keyboard: keyboards.event1
   },
   {
@@ -118,17 +118,17 @@ var events = [{
   },
   {
     name: "Formal Night",
-    description: "Put on your glad rags and do your hair because tonight is formal night.",
+    description: "Put on your glad rags and do your hair because tonight is formal night. That means it steak and lobster in the main dining room and a las Vegas style show in the Show Lounge.",
     keyboard: keyboards.event3
   },
   {
     name: "Sea Day",
-    description: "Look around.... Nothing but ocean.",
+    description: "<b>Look around.... Nothing but ocean.</b> That doesn't mean there is nothing to do, the Cruise Director has orginazed a bunch of activties for your guests to take part in. activties include: The Men's Hairy Chest Competition, BINGO, Scavenger Hunt, etc",
     keyboard: keyboards.event4
   },
   {
     name: "Port Day",
-    description: "It's time to get of the ship and explore these strange and wonderful lands",
+    description: "It's time to get off the ship and explore these strange and wonderful lands",
     keyboard: keyboards.home
   },
   {
