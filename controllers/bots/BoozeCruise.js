@@ -105,7 +105,7 @@ var keyboards = {
   }
 }
 var events = [{
-    name: "Embarcation/Debarcation Day",
+    name: "Embarcation - Debarcation Day",
     description: "Your Cruise is over. Your current Guests will disembark your ship this morning, bringing with them stories from their cruise, the happier they are, the more more likley that they will cruise again and the more likley they will tell their friends to cruise. Guests that have had a negitive experence are not as likley to cruise again and are more than likley to discourage future guests from cruising. Use the time that your ship has no guests, to clean it and prepare it for the next cruise, which departs tonight",
     keyboard: keyboards.event1
   },
