@@ -57,54 +57,55 @@ var keyboards = {
           'text': 'Embarcation \ud83d\udea2'
         },
       ]
-      resize_keyboard: true
-    },
-    event2: {
-      keyboard: [
-        [{
-            'text': 'rando1 \ud83c\udf78'
-          },
-          {
-            'text': 'rando2 \ud83c\udf06'
-          },
-          {
-            'text': 'rando3 \ud83c\udf87'
-          },
-        ]
-      ],
-      resize_keyboard: true
-    },
-    event3: {
-      keyboard: [
-        [{
-            'text': 'hjbsfd Lounge \ud83c\udf78'
-          },
-          {
-            'text': 'The fdsggCity \ud83c\udf06'
-          },
-          {
-            'text': 'Achfgdgfdievements \ud83c\udf87'
-          },
-        ]
-      ],
-      resize_keyboard: true
-    },
-    event4: {
-      keyboard: [
-        [{
-            'text': 'rando4 \ud83c\udf78'
-          },
-          {
-            'text': 'rando4 \ud83c\udf06'
-          },
-          {
-            'text': 'rando4 \ud83c\udf87'
-          },
-        ]
-      ],
-      resize_keyboard: true
-    }
-  }
+    ],
+    resize_keyboard: true
+  },
+  event2: {
+    keyboard: [
+      [{
+          'text': 'rando1 \ud83c\udf78'
+        },
+        {
+          'text': 'rando2 \ud83c\udf06'
+        },
+        {
+          'text': 'rando3 \ud83c\udf87'
+        },
+      ]
+    ],
+    resize_keyboard: true
+  },
+  event3: {
+    keyboard: [
+      [{
+          'text': 'hjbsfd Lounge \ud83c\udf78'
+        },
+        {
+          'text': 'The fdsggCity \ud83c\udf06'
+        },
+        {
+          'text': 'Achfgdgfdievements \ud83c\udf87'
+        },
+      ]
+    ],
+    resize_keyboard: true
+  },
+  event4: {
+    keyboard: [
+      [{
+          'text': 'rando4 \ud83c\udf78'
+        },
+        {
+          'text': 'rando4 \ud83c\udf06'
+        },
+        {
+          'text': 'rando4 \ud83c\udf87'
+        },
+      ]
+    ],
+    resize_keyboard: true
+  },
+}
 var events = [{
     name: "Embarcation / Debarcation Day",
     description: "Your Cruise is over. Your current Guests will disembark your ship this morning, bringing with them stories from their cruise, the happier they are, the more more likley that they will cruise again and the more likley they will tell their friends to cruise. Guests that have had a negitive experence are not as likley to cruise again and are more than likley to discourage future guests from cruising. Use the time that your ship has no guests, to clean it and prepare it for the next cruise, which departs tonight",
