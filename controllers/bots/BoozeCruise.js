@@ -16,7 +16,7 @@ b.init(TOKEN).then(function() {
 console.log(guest.pick());
 
 //var dailyEvent = schedule.scheduleJob('30 * * * * *', function(){
-var dailyEvent = schedule.scheduleJob('0 0 0 * * *', function() {
+var dailyEvent = schedule.scheduleJob('0 0 7 * * *', function() {
   console.log('The answer to life, the universe, and everything!');
   var randomEvent = events[Math.floor(Math.random() * events.length)]
   Chat.find({})
@@ -92,32 +92,38 @@ var keyboards = {
   }
 }
 var events = [{
-    name: "Event 1",
-    description: "this is a description",
+    name: "Embarcation Day",
+    description: "New passangers are boarding your ship",
     keyboard: keyboards.home
   },
   {
-    name: "Event 2",
+    name: "Deck Party",
+    description: "It's party time.",
     keyboard: keyboards.event2
   },
   {
-    name: "Event 3",
+    name: "Formal Night",
+    description: "Put on your glad rags and do your hair because tonight is formal night.",
     keyboard: keyboards.event3
   },
   {
-    name: "Event 4",
+    name: "Sea Day",
+    description: "Look around.... Nothing but ocean.",
     keyboard: keyboards.event4
   },
   {
-    name: "Event 5",
+    name: "Port Day",
+    description: "It's time to get of the ship and explore these strange and wonderful lands",
     keyboard: keyboards.home
   },
   {
-    name: "Event 6",
+    name: "Hurricane",
+    description: "This is your Captin speaking.... Due to some severe weather patterns, we will unfortunately be skipping our next port of call.",
     keyboard: keyboards.home
   },
   {
-    name: "Event 7",
+    name: "Man Over Board",
+    description: "Turn the ship around because someone just fell overboard",
     keyboard: keyboards.home
   },
 ];
