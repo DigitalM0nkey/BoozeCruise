@@ -45,19 +45,32 @@ var keyboards = {
     ],
     resize_keyboard: true
   },
-  event2: {
+  event1: {
     keyboard: [
       [{
-          'text': 'rando1 \ud83c\udf78'
+          'text': 'Debarcation \ud83c\udf05'
         },
         {
-          'text': 'rando2 \ud83c\udf06'
+          'text': 'Clean \ud83d\udc4b'
         },
         {
-          'text': 'rando3 \ud83c\udf87'
+          'text': 'Embarcation \ud83d\udea2'
         },
       ]
     ],
+    event2: {
+      keyboard: [
+        [{
+            'text': 'rando1 \ud83c\udf78'
+          },
+          {
+            'text': 'rando2 \ud83c\udf06'
+          },
+          {
+            'text': 'rando3 \ud83c\udf87'
+          },
+        ]
+      ],
     resize_keyboard: true
   },
   event3: {
@@ -92,9 +105,9 @@ var keyboards = {
   }
 }
 var events = [{
-    name: "Embarcation Day",
-    description: "New passangers are boarding your ship",
-    keyboard: keyboards.home
+    name: "Embarcation/Debarcation Day",
+    description: "<b>Your Cruise is over.</b> Your current Guests will disembark your ship this morning, bringing with them stories from their cruise, the happier they are, the more more likley that they will cruise again and the more likley they will tell their friends to cruise. Guests that have had a negitive experence are not as likley to cruise again and are more than likley to discourage future guests from cruising. Use the time that your ship has no guests, to clean it and prepare it for the next cruise, which departs tonight",
+    keyboard: keyboards.event1
   },
   {
     name: "Deck Party",
