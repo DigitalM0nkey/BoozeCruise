@@ -233,6 +233,11 @@ router.post('/', function(req, res, next) {
             id: req.body.message.chat.id
           });
           newPort.save();
+        } else {
+          if (req.body.message.text == "/start") {
+            //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
+            b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
+          }
         }
       });
   }
