@@ -239,6 +239,7 @@ router.post('/', function(req, res, next) {
             b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
           }
         }
+        res.sendStatus(200);
       });
   }
 
