@@ -3,7 +3,8 @@ var schedule = require('node-schedule');
 var config = require('../../config');
 var TelegramBot = require('../../bots/telegram');
 var TOKEN = config.tokens.telegram.BoozeCruise;
-var Chat = require('../../models/chat');
+var Port = require('../../models/port');
+var Ship = require('../../models/ship');
 var guest = require('../../types/guest');
 //console.log(Chat)
 var b = new TelegramBot();
@@ -19,10 +20,10 @@ console.log(guest.pick());
 var dailyEvent = schedule.scheduleJob('0 0 7 * * *', function() {
   console.log('The answer to life, the universe, and everything!');
   var randomEvent = events[Math.floor(Math.random() * events.length)]
-  Chat.find({})
-    .then(function(chats) {
-      chats.forEach(function(chat) {
-        b.sendKeyboard(chat.id, '<b>' + randomEvent.name + '</b> - ' + randomEvent.description, randomEvent.keyboard)
+  Ship.find({})
+    .then(function(ships) {
+      ships.forEach(function(ship) {
+        b.sendKeyboard(ship.id, '<b>' + randomEvent.name + '</b> - ' + randomEvent.description, randomEvent.keyboard)
       });
     });
 });
@@ -157,68 +158,84 @@ var moves = {
 
 router.post('/', function(req, res, next) {
   console.log(req.body);
-  Chat.findOne({
-      id: req.body.message.chat.id
-    })
-    .then(function(chat) {
-      console.log(chat);
-      if (!chat) {
-        var newChat = new Chat({
-          id: req.body.message.chat.id
-        });
-        newChat.save();
-      } else {
-        if (req.body.message.text == "/start") {
-          //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
-          b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
-        } else if (req.body.message.text == "/addGuest") {
-          var newGuest = guest.pick()
-          chat.guests.push({
-            type: newGuest
+  if (parseInt(req.body.message.chat.id) > 0) {
+    Ship.findOne({
+        id: req.body.message.chat.id
+      })
+      .then(function(ship) {
+        console.log(ship);
+        if (!ship) {
+          var newShip = new Ship({
+            id: req.body.message.chat.id
           });
-          chat.save();
-          b.sendKeyboard(req.body.message.chat.id, newGuest, keyboards.home);
-        } else if (req.body.message.text == "/removeGuest") {
-          var removedGuest = chat.guests.pop();
-          chat.save();
-          b.sendKeyboard(req.body.message.chat.id, removedGuest, keyboards.home);
-        } else if (req.body.message.text == 'The City \ud83c\udf06') {
-          b.sendKeyboard(req.body.message.chat.id, "Welcome To The City", {
-            keyboard: [
-              [{
-                'text': 'Good \ud83d\udc4d'
-              }, ]
-            ],
-            resize_keyboard: true
-          });
-        } else if (req.body.message.text == 'Cocktail Lounge \ud83c\udf78') {
-          b.sendKeyboard(req.body.message.chat.id, "Welcome To The Cocktail Lounge", {
-            keyboard: [
-              [{
-                  'text': 'Cat \ud83d\udc08'
-                },
-                {
-                  'text': 'Guest List \ud83d\udcc4'
-                },
-              ]
-            ],
-            resize_keyboard: true
-          });
-        } else if (req.body.message.text == 'Achievements \ud83c\udf87') {
-          b.sendKeyboard(req.body.message.chat.id, "Welcome To Achievements", {
-            keyboard: [
-              [{
-                'text': 'Bad \ud83d\udc4e'
-              }, ]
-            ],
-            resize_keyboard: true
-          });
-        } else if (req.body.message.text == 'Guest List \ud83d\udcc4') {
-          b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest: " + chat.guests, keyboards.home);
+          newShip.save();
+        } else {
+          if (req.body.message.text == "/start") {
+            //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
+            b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
+          } else if (req.body.message.text == "/addGuest") {
+            var newGuest = guest.pick()
+            ship.guests.push({
+              type: newGuest
+            });
+            ship.save();
+            b.sendKeyboard(req.body.message.chat.id, newGuest, keyboards.home);
+          } else if (req.body.message.text == "/removeGuest") {
+            var removedGuest = ship.guests.pop();
+            ship.save();
+            b.sendKeyboard(req.body.message.chat.id, removedGuest, keyboards.home);
+          } else if (req.body.message.text == 'The City \ud83c\udf06') {
+            b.sendKeyboard(req.body.message.chat.id, "Welcome To The City", {
+              keyboard: [
+                [{
+                  'text': 'Good \ud83d\udc4d'
+                }, ]
+              ],
+              resize_keyboard: true
+            });
+          } else if (req.body.message.text == 'Cocktail Lounge \ud83c\udf78') {
+            b.sendKeyboard(req.body.message.chat.id, "Welcome To The Cocktail Lounge", {
+              keyboard: [
+                [{
+                    'text': 'Cat \ud83d\udc08'
+                  },
+                  {
+                    'text': 'Guest List \ud83d\udcc4'
+                  },
+                ]
+              ],
+              resize_keyboard: true
+            });
+          } else if (req.body.message.text == 'Achievements \ud83c\udf87') {
+            b.sendKeyboard(req.body.message.chat.id, "Welcome To Achievements", {
+              keyboard: [
+                [{
+                  'text': 'Bad \ud83d\udc4e'
+                }, ]
+              ],
+              resize_keyboard: true
+            });
+          } else if (req.body.message.text == 'Guest List \ud83d\udcc4') {
+            b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest: " + ship.guests, keyboards.home);
+          }
         }
-      }
-      res.sendStatus(200);
-    })
+        res.sendStatus(200);
+      })
+  } else {
+    Port.findOne({
+        id: req.body.message.chat.id
+      })
+      .then(function(port) {
+        console.log(port);
+        if (!port) {
+          var newPort = new Port({
+            id: req.body.message.chat.id
+          });
+          newPort.save();
+        }
+      });
+  }
+
 
 
 

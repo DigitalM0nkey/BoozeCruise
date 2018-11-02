@@ -18,27 +18,27 @@ crew.pick = function() {
       crewStatus:""
     },
     {
-      title: "Gift Shop Attendent"
+      title: "Gift Shop Attendent",
       crewStatus: "Staff"
     },
     {
-      title: "Cheif Engeneer"
+      title: "Cheif Engeneer",
       crewStatus: "Officer"
     },
     {
-      title: "Server"
+      title: "Server",
       crewStatus: "Crew"
     },
     {
-      title: "Casino Host"
+      title: "Casino Host",
       crewStatus: "Staff"
     },
     {
-      title: "DJ"
+      title: "DJ",
       crewStatus: "Staff"
     },
     {
-      title: "Dancer"
+      title: "Dancer",
       crewStatus: "Staff"
     },
   ]
