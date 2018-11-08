@@ -154,6 +154,11 @@ var moves = {
   },
 }
 
+//b.exportChatInviteLink('')
+
+b.exportChatInviteLink('-265955522').then(function(link) {
+  console.log(link);
+});
 // This post is everytime someone says something to the bot.
 
 router.post('/', function(req, res, next) {
@@ -166,7 +171,13 @@ router.post('/', function(req, res, next) {
         console.log(ship);
         if (!ship) {
           var newShip = new Ship({
-            id: req.body.message.chat.id
+            id: req.body.message.chat.id,
+            user:{
+              id:req.body.message.from.id,
+              first_name:req.body.message.from.first_name,
+              last_name:req.body.message.from.last_name,
+              username:req.body.message.from.username,
+            }
           });
           newShip.save();
         } else {
@@ -222,7 +233,7 @@ router.post('/', function(req, res, next) {
         res.sendStatus(200);
       })
   } else {
-    console.log("hers");
+    console.log("here");
     Port.findOne({
         id: req.body.message.chat.id
       })
