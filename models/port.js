@@ -14,7 +14,7 @@ var Port = db.model('Port', {
       type: String,
       required: true
     },
-  }]
+  }],
   ships: [{
     type: String,
     ref: "Ship",
