@@ -15,5 +15,10 @@ var Port = db.model('Port', {
       required: true
     },
   }]
+  ships: [{
+    type: String,
+    ref: "Ship",
+    required: false
+  }]
 })
 module.exports = Port;
