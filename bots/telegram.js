@@ -83,6 +83,7 @@ module.exports = function() {
     return new Promise(function (resolve, reject) {
       var url = 'https://api.telegram.org/bot' + bot.token + '/exportChatInviteLink?chat_id=' + channel;
       request(encodeURI(url), function (error, r, body) {
+        console.log(body);
         var response = JSON.parse(body).result;
         //console.log(response);
         if(error) return;
