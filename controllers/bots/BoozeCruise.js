@@ -42,6 +42,9 @@ var keyboards = {
         {
           'text': 'Achievements \ud83c\udf87'
         },
+        {
+          'text': 'Port \ud83d\udea2'
+        },
       ]
     ],
     resize_keyboard: true
@@ -156,9 +159,7 @@ var moves = {
 
 //b.exportChatInviteLink('')
 
-b.exportChatInviteLink('-265955522').then(function(link) {
-  console.log(link);
-});
+
 // This post is everytime someone says something to the bot.
 
 router.post('/', function(req, res, next) {
@@ -228,6 +229,10 @@ router.post('/', function(req, res, next) {
             });
           } else if (req.body.message.text == 'Guest List \ud83d\udcc4') {
             b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest: " + ship.guests, keyboards.home);
+          } else if (req.body.message.text == 'Port \ud83d\udea2') {
+            b.exportChatInviteLink('-265955522').then(function(link) {
+              b.sendMessage (req.body.message.chat.id, link);
+            });
           }
         }
         res.sendStatus(200);
