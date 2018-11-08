@@ -231,6 +231,7 @@ router.post('/', function(req, res, next) {
             b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest: " + ship.guests, keyboards.home);
           } else if (req.body.message.text == 'Port \ud83d\udea2') {
             b.exportChatInviteLink('-265955522').then(function(link) {
+              console.log(link);
               b.sendMessage (req.body.message.chat.id, link);
             });
           }
