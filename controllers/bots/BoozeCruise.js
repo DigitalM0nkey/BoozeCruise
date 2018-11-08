@@ -256,6 +256,13 @@ router.post('/', function(req, res, next) {
             //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
             b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
           }
+         else if (req.body.message.new_chat_participant) {
+           Ship.findOne ({"user.id":req.body.message.new_chat_participant.id}).then(function (ship) {
+             port.ships.push(ship)
+             port.save()             
+           })
+
+         }
         }
         res.sendStatus(200);
       });
