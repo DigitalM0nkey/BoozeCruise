@@ -43,7 +43,7 @@ var keyboards = {
           'text': 'Achievements \ud83c\udf87'
         },
         {
-          'text': 'Port'
+          'text': 'Port \ud83d\udea2'
         },
       ]
     ],
@@ -229,9 +229,9 @@ router.post('/', function(req, res, next) {
             });
           } else if (req.body.message.text == 'Guest List \ud83d\udcc4') {
             b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest: " + ship.guests, keyboards.home);
-          } else if (req.body.message.text == 'Port') {
+          } else if (req.body.message.text == 'Port \ud83d\udea2') {
             console.log("log here");
-            b.exportChatInviteLink('-265955522').then(function(link) {
+            b.exportChatInviteLink('-1001399879250').then(function(link) {
               console.log(link);
               b.sendMessage (req.body.message.chat.id, link);
             });
