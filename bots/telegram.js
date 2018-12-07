@@ -112,7 +112,6 @@ module.exports = function() {
         var url = 'https://api.telegram.org/bot' + bot.token + '/kickChatMember?chat_id=' + channel + '&user_id=' + user + 'until_date=' + in1Minute;
         request(url, function (error, r, body) {
           if(error) return;
-          if(!response) return;
           resolve();
         });
       });
