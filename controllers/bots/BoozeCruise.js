@@ -17,7 +17,7 @@ b.init(TOKEN).then(function() {
 console.log(guest.pick());
 
 //var dailyEvent = schedule.scheduleJob('30 * * * * *', function(){
-var dailyEvent = schedule.scheduleJob('0 0 7 * * *', function() {
+var dailyEvent = schedule.scheduleJob('0 0 8 * * *', function() {
   console.log('The answer to life, the universe, and everything!');
   var randomEvent = events[Math.floor(Math.random() * events.length)]
   Ship.find({})
@@ -256,11 +256,35 @@ router.post('/', function(req, res, next) {
             //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
             b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
           }
+
+
+
          else if (req.body.message.new_chat_participant) {
            Ship.findOne ({"user.id":req.body.message.new_chat_participant.id}).then(function (ship) {
              port.ships.push(ship)
-             port.save()             
+             port.save()
            })
+
+         }
+
+         else if (req.body.message.left_chat_participant) {
+           Ship.findOne ({"user.id":req.body.message.left_chat_participant.id}).then(function (ship) {
+             port.ships = port.ships.filter(function(portShip){
+               return portShip._id != ship._id;
+             })
+             port.save()
+           })
+         }
+//       function checkPort(docked) {
+//      return docked > 1;
+//       }
+function functionName() {
+
+}
+//       Ship.findOne ({"user.id":req.body.message.left_chat_participant.id}).then(function (ship) {
+//       port.ships.push(ship)
+//       port.save()
+//       })
 
          }
         }
