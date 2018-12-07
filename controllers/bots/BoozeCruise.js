@@ -247,10 +247,14 @@ router.post('/', function(req, res, next) {
       .then(function(port) {
           console.log(port);
           if (!port) {
-            var newPort = new Port({
-              id: req.body.message.chat.id
-            });
-            newPort.save();
+            b.getChat(req.body.message.chat.id).then(function(chat){
+              console.log(chat);
+              var newPort = new Port({
+                id: req.body.message.chat.id
+              });
+              newPort.save();
+            })
+
           } else {
             if (req.body.message.text == "/start") {
               //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
