@@ -259,7 +259,7 @@ router.post('/', function(req, res, next) {
               Ship.findOne({
                 "user.id": req.body.message.new_chat_participant.id
               }).then(function(ship) {
-                port.ships.push(ship)
+                port.ships.push(ship._id)
                 port.save()
               })
 
