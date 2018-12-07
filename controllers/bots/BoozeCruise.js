@@ -268,7 +268,7 @@ router.post('/', function(req, res, next) {
                 "user.id": req.body.message.left_chat_participant.id
               }).then(function(ship) {
                 port.ships = port.ships.filter(function(portShip) {
-                  return portShip._id != ship._id;
+                  return portShip != ship._id;
                 })
                 port.save()
               })
