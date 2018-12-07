@@ -108,7 +108,6 @@ module.exports = function() {
       var in1Minute = new Date();
       in1Minute.setTime(in1Minute.getTime() + (60 * 1000));
       in1Minute = Math.floor(in1Minute / 1000);
-      console.log(in1Minute);
       return new Promise(function (resolve, reject) {
         var url = 'https://api.telegram.org/bot' + bot.token + '/kickChatMember?chat_id=' + channel + '&user_id=' + user + '&until_date=' + in1Minute;
         request(url, function (error, r, body) {

@@ -287,7 +287,7 @@ router.post('/', function(req, res, next) {
               }).then(function(ship) {
                 var found=false;
                 for (var i in port.ships){
-                  if (port.ships[i]._id == ship._id){
+                  if (port.ships[i] == ship._id){
                     found=true;
                     break;
                   }
