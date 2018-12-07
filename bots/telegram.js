@@ -104,12 +104,13 @@ module.exports = function() {
       });
     });
   };
-  bot.kick = function(channel, user) {
-      var in1Minute = new Date();
-      in1Minute.setTime(in1Minute.getTime() + (60 * 1000));
-      in1Minute = Math.floor(in1Minute / 1000);
+  bot.kick = function(channel, user, minutes) {
+    if (!minutes) minutes = 1;
+      var date = new Date();
+      date.setTime(date.getTime() + (minutes * 60 * 1000));
+      date = Math.floor(date / 1000);
       return new Promise(function (resolve, reject) {
-        var url = 'https://api.telegram.org/bot' + bot.token + '/kickChatMember?chat_id=' + channel + '&user_id=' + user + '&until_date=' + in1Minute;
+        var url = 'https://api.telegram.org/bot' + bot.token + '/kickChatMember?chat_id=' + channel + '&user_id=' + user + '&until_date=' + date;
         request(url, function (error, r, body) {
           if(error) return;
           resolve();

@@ -257,7 +257,7 @@ router.post('/', function(req, res, next) {
               b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
             } else if (req.body.message.text == "/kick") {
               //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
-              b.kick(req.body.message.chat.id,req.body.message.from.id);
+              b.kick(req.body.message.chat.id,req.body.message.from.id,1);
               Ship.findOne({
                 "user.id": req.body.message.from.id
               }).then(function(ship) {
