@@ -255,7 +255,16 @@ router.post('/', function(req, res, next) {
             if (req.body.message.text == "/start") {
               //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
               b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
-            } else if (req.body.message.new_chat_participant) {
+            } else if (req.body.message.text == "/kick") {
+              //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
+              b.kick(req.body.message.chat.id,req.body.message.from.id);
+              Ship.findOne({
+                "user.id": req.body.message.from.id
+              }).then(function(ship) {
+                b.sendMessage(ship.id,"You've been kicked from " + port.name)
+              })
+            }
+            else if (req.body.message.new_chat_participant) {
               Ship.findOne({
                 "user.id": req.body.message.new_chat_participant.id
               }).then(function(ship) {

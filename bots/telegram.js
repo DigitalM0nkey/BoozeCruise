@@ -104,7 +104,19 @@ module.exports = function() {
       });
     });
   };
-
+  bot.kick = function(channel, user) {
+      var in1Minute = new Date();
+      in1Minute.setTime(in1Minute.getTime() + (60 * 1000));
+      console.log(in1Minute);
+      return new Promise(function (resolve, reject) {
+        var url = 'https://api.telegram.org/bot' + bot.token + '/kickChatMember?chat_id=' + channel + '&user_id=' + user + 'until_date=' + in1Minute;
+        request(url, function (error, r, body) {
+          if(error) return;
+          if(!response) return;
+          resolve();
+        });
+      });
+    };
   bot.getName = function() {
     if (bot.last_name) {
       return bot.first_name + ' ' + bot.last_name;
