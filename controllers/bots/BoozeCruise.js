@@ -272,6 +272,23 @@ router.post('/', function(req, res, next) {
                 })
                 port.save()
               })
+            }else {
+              Ship.findOne({
+                "user.id": req.body.message.from.id
+              }).then(function(ship) {
+                var found=false;
+                for (var i in port.ships){
+                  if (port.ships[i]._id == ship._id){
+                    found=true;
+                    break;
+                  }
+                }
+                if (!found){
+                  port.ships.push(ship._id)
+                  port.save()
+                }
+              })
+
             }
 
 
