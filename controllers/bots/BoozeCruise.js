@@ -250,7 +250,8 @@ router.post('/', function(req, res, next) {
             b.getChat(req.body.message.chat.id).then(function(chat){
               console.log(chat);
               var newPort = new Port({
-                id: req.body.message.chat.id
+                id: req.body.message.chat.id,
+                name: chat.title,
               });
               newPort.save();
             })
