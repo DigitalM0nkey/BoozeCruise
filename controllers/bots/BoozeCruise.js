@@ -173,11 +173,11 @@ router.post('/', function(req, res, next) {
         if (!ship) {
           var newShip = new Ship({
             id: req.body.message.chat.id,
-            user:{
-              id:req.body.message.from.id,
-              first_name:req.body.message.from.first_name,
-              last_name:req.body.message.from.last_name,
-              username:req.body.message.from.username,
+            user: {
+              id: req.body.message.from.id,
+              first_name: req.body.message.from.first_name,
+              last_name: req.body.message.from.last_name,
+              username: req.body.message.from.username,
             }
           });
           newShip.save();
@@ -233,7 +233,7 @@ router.post('/', function(req, res, next) {
             console.log("log here");
             b.exportChatInviteLink('-1001399879250').then(function(link) {
               console.log(link);
-              b.sendMessage (req.body.message.chat.id, link);
+              b.sendMessage(req.body.message.chat.id, link);
             });
           }
         }
@@ -245,52 +245,41 @@ router.post('/', function(req, res, next) {
         id: req.body.message.chat.id
       })
       .then(function(port) {
-        console.log(port);
-        if (!port) {
-          var newPort = new Port({
-            id: req.body.message.chat.id
-          });
-          newPort.save();
-        } else {
-          if (req.body.message.text == "/start") {
-            //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
-            b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
+          console.log(port);
+          if (!port) {
+            var newPort = new Port({
+              id: req.body.message.chat.id
+            });
+            newPort.save();
+          } else {
+            if (req.body.message.text == "/start") {
+              //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
+              b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
+            } else if (req.body.message.new_chat_participant) {
+              Ship.findOne({
+                "user.id": req.body.message.new_chat_participant.id
+              }).then(function(ship) {
+                port.ships.push(ship)
+                port.save()
+              })
+
+            } else if (req.body.message.left_chat_participant) {
+              Ship.findOne({
+                "user.id": req.body.message.left_chat_participant.id
+              }).then(function(ship) {
+                port.ships = port.ships.filter(function(portShip) {
+                  return portShip._id != ship._id;
+                })
+                port.save()
+              })
+            }
+
+
           }
-
-
-
-         else if (req.body.message.new_chat_participant) {
-           Ship.findOne ({"user.id":req.body.message.new_chat_participant.id}).then(function (ship) {
-             port.ships.push(ship)
-             port.save()
-           })
-
-         }
-
-         else if (req.body.message.left_chat_participant) {
-           Ship.findOne ({"user.id":req.body.message.left_chat_participant.id}).then(function (ship) {
-             port.ships = port.ships.filter(function(portShip){
-               return portShip._id != ship._id;
-             })
-             port.save()
-           })
-         }
-//       function checkPort(docked) {
-//      return docked > 1;
-//       }
-function functionName() {
-
-}
-//       Ship.findOne ({"user.id":req.body.message.left_chat_participant.id}).then(function (ship) {
-//       port.ships.push(ship)
-//       port.save()
-//       })
-
-         }
-        }
+        });
         res.sendStatus(200);
-      });
-  }
+      }
+
 
 
 
