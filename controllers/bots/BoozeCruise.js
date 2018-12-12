@@ -127,9 +127,7 @@ router.post('/', function(req, res, next) {
               "location.sector": ship.location.sector
             }).then(function(ports){
               b.sendKeyboard(req.body.message.chat.id, "Available Ports", {
-                inline_keyboard: [
-                  makeInlineKeyboard(ports, ship)
-                ],
+                inline_keyboard: makeInlineKeyboard(ports, ship),
               });
             })
           } else if (req.body.message.text == 'The City \ud83c\udf06') {
@@ -274,7 +272,7 @@ function calculateDistance(portLocation, shipLocation){
 
 function makeInlineKeyboard(ports, ship) {
 
-    var keyboard = array.map(function(port){
+    var keyboard = ports.map(function(port){
       var message = port.name;
       message += "Ships in port (" + port.ships.length + ")\n"
       message += "Distance to port (" + calculateDistance(port.location, ship.location) + ") days"
@@ -288,5 +286,5 @@ function makeInlineKeyboard(ports, ship) {
       }
     })
     console.log(keyboard);
-    return keyboard;
+    return [keyboard];
 }
