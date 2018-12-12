@@ -124,6 +124,12 @@ router.post('/', function(req, res, next) {
           }else if (req.body.message.text == 'Same Continent') {
             Port.find({
               "location.sector": ship.location.sector
+            }).then(function(ports){
+              b.sendKeyboard(req.body.message.chat.id, "", {
+                keyboard: [
+                  ports.map(function(port){return port.name})
+                ]
+              });
             })
           } else if (req.body.message.text == 'The City \ud83c\udf06') {
             b.sendKeyboard(req.body.message.chat.id, "Welcome To The City", {
