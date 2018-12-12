@@ -133,7 +133,7 @@ router.post('/', function(req, res, next) {
                     message += "Ships in port (" + port.ships.length + ")\n"
                     message += "Distance to port (" + calculateDistance(port.location, ship.location) + ") days"
                     return {
-                      text:message,
+                      'text':message,
                       'callback_data': JSON.stringify({
                         port:port.id,
                         ship:ship.id,
