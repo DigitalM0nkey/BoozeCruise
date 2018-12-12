@@ -11,6 +11,12 @@ var Ship = db.model('Ship',{
   guests: [{
     type: {type: String, required: true},
   }
-  ]
+],
+  location: {
+    sector: {type: Integer, required: false},
+    x: {type: Integer, required: false},
+    y: {type: Integer, required: false},
+
+  }
 })
 module.exports = Ship;

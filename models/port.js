@@ -20,5 +20,11 @@ var Port = db.model('Port', {
     ref: "Ship",
     required: false
   }]
+  location: {
+    sector: {type: Integer, required: false},
+    x: {type: Integer, required: false},
+    y: {type: Integer, required: false}, 
+
+  }
 })
 module.exports = Port;

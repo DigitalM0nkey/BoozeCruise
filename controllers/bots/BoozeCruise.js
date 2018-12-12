@@ -2,7 +2,10 @@ var router = require('express').Router();
 var schedule = require('node-schedule');
 var config = require('../../config');
 var TelegramBot = require('../../bots/telegram');
+var keyboards = require('../../constants/keyboards')
 var TOKEN = config.tokens.telegram.BoozeCruise;
+var NUMOFSECTORS = 3;
+var SIZEOFSECTOR = 2;
 var Port = require('../../models/port');
 var Ship = require('../../models/ship');
 var guest = require('../../types/guest');
@@ -30,86 +33,6 @@ var dailyEvent = schedule.scheduleJob('0 0 8 * * *', function() {
 
 // Global Variables
 
-var keyboards = {
-  home: {
-    keyboard: [
-      [{
-          'text': 'Cocktail Lounge \ud83c\udf78'
-        },
-        {
-          'text': 'The City \ud83c\udf06'
-        },
-        {
-          'text': 'Achievements \ud83c\udf87'
-        },
-        {
-          'text': 'Port \ud83d\udea2'
-        },
-      ]
-    ],
-    resize_keyboard: true
-  },
-  event1: {
-    keyboard: [
-      [{
-          'text': 'Debarcation \ud83c\udf05'
-        },
-        {
-          'text': 'Clean \ud83d\udc4b'
-        },
-        {
-          'text': 'Embarcation \ud83d\udea2'
-        },
-      ]
-    ],
-    resize_keyboard: true
-  },
-  event2: {
-    keyboard: [
-      [{
-          'text': 'rando1 \ud83c\udf78'
-        },
-        {
-          'text': 'rando2 \ud83c\udf06'
-        },
-        {
-          'text': 'rando3 \ud83c\udf87'
-        },
-      ]
-    ],
-    resize_keyboard: true
-  },
-  event3: {
-    keyboard: [
-      [{
-          'text': 'hjbsfd Lounge \ud83c\udf78'
-        },
-        {
-          'text': 'The fdsggCity \ud83c\udf06'
-        },
-        {
-          'text': 'Achfgdgfdievements \ud83c\udf87'
-        },
-      ]
-    ],
-    resize_keyboard: true
-  },
-  event4: {
-    keyboard: [
-      [{
-          'text': 'rando4 \ud83c\udf78'
-        },
-        {
-          'text': 'rando4 \ud83c\udf06'
-        },
-        {
-          'text': 'rando4 \ud83c\udf87'
-        },
-      ]
-    ],
-    resize_keyboard: true
-  },
-}
 var events = [{
     name: "Embarcation / Debarcation Day",
     description: "<b>Your Cruise is over.</b> Your current Guests will disembark your ship this morning, bringing with them stories from their cruise, the happier they are, the more more likley they will cruise again and the more likley they will tell their friends to cruise. Guests that have had a negitive experence are not likley to cruise again and are more than likley to discourage future guests from cruising. Use the time that your ship has no guests, to clean it and prepare it for the next cruise, which departs tonight.",
@@ -196,6 +119,12 @@ router.post('/', function(req, res, next) {
             var removedGuest = ship.guests.pop();
             ship.save();
             b.sendKeyboard(req.body.message.chat.id, removedGuest, keyboards.home);
+          }else if (req.body.message.text == 'Ports') {
+            b.sendKeyboard(req.body.message.chat.id, "", keyboards.ports);
+          }else if (req.body.message.text == 'Same Continent') {
+            Port.find({
+              "location.sector": ship.location.sector
+            })
           } else if (req.body.message.text == 'The City \ud83c\udf06') {
             b.sendKeyboard(req.body.message.chat.id, "Welcome To The City", {
               keyboard: [
@@ -301,6 +230,8 @@ router.post('/', function(req, res, next) {
                   port.ships.push(ship._id)
                   port.save()
                 }
+                ship.location = port.location;
+                ship.save();
               })
 
             }
