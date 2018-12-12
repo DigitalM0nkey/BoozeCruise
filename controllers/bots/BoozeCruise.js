@@ -127,12 +127,19 @@ router.post('/', function(req, res, next) {
               "location.sector": ship.location.sector
             }).then(function(ports){
               b.sendKeyboard(req.body.message.chat.id, "Available Ports", {
-                keyboard: [
+                inline_keyboard: [
                   ports.map(function(port){
                     var message = port.name;
                     message += "Ships in port (" + port.ships.length + ")\n"
                     message += "Distance to port (" + calculateDistance(port.location, ship.location) + ") days"
-                    return port.name
+                    return {
+                      text:message,
+                      'callback_data': JSON.stringify({
+                        port:port.id,
+                        ship:ship.id,
+                        command:"changePort"
+                      })
+                    }
                   })
                 ],
                 resize_keyboard: true
