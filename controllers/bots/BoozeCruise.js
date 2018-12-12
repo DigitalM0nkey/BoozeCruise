@@ -127,8 +127,25 @@ router.post('/', function(req, res, next) {
               "location.sector": ship.location.sector
             }).then(function(ports){
               b.sendKeyboard(req.body.message.chat.id, "Available Ports", {
-                inline_keyboard: [
-                  ports.map(function(port){
+                inline_keyboard: [[
+      {
+        'text': '\ud83d\udc4d',
+        'callback_data': JSON.stringify({
+          type: 'rate',
+          list: game.list._id,
+          vote: 1
+        })
+      },
+      {
+        'text': '\ud83d\udc4e',
+        'callback_data': JSON.stringify({
+          type: 'rate',
+          list: game.list._id,
+          vote: -1
+        })
+      }
+    ]
+                  /*ports.map(function(port){
                     var message = port.name;
                     message += "Ships in port (" + port.ships.length + ")\n"
                     message += "Distance to port (" + calculateDistance(port.location, ship.location) + ") days"
@@ -140,7 +157,7 @@ router.post('/', function(req, res, next) {
                         command:"changePort"
                       })
                     }
-                  })
+                  })*/
                 ],
               });
             })
