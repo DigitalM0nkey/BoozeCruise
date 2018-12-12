@@ -121,7 +121,7 @@ router.post('/', function(req, res, next) {
             b.sendKeyboard(req.body.message.chat.id, removedGuest, keyboards.home);
           }else if (req.body.message.text == 'Ports') {
             b.sendKeyboard(req.body.message.chat.id, "", keyboards.ports);
-          console.log("i'm here");
+          console.log(keyboards.ports);
           }else if (req.body.message.text == 'Same Continent') {
             Port.find({
               "location.sector": ship.location.sector
