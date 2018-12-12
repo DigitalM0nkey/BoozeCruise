@@ -268,21 +268,7 @@ router.get('/', function(req, res, next) {
     message: 'get ok'
   });
 });
-b.sendKeyboard('510423667', 'Server Restarted', {
-  keyboard: [
-    [{
-        'text': 'Good \ud83d\udc4d'
-      },
-      {
-        'text': 'Bad \ud83d\udc4e'
-      },
-      {
-        'text': 'Ports'
-      },
-    ]
-  ],
-  resize_keyboard: true
-});
+b.sendMessage('510423667', 'Server Restarted');
 module.exports = router;
 
 function calculateDistance(portLocation, shipLocation){
