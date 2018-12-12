@@ -21,9 +21,9 @@ var Port = db.model('Port', {
     required: false
   }],
   location: {
-    sector: {type: Integer, required: false},
-    x: {type: Integer, required: false},
-    y: {type: Integer, required: false},
+    sector: {type: Number, required: false},
+    x: {type: Number, required: false},
+    y: {type: Number, required: false},
 
   }
 })
