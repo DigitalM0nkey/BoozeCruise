@@ -130,8 +130,8 @@ router.post('/', function(req, res, next) {
                 inline_keyboard: [
                   ports.map(function(port){
                     var message = port.name;
-                    //message += "Ships in port (" + port.ships.length + ")\n"
-                    //message += "Distance to port (" + calculateDistance(port.location, ship.location) + ") days"
+                    message += "Ships in port (" + port.ships.length + ")\n"
+                    message += "Distance to port (" + calculateDistance(port.location, ship.location) + ") days"
                     return {
                       'text':message,
                       'callback_data': JSON.stringify({
@@ -142,7 +142,6 @@ router.post('/', function(req, res, next) {
                     }
                   })
                 ],
-                resize_keyboard: true
               });
             })
           } else if (req.body.message.text == 'The City \ud83c\udf06') {
