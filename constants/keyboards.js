@@ -8,7 +8,7 @@ module.exports={  home: {
         },
         {
           'text': 'Achievements \ud83c\udf87'
-        },
+        }],[
         {
           'text': 'Home Port \ud83d\udea2'
         },

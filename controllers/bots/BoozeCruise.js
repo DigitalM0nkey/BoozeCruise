@@ -120,16 +120,22 @@ router.post('/', function(req, res, next) {
             ship.save();
             b.sendKeyboard(req.body.message.chat.id, removedGuest, keyboards.home);
           }else if (req.body.message.text == 'Ports') {
-            b.sendKeyboard(req.body.message.chat.id, "text", keyboards.ports);
+            b.sendKeyboard(req.body.message.chat.id, "Which Continent?", keyboards.ports);
           console.log(keyboards.ports);
           }else if (req.body.message.text == 'Same Continent') {
             Port.find({
               "location.sector": ship.location.sector
             }).then(function(ports){
-              b.sendKeyboard(req.body.message.chat.id, "text", {
+              b.sendKeyboard(req.body.message.chat.id, "Available Ports", {
                 keyboard: [
-                  ports.map(function(port){return port.name})
-                ]
+                  ports.map(function(port){
+                    var message = port.name;
+                    message += "Ships in port (" + port.ships.length + ")\n"
+                    message += "Distance to port (" + calculateDistance(port.location, ship.location) + ") days"
+                    return port.name
+                  })
+                ],
+                resize_keyboard: true
               });
             })
           } else if (req.body.message.text == 'The City \ud83c\udf06') {
@@ -271,10 +277,16 @@ b.sendKeyboard('510423667', 'Server Restarted', {
         'text': 'Bad \ud83d\udc4e'
       },
       {
-        'text': 'Cat \ud83d\udc08'
+        'text': 'Ports'
       },
     ]
   ],
   resize_keyboard: true
 });
 module.exports = router;
+
+function calculateDistance(portLocation, shipLocation){
+  if (portLocation.sector===shipLocation.sector){
+    return Math.abs(portLocation.x-shipLocation.x)+Math.abs(portLocation.y-shipLocation.y)
+  }
+}
