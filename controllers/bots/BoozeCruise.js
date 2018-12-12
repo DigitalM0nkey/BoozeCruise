@@ -273,7 +273,7 @@ function calculateDistance(portLocation, shipLocation){
 function makeInlineKeyboard(ports, ship) {
 
     var keyboard = ports.map(function(port){
-      var message = port.name;
+      var message = port.name + "\n";
       message += "Ships in port (" + port.ships.length + ")\n"
       message += "Distance to port (" + calculateDistance(port.location, ship.location) + ") days"
       return {
@@ -281,7 +281,6 @@ function makeInlineKeyboard(ports, ship) {
         'callback_data': JSON.stringify({
           port:port.id,
           ship:ship.id,
-          command:"changePort"
         })
       }
     })
