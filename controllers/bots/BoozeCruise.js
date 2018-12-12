@@ -275,7 +275,8 @@ router.get('/', function(req, res, next) {
     message: 'get ok'
   });
 });
-b.sendMessage('510423667', 'Server Restarted');
+b.sendkeyboard('510423667', 'Server Restarted',keyboards.home);
+
 module.exports = router;
 
 function calculateDistance(portLocation, shipLocation){
