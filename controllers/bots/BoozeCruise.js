@@ -127,37 +127,8 @@ router.post('/', function(req, res, next) {
               "location.sector": ship.location.sector
             }).then(function(ports){
               b.sendKeyboard(req.body.message.chat.id, "Available Ports", {
-                inline_keyboard: [[
-      {
-        'text': '\ud83d\udc4d',
-        'callback_data': JSON.stringify({
-          type: 'rate',
-          list: game.list._id,
-          vote: 1
-        })
-      },
-      {
-        'text': '\ud83d\udc4e',
-        'callback_data': JSON.stringify({
-          type: 'rate',
-          list: game.list._id,
-          vote: -1
-        })
-      }
-    ]
-                  /*ports.map(function(port){
-                    var message = port.name;
-                    message += "Ships in port (" + port.ships.length + ")\n"
-                    message += "Distance to port (" + calculateDistance(port.location, ship.location) + ") days"
-                    return {
-                      'text':message,
-                      'callback_data': JSON.stringify({
-                        port:port.id,
-                        ship:ship.id,
-                        command:"changePort"
-                      })
-                    }
-                  })*/
+                inline_keyboard: [
+                  makeInlineKeyboard(ports, ship)
                 ],
               });
             })
@@ -299,4 +270,23 @@ function calculateDistance(portLocation, shipLocation){
   if (portLocation.sector===shipLocation.sector){
     return Math.abs(portLocation.x-shipLocation.x)+Math.abs(portLocation.y-shipLocation.y)
   }
+}
+
+function makeInlineKeyboard(ports, ship) {
+
+    var keyboard = array.map(function(port){
+      var message = port.name;
+      message += "Ships in port (" + port.ships.length + ")\n"
+      message += "Distance to port (" + calculateDistance(port.location, ship.location) + ") days"
+      return {
+        'text':message,
+        'callback_data': JSON.stringify({
+          port:port.id,
+          ship:ship.id,
+          command:"changePort"
+        })
+      }
+    })
+    console.log(keyboard);
+    return keyboard;
 }
