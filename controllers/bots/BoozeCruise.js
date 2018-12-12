@@ -120,13 +120,13 @@ router.post('/', function(req, res, next) {
             ship.save();
             b.sendKeyboard(req.body.message.chat.id, removedGuest, keyboards.home);
           }else if (req.body.message.text == 'Ports') {
-            b.sendKeyboard(req.body.message.chat.id, "", keyboards.ports);
+            b.sendKeyboard(req.body.message.chat.id, "text", keyboards.ports);
           console.log(keyboards.ports);
           }else if (req.body.message.text == 'Same Continent') {
             Port.find({
               "location.sector": ship.location.sector
             }).then(function(ports){
-              b.sendKeyboard(req.body.message.chat.id, "", {
+              b.sendKeyboard(req.body.message.chat.id, "text", {
                 keyboard: [
                   ports.map(function(port){return port.name})
                 ]
