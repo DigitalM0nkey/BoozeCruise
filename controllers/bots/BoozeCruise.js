@@ -138,6 +138,16 @@ router.post('/', function(req, res, next) {
               }).then(function(ports) {
                 sendAvailablePorts(req.body.message.chat.id, ports, ship);
               })
+            } else if (req.body.message.text == 'Change Continent') {
+              Port.find({
+                "location.sector": { $not: ship.location.sector }
+              }).then(function(ports) {
+                var sectors = {};
+                ports.forEach(function(port, i, array){
+                  sectors[port.location.sector] += port.name + (i === array.length - 1 ? '' : ', ');
+                });
+                b.sendMessage(req.body.message.chat.id, sectors);
+              })
             } else if (req.body.message.text == 'The City \ud83c\udf06') {
               b.sendKeyboard(req.body.message.chat.id, "Welcome To The City", {
                 keyboard: [
