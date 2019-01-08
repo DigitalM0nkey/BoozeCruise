@@ -283,13 +283,13 @@ function calculateDistance(portLocation, shipLocation){
 
 function sendAvailablePorts(chat_id, ports, ship) {
 b.sendMessage(chat_id, ports.map(function(port){
-  var message = port.name + "\n";
-  message += "Ships in port (" + port.ships.length + ")\n"
-  message += "Distance to port (" + calculateDistance(port.location, ship.location) + ") hours"
+  var message = '<b>' + port.name + "</b>\n";
+  message += "Distance to port (<b>" + calculateDistance(port.location, ship.location) + "</b>) hours\n"
+  message += "Ships in port (<b>" + port.ships.length + "</b>)\n\n"
   return message;
 }));
 setTimeout(function(){
-  b.sendKeyboard(chat_id, "Available Ports", {
+  b.sendKeyboard(chat_id, "Navigate to:", {
     inline_keyboard: [ports.map(function(port){
       return {
         'text':port.name,
