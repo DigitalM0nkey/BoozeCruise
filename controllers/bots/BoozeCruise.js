@@ -140,7 +140,7 @@ router.post('/', function(req, res, next) {
               })
             } else if (req.body.message.text == 'Change Continent') {
               Port.find({
-                "location.sector": { $not: ship.location.sector }
+                "location.sector": { $ne: ship.location.sector }
               }).then(function(ports) {
                 var sectors = {};
                 ports.forEach(function(port, i, array){
