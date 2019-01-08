@@ -144,8 +144,8 @@ router.post('/', function(req, res, next) {
               }).then(function(ports) {
                 var sectors = {};
                 ports.forEach(function(port, i, array){
-                  if (!sectors[port.location.sector]) sectors[port.location.sector] = '';
-                  sectors[port.location.sector] += port.name + (i === array.length - 1 ? '' : ',\n');
+                  if (!sectors[port.location.sector]) sectors[port.location.sector] = '\n';
+                  sectors[port.location.sector] += port.name + (i === array.length - 1 ? '' : ', ');
                 });
                 var message="";
                 for (var i in sectors) {
