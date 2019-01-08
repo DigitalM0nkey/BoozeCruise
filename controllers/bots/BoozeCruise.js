@@ -351,18 +351,20 @@ function sendAvailablePorts(chat_id, ports, ship) {
     return message;
   }, ''));
   setTimeout(function() {
+    var keyboard = ports.map(function(port) {
+      return {
+        'text': port.name,
+        'callback_data': JSON.stringify({
+          action: "navigate",
+          distance: calculateDistance(port.location, ship.location),
+          port: port.id,
+          ship: ship.id,
+        })
+      }
+    })
+    console.log(keyboard);
     b.sendKeyboard(chat_id, "Navigate to:", {
-      inline_keyboard: [ports.map(function(port) {
-        return {
-          'text': port.name,
-          'callback_data': JSON.stringify({
-            action: "navigate",
-            distance: calculateDistance(port.location, ship.location),
-            port: port.id,
-            ship: ship.id,
-          })
-        }
-      })]
+      inline_keyboard: [keyboard]
     });
   }, 1000)
 
