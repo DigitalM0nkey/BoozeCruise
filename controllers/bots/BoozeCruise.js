@@ -146,7 +146,11 @@ router.post('/', function(req, res, next) {
                 ports.forEach(function(port, i, array){
                   sectors[port.location.sector] += port.name + (i === array.length - 1 ? '' : ', ');
                 });
-                b.sendMessage(req.body.message.chat.id, sectors);
+                var message="";
+                for (var i in sectors) {
+                  message += i + ': ' + sectors[i];
+                }
+                b.sendMessage(req.body.message.chat.id, message);
               })
             } else if (req.body.message.text == 'The City \ud83c\udf06') {
               b.sendKeyboard(req.body.message.chat.id, "Welcome To The City", {
