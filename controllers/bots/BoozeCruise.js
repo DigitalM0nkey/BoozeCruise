@@ -89,26 +89,33 @@ router.post('/', function(req, res, next) {
   console.log(req.body);
 
   if (req.body.callback_query) {
-    if (parseInt(req.body.callback_query.from.id) > 0) {} else {}
-    var data = JSON.parse(req.body.callback_query.data);
-    if (data.action === 'navigate') {
-      console.log(data);
-    } else if (data.action === 'navigate_sector') {
-      Port.find({
-          "location.sector": data.sector
-        })
-        .then(function(ports) {
-          Ship.findOne({
-              id: req.body.callback_query.from.id
+    Ship.findOne({
+        id: req.body.callback_query.from.id
+      })
+      .then(function(ship) {
+        if (parseInt(req.body.callback_query.from.id) > 0) {} else {}
+        var data = JSON.parse(req.body.callback_query.data);
+        if (data.action === 'navigate') {
+          var arrival = new Date();
+          arrival = arrival.setTime(arrival.getTime() + data.distance * 60 * 60 * 1000)
+          ship.nextLocation = {
+            arrival: arrival,
+            port: data.port,
+          }
+          ship.save();
+          console.log(data);
+        } else if (data.action === 'navigate_sector') {
+          Port.find({
+              "location.sector": data.sector
             })
-            .then(function(ship) {
+            .then(function(ports) {
               sendAvailablePorts(req.body.callback_query.from.id, ports, ship);
-            });
 
-        })
+            })
 
-    }
-    return res.sendStatus(200);
+        }
+        return res.sendStatus(200);
+      });
 
   } else {
     if (parseInt(req.body.message.chat.id) > 0) {
@@ -350,6 +357,7 @@ function sendAvailablePorts(chat_id, ports, ship) {
           'text': port.name,
           'callback_data': JSON.stringify({
             action: "navigate",
+            distance: calculateDistance(port.location, ship.location),
             port: port.id,
             ship: ship.id,
           })
