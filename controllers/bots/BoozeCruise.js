@@ -87,107 +87,109 @@ var moves = {
 
 router.post('/', function(req, res, next) {
   console.log(req.body);
-  if (parseInt(req.body.message.chat.id) > 0) {
-    Ship.findOne({
-        id: req.body.message.chat.id
-      })
-      .then(function(ship) {
-        console.log(ship);
-        if (!ship) {
-          var newShip = new Ship({
-            id: req.body.message.chat.id,
-            user: {
-              id: req.body.message.from.id,
-              first_name: req.body.message.from.first_name,
-              last_name: req.body.message.from.last_name,
-              username: req.body.message.from.username,
-            }
-          });
-          newShip.save();
-        } else {
 
-if (req.body.callback_query) {
+  if (req.body.callback_query) {
+    if (parseInt(req.body.callback_query.from.id) > 0) {} else {}
     var data = JSON.parse(req.body.callback_query.data);
     if (data.action === 'navigate') {
       console.log(data);
     }
     return res.sendStatus(200);
 
-  } else if (req.body.message.text == "/start") {
-            //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
-            b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
-          } else if (req.body.message.text == "/addGuest") {
-            var newGuest = guest.pick()
-            ship.guests.push({
-              type: newGuest
-            });
-            ship.save();
-            b.sendKeyboard(req.body.message.chat.id, newGuest, keyboards.home);
-          } else if (req.body.message.text == "/removeGuest") {
-            var removedGuest = ship.guests.pop();
-            ship.save();
-            b.sendKeyboard(req.body.message.chat.id, removedGuest, keyboards.home);
-          }else if (req.body.message.text == 'Ports') {
-            b.sendKeyboard(req.body.message.chat.id, "Which Continent?", keyboards.ports);
-          console.log(keyboards.ports);
-          }else if (req.body.message.text == 'Same Continent') {
-            Port.find({
-              "location.sector": ship.location.sector
-            }).then(function(ports){
-              sendAvailablePorts(req.body.message.chat.id, ports, ship);
-            })
-          } else if (req.body.message.text == 'The City \ud83c\udf06') {
-            b.sendKeyboard(req.body.message.chat.id, "Welcome To The City", {
-              keyboard: [
-                [{
-                  'text': 'Good \ud83d\udc4d'
-                }, ]
-              ],
-              resize_keyboard: true
-            });
-          } else if (req.body.message.text == 'Cocktail Lounge \ud83c\udf78') {
-            b.sendKeyboard(req.body.message.chat.id, "Welcome To The Cocktail Lounge", {
-              keyboard: [
-                [{
-                    'text': 'Cat \ud83d\udc08'
-                  },
-                  {
-                    'text': 'Guest List \ud83d\udcc4'
-                  },
-                ]
-              ],
-              resize_keyboard: true
-            });
-          } else if (req.body.message.text == 'Achievements \ud83c\udf87') {
-            b.sendKeyboard(req.body.message.chat.id, "Welcome To Achievements", {
-              keyboard: [
-                [{
-                  'text': 'Bad \ud83d\udc4e'
-                }, ]
-              ],
-              resize_keyboard: true
-            });
-          } else if (req.body.message.text == 'Guest List \ud83d\udcc4') {
-            b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest: " + ship.guests, keyboards.home);
-          } else if (req.body.message.text == 'Port \ud83d\udea2') {
-            console.log("log here");
-            b.exportChatInviteLink('-1001399879250').then(function(link) {
-              console.log(link);
-              b.sendMessage(req.body.message.chat.id, link);
-            });
-          }
-        }
-        res.sendStatus(200);
-      })
   } else {
-    console.log("here");
-    Port.findOne({
-        id: req.body.message.chat.id
-      })
-      .then(function(port) {
+    if (parseInt(req.body.message.chat.id) > 0) {
+      Ship.findOne({
+          id: req.body.message.chat.id
+        })
+        .then(function(ship) {
+          console.log(ship);
+          if (!ship) {
+            var newShip = new Ship({
+              id: req.body.message.chat.id,
+              user: {
+                id: req.body.message.from.id,
+                first_name: req.body.message.from.first_name,
+                last_name: req.body.message.from.last_name,
+                username: req.body.message.from.username,
+              }
+            });
+            newShip.save();
+          } else {
+            if (req.body.message.text == "/start") {
+              //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
+              b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
+            } else if (req.body.message.text == "/addGuest") {
+              var newGuest = guest.pick()
+              ship.guests.push({
+                type: newGuest
+              });
+              ship.save();
+              b.sendKeyboard(req.body.message.chat.id, newGuest, keyboards.home);
+            } else if (req.body.message.text == "/removeGuest") {
+              var removedGuest = ship.guests.pop();
+              ship.save();
+              b.sendKeyboard(req.body.message.chat.id, removedGuest, keyboards.home);
+            } else if (req.body.message.text == 'Ports') {
+              b.sendKeyboard(req.body.message.chat.id, "Which Continent?", keyboards.ports);
+              console.log(keyboards.ports);
+            } else if (req.body.message.text == 'Same Continent') {
+              Port.find({
+                "location.sector": ship.location.sector
+              }).then(function(ports) {
+                sendAvailablePorts(req.body.message.chat.id, ports, ship);
+              })
+            } else if (req.body.message.text == 'The City \ud83c\udf06') {
+              b.sendKeyboard(req.body.message.chat.id, "Welcome To The City", {
+                keyboard: [
+                  [{
+                    'text': 'Good \ud83d\udc4d'
+                  }, ]
+                ],
+                resize_keyboard: true
+              });
+            } else if (req.body.message.text == 'Cocktail Lounge \ud83c\udf78') {
+              b.sendKeyboard(req.body.message.chat.id, "Welcome To The Cocktail Lounge", {
+                keyboard: [
+                  [{
+                      'text': 'Cat \ud83d\udc08'
+                    },
+                    {
+                      'text': 'Guest List \ud83d\udcc4'
+                    },
+                  ]
+                ],
+                resize_keyboard: true
+              });
+            } else if (req.body.message.text == 'Achievements \ud83c\udf87') {
+              b.sendKeyboard(req.body.message.chat.id, "Welcome To Achievements", {
+                keyboard: [
+                  [{
+                    'text': 'Bad \ud83d\udc4e'
+                  }, ]
+                ],
+                resize_keyboard: true
+              });
+            } else if (req.body.message.text == 'Guest List \ud83d\udcc4') {
+              b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest: " + ship.guests, keyboards.home);
+            } else if (req.body.message.text == 'Port \ud83d\udea2') {
+              console.log("log here");
+              b.exportChatInviteLink('-1001399879250').then(function(link) {
+                console.log(link);
+                b.sendMessage(req.body.message.chat.id, link);
+              });
+            }
+          }
+          res.sendStatus(200);
+        })
+    } else {
+      console.log("here");
+      Port.findOne({
+          id: req.body.message.chat.id
+        })
+        .then(function(port) {
           console.log(port);
           if (!port) {
-            b.getChat(req.body.message.chat.id).then(function(chat){
+            b.getChat(req.body.message.chat.id).then(function(chat) {
               console.log(chat);
               var newPort = new Port({
                 id: req.body.message.chat.id,
@@ -202,14 +204,13 @@ if (req.body.callback_query) {
               b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
             } else if (req.body.message.text == "/kick") {
               //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
-              b.kick(req.body.message.chat.id,req.body.message.from.id,1);
+              b.kick(req.body.message.chat.id, req.body.message.from.id, 1);
               Ship.findOne({
                 "user.id": req.body.message.from.id
               }).then(function(ship) {
-                b.sendMessage(ship.id,"You've been kicked from " + port.name)
+                b.sendMessage(ship.id, "You've been kicked from " + port.name)
               })
-            }
-            else if (req.body.message.new_chat_participant) {
+            } else if (req.body.message.new_chat_participant) {
               Ship.findOne({
                 "user.id": req.body.message.new_chat_participant.id
               }).then(function(ship) {
@@ -226,18 +227,18 @@ if (req.body.callback_query) {
                 })
                 port.save()
               })
-            }else {
+            } else {
               Ship.findOne({
                 "user.id": req.body.message.from.id
               }).then(function(ship) {
-                var found=false;
-                for (var i in port.ships){
-                  if (port.ships[i] == ship._id){
-                    found=true;
+                var found = false;
+                for (var i in port.ships) {
+                  if (port.ships[i] == ship._id) {
+                    found = true;
                     break;
                   }
                 }
-                if (!found){
+                if (!found) {
                   port.ships.push(ship._id)
                   port.save()
                 }
@@ -250,12 +251,12 @@ if (req.body.callback_query) {
 
           }
         });
-        res.sendStatus(200);
-      }
+      res.sendStatus(200);
+    }
 
 
 
-
+  }
 
 });
 
@@ -266,49 +267,49 @@ router.get('/', function(req, res, next) {
     message: 'get ok'
   });
 });
-b.sendKeyboard('510423667', 'Server Restarted',keyboards.home);
+b.sendKeyboard('510423667', 'Server Restarted', keyboards.home);
 
 module.exports = router;
 
-function calculateDistance(portLocation, shipLocation){
-  if (portLocation.sector===shipLocation.sector){
-    var distance= Math.abs(portLocation.x-shipLocation.x)+Math.abs(portLocation.y-shipLocation.y);
-    return distance?distance*12:6;
+function calculateDistance(portLocation, shipLocation) {
+  if (portLocation.sector === shipLocation.sector) {
+    var distance = Math.abs(portLocation.x - shipLocation.x) + Math.abs(portLocation.y - shipLocation.y);
+    return distance ? distance * 12 : 6;
   } else {
-    var portSector={
-      x:portLocation.sector % HSECTORS,
-      y:Math.floor(portLocation.sector / VSECTORS)
+    var portSector = {
+      x: portLocation.sector % HSECTORS,
+      y: Math.floor(portLocation.sector / VSECTORS)
     };
-    var shipSector={
-      x:shipLocation.sector % HSECTORS,
-      y:Math.floor(shipLocation.sector / VSECTORS)
+    var shipSector = {
+      x: shipLocation.sector % HSECTORS,
+      y: Math.floor(shipLocation.sector / VSECTORS)
     };
-    var x = Math.abs(portSector.x-shipSector.x)>HSECTORS-Math.abs(portSector.x-shipSector.x)?HSECTORS-Math.abs(portSector.x-shipSector.x):Math.abs(portSector.x-shipSector.x);
-    var y = Math.abs(portSector.y-shipSector.y)>VSECTORS-Math.abs(portSector.y-shipSector.y)?VSECTORS-Math.abs(portSector.y-shipSector.y):Math.abs(portSector.y-shipSector.y);
-    return (x+y)*24;
+    var x = Math.abs(portSector.x - shipSector.x) > HSECTORS - Math.abs(portSector.x - shipSector.x) ? HSECTORS - Math.abs(portSector.x - shipSector.x) : Math.abs(portSector.x - shipSector.x);
+    var y = Math.abs(portSector.y - shipSector.y) > VSECTORS - Math.abs(portSector.y - shipSector.y) ? VSECTORS - Math.abs(portSector.y - shipSector.y) : Math.abs(portSector.y - shipSector.y);
+    return (x + y) * 24;
   }
 }
 
 function sendAvailablePorts(chat_id, ports, ship) {
-b.sendMessage(chat_id, ports.reduce(function(message, port){
-  message += '<b>' + port.name + "</b>\n";
-  message += "Distance to port <b>" + calculateDistance(port.location, ship.location) + "</b> hours\n"
-  message += "Ships in port <b>" + port.ships.length + "</b>\n\n"
-  return message;
-}, ''));
-setTimeout(function(){
-  b.sendKeyboard(chat_id, "Navigate to:", {
-    inline_keyboard: [ports.map(function(port){
-      return {
-        'text':port.name,
-        'callback_data': JSON.stringify({
-          action:"navigate",
-          port:port.id,
-          ship:ship.id,
-        })
-      }
-    })]
-  });
-}, 1000)
+  b.sendMessage(chat_id, ports.reduce(function(message, port) {
+    message += '<b>' + port.name + "</b>\n";
+    message += "Distance to port <b>" + calculateDistance(port.location, ship.location) + "</b> hours\n"
+    message += "Ships in port <b>" + port.ships.length + "</b>\n\n"
+    return message;
+  }, ''));
+  setTimeout(function() {
+    b.sendKeyboard(chat_id, "Navigate to:", {
+      inline_keyboard: [ports.map(function(port) {
+        return {
+          'text': port.name,
+          'callback_data': JSON.stringify({
+            action: "navigate",
+            port: port.id,
+            ship: ship.id,
+          })
+        }
+      })]
+    });
+  }, 1000)
 
 }
