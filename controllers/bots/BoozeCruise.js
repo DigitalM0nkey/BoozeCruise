@@ -96,14 +96,18 @@ router.post('/', function(req, res, next) {
         if (parseInt(req.body.callback_query.from.id) > 0) {} else {}
         var data = JSON.parse(req.body.callback_query.data);
         if (data.action === 'navigate') {
-          var arrival = new Date();
-          arrival = arrival.setTime(arrival.getTime() + data.distance * 60 * 60 * 1000)
-          ship.nextLocation = {
-            arrival: arrival,
-            port: data.port,
-          }
-          ship.save();
-          console.log(data);
+          Port.findOne({id: data.port})
+          .then(function(port){
+
+            var arrival = new Date();
+            arrival = arrival.setTime(arrival.getTime() + calculateDistance(port.location, ship.location) * 60 * 60 * 1000)
+            ship.nextLocation = {
+              arrival: arrival,
+              port: data.port,
+            }
+            ship.save();
+            console.log(data);
+          })
         } else if (data.action === 'navigate_sector') {
           Port.find({
               "location.sector": data.sector
@@ -356,7 +360,6 @@ function sendAvailablePorts(chat_id, ports, ship) {
         'text': port.name,
         'callback_data': JSON.stringify({
           action: "navigate",
-          distance: calculateDistance(port.location, ship.location),
           port: port.id,
           ship: ship.id,
         })
