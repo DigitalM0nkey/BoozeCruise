@@ -161,7 +161,7 @@ router.post('/', function(req, res, next) {
                 }
                 b.sendMessage(req.body.message.chat.id, message);
                 setTimeout(function(){
-                  b.sendKeyboard(chat_id, "Navigate to:", {
+                  b.sendKeyboard(req.body.message.chat.id, "Navigate to:", {
                     inline_keyboard: [Object.keys(sectors).map(function(sector) {
                       return {
                         'text': sector,
