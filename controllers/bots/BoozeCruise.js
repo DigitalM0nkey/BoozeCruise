@@ -4,8 +4,8 @@ var config = require('../../config');
 var TelegramBot = require('../../bots/telegram');
 var keyboards = require('../../constants/keyboards')
 var TOKEN = config.tokens.telegram.BoozeCruise;
-var NUMOFSECTORS = 3;
-var SIZEOFSECTOR = 2;
+var HSECTORS = 3;
+var VSECTORS = 2;
 var Port = require('../../models/port');
 var Ship = require('../../models/ship');
 var guest = require('../../types/guest');
@@ -64,8 +64,8 @@ var events = [{
     keyboard: keyboards.home
   },
   {
-    name: "Man Over Board",
-    description: "Turn the ship around because someone just fell overboard",
+    name: "Booze Cruise Update #1",
+    description: "Have you noticed anything different with Booze Cruise? Probly not ",
     keyboard: keyboards.home
   },
 ];
@@ -126,9 +126,7 @@ router.post('/', function(req, res, next) {
             Port.find({
               "location.sector": ship.location.sector
             }).then(function(ports){
-              b.sendKeyboard(req.body.message.chat.id, "Available Ports", {
-                inline_keyboard: makeInlineKeyboard(ports, ship),
-              });
+              sendAvailablePorts(req.body.message.chat.id, ports, ship);
             })
           } else if (req.body.message.text == 'The City \ud83c\udf06') {
             b.sendKeyboard(req.body.message.chat.id, "Welcome To The City", {
@@ -266,24 +264,43 @@ module.exports = router;
 
 function calculateDistance(portLocation, shipLocation){
   if (portLocation.sector===shipLocation.sector){
-    return Math.abs(portLocation.x-shipLocation.x)+Math.abs(portLocation.y-shipLocation.y)
+    var distance= Math.abs(portLocation.x-shipLocation.x)+Math.abs(portLocation.y-shipLocation.y);
+    return distance?distance*12:6;
+  } else {
+    var portSector={
+      x:portLocation.sector % HSECTORS,
+      y:Math.floor(portLocation.sector / VSECTORS)
+    };
+    var shipSector={
+      x:shipLocation.sector % HSECTORS,
+      y:Math.floor(shipLocation.sector / VSECTORS)
+    };
+    var x = Math.abs(portSector.x-shipSector.x)>HSECTORS-Math.abs(portSector.x-shipSector.x)?HSECTORS-Math.abs(portSector.x-shipSector.x):Math.abs(portSector.x-shipSector.x);
+    var y = Math.abs(portSector.y-shipSector.y)>VSECTORS-Math.abs(portSector.y-shipSector.y)?VSECTORS-Math.abs(portSector.y-shipSector.y):Math.abs(portSector.y-shipSector.y);
+    return (x+y)*24;
   }
 }
 
-function makeInlineKeyboard(ports, ship) {
-
-    var keyboard = ports.map(function(port){
-      var message = port.name + "\n";
-      message += "Ships in port (" + port.ships.length + ")\n"
-      message += "Distance to port (" + calculateDistance(port.location, ship.location) + ") days"
+function sendAvailablePorts(chat_id, ports, ship) {
+b.sendMessage(chat_id, ports.map(function(port){
+  var message = port.name + "\n";
+  message += "Ships in port (" + port.ships.length + ")\n"
+  message += "Distance to port (" + calculateDistance(port.location, ship.location) + ") hours"
+  return message;
+}
+}));
+setTimeout(function(){  
+  b.sendKeyboard(chat_id, "Available Ports", {
+    inline_keyboard: [ports.map(function(port){
       return {
-        'text':message,
+        'text':port.name,
         'callback_data': JSON.stringify({
           port:port.id,
           ship:ship.id,
         })
       }
-    })
-    console.log(keyboard);
-    return [keyboard];
+    })]
+  });
+}, 1000)
+
 }

@@ -4,6 +4,10 @@ module.exports = function() {
 
   bot.lastMsgId = 69;
 
+  bot.notifyAdmin=function(message){
+  bot.sendMessage('510423667', message);
+}
+
   bot.init = function(TOKEN) {
     bot.token = TOKEN;
     return new Promise(function (resolve, reject) {
