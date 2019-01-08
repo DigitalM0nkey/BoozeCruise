@@ -97,7 +97,7 @@ router.post('/', function(req, res, next) {
       Port.find({"location.sector":data.sector})
       .then(function(ports){
 
-          sendAvailablePorts(req.body.message.chat.id, ports, req.body.callback_query.from.id);
+          sendAvailablePorts(req.body.callback_query.from.id, ports, req.body.callback_query.from.id);
       })
 
     }
