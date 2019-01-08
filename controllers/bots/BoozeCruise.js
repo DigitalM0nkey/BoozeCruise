@@ -287,9 +287,8 @@ b.sendMessage(chat_id, ports.map(function(port){
   message += "Ships in port (" + port.ships.length + ")\n"
   message += "Distance to port (" + calculateDistance(port.location, ship.location) + ") hours"
   return message;
-}
 }));
-setTimeout(function(){  
+setTimeout(function(){
   b.sendKeyboard(chat_id, "Available Ports", {
     inline_keyboard: [ports.map(function(port){
       return {
