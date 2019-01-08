@@ -94,11 +94,18 @@ router.post('/', function(req, res, next) {
     if (data.action === 'navigate') {
       console.log(data);
     } else if (data.action === 'navigate_sector') {
-      Port.find({"location.sector":data.sector})
-      .then(function(ports){
+      Port.find({
+          "location.sector": data.sector
+        })
+        .then(function(ports) {
+          Ship.findOne({
+              id: req.body.callback_query.from.id
+            })
+            .then(function(ship) {
+              sendAvailablePorts(req.body.callback_query.from.id, ports, ship);
+            });
 
-          sendAvailablePorts(req.body.callback_query.from.id, ports, req.body.callback_query.from.id);
-      })
+        })
 
     }
     return res.sendStatus(200);
@@ -147,20 +154,22 @@ router.post('/', function(req, res, next) {
               })
             } else if (req.body.message.text == 'Change Continent') {
               Port.find({
-                "location.sector": { $ne: ship.location.sector }
+                "location.sector": {
+                  $ne: ship.location.sector
+                }
               }).then(function(ports) {
                 var sectors = {};
-                ports.forEach(function(port, i, array){
+                ports.forEach(function(port, i, array) {
                   if (!sectors[port.location.sector]) sectors[port.location.sector] = '';
                   sectors[port.location.sector] += port.name + ', ';
                 });
-                var message="";
+                var message = "";
                 for (var i in sectors) {
-                  sectors[i] = sectors[i].substring(0, sectors[i].length-2)
+                  sectors[i] = sectors[i].substring(0, sectors[i].length - 2)
                   message += i + ': ' + sectors[i] + '\n';
                 }
                 b.sendMessage(req.body.message.chat.id, message);
-                setTimeout(function(){
+                setTimeout(function() {
                   b.sendKeyboard(req.body.message.chat.id, "Navigate to:", {
                     inline_keyboard: [Object.keys(sectors).map(function(sector) {
                       return {
@@ -172,7 +181,7 @@ router.post('/', function(req, res, next) {
                       }
                     })]
                   });
-                },1000)
+                }, 1000)
               })
 
             } else if (req.body.message.text == 'The City \ud83c\udf06') {
