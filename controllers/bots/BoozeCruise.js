@@ -144,12 +144,13 @@ router.post('/', function(req, res, next) {
               }).then(function(ports) {
                 var sectors = {};
                 ports.forEach(function(port, i, array){
-                  if (!sectors[port.location.sector]) sectors[port.location.sector] = '\n';
-                  sectors[port.location.sector] += port.name + (i === array.length - 1 ? '' : ', ');
+                  if (!sectors[port.location.sector]) sectors[port.location.sector] = '';
+                  sectors[port.location.sector] += port.name + ', ';
                 });
                 var message="";
                 for (var i in sectors) {
-                  message += i + ': ' + sectors[i];
+                  sectors[i] = sectors[i].substring(0, sectors[i].length-2)
+                  message += i + ': ' + sectors[i] + '\n';
                 }
                 b.sendMessage(req.body.message.chat.id, message);
               })
