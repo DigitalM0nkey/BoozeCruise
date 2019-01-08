@@ -105,7 +105,15 @@ router.post('/', function(req, res, next) {
           });
           newShip.save();
         } else {
-          if (req.body.message.text == "/start") {
+
+if (req.body.callback_query) {
+    var data = JSON.parse(req.body.callback_query.data);
+    if (data.action === 'navigate') {
+      console.log(data);
+    }
+    return res.sendStatus(200);
+
+  } else if (req.body.message.text == "/start") {
             //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
             b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
           } else if (req.body.message.text == "/addGuest") {
@@ -282,18 +290,19 @@ function calculateDistance(portLocation, shipLocation){
 }
 
 function sendAvailablePorts(chat_id, ports, ship) {
-b.sendMessage(chat_id, ports.map(function(port){
-  var message = '<b>' + port.name + "</b>\n";
-  message += "Distance to port (<b>" + calculateDistance(port.location, ship.location) + "</b>) hours\n"
-  message += "Ships in port (<b>" + port.ships.length + "</b>)\n\n"
+b.sendMessage(chat_id, ports.reduce(function(message, port){
+  message += '<b>' + port.name + "</b>\n";
+  message += "Distance to port <b>" + calculateDistance(port.location, ship.location) + "</b> hours\n"
+  message += "Ships in port <b>" + port.ships.length + "</b>\n\n"
   return message;
-}));
+}, ''));
 setTimeout(function(){
   b.sendKeyboard(chat_id, "Navigate to:", {
     inline_keyboard: [ports.map(function(port){
       return {
         'text':port.name,
         'callback_data': JSON.stringify({
+          action:"navigate",
           port:port.id,
           ship:ship.id,
         })
