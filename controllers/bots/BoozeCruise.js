@@ -93,6 +93,13 @@ router.post('/', function(req, res, next) {
     var data = JSON.parse(req.body.callback_query.data);
     if (data.action === 'navigate') {
       console.log(data);
+    } else if (data.action === 'navigate_sector') {
+      Port.find({"location.sector":data.sector})
+      .then(function(ports){
+
+          sendAvailablePorts(req.body.message.chat.id, ports, req.body.callback_query.from.id);
+      })
+
     }
     return res.sendStatus(200);
 
@@ -153,7 +160,21 @@ router.post('/', function(req, res, next) {
                   message += i + ': ' + sectors[i] + '\n';
                 }
                 b.sendMessage(req.body.message.chat.id, message);
+                setTimeout(function(){
+                  b.sendKeyboard(chat_id, "Navigate to:", {
+                    inline_keyboard: [Object.keys(sectors).map(function(sector) {
+                      return {
+                        'text': sector,
+                        'callback_data': JSON.stringify({
+                          action: "navigate_sector",
+                          sector: sector,
+                        })
+                      }
+                    })]
+                  });
+                },1000)
               })
+
             } else if (req.body.message.text == 'The City \ud83c\udf06') {
               b.sendKeyboard(req.body.message.chat.id, "Welcome To The City", {
                 keyboard: [
