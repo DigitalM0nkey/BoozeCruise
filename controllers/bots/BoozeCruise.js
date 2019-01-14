@@ -144,9 +144,9 @@ router.post('/', function(req, res, next) {
               //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
               b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
             } else if (req.body.message.text == "\u2630 Main Menu \u2630") {
-              b.sendKeyboard(req.body.message.chat.id, "Main Menu", keyboards.home);
+              b.sendKeyboard(req.body.message.chat.id, "\u2630 Main Menu \u2630", keyboards.home);
             } else if (req.body.message.text == "\ud83d\uddfa Navigation \ud83d\uddfa") {
-              b.sendKeyboard(req.body.message.chat.id, "This is the ships bridge, from here you can control where your ship will head to next", keyboards.navigation);
+              b.sendKeyboard(req.body.message.chat.id, "This is the ships bridge. From here you can control where your ship will head to next.", keyboards.navigation);
             } else if (req.body.message.text == "/addGuest") {
               var newGuest = guest.pick()
               ship.guests.push({
@@ -158,7 +158,7 @@ router.post('/', function(req, res, next) {
               var removedGuest = ship.guests.pop();
               ship.save();
               b.sendKeyboard(req.body.message.chat.id, removedGuest, keyboards.home);
-            } else if (req.body.message.text == 'Ports') {
+            } else if (req.body.message.text == '\ud83c\udfdd Ports of Call \ud83c\udfdd') {
               b.sendKeyboard(req.body.message.chat.id, "Which Continent?", keyboards.ports);
               console.log(keyboards.ports);
             } else if (req.body.message.text == 'Same Continent') {
