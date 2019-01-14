@@ -183,7 +183,7 @@ router.post('/', function(req, res, next) {
                   sectors[i] = sectors[i].substring(0, sectors[i].length - 2)
                   message += i + ': ' + sectors[i] + '\n';
                 }
-                b.sendMessage(req.body.message.chat.id, message);
+                b.sendMessage(req.body.message.chat.id, 'test\n' + message);
                 setTimeout(function() {
                   b.sendKeyboard(req.body.message.chat.id, "Navigate to:", {
                     inline_keyboard: [Object.keys(sectors).map(function(sector) {
