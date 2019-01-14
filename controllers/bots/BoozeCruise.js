@@ -143,8 +143,10 @@ router.post('/', function(req, res, next) {
             if (req.body.message.text == "/start") {
               //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
               b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
-            } else if (req.body.message.text == "Return to Stateroom") {
-              b.sendKeyboard(req.body.message.chat.id, "This is your stateroom\nWhere would you like to go?", keyboards.home);
+            } else if (req.body.message.text == "\u2630 Main Menu \u2630") {
+              b.sendKeyboard(req.body.message.chat.id, "Main Menu", keyboards.home);
+            } else if (req.body.message.text == "\ud83d\uddfa Navigation \ud83d\uddfa") {
+              b.sendKeyboard(req.body.message.chat.id, "This is the ships bridge, from here you can control where your ship will head to next", keyboards.navigation);
             } else if (req.body.message.text == "/addGuest") {
               var newGuest = guest.pick()
               ship.guests.push({

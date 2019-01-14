@@ -1,7 +1,7 @@
 module.exports={  home: {
     keyboard: [
       [{
-        'text': '\ud83d\uddfa Navigation'
+        'text': '\ud83d\uddfa Navigation \ud83d\uddfa'
       },
       {
           'text': 'Cocktail Lounge \ud83c\udf78'
@@ -23,13 +23,13 @@ module.exports={  home: {
   navigation:{
   keyboard: [
     [{
-      'text': 'Home Port \ud83d\udea2'
+      'text': '\ud83d\udea2 Home Port \ud83d\udea2'
     }, ],
     [{
       'text': 'Ports'
     }, ],
     [{
-      'text': 'Main Menu'
+      'text': '\u2630 Main Menu \u2630'
     }, ]
   ],
   resize_keyboard: true
@@ -43,7 +43,7 @@ module.exports={  home: {
       'text': 'Deposit'
     }, ],
     [{
-      'text': 'Return to Stateroom'
+      'text': '\u2630 Main Menu \u2630'
     }, ]
   ],
   resize_keyboard: true
