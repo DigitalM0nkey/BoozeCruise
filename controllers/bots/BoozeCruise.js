@@ -201,21 +201,10 @@ router.post('/', function(req, res, next) {
 
             } else if (req.body.message.text == '\ud83d\udcb0 Purser \ud83d\udcb0') {
               b.sendKeyboard(req.body.message.chat.id, "A ship's purser is the person on a ship principally responsible for the handling of money on board.\n\nHow may I help you today?", keyboards.purser);
-            } else if (req.body.message.text == 'The City \ud83c\udf06') {
-              b.sendKeyboard(req.body.message.chat.id, "Welcome To The City", {
+            } else if (req.body.message.text == '\ud83d\udc65 Passenger Manifest \ud83d\udc65') {
+              b.sendKeyboard(req.body.message.chat.id, "\ud83d\udc65 Passenger Manifest \ud83d\udc65", {
                 keyboard: [
-                  [{
-                    'text': 'Good \ud83d\udc4d'
-                  }, ]
-                ],
-                resize_keyboard: true
-              });
-            } else if (req.body.message.text == 'Cocktail Lounge \ud83c\udf78') {
-              b.sendKeyboard(req.body.message.chat.id, "Welcome To The Cocktail Lounge", {
-                keyboard: [
-                  [{
-                      'text': 'Cat \ud83d\udc08'
-                    },
+                  [
                     {
                       'text': 'Guest List \ud83d\udcc4'
                     },

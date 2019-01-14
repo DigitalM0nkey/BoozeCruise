@@ -2,17 +2,16 @@ module.exports={  home: {
     keyboard: [
       [{
         'text': '\ud83d\uddfa Navigation \ud83d\uddfa'
-      },
-      {
-          'text': 'Cocktail Lounge \ud83c\udf78'
-        }],[
+      }],[
         {
-          'text': 'The City \ud83c\udf06'
+          'text': '\ud83d\udc65 Passenger Manifest \ud83d\udc65'
         },
         {
+          'text': '\ud83d\udc81 Crew Manifest \ud83d\udc81'
+        }],[
+        {
           'text': 'Achievements \ud83c\udf87'
-        }
-      ],[
+        }],[
         {
           'text': '\ud83d\udcb0 Purser \ud83d\udcb0'
         }
