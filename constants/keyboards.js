@@ -5,18 +5,12 @@ module.exports={  home: {
       },
       {
           'text': 'Cocktail Lounge \ud83c\udf78'
-        },
+        }],[
         {
           'text': 'The City \ud83c\udf06'
         },
         {
           'text': 'Achievements \ud83c\udf87'
-        }],[
-        {
-          'text': 'Home Port \ud83d\udea2'
-        },
-        {
-          'text': 'Ports'
         }
       ],[
         {
@@ -26,6 +20,20 @@ module.exports={  home: {
     ],
     resize_keyboard: true
   },
+  navigation:{
+  keyboard: [
+    [{
+      'text': 'Home Port \ud83d\udea2'
+    }, ],
+    [{
+      'text': 'Ports'
+    }, ],
+    [{
+      'text': 'Main Menu'
+    }, ]
+  ],
+  resize_keyboard: true
+},
   purser:{
   keyboard: [
     [{
