@@ -146,7 +146,7 @@ router.post('/', function(req, res, next) {
             } else if (req.body.message.text == "\u2630 Main Menu \u2630") {
               b.sendKeyboard(req.body.message.chat.id, "\u2630 Main Menu \u2630", keyboards.home);
             } else if (req.body.message.text == "\ud83d\uddfa Navigation \ud83d\uddfa") {
-              b.sendKeyboard(req.body.message.chat.id, "This is the ships bridge. From here you can control where your ship will head to next.", keyboards.navigation);
+              b.sendKeyboard(req.body.message.chat.id, "This is the ships bridge.\n\n From here you can control where your ship will head to next.", keyboards.navigation);
             } else if (req.body.message.text == "/addGuest") {
               var newGuest = guest.pick()
               ship.guests.push({
@@ -183,7 +183,7 @@ router.post('/', function(req, res, next) {
                   sectors[i] = sectors[i].substring(0, sectors[i].length - 2)
                   message += i + ': ' + sectors[i] + '\n';
                 }
-                b.sendMessage(req.body.message.chat.id, 'test\n' + message);
+                b.sendMessage(req.body.message.chat.id, 'Below (represented by a number) are the availble continents that you can travel to. Beside the continent # are the ports of call you can visit within that continent.\n\n' + message);
                 setTimeout(function() {
                   b.sendKeyboard(req.body.message.chat.id, "Navigate to:", {
                     inline_keyboard: [Object.keys(sectors).map(function(sector) {
