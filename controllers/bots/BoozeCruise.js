@@ -143,6 +143,8 @@ router.post('/', function(req, res, next) {
             if (req.body.message.text == "/start") {
               //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
               b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
+            } else if (req.body.message.text == "Stateroom") {
+              b.sendKeyboard(req.body.message.chat.id, "This is your stateroom\nWhere would you like to go?", keyboards.home);
             } else if (req.body.message.text == "/addGuest") {
               var newGuest = guest.pick()
               ship.guests.push({
@@ -195,6 +197,21 @@ router.post('/', function(req, res, next) {
                 }, 1000)
               })
 
+            } else if (req.body.message.text == '\ud83d\udcb0 Purser \ud83d\udcb0') {
+              b.sendKeyboard(req.body.message.chat.id, "A ship's purser is the person on a ship principally responsible for the handling of money on board./nHow may I help you today?", {
+                keyboard: [
+                  [{
+                    'text': 'Check Balence'
+                  }, ],
+                  [{
+                    'text': 'Deposit'
+                  }, ],
+                  [{
+                    'text': 'Stateroom'
+                  }, ]
+                ],
+                resize_keyboard: true
+              });
             } else if (req.body.message.text == 'The City \ud83c\udf06') {
               b.sendKeyboard(req.body.message.chat.id, "Welcome To The City", {
                 keyboard: [
