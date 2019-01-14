@@ -198,20 +198,7 @@ router.post('/', function(req, res, next) {
               })
 
             } else if (req.body.message.text == '\ud83d\udcb0 Purser \ud83d\udcb0') {
-              b.sendKeyboard(req.body.message.chat.id, "A ship's purser is the person on a ship principally responsible for the handling of money on board./nHow may I help you today?", {
-                keyboard: [
-                  [{
-                    'text': 'Check Balence'
-                  }, ],
-                  [{
-                    'text': 'Deposit'
-                  }, ],
-                  [{
-                    'text': 'Stateroom'
-                  }, ]
-                ],
-                resize_keyboard: true
-              });
+              b.sendKeyboard(req.body.message.chat.id, "A ship's purser is the person on a ship principally responsible for the handling of money on board.\n\nHow may I help you today?", keyboards.purser);
             } else if (req.body.message.text == 'The City \ud83c\udf06') {
               b.sendKeyboard(req.body.message.chat.id, "Welcome To The City", {
                 keyboard: [

@@ -23,6 +23,20 @@ module.exports={  home: {
     ],
     resize_keyboard: true
   },
+  purser:{
+  keyboard: [
+    [{
+      'text': 'Check Balence'
+    }, ],
+    [{
+      'text': 'Deposit'
+    }, ],
+    [{
+      'text': 'Stateroom'
+    }, ]
+  ],
+  resize_keyboard: true
+},
   event1: {
     keyboard: [
       [{
