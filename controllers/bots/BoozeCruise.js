@@ -143,7 +143,7 @@ router.post('/', function(req, res, next) {
             if (req.body.message.text == "/start") {
               //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
               b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
-            } else if (req.body.message.text == "Stateroom") {
+            } else if (req.body.message.text == "Return to Stateroom") {
               b.sendKeyboard(req.body.message.chat.id, "This is your stateroom\nWhere would you like to go?", keyboards.home);
             } else if (req.body.message.text == "/addGuest") {
               var newGuest = guest.pick()

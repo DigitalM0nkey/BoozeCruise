@@ -1,6 +1,9 @@
 module.exports={  home: {
     keyboard: [
       [{
+        'text': 'Navigation 	\u1F5FA'
+      },
+      {
           'text': 'Cocktail Lounge \ud83c\udf78'
         },
         {
@@ -32,7 +35,7 @@ module.exports={  home: {
       'text': 'Deposit'
     }, ],
     [{
-      'text': 'Stateroom'
+      'text': 'Return to Stateroom'
     }, ]
   ],
   resize_keyboard: true
