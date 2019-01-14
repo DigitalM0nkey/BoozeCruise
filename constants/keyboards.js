@@ -59,7 +59,10 @@ module.exports={  home: {
         {
           'text': 'Embarcation \ud83d\udea2'
         },
-      ]
+      ],
+      [{
+        'text': '\u2630 Main Menu \u2630'
+      }, ]
     ],
     resize_keyboard: true
   },
@@ -74,7 +77,10 @@ module.exports={  home: {
         {
           'text': 'rando3 \ud83c\udf87'
         },
-      ]
+      ],
+      [{
+        'text': '\u2630 Main Menu \u2630'
+      }, ]
     ],
     resize_keyboard: true
   },
@@ -89,7 +95,10 @@ module.exports={  home: {
         {
           'text': 'Achfgdgfdievements \ud83c\udf87'
         },
-      ]
+      ],
+      [{
+        'text': '\u2630 Main Menu \u2630'
+      }, ]
     ],
     resize_keyboard: true
   },
@@ -104,7 +113,10 @@ module.exports={  home: {
         {
           'text': 'rando4 \ud83c\udf87'
         },
-      ]
+      ],
+      [{
+        'text': '\u2630 Main Menu \u2630'
+      }, ]
     ],
     resize_keyboard: true
   },
@@ -116,7 +128,10 @@ module.exports={  home: {
         {
           'text': 'Change Continent'
         },
-      ]
+      ],
+      [{
+        'text': '\u2630 Main Menu \u2630'
+      }, ]
     ],
     resize_keyboard: true
   },
