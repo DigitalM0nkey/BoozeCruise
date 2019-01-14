@@ -1,7 +1,7 @@
 module.exports={  home: {
     keyboard: [
       [{
-        'text': 'Navigation 	\u1F5FA'
+        'text': 'Navigation \ud83d\uddfa'
       },
       {
           'text': 'Cocktail Lounge \ud83c\udf78'
