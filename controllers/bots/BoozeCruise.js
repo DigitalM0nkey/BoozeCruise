@@ -159,7 +159,7 @@ router.post('/', function(req, res, next) {
               ship.save();
               b.sendKeyboard(req.body.message.chat.id, removedGuest, keyboards.home);
             } else if (req.body.message.text == '\ud83c\udfdd Ports of Call \ud83c\udfdd') {
-              b.sendKeyboard(req.body.message.chat.id, "Which Continent?", keyboards.ports);
+              b.sendKeyboard(req.body.message.chat.id, "A port of call is an intermediate stop for a ship on its sailing itinerary\n\nWhere would you like to go?", keyboards.ports);
               console.log(keyboards.ports);
             } else if (req.body.message.text == 'Same Continent') {
               Port.find({
