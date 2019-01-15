@@ -152,7 +152,7 @@ router.post('/', function(req, res, next) {
               var newGuest = guest.pick()
               ship.guests.push({
                 type: newGuest
-              });\
+              });
               ship.save();
               b.sendKeyboard(req.body.message.chat.id, newGuest, keyboards.home);
             } else if (req.body.message.text == "/removeGuest") {
