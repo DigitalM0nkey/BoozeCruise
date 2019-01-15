@@ -8,6 +8,10 @@ var Port = db.model('Port', {
     type: String,
     required: false
   },
+  description: {
+    type: String,
+    required: false
+  },
   userid: {type: String, required: false},
   guests: [{
     type: {

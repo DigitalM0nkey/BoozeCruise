@@ -24,6 +24,13 @@ var Ship = db.model('Ship',{
       ref: "Port",
       required: false
     }
-  }
+  },
+  portHistory: [
+    {
+      type: String,
+      ref: "Port",
+      required: false
+    }
+  ]
 });
 module.exports = Ship;

@@ -23,6 +23,16 @@ console.log(guest.pick());
 //var dailyEvent = schedule.scheduleJob('30 * * * * *', function(){
 var dailyEvent = schedule.scheduleJob('0 0 8 * * *', function() {
   console.log('The answer to life, the universe, and everything!');
+  Port.find({})
+    .then(function(ports) {
+      ports.forEach(function(port) {
+        b.getChat(req.body.message.chat.id).then(function(chat) {
+          console.log(chat);
+          port.description = chat.description
+          port.save();
+        })
+      });
+    });
   var randomEvent = events[Math.floor(Math.random() * events.length)]
   Ship.find({})
     .then(function(ships) {
@@ -247,6 +257,7 @@ router.post('/', function(req, res, next) {
               var newPort = new Port({
                 id: req.body.message.chat.id,
                 name: chat.title,
+                description: chat.description
               });
               newPort.save();
             })
