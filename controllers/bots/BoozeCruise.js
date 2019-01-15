@@ -122,7 +122,7 @@ router.post('/', function(req, res, next) {
                 };
                 ship.portHistory.push(ship.location.port);
                 b.kick(ship.location.port, ship.id, 1);
-                delete ship.location.port;
+                ship.location.port = null;
                 ship.save();
                 console.log(data);
                 b.sendMessage(ship.id, "Your ship is now en route to " + port.name + "\nyou will arrive in " + calculateDistance(port.location, ship.location) + " hours")
