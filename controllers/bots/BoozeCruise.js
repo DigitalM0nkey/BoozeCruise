@@ -1,6 +1,7 @@
 var router = require('express').Router();
 var schedule = require('node-schedule');
 var config = require('../../config');
+var constants = require('../../constants');
 var TelegramBot = require('../../bots/telegram');
 var keyboards = require('../../constants/keyboards')
 var TOKEN = config.tokens.telegram.BoozeCruise;
@@ -146,12 +147,12 @@ router.post('/', function(req, res, next) {
             } else if (req.body.message.text == "\u2630 Main Menu \u2630") {
               b.sendKeyboard(req.body.message.chat.id, "\u2630 Main Menu \u2630", keyboards.home);
             } else if (req.body.message.text == "\ud83d\uddfa Navigation \ud83d\uddfa") {
-              b.sendKeyboard(req.body.message.chat.id, "This is the ships bridge.\n\n From here you can control which port of call you will visit next.", keyboards.navigation);
+              b.sendKeyboard(req.body.message.chat.id, "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.", keyboards.navigation);
             } else if (req.body.message.text == "/addGuest") {
               var newGuest = guest.pick()
               ship.guests.push({
                 type: newGuest
-              });
+              });\
               ship.save();
               b.sendKeyboard(req.body.message.chat.id, newGuest, keyboards.home);
             } else if (req.body.message.text == "/removeGuest") {
@@ -181,14 +182,14 @@ router.post('/', function(req, res, next) {
                 var message = "";
                 for (var i in sectors) {
                   sectors[i] = sectors[i].substring(0, sectors[i].length - 2)
-                  message += i + ': ' + sectors[i] + '\n';
+                  message += constants.sectors[i] + ': ' + sectors[i] + '\n';
                 }
-                b.sendMessage(req.body.message.chat.id, 'Below (represented by a number) are the availble continents that you can travel to. The ports of call that you can visit are listed beside the respective continent numbers.\n\n' + message);
+                b.sendMessage(req.body.message.chat.id, 'Below (represented by a number) are the available continents that you can travel to. The ports of call that you can visit are listed beside the respective continent numbers.\n\n' + message);
                 setTimeout(function() {
                   b.sendKeyboard(req.body.message.chat.id, "Which continent would you like to navigate to:", {
                     inline_keyboard: [Object.keys(sectors).map(function(sector) {
                       return {
-                        'text': sector,
+                        'text': constants.sectors[sector],
                         'callback_data': JSON.stringify({
                           action: "navigate_sector",
                           sector: sector,

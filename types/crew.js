@@ -7,15 +7,15 @@ crew.pick = function() {
     },
     {
       title:"Cruise Director",
-      crewStatus:""
+      crewStatus:"Officer"
     },
     {
       title:"Art Auctioneer",
-      crewStatus:""
+      crewStatus:"Staff"
     };
     {
       title: "Gift Shop Manager",
-      crewStatus:""
+      crewStatus:"Staff"
     },
     {
       title: "Gift Shop Attendent",
