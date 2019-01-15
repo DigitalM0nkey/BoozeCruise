@@ -111,7 +111,7 @@ router.post('/', function(req, res, next) {
               ships: ship.id
             })
             .then(function(currentPort) {
-
+console.log(currentPort);
               Port.findOne({
                   id: data.port
                 })
