@@ -375,7 +375,6 @@ function sendAvailablePorts(chat_id, ports, ship) {
           action: "navigate",
           port: port.id,
           ship: ship.id,
-          currentPort:
         })
       }
     })
