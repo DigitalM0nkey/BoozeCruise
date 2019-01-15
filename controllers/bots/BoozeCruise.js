@@ -42,7 +42,23 @@ var dailyEvent = schedule.scheduleJob('0 0 8 * * *', function() {
       });
     });
 });
+var minutelyEvent = schedule.scheduleJob('0 */1 * * * *', function() {
+  Ship.find({
+    'nextLocation.arrival': {
+      $lte: new Date()
+    }
+  }).populate('nextLocation.port').then(function(ships) {
+    ships.forEach(function(ship) {
+      b.exportChatInviteLink(ship.nextLocation.port.id).then(function(link) {
+      b.sendMessage(ship.id, 'This is the ' + ship.nextLocation.port.name + ' port authority \nUse this link to dock.\n' + link);
+      ship.location = ship.nextLocation.port.location;
+      ship.location.port = ship.nextLocation.port.id;
+      ship.nextLocation = undefined;
+      });
 
+    });
+  });
+})
 // Global Variables
 
 var events = [{
@@ -122,7 +138,7 @@ router.post('/', function(req, res, next) {
                 };
                 ship.portHistory.push(ship.location.port);
                 b.kick(ship.location.port, ship.id, 1);
-                ship.location.port = null;
+                ship.location.port = undefined;
                 ship.save();
                 console.log(data);
                 b.sendMessage(ship.id, "Your ship is now en route to " + port.name + "\nyou will arrive in " + calculateDistance(port.location, ship.location) + " hours")
@@ -313,7 +329,7 @@ router.post('/', function(req, res, next) {
                   port.save()
                 }
                 ship.location = port.location;
-                ship.location.port=port.id;
+                ship.location.port = port.id;
                 ship.save();
               })
 
