@@ -107,18 +107,27 @@ router.post('/', function(req, res, next) {
         if (parseInt(req.body.callback_query.from.id) > 0) {} else {}
         var data = JSON.parse(req.body.callback_query.data);
         if (data.action === 'navigate') {
-          Port.findOne({id: data.port})
-          .then(function(port){
+          Port.findOne({
+              ships: ship.id
+            })
+            .then(function(currentPort) {
 
-            var arrival = new Date();
-            arrival = arrival.setTime(arrival.getTime() + calculateDistance(port.location, ship.location) * 60 * 60 * 1000)
-            ship.nextLocation = {
-              arrival: arrival,
-              port: data.port,
-            }
-            ship.save();
-            console.log(data);
-          })
+              Port.findOne({
+                  id: data.port
+                })
+                .then(function(port) {
+
+                  var arrival = new Date();
+                  arrival = arrival.setTime(arrival.getTime() + calculateDistance(port.location, ship.location) * 60 * 60 * 1000)
+                  ship.nextLocation = {
+                    arrival: arrival,
+                    port: data.port,
+                  }
+                  ship.portHistory.push(currentPort.id)
+                  ship.save();
+                  console.log(data);
+                })
+            });
         } else if (data.action === 'navigate_sector') {
           Port.find({
               "location.sector": data.sector
@@ -215,11 +224,9 @@ router.post('/', function(req, res, next) {
             } else if (req.body.message.text == '\ud83d\udc65 Passenger Manifest \ud83d\udc65') {
               b.sendKeyboard(req.body.message.chat.id, "\ud83d\udc65 Passenger Manifest \ud83d\udc65", {
                 keyboard: [
-                  [
-                    {
-                      'text': 'Guest List \ud83d\udcc4'
-                    },
-                  ]
+                  [{
+                    'text': 'Guest List \ud83d\udcc4'
+                  }, ]
                 ],
                 resize_keyboard: true
               });
