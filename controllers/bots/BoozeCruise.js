@@ -187,15 +187,15 @@ router.post('/', function(req, res, next) {
                 b.sendMessage(req.body.message.chat.id, 'Below (represented by a number) are the available continents that you can travel to. The ports of call that you can visit are listed beside the respective continent numbers.\n\n' + message);
                 setTimeout(function() {
                   b.sendKeyboard(req.body.message.chat.id, "Which continent would you like to navigate to:", {
-                    inline_keyboard: [Object.keys(sectors).map(function(sector) {
-                      return {
+                    inline_keyboard: Object.keys(sectors).map(function(sector) {
+                      return [{
                         'text': constants.sectors[sector],
                         'callback_data': JSON.stringify({
                           action: "navigate_sector",
                           sector: sector,
                         })
-                      }
-                    })]
+                      }]
+                    })
                   });
                 }, 1000)
               })
