@@ -28,7 +28,7 @@ var dailyEvent = schedule.scheduleJob('0 0 8 * * *', function() {
   Port.find({})
     .then(function(ports) {
       ports.forEach(function(port) {
-        b.getChat(req.body.message.chat.id).then(function(chat) {
+        b.getChat(port.id).then(function(chat) {
           console.log(chat);
           port.description = chat.description
           port.save();
