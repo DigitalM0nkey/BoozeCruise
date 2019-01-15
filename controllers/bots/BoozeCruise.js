@@ -125,6 +125,7 @@ router.post('/', function(req, res, next) {
                 delete ship.location.port;
                 ship.save();
                 console.log(data);
+                b.sendMessage(ship.id, "Your ship is now en route to " + port.name + "\nyou will arrive in " + calculateDistance(port.location, ship.location) + " hours")
 
               })
           }
