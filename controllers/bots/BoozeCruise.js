@@ -52,7 +52,7 @@ var minutelyEvent = schedule.scheduleJob('0 */1 * * * *', function() {
     }).then(function(ships) {
       ships.forEach(function(ship) {
         var nextPort = _.find(ports, function(port) {
-          return port.id == ship.nextLocation;
+          return port.id == ship.nextLocation.port;
         })
         b.exportChatInviteLink(nextPort.id).then(function(link) {
           b.sendMessage(ship.id, 'This is the ' + nextPort.name + ' port authority \nUse this link to dock.\n' + link);
