@@ -15,6 +15,8 @@ var Ship = db.model('Ship',{
     sector: {type: Number, required: false},
     x: {type: Number, required: false},
     y: {type: Number, required: false},
+    port: {type: String,ref: "Port", required: false}
+
 
   },
   nextLocation: {
@@ -26,11 +28,7 @@ var Ship = db.model('Ship',{
     }
   },
   portHistory: [
-    {
-      type: String,
-      ref: "Port",
-      required: false
-    }
-  ]
+    {type: String,ref: "Port", required: false}
+  ],
 });
 module.exports = Ship;

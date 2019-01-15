@@ -7,6 +7,7 @@ var keyboards = require('../../constants/keyboards')
 var TOKEN = config.tokens.telegram.BoozeCruise;
 var HSECTORS = 3;
 var VSECTORS = 2;
+var myShip = '5be3d50298ae6843394411ee';
 var Port = require('../../models/port');
 var Ship = require('../../models/ship');
 var guest = require('../../types/guest');
@@ -107,27 +108,26 @@ router.post('/', function(req, res, next) {
         if (parseInt(req.body.callback_query.from.id) > 0) {} else {}
         var data = JSON.parse(req.body.callback_query.data);
         if (data.action === 'navigate') {
-          Port.findOne({
-              ships: req.body.callback_query.from.id
-            })
-            .then(function(currentPort) {
-console.log(currentPort);
-              Port.findOne({
-                  id: data.port
-                })
-                .then(function(port) {
+          if (ship.id != myShip) {
+            Port.findOne({
+                id: data.port
+              })
+              .then(function(port) {
 
-                  var arrival = new Date();
-                  arrival = arrival.setTime(arrival.getTime() + calculateDistance(port.location, ship.location) * 60 * 60 * 1000)
-                  ship.nextLocation = {
-                    arrival: arrival,
-                    port: data.port,
-                  }
-                  ship.portHistory.push(currentPort.id)
-                  ship.save();
-                  console.log(data);
-                })
-            });
+                var arrival = new Date();
+                arrival = arrival.setTime(arrival.getTime() + calculateDistance(port.location, ship.location) * 60 * 60 * 1000);
+                ship.nextLocation = {
+                  arrival: arrival,
+                  port: data.port,
+                };
+                ship.portHistory.push(ship.location.port);
+                b.kick(ship.location.port, ship.id, 1);
+                delete ship.location.port;
+                ship.save();
+                console.log(data);
+
+              })
+          }
         } else if (data.action === 'navigate_sector') {
           Port.find({
               "location.sector": data.sector
@@ -252,12 +252,10 @@ console.log(currentPort);
           res.sendStatus(200);
         })
     } else {
-      console.log("here");
       Port.findOne({
           id: req.body.message.chat.id
         })
         .then(function(port) {
-          console.log(port);
           if (!port) {
             b.getChat(req.body.message.chat.id).then(function(chat) {
               console.log(chat);
@@ -314,6 +312,7 @@ console.log(currentPort);
                   port.save()
                 }
                 ship.location = port.location;
+                ship.location.port=port.id;
                 ship.save();
               })
 
@@ -376,6 +375,7 @@ function sendAvailablePorts(chat_id, ports, ship) {
           action: "navigate",
           port: port.id,
           ship: ship.id,
+          currentPort:
         })
       }
     })
