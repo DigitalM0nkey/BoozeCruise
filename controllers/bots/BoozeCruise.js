@@ -108,7 +108,7 @@ router.post('/', function(req, res, next) {
         var data = JSON.parse(req.body.callback_query.data);
         if (data.action === 'navigate') {
           Port.findOne({
-              ships: {$elemMatch:{$in:[ship.id]}}
+              ships: {$elemMatch:ship.id}
             })
             .then(function(currentPort) {
 console.log(currentPort);
