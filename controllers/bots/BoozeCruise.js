@@ -72,22 +72,22 @@ var minutelyEvent = schedule.scheduleJob('0 */1 * * * *', function() {
 var events = [{
     name: "Embarcation / Debarcation Day",
     description: "<b>Your Cruise is over.</b> Your current Guests will disembark your ship this morning, bringing with them stories from their cruise, the happier they are, the more more likley they will cruise again and the more likley they will tell their friends to cruise. Guests that have had a negitive experence are not likley to cruise again and are more than likley to discourage future guests from cruising. Use the time that your ship has no guests, to clean it and prepare it for the next cruise, which departs tonight.",
-    keyboard: keyboards.event1
+    keyboard: keyboards.home
   },
   {
     name: "Deck Party",
     description: "It's party time.",
-    keyboard: keyboards.event2
+    keyboard: keyboards.home
   },
   {
     name: "Formal Night",
     description: "Put on your glad rags and do your hair because tonight is formal night. That means it steak and lobster in the main dining room and a las Vegas style show in the Show Lounge.",
-    keyboard: keyboards.event3
+    keyboard: keyboards.home
   },
   {
     name: "Sea Day",
     description: "<b>Look around.... Nothing but ocean.</b> That doesn't mean there is nothing to do, the Cruise Director has orginazed a bunch of activties for your guests to take part in. activties include: The Men's Hairy Chest Competition, BINGO, Scavenger Hunt, etc",
-    keyboard: keyboards.event4
+    keyboard: keyboards.home
   },
   {
     name: "Port Day",
@@ -388,6 +388,7 @@ function calculateDistance(portLocation, shipLocation) {
 function sendAvailablePorts(chat_id, ports, ship) {
   b.sendMessage(chat_id, ports.reduce(function(message, port) {
     message += '<b>' + port.name + "</b>\n";
+    message += port.description + "\n\n";
     message += "Distance to port <b>" + calculateDistance(port.location, ship.location) + "</b> hours\n"
     message += "Ships in port <b>" + port.ships.length + "</b>\n\n"
     return message;
