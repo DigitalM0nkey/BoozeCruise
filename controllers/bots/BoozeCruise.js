@@ -188,7 +188,11 @@ router.post('/', function(req, res, next) {
                 username: req.body.message.from.username,
               },
               location: {
-                homePort: randomPort,
+                sector: randomPort.sector,
+                x: randomPort.x,
+                y: randomPort.y,
+                port: randomPort.id,
+                homePort: randomPort.id,
               }
             });
             newShip.save();
