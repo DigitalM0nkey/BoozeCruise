@@ -22,6 +22,10 @@ b.init(TOKEN).then(function() {
 
 console.log(guest.pick());
 
+//TODO -- Add sector to new player.
+//TODO -- Add Home Port (Everyone has the same home port? everyone is assigined a random home port).
+//TODO -- When player chats(arrives?) in port, a meassage is sent to their ship. (Acheivement, stats, other ships in port)
+
 //var dailyEvent = schedule.scheduleJob('30 * * * * *', function(){
 var dailyEvent = schedule.scheduleJob('0 0 8 * * *', function() {
   console.log('The answer to life, the universe, and everything!');
@@ -174,6 +178,7 @@ router.post('/', function(req, res, next) {
         .then(function(ship) {
           console.log(ship);
           if (!ship) {
+            var randomPort = ports[Math.floor(Math.random() * ports.length)];
             var newShip = new Ship({
               id: req.body.message.chat.id,
               user: {
@@ -181,6 +186,9 @@ router.post('/', function(req, res, next) {
                 first_name: req.body.message.from.first_name,
                 last_name: req.body.message.from.last_name,
                 username: req.body.message.from.username,
+              },
+              location: {
+                homePort: randomPort,
               }
             });
             newShip.save();
@@ -246,6 +254,8 @@ router.post('/', function(req, res, next) {
 
             } else if (req.body.message.text == '\ud83d\udcb0 Purser \ud83d\udcb0') {
               b.sendKeyboard(req.body.message.chat.id, "A ship's purser is the person on a ship principally responsible for the handling of money on board.\n\nHow may I help you today?", keyboards.purser);
+            } else if (req.body.message.text == '\ud83d\udc65 Manifest \ud83d\udc65') {
+              b.sendKeyboard(req.body.message.chat.id, "A document giving comprehensive details of a ship and its cargo and other contents, passengers, and crew for the use of customs officers.", keyboards.manifest);
             } else if (req.body.message.text == '\ud83d\udc65 Passenger Manifest \ud83d\udc65') {
               b.sendKeyboard(req.body.message.chat.id, "\ud83d\udc65 Passenger Manifest \ud83d\udc65", {
                 keyboard: [

@@ -15,17 +15,12 @@ var Ship = db.model('Ship',{
     sector: {type: Number, required: false},
     x: {type: Number, required: false},
     y: {type: Number, required: false},
-    port: {type: String,ref: "Port", required: false}
-
-
+    port: {type: String,ref: "Port", required: false},
+    homePort: {type: String,ref: "Port", required: false}
   },
   nextLocation: {
     arrival: {type: Date, required: false},
-    port: {
-      type: String,
-      ref: "Port",
-      required: false
-    }
+    port: {type: String, ref: "Port", required: false}
   },
   portHistory: [
     {type: String,ref: "Port", required: false}

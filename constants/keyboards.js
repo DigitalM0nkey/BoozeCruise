@@ -4,10 +4,7 @@ module.exports={  home: {
         'text': '\ud83d\uddfa Navigation \ud83d\uddfa'
       }],[
         {
-          'text': '\ud83d\udc65 Passenger Manifest \ud83d\udc65'
-        },
-        {
-          'text': '\ud83d\udc81 Crew Manifest \ud83d\udc81'
+          'text': '\ud83d\udc65 Manifest \ud83d\udc65'
         }],[
         {
           'text': 'Achievements \ud83c\udf87'
@@ -19,6 +16,18 @@ module.exports={  home: {
     ],
     resize_keyboard: true
   },
+  manifest:{
+  keyboard: [
+  [
+    {
+      'text': '\ud83d\udc65 Passenger Manifest \ud83d\udc65'
+    },
+    {
+      'text': '\ud83d\udc81 Crew Manifest \ud83d\udc81'
+    }]
+  ],
+  resize_keyboard: true
+},
   navigation:{
   keyboard: [
     [{
