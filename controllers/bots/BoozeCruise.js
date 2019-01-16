@@ -228,7 +228,7 @@ router.post('/', function(req, res, next) {
                   sectors[i] = sectors[i].substring(0, sectors[i].length - 2)
                   message += constants.sectors[i] + ': ' + sectors[i] + '\n';
                 }
-                b.sendMessage(req.body.message.chat.id, 'Below (represented by a number) are the available continents that you can travel to. The ports of call that you can visit are listed beside the respective continent numbers.\n\n' + message);
+                b.sendMessage(req.body.message.chat.id, 'Below are the available continents that you can travel to. The ports of call that you can visit are listed beside the respective continents.\n\n' + message);
                 setTimeout(function() {
                   b.sendKeyboard(req.body.message.chat.id, "Which continent would you like to navigate to:", {
                     inline_keyboard: Object.keys(sectors).map(function(sector) {
@@ -282,16 +282,17 @@ router.post('/', function(req, res, next) {
         })
         .then(function(port) {
           if (!port) {
-            b.getChat(req.body.message.chat.id).then(function(chat) {
-              console.log(chat);
-              var newPort = new Port({
-                id: req.body.message.chat.id,
-                name: chat.title,
-                description: chat.description
-              });
-              newPort.save();
-            })
-
+            if (req.body.message.chat.id == myShip) {
+              b.getChat(req.body.message.chat.id).then(function(chat) {
+                console.log(chat);
+                var newPort = new Port({
+                  id: req.body.message.chat.id,
+                  name: chat.title,
+                  description: chat.description
+                });
+                newPort.save();
+              })
+            }
           } else {
             if (req.body.message.text == "/start") {
               //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
