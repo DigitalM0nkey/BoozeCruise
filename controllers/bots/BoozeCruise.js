@@ -208,6 +208,7 @@ router.post('/', function(req, res, next) {
               b.sendKeyboard(req.body.message.chat.id, "\u2630 Main Menu \u2630", keyboards.home);
             } else if (req.body.message.text == "\ud83d\uddfa Navigation \ud83d\uddfa") {
               console.log(ship);
+              var data = JSON.parse(req.body.callback_query.data);
               Port.findOne({
                 id: data.port
               }).then(function(port) {
