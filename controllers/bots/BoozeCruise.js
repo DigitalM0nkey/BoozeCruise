@@ -207,10 +207,11 @@ router.post('/', function(req, res, next) {
             } else if (req.body.message.text == "\u2630 Main Menu \u2630") {
               b.sendKeyboard(req.body.message.chat.id, "\u2630 Main Menu \u2630", keyboards.home);
             } else if (req.body.message.text == "\ud83d\uddfa Navigation \ud83d\uddfa") {
-              /* if (ship.nextLocation)
+              console.log(ship);
+               if (ship.nextLocation)
               {
                 b.sendKeyboard(ship.id, "Your ship is now en route to " + port.name + "\nyou will arrive in " + calculateDistance(port.location, ship.location) + " hours", keyboard.atSea);
-              } else { */
+              } else {
               b.sendKeyboard(req.body.message.chat.id, "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.", keyboards.navigation);
             } else if (req.body.message.text == "/addGuest") {
               var newGuest = guest.pick()
