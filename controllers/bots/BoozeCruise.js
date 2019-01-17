@@ -207,7 +207,8 @@ router.post('/', function(req, res, next) {
             } else if (req.body.message.text == "\u2630 Main Menu \u2630") {
               b.sendKeyboard(req.body.message.chat.id, "\u2630 Main Menu \u2630", keyboards.home);
             } else if (req.body.message.text == "\ud83d\uddfa Navigation \ud83d\uddfa") {
-              if (ship.nextlocation != undefined)
+              var date = new Date()
+              if (ship.nextlocation.arrival > date)
               {
                 b.sendKeyboard(ship.id, "Your ship is now en route to " + port.name + "\nyou will arrive in " + calculateDistance(port.location, ship.location) + " hours", keyboard.atSea);
               } else {
