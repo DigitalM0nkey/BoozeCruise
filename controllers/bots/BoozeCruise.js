@@ -189,7 +189,7 @@ router.post('/', function(req, res, next) {
                     username: req.body.message.from.username,
                   },
                   location: {
-                    sector: randomPort.sector,
+                    sector: randomPort.location.sector,
                     x: randomPort.location.x,
                     y: randomPort.location.y,
                     port: randomPort.id,
