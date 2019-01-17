@@ -1,64 +1,81 @@
-module.exports={  home: {
+module.exports = {
+  home: {
     keyboard: [
       [{
         'text': '\ud83d\uddfa Navigation \ud83d\uddfa'
-      }],[
-        {
-          'text': '\ud83d\udc65 Manifest \ud83d\udc65'
-        }],[
-        {
-          'text': '\ud83c\udf87 Achievements \ud83c\udf87'
-        }],[
-        {
-          'text': '\ud83d\udcb0 Purser \ud83d\udcb0'
-        }
-      ]
+      }],
+      [{
+        'text': '\ud83d\udc65 Manifest \ud83d\udc65'
+      }],
+      [{
+        'text': '\ud83c\udf87 Achievements \ud83c\udf87'
+      }],
+      [{
+        'text': '\ud83d\udcb0 Purser \ud83d\udcb0'
+      }]
     ],
     resize_keyboard: true
   },
-  manifest:{
-  keyboard: [
-  [
-    {
-      'text': '\ud83d\udc65 Passenger Manifest \ud83d\udc65'
-    },
-    {
-      'text': '\ud83d\udc81 Crew Manifest \ud83d\udc81'
-    }],
-    [{
-      'text': '\u2630 Main Menu \u2630'
-    }]
-  ],
-  resize_keyboard: true
-},
-  navigation:{
-  keyboard: [
-    [{
-      'text': '\ud83d\udea2 Home Port \ud83d\udea2'
-    }, ],
-    [{
-      'text': '\ud83c\udfdd Ports of Call \ud83c\udfdd'
-    }, ],
-    [{
-      'text': '\u2630 Main Menu \u2630'
-    }, ]
-  ],
-  resize_keyboard: true
-},
-  purser:{
-  keyboard: [
-    [{
-      'text': 'Check Balence'
-    }, ],
-    [{
-      'text': 'Deposit'
-    }, ],
-    [{
-      'text': '\u2630 Main Menu \u2630'
-    }, ]
-  ],
-  resize_keyboard: true
-},
+  manifest: {
+    keyboard: [
+      [{
+          'text': '\ud83d\udc65 Passenger Manifest \ud83d\udc65'
+        },
+        {
+          'text': '\ud83d\udc81 Crew Manifest \ud83d\udc81'
+        }
+      ],
+      [{
+        'text': '\u2630 Main Menu \u2630'
+      }]
+    ],
+    resize_keyboard: true
+  },
+  atSea: {
+    keyboard: [
+      [{
+        'text': '\ud83d\udccd Current Location \ud83d\udccd'
+      }, ],
+      [{
+        'text': '\ud83d\udea2 Home Port \ud83d\udea2'
+      }, ],
+      [{
+        'text': '\ud83c\udfdd Ports of Call \ud83c\udfdd'
+      }, ],
+      [{
+        'text': '\u2630 Main Menu \u2630'
+      }, ]
+    ],
+    resize_keyboard: true
+  },
+  navigation: {
+    keyboard: [
+      [{
+        'text': '\ud83d\udea2 Home Port \ud83d\udea2'
+      }, ],
+      [{
+        'text': '\ud83c\udfdd Ports of Call \ud83c\udfdd'
+      }, ],
+      [{
+        'text': '\u2630 Main Menu \u2630'
+      }, ]
+    ],
+    resize_keyboard: true
+  },
+  purser: {
+    keyboard: [
+      [{
+        'text': 'Check Balence'
+      }, ],
+      [{
+        'text': 'Deposit'
+      }, ],
+      [{
+        'text': '\u2630 Main Menu \u2630'
+      }, ]
+    ],
+    resize_keyboard: true
+  },
   event1: {
     keyboard: [
       [{
