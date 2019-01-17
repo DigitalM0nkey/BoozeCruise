@@ -176,26 +176,29 @@ router.post('/', function(req, res, next) {
           id: req.body.message.chat.id
         })
         .then(function(ship) {
-          console.log(ship);
           if (!ship) {
-            var randomPort = ports[Math.floor(Math.random() * ports.length)];
-            var newShip = new Ship({
-              id: req.body.message.chat.id,
-              user: {
-                id: req.body.message.from.id,
-                first_name: req.body.message.from.first_name,
-                last_name: req.body.message.from.last_name,
-                username: req.body.message.from.username,
-              },
-              location: {
-                sector: randomPort.sector,
-                x: randomPort.x,
-                y: randomPort.y,
-                port: randomPort.id,
-                homePort: randomPort.id,
-              }
-            });
-            newShip.save();
+            Port.find({})
+              .then(function(ports) {
+                var randomPort = ports[Math.floor(Math.random() * ports.length)];
+                var newShip = new Ship({
+                  id: req.body.message.chat.id,
+                  user: {
+                    id: req.body.message.from.id,
+                    first_name: req.body.message.from.first_name,
+                    last_name: req.body.message.from.last_name,
+                    username: req.body.message.from.username,
+                  },
+                  location: {
+                    sector: randomPort.sector,
+                    x: randomPort.x,
+                    y: randomPort.y,
+                    port: randomPort.id,
+                    homePort: randomPort.id,
+                  }
+                })
+                newShip.save();
+              });
+
           } else {
             if (req.body.message.text == "/start") {
               //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
