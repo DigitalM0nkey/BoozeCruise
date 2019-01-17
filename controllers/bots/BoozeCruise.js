@@ -190,8 +190,8 @@ router.post('/', function(req, res, next) {
                   },
                   location: {
                     sector: randomPort.sector,
-                    x: randomPort.x,
-                    y: randomPort.y,
+                    x: randomPort.location.x,
+                    y: randomPort.location.y,
                     port: randomPort.id,
                     homePort: randomPort.id,
                   }
