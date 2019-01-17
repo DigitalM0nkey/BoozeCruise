@@ -197,6 +197,7 @@ router.post('/', function(req, res, next) {
                   }
                 })
                 newShip.save();
+                console.log(randomPort);
               });
 
           } else {
