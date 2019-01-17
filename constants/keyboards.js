@@ -7,7 +7,7 @@ module.exports={  home: {
           'text': '\ud83d\udc65 Manifest \ud83d\udc65'
         }],[
         {
-          'text': 'Achievements \ud83c\udf87'
+          'text': '\ud83c\udf87 Achievements \ud83c\udf87'
         }],[
         {
           'text': '\ud83d\udcb0 Purser \ud83d\udcb0'
@@ -24,6 +24,9 @@ module.exports={  home: {
     },
     {
       'text': '\ud83d\udc81 Crew Manifest \ud83d\udc81'
+    }],
+    [{
+      'text': '\u2630 Main Menu \u2630'
     }]
   ],
   resize_keyboard: true

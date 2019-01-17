@@ -272,7 +272,7 @@ router.post('/', function(req, res, next) {
                 ],
                 resize_keyboard: true
               });
-            } else if (req.body.message.text == 'Achievements \ud83c\udf87') {
+            } else if (req.body.message.text == '\ud83c\udf87 Achievements \ud83c\udf87') {
               b.sendKeyboard(req.body.message.chat.id, "Welcome To Achievements", {
                 keyboard: [
                   [{
