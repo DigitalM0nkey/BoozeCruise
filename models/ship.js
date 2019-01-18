@@ -20,7 +20,8 @@ var Ship = db.model('Ship',{
   },
   nextLocation: {
     arrival: {type: Date, required: false},
-    port: {type: String, ref: "Port", required: false}
+    port: {type: String, ref: "Port", required: false},
+    portName: {type: String,ref: "Port", required: false}
   },
   portHistory: [
     {type: String,ref: "Port", required: false}
