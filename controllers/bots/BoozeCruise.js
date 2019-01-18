@@ -209,14 +209,10 @@ router.post('/', function(req, res, next) {
             } else if (req.body.message.text == "\ud83d\uddfa Navigation \ud83d\uddfa") {
               console.log(ship);
               Port.findOne({
-                id: ship.location.port
+                id: ship.location.port,
+                name: ship.nextLocation.portName
               }).then(function(port) {
                 if (ship.nextLocation) {
-
-                  var nextPort = _.find(ports, function(port) {
-                    return port.name == ship.nextLocation.portName;
-                  })
-
                   b.sendKeyboard(ship.id, "Your ship is currently en route to " + ship.nextLocation.portName /* + "\nyou will arrive in "  + calculateDistance(port.location, ship.nextLocation) + " hours"*/ , keyboards.atSea);
                 } else {
                   b.sendKeyboard(req.body.message.chat.id, "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.", keyboards.navigation);
