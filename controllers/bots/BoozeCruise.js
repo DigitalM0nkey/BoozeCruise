@@ -147,7 +147,7 @@ router.post('/', function(req, res, next) {
                 ship.nextLocation = {
                   arrival: arrival,
                   port: data.port,
-                  portName: data.portName
+                  portName: port.name
                 };
                 ship.portHistory.push(ship.location.port);
                 b.kick(ship.location.port, ship.id, 1);
