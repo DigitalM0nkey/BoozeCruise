@@ -58,9 +58,6 @@ var minutelyEvent = schedule.scheduleJob('0 */1 * * * *', function() {
         var nextPort = _.find(ports, function(port) {
           return port.id == ship.nextLocation.port;
         })
-        var nextPort = _.find(ports, function(port) {
-          return port.name == ship.nextLocation.portName;
-        })
         b.exportChatInviteLink(nextPort.id).then(function(link) {
           b.sendMessage(ship.id, 'This is the ' + nextPort.name + ' port authority \nUse this link to dock.\n' + link);
           ship.location = nextPort.location;
@@ -215,6 +212,11 @@ router.post('/', function(req, res, next) {
                 id: ship.location.port
               }).then(function(port) {
                 if (ship.nextLocation) {
+
+                  var nextPort = _.find(ports, function(port) {
+                    return port.name == ship.nextLocation.portName;
+                  })
+
                   b.sendKeyboard(ship.id, "Your ship is currently en route to " + ship.nextLocation.portName /* + "\nyou will arrive in "  + calculateDistance(port.location, ship.nextLocation) + " hours"*/ , keyboards.atSea);
                 } else {
                   b.sendKeyboard(req.body.message.chat.id, "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.", keyboards.navigation);
