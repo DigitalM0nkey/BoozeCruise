@@ -219,7 +219,7 @@ router.post('/', function(req, res, next) {
                   b.sendKeyboard(req.body.message.chat.id, "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.", keyboards.navigation);
                 }
               });
-            } else if (req.body.message.text == "/addGuest") {
+            } else if (req.body.message.text == "\ud83d\udccd Current Location \ud83d\udccd") {
               var newGuest = guest.pick()
               ship.guests.push({
                 type: newGuest
@@ -294,7 +294,7 @@ router.post('/', function(req, res, next) {
                 resize_keyboard: true
               });
             } else if (req.body.message.text == 'Guest List \ud83d\udcc4') {
-              b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest: " + ship.guests, keyboards.home);
+              b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest: " + ship.guests.type, keyboards.home);
             } else if (req.body.message.text == 'Port \ud83d\udea2') {
               console.log("log here");
               b.exportChatInviteLink('-1001399879250').then(function(link) {
