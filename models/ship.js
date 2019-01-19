@@ -8,9 +8,9 @@ var Ship = db.model('Ship',{
     last_name:{type: String, required: false},
     username:{type: String, required: false}
   },
-  guests: {
+  guests: {[
     type: {type: String, required: true},
-  },
+  }],
   location: {
     sector: {type: Number, required: false},
     x: {type: Number, required: false},
