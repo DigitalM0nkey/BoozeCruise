@@ -225,7 +225,7 @@ router.post('/', function(req, res, next) {
                 type: newGuest
               });
               ship.save();
-              b.sendKeyboard(req.body.message.chat.id, "A " + newGuest + " Just boarded your vessel", keyboards.home);
+              b.sendKeyboard(req.body.message.chat.id, "A " + newGuest + " just boarded your vessel", keyboards.home);
             } else if (req.body.message.text == "/removeGuest") {
               var removedGuest = ship.guests.pop();
               ship.save();
