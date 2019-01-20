@@ -172,7 +172,7 @@ router.post('/', function(req, res, next) {
       });
 
   } else {
-    if (parseInt(req.body.message.chat.id) > 0) {
+    if (parseInt(req.body.message.chat.id) ) {
       Ship.findOne({
           id: req.body.message.chat.id
         })
