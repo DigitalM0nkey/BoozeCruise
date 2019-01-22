@@ -102,12 +102,12 @@ var events = [/*{
     name: "Hurricane",
     description: "This is your Captin speaking.... Due to some severe weather patterns, we will unfortunately be skipping our next port of call.",
     keyboard: keyboards.home
-  },*/
+  },
   {
     name: "Thank You",
     description: "Thank you for testing my game and giving me feedback on things that need fixing. I will be adding a place that you can report theses bugs, so keep an eye out for that button.\nOne thing I have become aware of is these daily messages are not very useful right now and as a result get ignored, I will be pausing the until they become relevant, with the hope that important messages like an invitation to dock will not get lost in the mix. \n\nAs you know I am building this game with the help of Laurent so that I can learn to code better, and it is clearly starting to pay off, so, THANK YOU LAURENT!",
     keyboard: keyboards.home
-  },
+  },*/
 ];
 
 // Moves
