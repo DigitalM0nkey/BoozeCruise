@@ -39,6 +39,9 @@ var dailyEvent = schedule.scheduleJob('0 0 8 * * *', function() {
         })
       });
     });
+
+    /*  Send a random event every day
+
   var randomEvent = events[Math.floor(Math.random() * events.length)]
   Ship.find({})
     .then(function(ships) {
@@ -46,7 +49,10 @@ var dailyEvent = schedule.scheduleJob('0 0 8 * * *', function() {
         b.sendKeyboard(ship.id, '<b>' + randomEvent.name + '</b> - ' + randomEvent.description, randomEvent.keyboard)
       });
     });
+
+    */
 });
+
 var minutelyEvent = schedule.scheduleJob('0 */1 * * * *', function() {
   Port.find({}).then(function(ports) {
     Ship.find({
@@ -72,8 +78,8 @@ var minutelyEvent = schedule.scheduleJob('0 */1 * * * *', function() {
 
 })
 // Global Variables
-
-var events = [/*{
+/* Daily events list
+var events = [{
     name: "Embarcation / Debarcation Day",
     description: "<b>Your Cruise is over.</b> Your current Guests will disembark your ship this morning, bringing with them stories from their cruise, the happier they are, the more more likley they will cruise again and the more likley they will tell their friends to cruise. Guests that have had a negitive experence are not likley to cruise again and are more than likley to discourage future guests from cruising. Use the time that your ship has no guests, to clean it and prepare it for the next cruise, which departs tonight.",
     keyboard: keyboards.home
@@ -107,9 +113,10 @@ var events = [/*{
     name: "Thank You",
     description: "Thank you for testing my game and giving me feedback on things that need fixing. I will be adding a place that you can report theses bugs, so keep an eye out for that button.\nOne thing I have become aware of is these daily messages are not very useful right now and as a result get ignored, I will be pausing the until they become relevant, with the hope that important messages like an invitation to dock will not get lost in the mix. \n\nAs you know I am building this game with the help of Laurent so that I can learn to code better, and it is clearly starting to pay off, so, THANK YOU LAURENT!",
     keyboard: keyboards.home
-  },*/
+  },
 ];
 
+*/
 // Moves
 
 var moves = {
