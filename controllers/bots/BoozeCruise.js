@@ -225,13 +225,14 @@ router.post('/', function(req, res, next) {
                 Port.findOne({
                   id: ship.nextLocation.port
                 }).then(function(port) {
-                  b.sendMessage(ship.id, "Your ship is currently en route to " + port.name + "\nyou will arrive in " + calculateDistance(port.location, ship.nextLocation) + " hours")
-                  b.sendKeyboard(ship.id, "Options", keyboards.atSea);
+                  b.sendMessage(ship.id, "You will arrive in " + calculateDistance(port.location, ship.location) + " hours")
+                  b.sendKeyboard(ship.id, "Your ship is currently en route to " + port.name, keyboards.atSea);
                 });
               } else {
                 Port.findOne({
                   id: ship.location.port
                 }).then(function(port) {
+                  b.sendMessage(ship.id,"You are currently docked in " + port.name + "\n " + b.exportChatInviteLink(port.id))
                   b.sendKeyboard(req.body.message.chat.id, "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.", keyboards.navigation);
                 })
               }
