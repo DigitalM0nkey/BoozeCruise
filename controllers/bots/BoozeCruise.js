@@ -40,7 +40,7 @@ var dailyEvent = schedule.scheduleJob('0 0 8 * * *', function() {
       });
     });
 
-    /*  Send a random event every day
+  /*  Send a random event every day
 
   var randomEvent = events[Math.floor(Math.random() * events.length)]
   Ship.find({})
@@ -178,12 +178,12 @@ router.post('/', function(req, res, next) {
         return res.sendStatus(200);
       });
 
-  }  else if (req.body.edited_message || req.body.message.photo || req.body.message.game || req.body.message.emoji || req.body.message.voice || req.body.message.animation || req.body.message.sticker || req.body.message.reply_to_message) {
-      //Ignore these messages as they're just chat interactions
-      console.log('Ignoring this message:');
-      console.log(req.body);
-      return res.sendStatus(200);
-    } else {
+  } else if (req.body.edited_message || req.body.message.photo || req.body.message.game || req.body.message.emoji || req.body.message.voice || req.body.message.animation || req.body.message.sticker || req.body.message.reply_to_message) {
+    //Ignore these messages as they're just chat interactions
+    console.log('Ignoring this message:');
+    console.log(req.body);
+    return res.sendStatus(200);
+  } else {
     if (parseInt(req.body.message.chat.id) > 0) {
       Ship.findOne({
           id: req.body.message.chat.id
@@ -221,17 +221,20 @@ router.post('/', function(req, res, next) {
               b.sendKeyboard(req.body.message.chat.id, "\u2630 Main Menu \u2630", keyboards.home);
             } else if (req.body.message.text == "\ud83d\uddfa Navigation \ud83d\uddfa") {
               console.log(ship.nextLocation);
-                if (ship.nextLocation.portName) {
-                  Port.findOne({
-                    id: ship.location.port,
-                    name: ship.nextLocation.portName
-                  }).then(function(port) {
-                    b.sendMessage(ship.id, "Your ship is currently en route to " + ship.nextLocation.portName + "\nyou will arrive in "  + calculateDistance(port.location, ship.nextLocation) + " hours") 
-                    b.sendKeyboard(ship.id, "Options", keyboards.atSea);
-                  });
-                } else {
+              if (ship.nextLocation.port) {
+                Port.findOne({
+                  id: ship.nextLocation.port
+                }).then(function(port) {
+                  b.sendMessage(ship.id, "Your ship is currently en route to " + port.name + "\nyou will arrive in " + calculateDistance(port.location, ship.nextLocation) + " hours")
+                  b.sendKeyboard(ship.id, "Options", keyboards.atSea);
+                });
+              } else {
+                Port.findOne({
+                  id: ship.location.port
+                }).then(function(port) {
                   b.sendKeyboard(req.body.message.chat.id, "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.", keyboards.navigation);
-                }
+                })
+              }
             } else if (req.body.message.text == "\ud83d\udea2 Home Port \ud83d\udea2") {
               var newGuest = guest.pick()
               ship.guests.push({
@@ -310,16 +313,16 @@ router.post('/', function(req, res, next) {
               });
             } else if (req.body.message.text == 'Guest List \ud83d\udcc4') {
               var guestList = {};
-              ship.guests.forEach (function(guest){
+              ship.guests.forEach(function(guest) {
                 if (!guestList[guest.type]) {
-                  guestList[guest.type]=0;
+                  guestList[guest.type] = 0;
 
                 }
                 guestList[guest.type]++;
               });
               var message = '';
               for (var i in guestList) {
-                message += i + ": " +guestList[i]+"\n";
+                message += i + ": " + guestList[i] + "\n";
               }
               b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest:\n" + message, keyboards.home);
             } else if (req.body.message.text == 'Port \ud83d\udea2') {
