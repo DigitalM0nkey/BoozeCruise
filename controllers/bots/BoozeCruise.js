@@ -220,7 +220,7 @@ router.post('/', function(req, res, next) {
             } else if (req.body.message.text == "\u2630 Main Menu \u2630") {
               b.sendKeyboard(req.body.message.chat.id, "\u2630 Main Menu \u2630", keyboards.home);
             } else if (req.body.message.text == "\ud83d\uddfa Navigation \ud83d\uddfa") {
-              console.log(ship);
+              console.log(ship.nextLocation);
               Port.findOne({
                 id: ship.location.port,
                 name: ship.nextLocation.portName
