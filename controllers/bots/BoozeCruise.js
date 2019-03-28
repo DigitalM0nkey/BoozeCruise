@@ -221,16 +221,17 @@ router.post('/', function(req, res, next) {
               b.sendKeyboard(req.body.message.chat.id, "\u2630 Main Menu \u2630", keyboards.home);
             } else if (req.body.message.text == "\ud83d\uddfa Navigation \ud83d\uddfa") {
               console.log(ship.nextLocation);
-              Port.findOne({
-                id: ship.location.port,
-                name: ship.nextLocation.portName
-              }).then(function(port) {
-                if (ship.nextLocation) {
-                  b.sendKeyboard(ship.id, "Your ship is currently en route to " + ship.nextLocation.portName /*+ "\nyou will arrive in "  + calculateDistance(port.location, ship.nextLocation) + " hours"*/, keyboards.atSea);
+                if (ship.nextLocation.portName) {
+                  Port.findOne({
+                    id: ship.location.port,
+                    name: ship.nextLocation.portName
+                  }).then(function(port) {
+                    b.sendMessage(ship.id, "Your ship is currently en route to " + ship.nextLocation.portName + "\nyou will arrive in "  + calculateDistance(port.location, ship.nextLocation) + " hours") 
+                    b.sendKeyboard(ship.id, "Options", keyboards.atSea);
+                  });
                 } else {
                   b.sendKeyboard(req.body.message.chat.id, "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.", keyboards.navigation);
                 }
-              });
             } else if (req.body.message.text == "\ud83d\udea2 Home Port \ud83d\udea2") {
               var newGuest = guest.pick()
               ship.guests.push({
