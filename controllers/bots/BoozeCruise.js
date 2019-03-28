@@ -315,8 +315,12 @@ router.post('/', function(req, res, next) {
 
                 }
                 guestList[guest.type]++;
-              })
-              b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest: " + guestList, keyboards.home);
+              });
+              var message = '';
+              for (var i in guestList) {
+                message += i + ": " +guestList[i]+"\n";
+              }
+              b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest:\n" + message, keyboards.home);
             } else if (req.body.message.text == 'Port \ud83d\udea2') {
               console.log("log here");
               b.exportChatInviteLink('-1001399879250').then(function(link) {
