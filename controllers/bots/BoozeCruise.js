@@ -236,8 +236,7 @@ router.post('/', function(req, res, next) {
                     b.sendMessage(ship.id, "You are currently docked in " + port.name + "\n " + link)
                     b.sendKeyboard(req.body.message.chat.id, "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.", keyboards.navigation);
                   })
-
-                })
+                });
               }
             } else if (req.body.message.text == "\ud83d\udea2 Home Port \ud83d\udea2") {
               var newGuest = guest.pick()
@@ -257,11 +256,14 @@ router.post('/', function(req, res, next) {
               console.log(keyboards.ports);
             } else if (req.body.message.text == 'Same Continent') {
               Port.find({
-                "location.sector": ship.location.sector
+                "location.sector": ship.location.sector,
+                "id": {
+                  $ne: ship.location.port
+                }
               }).then(function(ports) {
                 sendAvailablePorts(req.body.message.chat.id, ports, ship);
               })
-            } else if (req.body.message.text == 'Change Continent') {
+            } else if (req.body.message.text === 'Change Continent') {
               Port.find({
                 "location.sector": {
                   $ne: ship.location.sector
