@@ -232,8 +232,11 @@ router.post('/', function(req, res, next) {
                 Port.findOne({
                   id: ship.location.port
                 }).then(function(port) {
-                  b.sendMessage(ship.id,"You are currently docked in " + port.name + "\n " + b.exportChatInviteLink(port.id))
-                  b.sendKeyboard(req.body.message.chat.id, "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.", keyboards.navigation);
+                  b.exportChatInviteLink(port.id).then(function(link) {
+                    b.sendMessage(ship.id, "You are currently docked in " + port.name + "\n " + link)
+                    b.sendKeyboard(req.body.message.chat.id, "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.", keyboards.navigation);
+                  })
+
                 })
               }
             } else if (req.body.message.text == "\ud83d\udea2 Home Port \ud83d\udea2") {
