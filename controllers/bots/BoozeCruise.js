@@ -308,7 +308,15 @@ router.post('/', function(req, res, next) {
                 resize_keyboard: true
               });
             } else if (req.body.message.text == 'Guest List \ud83d\udcc4') {
-              b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest: " + ship.guests, keyboards.home);
+              var guestList = {};
+              ship.guests.forEach (function(guest){
+                if (!guestList[guest.type]) {
+                  guestList[guest.type]=0;
+
+                }
+                guestList[guest.type]++;
+              })
+              b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest: " + guestList, keyboards.home);
             } else if (req.body.message.text == 'Port \ud83d\udea2') {
               console.log("log here");
               b.exportChatInviteLink('-1001399879250').then(function(link) {
