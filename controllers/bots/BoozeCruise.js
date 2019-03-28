@@ -258,7 +258,7 @@ router.post('/', function(req, res, next) {
                 }
               }).then(function(ports) {
                 var portsInShipSector = ports.filter(function(port) {
-                  return port.sector === ship.location.sector;
+                  return port.location.sector === ship.location.sector;
                 }).length;
                 if (portsInShipSector === 0) {
 
