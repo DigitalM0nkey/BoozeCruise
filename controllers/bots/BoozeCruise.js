@@ -163,7 +163,7 @@ router.post('/', function(req, res, next) {
                 ship.location.port = undefined;
                 ship.save();
                 console.log(data);
-                b.sendMessage(ship.id, "Your ship is now en route to " + port.name + "\nyou will arrive in " + Math.abs(moment().diff(arrival,'hours'))+ " hours");
+                b.sendMessage(ship.id, "Your ship is now en route to " + port.name + "\nyou will arrive in " + calculateTime(arrival));
                 b.sendKeyboard(ship.id,"--------",keyboards.home);
               });
           }
@@ -227,7 +227,7 @@ router.post('/', function(req, res, next) {
                 Port.findOne({
                   id: ship.nextLocation.port
                 }).then(function(port) {
-                  b.sendMessage(ship.id, "You will arrive in " + Math.abs(moment().diff(ship.nextLocation.arrival,'hours')) + " hours");
+                  b.sendMessage(ship.id, "You will arrive in " + calculateTime(ship.nextLocation.arrival));
                   b.sendKeyboard(ship.id, "Your ship is currently en route to " + port.name, keyboards.atSea);
                 });
               } else {
@@ -473,6 +473,10 @@ b.sendKeyboard('510423667', 'Server Restarted', keyboards.home);
 
 module.exports = router;
 
+function calculateTime(arrival){
+return  Math.abs(moment().diff(arrival,'hours'))+" hours "+Math.abs(moment().diff(arrival,'minutes')%60)+" minutes";
+}
+
 function calculateDistance(portLocation, shipLocation) {
   if (portLocation.sector === shipLocation.sector) {
     var distance = Math.abs(portLocation.x - shipLocation.x) + Math.abs(portLocation.y - shipLocation.y);
@@ -488,7 +492,7 @@ function calculateDistance(portLocation, shipLocation) {
     };
     var x = Math.abs(portSector.x - shipSector.x) > HSECTORS - Math.abs(portSector.x - shipSector.x) ? HSECTORS - Math.abs(portSector.x - shipSector.x) : Math.abs(portSector.x - shipSector.x);
     var y = Math.abs(portSector.y - shipSector.y) > VSECTORS - Math.abs(portSector.y - shipSector.y) ? VSECTORS - Math.abs(portSector.y - shipSector.y) : Math.abs(portSector.y - shipSector.y);
-    return (x + y) * 24;
+    return Math.abs((x + y) * 24);
   }
 }
 
