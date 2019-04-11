@@ -163,7 +163,7 @@ router.post('/', function(req, res, next) {
                 ship.location.port = undefined;
                 ship.save();
                 console.log(data);
-                b.sendMessage(ship.id, "Your ship is now en route to " + port.name + "\nyou will arrive in " + moment().diff(arrival,'hours')+ " hours");
+                b.sendMessage(ship.id, "Your ship is now en route to " + port.name + "\nyou will arrive in " + Math.abs(moment().diff(arrival,'hours'))+ " hours");
                 b.sendKeyboard(ship.id,keyboards.home);
               });
           }
@@ -227,7 +227,7 @@ router.post('/', function(req, res, next) {
                 Port.findOne({
                   id: ship.nextLocation.port
                 }).then(function(port) {
-                  b.sendMessage(ship.id, "You will arrive in " + moment().diff(ship.nextLocation.arrival,'hours') + " hours");
+                  b.sendMessage(ship.id, "You will arrive in " + Math.abs(moment().diff(ship.nextLocation.arrival,'hours')) + " hours");
                   b.sendKeyboard(ship.id, "Your ship is currently en route to " + port.name, keyboards.atSea);
                 });
               } else {
