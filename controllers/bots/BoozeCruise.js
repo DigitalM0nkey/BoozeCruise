@@ -164,7 +164,7 @@ router.post('/', function(req, res, next) {
                 ship.save();
                 console.log(data);
                 b.sendMessage(ship.id, "Your ship is now en route to " + port.name + "\nyou will arrive in " + moment().diff(arrival,'hours')+ " hours");
-                b.sendKeyboard(ship.id,keybord.home);
+                b.sendKeyboard(ship.id,keyboard.home);
               });
           }
         } else if (data.action === 'navigate_sector') {
