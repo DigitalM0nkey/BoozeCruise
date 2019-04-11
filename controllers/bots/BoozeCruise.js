@@ -163,7 +163,7 @@ router.post('/', function(req, res, next) {
                 ship.location.port = undefined;
                 ship.save();
                 console.log(data);
-                b.sendMessage(ship.id, "Your ship is now en route to " + port.name + "\nyou will arrive in " + moment().diff(arrival,'hours'));
+                b.sendMessage(ship.id, "Your ship is now en route to " + port.name + "\nyou will arrive in " + moment().diff(arrival,'hours')+ " hours");
               });
           }
         } else if (data.action === 'navigate_sector') {
@@ -209,7 +209,7 @@ router.post('/', function(req, res, next) {
                     port: randomPort.id,
                     homePort: randomPort.id,
                   }
-                })
+                });
                 newShip.save();
                 console.log(randomPort);
               });
