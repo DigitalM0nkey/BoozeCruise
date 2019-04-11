@@ -38,7 +38,7 @@ var dailyEvent = schedule.scheduleJob('0 0 8 * * *', function() {
           port.description = chat.description;
           port.name = chat.title;
           port.save();
-        })
+        });
       });
     });
 
@@ -65,7 +65,7 @@ var minutelyEvent = schedule.scheduleJob('0 */1 * * * *', function() {
       ships.forEach(function(ship) {
         var nextPort = _.find(ports, function(port) {
           return port.id == ship.nextLocation.port;
-        })
+        });
         b.exportChatInviteLink(nextPort.id).then(function(link) {
           b.sendMessage(ship.id, 'This is the ' + nextPort.name + ' port authority \nUse this link to dock.\n' + link);
           ship.location = nextPort.location;
@@ -76,9 +76,9 @@ var minutelyEvent = schedule.scheduleJob('0 */1 * * * *', function() {
 
       });
     });
-  })
+  });
 
-})
+});
 // Global Variables
 /* Daily events list
 var events = [{
@@ -127,7 +127,7 @@ var moves = {
       guest.pick();
     }
   },
-}
+};
 
 //b.exportChatInviteLink('')
 
@@ -164,6 +164,7 @@ router.post('/', function(req, res, next) {
                 ship.save();
                 console.log(data);
                 b.sendMessage(ship.id, "Your ship is now en route to " + port.name + "\nyou will arrive in " + moment().diff(arrival,'hours')+ " hours");
+                b.sendKeyboard(ship.id,keybord.home);
               });
           }
         } else if (data.action === 'navigate_sector') {
@@ -173,7 +174,7 @@ router.post('/', function(req, res, next) {
             .then(function(ports) {
               sendAvailablePorts(req.body.callback_query.from.id, ports, ship);
 
-            })
+            });
 
         }
         return res.sendStatus(200);
@@ -226,7 +227,7 @@ router.post('/', function(req, res, next) {
                 Port.findOne({
                   id: ship.nextLocation.port
                 }).then(function(port) {
-                  b.sendMessage(ship.id, "You will arrive in " + moment().diff(ship.nextLocation.arrival,'hours') + " hours")
+                  b.sendMessage(ship.id, "You will arrive in " + moment().diff(ship.nextLocation.arrival,'hours') + " hours");
                   b.sendKeyboard(ship.id, "Your ship is currently en route to " + port.name, keyboards.atSea);
                 });
               } else {
@@ -234,13 +235,13 @@ router.post('/', function(req, res, next) {
                   id: ship.location.port
                 }).then(function(port) {
                   b.exportChatInviteLink(port.id).then(function(link) {
-                    b.sendMessage(ship.id, "You are currently docked in " + port.name + "\n " + link)
+                    b.sendMessage(ship.id, "You are currently docked in " + port.name + "\n " + link);
                     b.sendKeyboard(req.body.message.chat.id, "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.", keyboards.navigation);
-                  })
+                  });
                 });
               }
             } else if (req.body.message.text == "\ud83d\udea2 Home Port \ud83d\udea2") {
-              var newGuest = guest.pick()
+              var newGuest = guest.pick();
               ship.guests.push({
                 type: newGuest
               });
@@ -316,7 +317,7 @@ router.post('/', function(req, res, next) {
                 });
                 var message = "";
                 for (var i in sectors) {
-                  sectors[i] = sectors[i].substring(0, sectors[i].length - 2)
+                  sectors[i] = sectors[i].substring(0, sectors[i].length - 2);
                   message += constants.sectors[i] + ': ' + sectors[i] + '\n';
                 }
                 b.sendMessage(req.body.message.chat.id, 'Below are the available continents that you can travel to. The ports of call that you can visit are listed beside the respective continents.\n\n' + message);
@@ -329,11 +330,11 @@ router.post('/', function(req, res, next) {
                           action: "navigate_sector",
                           sector: sector,
                         })
-                      }]
+                      }];
                     })
                   });
-                }, 1000)
-              })
+                }, 1000);
+              });
 
             } else if (req.body.message.text == '\ud83d\udcb0 Purser \ud83d\udcb0') {
               b.sendKeyboard(req.body.message.chat.id, "A ship's purser is the person on a ship principally responsible for the handling of money on board.\n\nHow may I help you today?", keyboards.purser);
@@ -380,7 +381,7 @@ router.post('/', function(req, res, next) {
             }
           }
           res.sendStatus(200);
-        })
+        });
     } else {
       Port.findOne({
           id: req.body.message.chat.id
@@ -396,7 +397,7 @@ router.post('/', function(req, res, next) {
                   description: chat.description
                 });
                 newPort.save();
-              })
+              });
             }
           } else {
             if (req.body.message.text == "/start") {
@@ -408,15 +409,15 @@ router.post('/', function(req, res, next) {
               Ship.findOne({
                 "user.id": req.body.message.from.id
               }).then(function(ship) {
-                b.sendMessage(ship.id, "You've been kicked from " + port.name)
-              })
+                b.sendMessage(ship.id, "You've been kicked from " + port.name);
+              });
             } else if (req.body.message.new_chat_participant) {
               Ship.findOne({
                 "user.id": req.body.message.new_chat_participant.id
               }).then(function(ship) {
-                port.ships.push(ship._id)
-                port.save()
-              })
+                port.ships.push(ship._id);
+                port.save();
+              });
 
             } else if (req.body.message.left_chat_participant) {
               Ship.findOne({
@@ -424,9 +425,9 @@ router.post('/', function(req, res, next) {
               }).then(function(ship) {
                 port.ships = port.ships.filter(function(portShip) {
                   return portShip != ship._id;
-                })
-                port.save()
-              })
+                });
+                port.save();
+              });
             } else {
               Ship.findOne({
                 "user.id": req.body.message.from.id
@@ -439,13 +440,13 @@ router.post('/', function(req, res, next) {
                   }
                 }
                 if (!found) {
-                  port.ships.push(ship._id)
-                  port.save()
+                  port.ships.push(ship._id);
+                  port.save();
                 }
                 ship.location = port.location;
                 ship.location.port = port.id;
                 ship.save();
-              })
+              });
 
             }
 
@@ -495,8 +496,8 @@ function sendAvailablePorts(chat_id, ports, ship) {
   b.sendMessage(chat_id, ports.reduce(function(message, port) {
     message += '<b>' + port.name + "</b>\n";
     message += port.description + "\n\n";
-    message += "Distance to port <b>" + calculateDistance(port.location, ship.location) + "</b> hours\n"
-    message += "Ships in port <b>" + port.ships.length + "</b>\n\n"
+    message += "Distance to port <b>" + calculateDistance(port.location, ship.location) + "</b> hours\n";
+    message += "Ships in port <b>" + port.ships.length + "</b>\n\n";
     return message;
   }, ''));
   setTimeout(function() {
@@ -508,12 +509,12 @@ function sendAvailablePorts(chat_id, ports, ship) {
           port: port.id,
           ship: ship.id,
         })
-      }
-    })
+      };
+    });
     console.log(keyboard);
     b.sendKeyboard(chat_id, "Navigate to:", {
       inline_keyboard: [keyboard]
     });
-  }, 1000)
+  }, 1000);
 
 }
