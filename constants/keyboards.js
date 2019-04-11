@@ -40,12 +40,6 @@ module.exports = {
         'text': '\ud83d\udccd Current Location \ud83d\udccd'
       }, ],
       [{
-        'text': '\ud83d\udea2 Home Port \ud83d\udea2'
-      }, ],
-      [{
-        'text': '\ud83c\udfdd Ports of Call \ud83c\udfdd'
-      }, ],
-      [{
         'text': '\u2630 Main Menu \u2630'
       }, ]
     ],
