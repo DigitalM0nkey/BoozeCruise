@@ -1,10 +1,11 @@
 var router = require('express').Router();
 var schedule = require('node-schedule');
+var moment = require('moment');
 var config = require('../../config');
 var constants = require('../../constants');
 var _ = require('underscore');
 var TelegramBot = require('../../bots/telegram');
-var keyboards = require('../../constants/keyboards')
+var keyboards = require('../../constants/keyboards');
 var TOKEN = config.tokens.telegram.BoozeCruise;
 var HSECTORS = 3;
 var VSECTORS = 2;
@@ -34,7 +35,8 @@ var dailyEvent = schedule.scheduleJob('0 0 8 * * *', function() {
       ports.forEach(function(port) {
         b.getChat(port.id).then(function(chat) {
           console.log(chat);
-          port.description = chat.description
+          port.description = chat.description;
+          port.name = chat.title;
           port.save();
         })
       });
@@ -161,9 +163,8 @@ router.post('/', function(req, res, next) {
                 ship.location.port = undefined;
                 ship.save();
                 console.log(data);
-                b.sendMessage(ship.id, "Your ship is now en route to " + port.name + "\nyou will arrive in " + calculateDistance(port.location, ship.location) + " hours")
-
-              })
+                b.sendMessage(ship.id, "Your ship is now en route to " + port.name + "\nyou will arrive in " + moment().diff(arrival,'hours'));
+              });
           }
         } else if (data.action === 'navigate_sector') {
           Port.find({
@@ -225,7 +226,7 @@ router.post('/', function(req, res, next) {
                 Port.findOne({
                   id: ship.nextLocation.port
                 }).then(function(port) {
-                  b.sendMessage(ship.id, "You will arrive in " + calculateDistance(port.location, ship.location) + " hours")
+                  b.sendMessage(ship.id, "You will arrive in " + moment().diff(ship.nextLocation.arrival,'hours') + " hours")
                   b.sendKeyboard(ship.id, "Your ship is currently en route to " + port.name, keyboards.atSea);
                 });
               } else {
