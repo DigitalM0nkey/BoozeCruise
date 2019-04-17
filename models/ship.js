@@ -2,6 +2,7 @@ var db = require('../db');
 var Ship = db.model('Ship',{
   id: {type: String, required: true},
   name: {type: String, required: false},
+  startDate: {type: Date, required: false},
   user: {
     id:{type: String, required: true},
     first_name:{type: String, required: true},
@@ -22,8 +23,11 @@ var Ship = db.model('Ship',{
     arrival: {type: Date, required: false},
     port: {type: String, ref: "Port", required: false}
   },
-  portHistory: [
-    {type: String,ref: "Port", required: false}
+  portHistory: [{
+      port: {type: String,ref: "Port", required: false},
+      arrivalDate: {type: Date, required: true},
+      departureDate: {type: Date, required: true},
+      }
   ],
   purse: {
     balance: {type: Number, required: true, default: 100},

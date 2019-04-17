@@ -72,6 +72,10 @@ var minutelyEvent = schedule.scheduleJob('0 */1 * * * *', function() {
           ship.location = nextPort.location;
           ship.location.port = nextPort.id;
           ship.nextLocation = undefined;
+          ship.portHistory.push({
+            port: ship.location.port,
+            arrivalDate: new Date()
+          });
           ship.save();
         });
 
@@ -151,7 +155,6 @@ router.post('/', function(req, res, next) {
                 id: data.port
               })
               .then(function(port) {
-
                 var arrival = new Date();
                 arrival = arrival.setTime(arrival.getTime() + calculateDistance(port.location, ship.location) * 60 * 60 * 1000);
                 ship.nextLocation = {
@@ -159,7 +162,9 @@ router.post('/', function(req, res, next) {
                   port: data.port,
                   portName: port.name
                 };
-                ship.portHistory.push(ship.location.port);
+                if (ship.portHistory.length > 0) {
+                ship.portHistory[ship.portHistory.length-1].departureDate=new Date();
+                }
                 b.kick(ship.location.port, ship.id, 1);
                 ship.location.port = undefined;
                 ship.save();
@@ -389,7 +394,7 @@ router.post('/', function(req, res, next) {
               b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest:\n" + message, keyboards.home);
             } else if (req.body.message.text == '\ud83c\udf87 Achievements \ud83c\udf87') {
               b.sendKeyboard(req.body.message.chat.id, "Welcome To Achievements", keyboards.home);
-            }  else if (req.body.message.text == 'Port \ud83d\udea2') {
+            } else if (req.body.message.text == 'Port \ud83d\udea2') {
               console.log("log here");
               b.exportChatInviteLink('-1001399879250').then(function(link) {
                 console.log(link);
