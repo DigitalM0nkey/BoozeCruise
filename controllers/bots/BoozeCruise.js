@@ -393,7 +393,16 @@ router.post('/', function(req, res, next) {
               }
               b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest:\n" + message, keyboards.home);
             } else if (req.body.message.text == '\ud83c\udf87 Achievements \ud83c\udf87') {
-              b.sendKeyboard(req.body.message.chat.id, "Welcome To Achievements", keyboards.home);
+              Ship.findOne({id: ship.id}).populate("portHistory.port").then(function(sameShip) {
+                var message = "Your Port history";
+                sameShip.portHistory.forEach(function(stop){
+                  var arrivalDate = moment(stop.arrivalDate);
+                  var departureDate = moment(stop.departureDate);
+                  message+="\n"+stop.port.name+" | "+arrivalDate.diff(departureDate,"days");
+                });
+                b.sendMessage(req.body.message.chat.id,message);
+              });
+
             } else if (req.body.message.text == 'Port \ud83d\udea2') {
               console.log("log here");
               b.exportChatInviteLink('-1001399879250').then(function(link) {
