@@ -222,7 +222,7 @@ router.post('/', function(req, res, next) {
               b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
             } else if (req.body.message.text == "\u2630 Main Menu \u2630") {
               b.sendKeyboard(req.body.message.chat.id, "\u2630 Main Menu \u2630", keyboards.home);
-            } else if (req.body.message.text == "\ud83d\uddfa Navigation \ud83d\uddfa") {
+            } else if (req.body.message.text == "\ud83d\uddfa Navigation \ud83d\uddfa" || req.body.message.text == "\ud83d\udccd Current Location \ud83d\udccd") {
               console.log(ship.nextLocation);
               if (ship.nextLocation.port) {
                 Port.findOne({
@@ -383,14 +383,7 @@ router.post('/', function(req, res, next) {
                 resize_keyboard: true
               });
             } else if (req.body.message.text == '\ud83c\udf87 Achievements \ud83c\udf87') {
-              b.sendKeyboard(req.body.message.chat.id, "Welcome To Achievements", {
-                keyboard: [
-                  [{
-                    'text': 'Bad \ud83d\udc4e'
-                  }, ]
-                ],
-                resize_keyboard: true
-              });
+              b.sendKeyboard(req.body.message.chat.id, "Welcome To Achievements", keyboards.home);
             } else if (req.body.message.text == 'Guest List \ud83d\udcc4') {
               var guestList = {};
               ship.guests.forEach(function(guest) {
