@@ -29,6 +29,7 @@ var Port = db.model('Port', {
     x: {type: Number, required: false},
     y: {type: Number, required: false},
 
-  }
-})
+  },
+  treasure: {type: Number, required: false, default:0},
+});
 module.exports = Port;

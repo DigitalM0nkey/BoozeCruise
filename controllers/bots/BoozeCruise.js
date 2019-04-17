@@ -9,6 +9,7 @@ var keyboards = require('../../constants/keyboards');
 var TOKEN = config.tokens.telegram.BoozeCruise;
 var HSECTORS = 3;
 var VSECTORS = 2;
+var TREASURE = 500;
 var myShip = '5be3d50298ae6843394411ee';
 var Port = require('../../models/port');
 var Ship = require('../../models/ship');
@@ -247,7 +248,39 @@ router.post('/', function(req, res, next) {
               });
               ship.save();
               b.sendKeyboard(req.body.message.chat.id, "A " + newGuest + " just boarded your vessel", keyboards.home);
-            } else if (req.body.message.text == "/removeGuest") {
+            } else if (req.body.message.text == '\ud83d\udcb0 Treasure \ud83d\udcb0'){
+              Port.findOne({
+                id: ship.location.port,
+                treasure: {$gt:0}
+              }).then(function(port) {
+                if (port) {
+                  b.sendMessage(ship.id, "You found "+ port.treasure + " Koronas in the buried treasure" );
+                  ship.purse.balance+=port.treasure;
+                  ship.purse.transactions.push({
+                    date: new Date(),
+                    type: "Treasure",
+                    amount: port.treasure
+                  });
+                  ship.save();
+                  port.treasure=0;
+                  port.save();
+                  Port.find({
+                    id:{$ne:ship.location.port}
+                  }).then(function(ports){
+                    var randomPort = Math.floor(Math.random()*ports.length);
+                    ports[randomPort].treasure=Math.random()*TREASURE+1;
+                    ports[randomPort].save();
+                  });
+                } else {
+                  b.sendMessage(ship.id, "No treasure here, keep searching" );
+                }
+              });
+
+
+
+
+
+              } else if (req.body.message.text == "/removeGuest") {
               var removedGuest = ship.guests.pop();
               ship.save();
               b.sendKeyboard(req.body.message.chat.id, removedGuest, keyboards.home);

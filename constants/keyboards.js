@@ -14,6 +14,9 @@ module.exports = {
         'text': '\ud83d\udcb0 Purser \ud83d\udcb0'
       },
       {
+        'text': '\ud83d\udcb0 Treasure \ud83d\udcb0'
+      },
+      {
         'text': '\ud83d\udc1b BUG \ud83d\udc1b'
       }],
     ],
@@ -58,11 +61,10 @@ module.exports = {
       }, ]
     ],
     resize_keyboard: true
-  },
-  purser: {
+  },purser: {
     keyboard: [
       [{
-        'text': 'Check Balence'
+        'text': 'Check Balance'
       }, ],
       [{
         'text': 'Deposit'
@@ -160,4 +162,4 @@ module.exports = {
     ],
     resize_keyboard: true
   },
-}
+};

@@ -25,5 +25,15 @@ var Ship = db.model('Ship',{
   portHistory: [
     {type: String,ref: "Port", required: false}
   ],
+  purse: {
+    balance: {type: Number, required: true, default: 100},
+    transactions: [
+      {
+        date: {type: Date, required: true},
+        type: {type: String, required: true},
+        amount: {type: Number, required: true}
+      }
+    ]
+  }
 });
 module.exports = Ship;
