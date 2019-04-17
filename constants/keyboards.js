@@ -25,7 +25,7 @@ module.exports = {
   manifest: {
     keyboard: [
       [{
-          'text': '\ud83d\udc65 Passenger Manifest \ud83d\udc65'
+          'text': '\ud83d\udc65 Guest Manifest \ud83d\udc65'
         },
         {
           'text': '\ud83d\udc81 Crew Manifest \ud83d\udc81'

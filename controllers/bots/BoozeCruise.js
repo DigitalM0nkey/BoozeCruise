@@ -373,18 +373,7 @@ router.post('/', function(req, res, next) {
               b.sendKeyboard(req.body.message.chat.id, "A ship's purser is the person on a ship principally responsible for the handling of money on board.\n\nHow may I help you today?", keyboards.purser);
             } else if (req.body.message.text == '\ud83d\udc65 Manifest \ud83d\udc65') {
               b.sendKeyboard(req.body.message.chat.id, "A document giving comprehensive details of a ship and its cargo and other contents, passengers, and crew for the use of customs officers.", keyboards.manifest);
-            } else if (req.body.message.text == '\ud83d\udc65 Passenger Manifest \ud83d\udc65') {
-              b.sendKeyboard(req.body.message.chat.id, "\ud83d\udc65 Passenger Manifest \ud83d\udc65", {
-                keyboard: [
-                  [{
-                    'text': 'Guest List \ud83d\udcc4'
-                  }, ]
-                ],
-                resize_keyboard: true
-              });
-            } else if (req.body.message.text == '\ud83c\udf87 Achievements \ud83c\udf87') {
-              b.sendKeyboard(req.body.message.chat.id, "Welcome To Achievements", keyboards.home);
-            } else if (req.body.message.text == 'Guest List \ud83d\udcc4') {
+            } else if (req.body.message.text == '\ud83d\udc65 Guest Manifest \ud83d\udc65') {
               var guestList = {};
               ship.guests.forEach(function(guest) {
                 if (!guestList[guest.type]) {
@@ -398,7 +387,9 @@ router.post('/', function(req, res, next) {
                 message += i + ": " + guestList[i] + "\n";
               }
               b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest:\n" + message, keyboards.home);
-            } else if (req.body.message.text == 'Port \ud83d\udea2') {
+            } else if (req.body.message.text == '\ud83c\udf87 Achievements \ud83c\udf87') {
+              b.sendKeyboard(req.body.message.chat.id, "Welcome To Achievements", keyboards.home);
+            }  else if (req.body.message.text == 'Port \ud83d\udea2') {
               console.log("log here");
               b.exportChatInviteLink('-1001399879250').then(function(link) {
                 console.log(link);
