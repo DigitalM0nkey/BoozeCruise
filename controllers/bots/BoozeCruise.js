@@ -394,7 +394,7 @@ router.post('/', function(req, res, next) {
               b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest:\n" + message, keyboards.home);
             } else if (req.body.message.text == '\ud83c\udf87 Achievements \ud83c\udf87') {
               Ship.findOne({id: ship.id}).populate("portHistory.port").then(function(sameShip) {
-                var message = "Your Port history";
+                var message = "<b>Your Port History:</b>";
                 sameShip.portHistory.forEach(function(stop){
                   var arrivalDate = moment(stop.arrivalDate);
                   var departureDate = moment(stop.departureDate);
