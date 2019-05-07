@@ -230,7 +230,29 @@ router.post('/', function(req, res, next) {
               //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
               b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
             } else if (req.body.message.text == "Check Balance") {
-              b.sendMessage(ship.id, "Your balance is  " + ship.purse.balance + " Koranas");
+              b.sendMessage(ship.id, "Your balance is " + ship.purse.balance + " Koranas");
+            } else if (req.body.message.text == "\ud83c\udf87 Achievements \ud83c\udf87") {
+              var portIds = ship.portHistory.map(function(port){
+                return port.id;
+              });
+              Port.find({id:portIds}).then(function(ports){
+                var count = ship.portHistory.reduce(function(portCount,port){
+                  if (!portCount[port.id]){
+                    portCount[port.id]={
+                      name:ports.find(function(foundPort){
+                        return foundPort.id === port.id;
+                      }).name,
+                      count:0
+                    };
+                  }
+                  portCount[port.id].count++;
+                },{});
+                var message = "";
+                for (var value of count){
+                  message += value.name + " (" + value.count + ")\n";
+                }
+              });
+              b.sendMessage(ship.id, "You have been to the following ports: " + message);
             } else if (req.body.message.text == "\u2630 Main Menu \u2630") {
               b.sendKeyboard(req.body.message.chat.id, "\u2630 Main Menu \u2630", keyboards.home);
             } else if (req.body.message.text == "\ud83d\uddfa Navigation \ud83d\uddfa" || req.body.message.text == "\ud83d\udccd Current Location \ud83d\udccd") {
