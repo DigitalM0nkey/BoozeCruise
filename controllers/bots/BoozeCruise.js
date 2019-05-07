@@ -251,8 +251,8 @@ router.post('/', function(req, res, next) {
                 },{});
                 console.log(count);
                 var message = "";
-                for (var value of count){
-                  message += value.name + " (" + value.count + ")\n";
+                for (var key in count){
+                  message += count[key].name + " (" + count[key].count + ")\n";
                 }
                 b.sendMessage(ship.id, "You have been to the following ports: " + message);
               });
