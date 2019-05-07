@@ -233,20 +233,20 @@ router.post('/', function(req, res, next) {
               b.sendMessage(ship.id, "Your balance is " + ship.purse.balance + " Koranas");
             } else if (req.body.message.text == "\ud83c\udf87 Achievements \ud83c\udf87") {
               var portIds = ship.portHistory.map(function(port){
-                return port.id;
+                return port.port;
               });
               Port.find({id:portIds}).then(function(ports){
                 console.log(ports);
                 var count = ship.portHistory.reduce(function(portCount,port){
-                  if (!portCount[port.id]){
-                    portCount[port.id]={
+                  if (!portCount[port.port]){
+                    portCount[port.port]={
                       name:ports.find(function(foundPort){
-                        return foundPort.id == port.id;
+                        return foundPort.id == port.port;
                       }).name,
                       count:0
                     };
                   }
-                  portCount[port.id].count++;
+                  portCount[port.port].count++;
                 },{});
                 console.log(count);
                 var message = "";
