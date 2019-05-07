@@ -24,9 +24,9 @@ var Ship = db.model('Ship',{
     port: {type: String, ref: "Port", required: false}
   },
   portHistory: [{
-      port: {type: String,ref: "Port", required: false},
+      port: {type: String,ref: "Port", required: true},
       arrivalDate: {type: Date, required: true},
-      departureDate: {type: Date, required: true},
+      departureDate: {type: Date, required: false},
       }
   ],
   purse: {
