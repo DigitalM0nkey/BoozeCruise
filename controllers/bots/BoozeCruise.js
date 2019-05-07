@@ -229,6 +229,8 @@ router.post('/', function(req, res, next) {
             if (req.body.message.text == "/start") {
               //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
               b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
+            } else if (req.body.message.text == "Check Balance") {
+              b.sendMessage(ship.id, "Your balance is  " + ship.purse.balance + " Koranas");
             } else if (req.body.message.text == "\u2630 Main Menu \u2630") {
               b.sendKeyboard(req.body.message.chat.id, "\u2630 Main Menu \u2630", keyboards.home);
             } else if (req.body.message.text == "\ud83d\uddfa Navigation \ud83d\uddfa" || req.body.message.text == "\ud83d\udccd Current Location \ud83d\udccd") {
