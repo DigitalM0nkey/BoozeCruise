@@ -248,11 +248,12 @@ router.post('/', function(req, res, next) {
                   portCount[port.id].count++;
                 },{});
                 var message = "";
-                for (var value of count){
-                  message += value.name + " (" + value.count + ")\n";
+                for (var key in count){
+                  message += count[key].name + " (" + count[key].count + ")\n";
                 }
+                b.sendMessage(ship.id, "You have been to the following ports: " + message);
               });
-              b.sendMessage(ship.id, "You have been to the following ports: " + message);
+
             } else if (req.body.message.text == "\u2630 Main Menu \u2630") {
               b.sendKeyboard(req.body.message.chat.id, "\u2630 Main Menu \u2630", keyboards.home);
             } else if (req.body.message.text == "\ud83d\uddfa Navigation \ud83d\uddfa" || req.body.message.text == "\ud83d\udccd Current Location \ud83d\udccd") {
