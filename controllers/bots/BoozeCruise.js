@@ -252,7 +252,7 @@ router.post('/', function(req, res, next) {
                 console.log(count);
                 var message = "";
                 for (var key in count){
-                  message += count[key].name + " (" + count[key].count + ")\n";
+                  message += "\n" + count[key].name + " (" + count[key].count + ")";
                 }
                 b.sendMessage(ship.id, "You have been to the following ports: " + message);
               });
