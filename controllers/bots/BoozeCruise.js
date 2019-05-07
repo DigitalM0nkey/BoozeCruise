@@ -247,6 +247,7 @@ router.post('/', function(req, res, next) {
                     };
                   }
                   portCount[port.port].count++;
+                  return portCount;
                 },{});
                 console.log(count);
                 var message = "";
