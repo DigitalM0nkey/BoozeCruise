@@ -519,11 +519,11 @@ function calculateDistance(portLocation, shipLocation) {
   } else {
     var portSector = {
       x: portLocation.sector % HSECTORS,
-      y: Math.floor(portLocation.sector / VSECTORS)
+      y: Math.floor(portLocation.sector / HSECTORS)
     };
     var shipSector = {
       x: shipLocation.sector % HSECTORS,
-      y: Math.floor(shipLocation.sector / VSECTORS)
+      y: Math.floor(shipLocation.sector / HSECTORS)
     };
     var x = Math.abs(portSector.x - shipSector.x) > HSECTORS - Math.abs(portSector.x - shipSector.x) ? HSECTORS - Math.abs(portSector.x - shipSector.x) : Math.abs(portSector.x - shipSector.x);
     var y = Math.abs(portSector.y - shipSector.y) > VSECTORS - Math.abs(portSector.y - shipSector.y) ? VSECTORS - Math.abs(portSector.y - shipSector.y) : Math.abs(portSector.y - shipSector.y);
