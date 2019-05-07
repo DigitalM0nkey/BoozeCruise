@@ -236,17 +236,19 @@ router.post('/', function(req, res, next) {
                 return port.id;
               });
               Port.find({id:portIds}).then(function(ports){
+                console.log(ports);
                 var count = ship.portHistory.reduce(function(portCount,port){
                   if (!portCount[port.id]){
                     portCount[port.id]={
                       name:ports.find(function(foundPort){
-                        return foundPort.id === port.id;
+                        return foundPort.id == port.id;
                       }).name,
                       count:0
                     };
                   }
                   portCount[port.id].count++;
                 },{});
+                console.log(count);
                 var message = "";
                 for (var key in count){
                   message += count[key].name + " (" + count[key].count + ")\n";
