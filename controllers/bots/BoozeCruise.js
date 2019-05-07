@@ -76,7 +76,11 @@ var minutelyEvent = schedule.scheduleJob('0 */1 * * * *', function() {
             port: ship.location.port,
             arrivalDate: new Date()
           });
-          ship.save();
+          ship.save().then(function(savedShip){
+            console.log(savedShip);
+          },function(e){
+            console.error(e);
+          });
         });
 
       });
