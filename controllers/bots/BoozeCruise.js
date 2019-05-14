@@ -7,8 +7,8 @@ var _ = require('underscore');
 var TelegramBot = require('../../bots/telegram');
 var keyboards = require('../../constants/keyboards');
 var TOKEN = config.tokens.telegram.BoozeCruise;
-var HSECTORS = 3;
-var VSECTORS = 2;
+var HSECTORS = 4;
+var VSECTORS = 3;
 var TREASURE = 500;
 var myShip = '5be3d50298ae6843394411ee';
 var Port = require('../../models/port');
@@ -93,37 +93,37 @@ var minutelyEvent = schedule.scheduleJob('0 */1 * * * *', function() {
 var events = [{
     name: "Embarcation / Debarcation Day",
     description: "<b>Your Cruise is over.</b> Your current Guests will disembark your ship this morning, bringing with them stories from their cruise, the happier they are, the more more likley they will cruise again and the more likley they will tell their friends to cruise. Guests that have had a negitive experence are not likley to cruise again and are more than likley to discourage future guests from cruising. Use the time that your ship has no guests, to clean it and prepare it for the next cruise, which departs tonight.",
-    keyboard: keyboards.home
+    keyboard: keyboards.home(ship.nextLocation)
   },
   {
     name: "Deck Party",
     description: "It's party time.",
-    keyboard: keyboards.home
+    keyboard: keyboards.home(ship.nextLocation)
   },
   {
     name: "Formal Night",
     description: "Put on your glad rags and do your hair because tonight is formal night. That means it steak and lobster in the main dining room and a las Vegas style show in the Show Lounge.",
-    keyboard: keyboards.home
+    keyboard: keyboards.home(ship.nextLocation)
   },
   {
     name: "Sea Day",
     description: "<b>Look around.... Nothing but ocean.</b> That doesn't mean there is nothing to do, the Cruise Director has orginazed a bunch of activties for your guests to take part in. activties include: The Men's Hairy Chest Competition, BINGO, Scavenger Hunt, etc",
-    keyboard: keyboards.home
+    keyboard: keyboards.home(ship.nextLocation)
   },
   {
     name: "Port Day",
     description: "It's time to get off the ship and explore these strange and wonderful lands",
-    keyboard: keyboards.home
+    keyboard: keyboards.home(ship.nextLocation)
   },
   {
     name: "Hurricane",
     description: "This is your Captin speaking.... Due to some severe weather patterns, we will unfortunately be skipping our next port of call.",
-    keyboard: keyboards.home
+    keyboard: keyboards.home(ship.nextLocation)
   },
   {
     name: "Thank You",
     description: "Thank you for testing my game and giving me feedback on things that need fixing. I will be adding a place that you can report theses bugs, so keep an eye out for that button.\nOne thing I have become aware of is these daily messages are not very useful right now and as a result get ignored, I will be pausing the until they become relevant, with the hope that important messages like an invitation to dock will not get lost in the mix. \n\nAs you know I am building this game with the help of Laurent so that I can learn to code better, and it is clearly starting to pay off, so, THANK YOU LAURENT!",
-    keyboard: keyboards.home
+    keyboard: keyboards.home(ship.nextLocation)
   },
 ];
 
@@ -174,7 +174,7 @@ router.post('/', function(req, res, next) {
                 ship.save();
                 console.log(data);
                 b.sendMessage(ship.id, "Your ship is now en route to " + port.name + "\nyou will arrive in " + calculateTime(arrival));
-                b.sendKeyboard(ship.id,"--------",keyboards.home);
+                b.sendKeyboard(ship.id,"--------",keyboards.home(ship.nextLocation));
               });
           }
         } else if (data.action === 'navigate_sector') {
@@ -228,7 +228,7 @@ router.post('/', function(req, res, next) {
           } else {
             if (req.body.message.text == "/start") {
               //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
-              b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
+              b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home(ship.nextLocation));
             } else if (req.body.message.text == "Check Balance") {
               b.sendMessage(ship.id, "Your balance is " + ship.purse.balance + " Koranas");
             } else if (req.body.message.text == "\ud83c\udf87 Achievements \ud83c\udf87") {
@@ -258,7 +258,7 @@ router.post('/', function(req, res, next) {
               });
 
             } else if (req.body.message.text == "\u2630 Main Menu \u2630") {
-              b.sendKeyboard(req.body.message.chat.id, "\u2630 Main Menu \u2630", keyboards.home);
+              b.sendKeyboard(req.body.message.chat.id, "\u2630 Main Menu \u2630", keyboards.home(ship.nextLocation));
             } else if (req.body.message.text == "\ud83d\uddfa Navigation \ud83d\uddfa" || req.body.message.text == "\ud83d\udccd Current Location \ud83d\udccd") {
               console.log(ship.nextLocation);
               if (ship.nextLocation.port) {
@@ -284,14 +284,14 @@ router.post('/', function(req, res, next) {
                 type: newGuest
               });
               ship.save();
-              b.sendKeyboard(req.body.message.chat.id, "A " + newGuest + " just boarded your vessel", keyboards.home);
+              b.sendKeyboard(req.body.message.chat.id, "A " + newGuest + " just boarded your vessel", keyboards.home(ship.nextLocation));
             } else if (req.body.message.text == '\ud83d\udcb0 Treasure \ud83d\udcb0'){
               Port.findOne({
                 id: ship.location.port,
                 treasure: {$gt:0}
               }).then(function(port) {
                 if (port) {
-                  b.sendMessage(ship.id, "You found "+ port.treasure + " Koronas in the buried treasure" );
+                  b.sendMessage(ship.id, "You found "+ port.treasure + " Korona in the buried treasure" );
                   ship.purse.balance+=port.treasure;
                   ship.purse.transactions.push({
                     date: new Date(),
@@ -305,7 +305,7 @@ router.post('/', function(req, res, next) {
                     id:{$ne:ship.location.port}
                   }).then(function(ports){
                     var randomPort = Math.floor(Math.random()*ports.length);
-                    ports[randomPort].treasure=Math.random()*TREASURE+1;
+                    ports[randomPort].treasure= Math.round(Math.random()*TREASURE+1);
                     ports[randomPort].save();
                   });
                 } else {
@@ -320,9 +320,9 @@ router.post('/', function(req, res, next) {
               } else if (req.body.message.text == "/removeGuest") {
               var removedGuest = ship.guests.pop();
               ship.save();
-              b.sendKeyboard(req.body.message.chat.id, removedGuest, keyboards.home);
+              b.sendKeyboard(req.body.message.chat.id, removedGuest, keyboards.home(ship.nextLocation));
             } else if (req.body.message.text == '\ud83d\udc1b BUG \ud83d\udc1b') {
-              b.sendKeyboard(req.body.message.chat.id, "Oh No!!! A BUG! Quick! Kill it!\n\nGo here to report the bug\n\nhttps://t.me/joinchat/HmxycxY2tSHp_aZX4mQ9QA", keyboards.home);
+              b.sendKeyboard(req.body.message.chat.id, "Oh No!!! A BUG! Quick! Kill it!\n\nGo here to report the bug\n\nhttps://t.me/joinchat/HmxycxY2tSHp_aZX4mQ9QA", keyboards.home(ship.nextLocation));
             } else if (req.body.message.text == '\ud83c\udfdd Ports of Call \ud83c\udfdd') {
               Port.find({
                 id: {
@@ -423,7 +423,7 @@ router.post('/', function(req, res, next) {
               for (var i in guestList) {
                 message += i + ": " + guestList[i] + "\n";
               }
-              b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest:\n" + message, keyboards.home);
+              b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest:\n" + message, keyboards.home(ship.nextLocation));
             } else if (req.body.message.text == '\ud83c\udf87 Achievements \ud83c\udf87') {
               Ship.findOne({id: ship.id}).populate("portHistory.port").then(function(sameShip) {
                 var message = "<b>Your Port History:</b>";
@@ -465,7 +465,7 @@ router.post('/', function(req, res, next) {
           } else {
             if (req.body.message.text == "/start") {
               //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
-              b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home);
+              b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home(ship.nextLocation));
             } else if (req.body.message.text == "/kick") {
               //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
               b.kick(req.body.message.chat.id, req.body.message.from.id, 1);
@@ -532,7 +532,7 @@ router.get('/', function(req, res, next) {
     message: 'get ok'
   });
 });
-b.sendKeyboard('510423667', 'Server Restarted', keyboards.home);
+b.sendKeyboard('510423667', 'Server Restarted', keyboards.home(ship.nextLocation));
 
 module.exports = router;
 

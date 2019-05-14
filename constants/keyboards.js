@@ -1,26 +1,35 @@
 module.exports = {
-  home: {
-    keyboard: [
-      [{
-        'text': '\ud83d\uddfa Navigation \ud83d\uddfa'
-      }],
-      [{
-        'text': '\ud83d\udc65 Manifest \ud83d\udc65'
-      }],
-      [{
-        'text': '\ud83c\udf87 Achievements \ud83c\udf87'
-      }],
-      [{
-        'text': '\ud83d\udcb0 Purser \ud83d\udcb0'
-      },
-      {
-        'text': '\ud83d\udcb0 Treasure \ud83d\udcb0'
-      },
-      {
-        'text': '\ud83d\udc1b BUG \ud83d\udc1b'
-      }],
-    ],
-    resize_keyboard: true
+  home: function(seaDay) {
+    return {
+      keyboard: [
+        [{
+          'text': '\ud83d\uddfa Navigation \ud83d\uddfa'
+        }],
+        [{
+          'text': '\ud83d\udc65 Manifest \ud83d\udc65'
+        }],
+        [{
+          'text': '\ud83c\udf87 Achievements \ud83c\udf87'
+        }],
+        seaDay ? [{
+            'text': '\ud83d\udcb0 Purser \ud83d\udcb0'
+          },
+          {
+            'text': '\ud83d\udc1b BUG \ud83d\udc1b'
+          }
+        ] : [{
+            'text': '\ud83d\udcb0 Purser \ud83d\udcb0'
+          },
+          {
+            'text': '\ud83d\udcb0 Treasure \ud83d\udcb0'
+          },
+          {
+            'text': '\ud83d\udc1b BUG \ud83d\udc1b'
+          }
+        ],
+      ],
+      resize_keyboard: true
+    };
   },
   manifest: {
     keyboard: [
@@ -61,7 +70,8 @@ module.exports = {
       }, ]
     ],
     resize_keyboard: true
-  },purser: {
+  },
+  purser: {
     keyboard: [
       [{
         'text': 'Check Balance'
