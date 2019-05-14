@@ -532,7 +532,7 @@ router.get('/', function(req, res, next) {
     message: 'get ok'
   });
 });
-b.sendKeyboard('510423667', 'Server Restarted', keyboards.home(ship.nextLocation));
+b.sendKeyboard('510423667', 'Server Restarted', keyboards.home(false));
 
 module.exports = router;
 
