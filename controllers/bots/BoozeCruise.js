@@ -280,11 +280,9 @@ router.post('/', function(req, res, next) {
               }
             } else if (req.body.message.text == "\ud83d\udea2 Home Port \ud83d\udea2") {
               var newGuest = guest.pick();
-              ship.guests.push({
-                type: newGuest
-              });
+              ship.guests.push(newGuest);
               ship.save();
-              b.sendKeyboard(req.body.message.chat.id, "A " + newGuest + " just boarded your vessel", keyboards.home(ship.nextLocation.port));
+              b.sendKeyboard(req.body.message.chat.id, "A " + guest.getType(newGuest.type) + " guest just boarded your vessel", keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == '\ud83d\udcb0 Treasure \ud83d\udcb0'){
               Port.findOne({
                 id: ship.location.port,

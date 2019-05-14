@@ -18,6 +18,10 @@ var index = Math.floor(Math.random() * guestTypes.length);
     };
 };
 
+guest.getType = function(index){
+  return guestTypes[index];
+};
+
 guest.board = function(){
 
 }
