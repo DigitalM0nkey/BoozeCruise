@@ -582,6 +582,6 @@ function sendAvailablePorts(chat_id, ports, ship) {
     b.sendKeyboard(chat_id, "Navigate to:", {
       inline_keyboard: [keyboard]
     });
-  }, 1000);
+  }, 5000);
 
 }
