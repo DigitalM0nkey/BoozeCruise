@@ -357,7 +357,7 @@ router.post('/', function(req, res, next) {
                         }];
                       })
                     });
-                  }, 1000);
+                  }, 5000);
                 } else if (portsInShipSector === ports.length) {
                   sendAvailablePorts(req.body.message.chat.id, ports, ship);
                 } else {
@@ -403,7 +403,7 @@ router.post('/', function(req, res, next) {
                       }];
                     })
                   });
-                }, 1000);
+                }, 5000);
               });
 
             } else if (req.body.message.text == '\ud83d\udcb0 Purser \ud83d\udcb0') {
@@ -582,6 +582,6 @@ function sendAvailablePorts(chat_id, ports, ship) {
     b.sendKeyboard(chat_id, "Navigate to:", {
       inline_keyboard: [keyboard]
     });
-  }, 5000);
+  }, 3000);
 
 }
