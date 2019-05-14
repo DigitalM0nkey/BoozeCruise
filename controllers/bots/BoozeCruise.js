@@ -278,7 +278,7 @@ router.post('/', function(req, res, next) {
                   });
                 });
               }
-            } else if (req.body.message.text == "\ud83d\udea2 Home Port \ud83d\udea2") {
+            } else if (req.body.message.text == "\ud83d\udea2 Home Port \ud83d\udea2" || req.body.message.text == "/addGuest") {
               var newGuest = guest.pick();
               ship.guests.push(newGuest);
               ship.save();
