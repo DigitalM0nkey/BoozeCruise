@@ -44,6 +44,7 @@ module.exports = function() {
         console.log(response);
         if(error) return;
         if(!response) return reject();
+        if(response.status == 'restricted' || response.status == 'left' || response.status == 'kicked') return reject();
         resolve(response);
       });
     });
