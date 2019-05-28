@@ -41,6 +41,7 @@ module.exports = function() {
       var url = 'https://api.telegram.org/bot' + bot.token + '/getChatMember?chat_id='+chat_id+'&user_id='+user_id;
       request(url, function (error, r, body) {
         var response = JSON.parse(body).result;
+        console.log(response);
         if(error) return;
         if(!response) return reject();
         resolve(response);
