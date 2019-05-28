@@ -290,6 +290,7 @@ router.post('/', function(req, res, next) {
               }).then(function(port) {
                 if (port) {
                   b.sendMessage(ship.id, "You found "+ port.treasure + " Korona in the buried treasure" );
+                  b.sendMessage(port.id, ship.user.first_name + " just found "+ port.treasure + " Korona here.");
                   ship.purse.balance+=port.treasure;
                   ship.purse.transactions.push({
                     date: new Date(),
