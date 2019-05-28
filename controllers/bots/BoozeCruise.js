@@ -68,7 +68,7 @@ var minutelyEvent = schedule.scheduleJob('0 */1 * * * *', function() {
           return port.id == ship.nextLocation.port;
         });
         b.exportChatInviteLink(nextPort.id).then(function(link) {
-          b.sendMessage(ship.id, 'This is the ' + nextPort.name + ' port authority \nUse this link to dock.\n' + link);
+          b.sendKeyboard(ship.id, 'This is the ' + nextPort.name + ' port authority \nUse this link to dock.\n' + link, keyboards.home(false));
           ship.location = nextPort.location;
           ship.location.port = nextPort.id;
           ship.nextLocation = undefined;
@@ -230,7 +230,7 @@ router.post('/', function(req, res, next) {
               //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
               b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == "Check Balance") {
-              b.sendMessage(ship.id, "Your balance is " + ship.purse.balance + " Koranas");
+              b.sendMessage(ship.id, "Your balance is " + ship.purse.balance + " Korona");
             } else if (req.body.message.text == "\ud83c\udf87 Achievements \ud83c\udf87") {
               var portIds = ship.portHistory.map(function(port) {
                 return port.port;
@@ -286,37 +286,45 @@ router.post('/', function(req, res, next) {
               ship.save();
               b.sendKeyboard(req.body.message.chat.id, "A " + guest.getType(newGuest.type) + " guest just boarded your vessel", keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == '\ud83d\udcb0 Treasure \ud83d\udcb0') {
-              Port.findOne({
-                id: ship.location.port,
-                treasure: {
-                  $gt: 0
-                }
-              }).then(function(port) {
-                if (port) {
-                  b.sendMessage(ship.id, "You found " + port.treasure + " Korona in the buried treasure");
-                  b.sendMessage(port.id, ship.user.first_name + " just found " + port.treasure + " Korona here.");
-                  ship.purse.balance += port.treasure;
-                  ship.purse.transactions.push({
-                    date: new Date(),
-                    type: "Treasure",
-                    amount: port.treasure
-                  });
-                  ship.save();
-                  port.treasure = 0;
-                  port.save();
-                  Port.find({
-                    id: {
-                      $ne: ship.location.port
-                    }
-                  }).then(function(ports) {
-                    var randomPort = Math.floor(Math.random() * ports.length);
-                    ports[randomPort].treasure = Math.round(Math.random() * TREASURE + 1);
-                    ports[randomPort].save();
-                  });
-                } else {
-                  b.sendMessage(ship.id, "No treasure here, keep searching");
-                }
+              b.getChatMember(ship.location.port,ship.id)
+              .then(function(chatMember){
+                Port.findOne({
+                  id: ship.location.port,
+                  treasure: {
+                    $gt: 0
+                  }
+                }).then(function(port) {
+                  if (port) {
+                    b.sendMessage(ship.id, "You found " + port.treasure + " Korona in the buried treasure");
+                    b.sendMessage(port.id, ship.user.first_name + " just found " + port.treasure + " Korona here.");
+                    ship.purse.balance += port.treasure;
+                    ship.purse.transactions.push({
+                      date: new Date(),
+                      type: "Treasure",
+                      amount: port.treasure
+                    });
+                    ship.save();
+                    port.treasure = 0;
+                    port.save();
+                    Port.find({
+                      id: {
+                        $ne: ship.location.port
+                      }
+                    }).then(function(ports) {
+                      var randomPort = Math.floor(Math.random() * ports.length);
+                      ports[randomPort].treasure = Math.round(Math.random() * TREASURE + 1);
+                      ports[randomPort].save();
+                    });
+                  } else {
+                    b.sendMessage(ship.id, "No treasure here, keep searching");
+                  }
+                });
+              },function(){
+                b.exportChatInviteLink(ship.location.port).then(function(link){
+                  b.sendMessage(ship.id, "You have not docked, you can only search for treasure in port\n" + link);
+                });
               });
+
 
 
 
@@ -531,7 +539,6 @@ router.post('/', function(req, res, next) {
   }
 
 });
-
 
 router.get('/', function(req, res, next) {
   b.sendMessage('510423667', 'Received Get');

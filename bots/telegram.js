@@ -36,6 +36,17 @@ module.exports = function() {
       });
     });
   };
+  bot.getChatMember = function(chat_id, user_id) {
+    return new Promise(function (resolve, reject) {
+      var url = 'https://api.telegram.org/bot' + bot.token + '/getChatMember?chat_id='+chat_id+'&user_id='+user_id;
+      request(url, function (error, r, body) {
+        var response = JSON.parse(body).result;
+        if(error) return;
+        if(!response) return reject();
+        resolve(response);
+      });
+    });
+  };
   bot.setWebhook = function(api) {
     return new Promise(function (resolve, reject) {
       var url = 'https://api.telegram.org/bot' + bot.token + '/setWebhook?url=https://boozecruise.punchmonkeyproductions.com/bots/' + api;
