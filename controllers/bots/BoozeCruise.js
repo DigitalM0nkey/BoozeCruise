@@ -76,9 +76,9 @@ var minutelyEvent = schedule.scheduleJob('0 */1 * * * *', function() {
             port: ship.location.port,
             arrivalDate: new Date()
           });
-          ship.save().then(function(savedShip){
+          ship.save().then(function(savedShip) {
             console.log(savedShip);
-          },function(e){
+          }, function(e) {
             console.error(e);
           });
         });
@@ -167,14 +167,14 @@ router.post('/', function(req, res, next) {
                   portName: port.name
                 };
                 if (ship.portHistory.length > 0) {
-                ship.portHistory[ship.portHistory.length-1].departureDate=new Date();
+                  ship.portHistory[ship.portHistory.length - 1].departureDate = new Date();
                 }
                 b.kick(ship.location.port, ship.id, 1);
                 ship.location.port = undefined;
                 ship.save();
                 console.log(data);
                 b.sendMessage(ship.id, "Your ship is now en route to " + port.name + "\nyou will arrive in " + calculateTime(arrival));
-                b.sendKeyboard(ship.id,"--------",keyboards.home(ship.nextLocation.port));
+                b.sendKeyboard(ship.id, "--------", keyboards.home(ship.nextLocation.port));
               });
           }
         } else if (data.action === 'navigate_sector') {
@@ -232,26 +232,28 @@ router.post('/', function(req, res, next) {
             } else if (req.body.message.text == "Check Balance") {
               b.sendMessage(ship.id, "Your balance is " + ship.purse.balance + " Koranas");
             } else if (req.body.message.text == "\ud83c\udf87 Achievements \ud83c\udf87") {
-              var portIds = ship.portHistory.map(function(port){
+              var portIds = ship.portHistory.map(function(port) {
                 return port.port;
               });
-              Port.find({id:portIds}).then(function(ports){
+              Port.find({
+                id: portIds
+              }).then(function(ports) {
                 console.log(ports);
-                var count = ship.portHistory.reduce(function(portCount,port){
-                  if (!portCount[port.port]){
-                    portCount[port.port]={
-                      name:ports.find(function(foundPort){
+                var count = ship.portHistory.reduce(function(portCount, port) {
+                  if (!portCount[port.port]) {
+                    portCount[port.port] = {
+                      name: ports.find(function(foundPort) {
                         return foundPort.id == port.port;
                       }).name,
-                      count:0
+                      count: 0
                     };
                   }
                   portCount[port.port].count++;
                   return portCount;
-                },{});
+                }, {});
                 console.log(count);
                 var message = "";
-                for (var key in count){
+                for (var key in count) {
                   message += "\n" + count[key].name + " (" + count[key].count + ")";
                 }
                 b.sendMessage(ship.id, "You have been to the following ports: " + message);
@@ -283,32 +285,36 @@ router.post('/', function(req, res, next) {
               ship.guests.push(newGuest);
               ship.save();
               b.sendKeyboard(req.body.message.chat.id, "A " + guest.getType(newGuest.type) + " guest just boarded your vessel", keyboards.home(ship.nextLocation.port));
-            } else if (req.body.message.text == '\ud83d\udcb0 Treasure \ud83d\udcb0'){
+            } else if (req.body.message.text == '\ud83d\udcb0 Treasure \ud83d\udcb0') {
               Port.findOne({
                 id: ship.location.port,
-                treasure: {$gt:0}
+                treasure: {
+                  $gt: 0
+                }
               }).then(function(port) {
                 if (port) {
-                  b.sendMessage(ship.id, "You found "+ port.treasure + " Korona in the buried treasure" );
-                  b.sendMessage(port.id, ship.user.first_name + " just found "+ port.treasure + " Korona here.");
-                  ship.purse.balance+=port.treasure;
+                  b.sendMessage(ship.id, "You found " + port.treasure + " Korona in the buried treasure");
+                  b.sendMessage(port.id, ship.user.first_name + " just found " + port.treasure + " Korona here.");
+                  ship.purse.balance += port.treasure;
                   ship.purse.transactions.push({
                     date: new Date(),
                     type: "Treasure",
                     amount: port.treasure
                   });
                   ship.save();
-                  port.treasure=0;
+                  port.treasure = 0;
                   port.save();
                   Port.find({
-                    id:{$ne:ship.location.port}
-                  }).then(function(ports){
-                    var randomPort = Math.floor(Math.random()*ports.length);
-                    ports[randomPort].treasure= Math.round(Math.random()*TREASURE+1);
+                    id: {
+                      $ne: ship.location.port
+                    }
+                  }).then(function(ports) {
+                    var randomPort = Math.floor(Math.random() * ports.length);
+                    ports[randomPort].treasure = Math.round(Math.random() * TREASURE + 1);
                     ports[randomPort].save();
                   });
                 } else {
-                  b.sendMessage(ship.id, "No treasure here, keep searching" );
+                  b.sendMessage(ship.id, "No treasure here, keep searching");
                 }
               });
 
@@ -316,7 +322,7 @@ router.post('/', function(req, res, next) {
 
 
 
-              } else if (req.body.message.text == "/removeGuest") {
+            } else if (req.body.message.text == "/removeGuest") {
               var removedGuest = ship.guests.pop();
               ship.save();
               b.sendKeyboard(req.body.message.chat.id, removedGuest, keyboards.home(ship.nextLocation.port));
@@ -424,14 +430,16 @@ router.post('/', function(req, res, next) {
               }
               b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest:\n" + message, keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == '\ud83c\udf87 Achievements \ud83c\udf87') {
-              Ship.findOne({id: ship.id}).populate("portHistory.port").then(function(sameShip) {
+              Ship.findOne({
+                id: ship.id
+              }).populate("portHistory.port").then(function(sameShip) {
                 var message = "<b>Your Port History:</b>";
-                sameShip.portHistory.forEach(function(stop){
+                sameShip.portHistory.forEach(function(stop) {
                   var arrivalDate = moment(stop.arrivalDate);
                   var departureDate = moment(stop.departureDate);
-                  message+="\n"+stop.port.name+" | "+arrivalDate.diff(departureDate,"days");
+                  message += "\n" + stop.port.name + " | " + arrivalDate.diff(departureDate, "days");
                 });
-                b.sendMessage(req.body.message.chat.id,message);
+                b.sendMessage(req.body.message.chat.id, message);
               });
 
             } else if (req.body.message.text == 'Port \ud83d\udea2') {
@@ -535,14 +543,14 @@ b.sendKeyboard('510423667', 'Server Restarted', keyboards.home(false));
 
 module.exports = router;
 
-function calculateTime(arrival){
-return  Math.abs(moment().diff(arrival,'hours'))+" hours "+Math.abs(moment().diff(arrival,'minutes')%60)+" minutes";
+function calculateTime(arrival) {
+  return Math.abs(moment().diff(arrival, 'hours')) + " hours " + Math.abs(moment().diff(arrival, 'minutes') % 60) + " minutes";
 }
 
 function calculateDistance(portLocation, shipLocation) {
   if (portLocation.sector === shipLocation.sector) {
     var distance = Math.abs(portLocation.x - shipLocation.x) + Math.abs(portLocation.y - shipLocation.y);
-    return distance ? distance * 12 : 6;
+    return (distance + 1) * 3;
   } else {
     var portSector = {
       x: portLocation.sector % HSECTORS,
