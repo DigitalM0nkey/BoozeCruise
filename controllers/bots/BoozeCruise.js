@@ -16,7 +16,7 @@ var Ship = require('../../models/ship');
 var guest = require('../../types/guest');
 //console.log(Chat)
 var b = new TelegramBot();
-b.init(TOKEN).then(function() {
+b.init(TOKEN).then(function () {
   b.introduceYourself();
   //b.deleteWebhook();
   b.setWebhook('BoozeCruise');
@@ -29,12 +29,12 @@ console.log(guest.pick());
 //TODO -- When player chats(arrives?) in port, a meassage is sent to their ship. (Acheivement, stats, other ships in port)
 
 //var dailyEvent = schedule.scheduleJob('30 * * * * *', function(){
-var dailyEvent = schedule.scheduleJob('0 0 8 * * *', function() {
+var dailyEvent = schedule.scheduleJob('0 0 8 * * *', function () {
   console.log('The answer to life, the universe, and everything!');
   Port.find({})
-    .then(function(ports) {
-      ports.forEach(function(port) {
-        b.getChat(port.id).then(function(chat) {
+    .then(function (ports) {
+      ports.forEach(function (port) {
+        b.getChat(port.id).then(function (chat) {
           console.log(chat);
           port.description = chat.description;
           port.name = chat.title;
@@ -56,18 +56,18 @@ var dailyEvent = schedule.scheduleJob('0 0 8 * * *', function() {
     */
 });
 
-var minutelyEvent = schedule.scheduleJob('0 */1 * * * *', function() {
-  Port.find({}).then(function(ports) {
+var minutelyEvent = schedule.scheduleJob('0 */1 * * * *', function () {
+  Port.find({}).then(function (ports) {
     Ship.find({
       'nextLocation.arrival': {
         $lte: new Date()
       }
-    }).then(function(ships) {
-      ships.forEach(function(ship) {
-        var nextPort = _.find(ports, function(port) {
+    }).then(function (ships) {
+      ships.forEach(function (ship) {
+        var nextPort = _.find(ports, function (port) {
           return port.id == ship.nextLocation.port;
         });
-        b.exportChatInviteLink(nextPort.id).then(function(link) {
+        b.exportChatInviteLink(nextPort.id).then(function (link) {
           b.sendKeyboard(ship.id, 'This is the ' + nextPort.name + ' port authority \nUse this link to dock.\n' + link, keyboards.home(false));
           ship.location = nextPort.location;
           ship.location.port = nextPort.id;
@@ -76,9 +76,9 @@ var minutelyEvent = schedule.scheduleJob('0 */1 * * * *', function() {
             port: ship.location.port,
             arrivalDate: new Date()
           });
-          ship.save().then(function(savedShip) {
+          ship.save().then(function (savedShip) {
             console.log(savedShip);
-          }, function(e) {
+          }, function (e) {
             console.error(e);
           });
         });
@@ -132,7 +132,7 @@ var events = [{
 
 var moves = {
   cocktailLounge: {
-    guests: function() {
+    guests: function () {
       guest.pick();
     }
   },
@@ -143,22 +143,22 @@ var moves = {
 
 // This post is everytime someone says something to the bot.
 
-router.post('/', function(req, res, next) {
+router.post('/', function (req, res, next) {
   console.log(req.body);
 
   if (req.body.callback_query) {
     Ship.findOne({
-        id: req.body.callback_query.from.id
-      })
-      .then(function(ship) {
-        if (parseInt(req.body.callback_query.from.id) > 0) {} else {}
+      id: req.body.callback_query.from.id
+    })
+      .then(function (ship) {
+        if (parseInt(req.body.callback_query.from.id) > 0) { } else { }
         var data = JSON.parse(req.body.callback_query.data);
         if (data.action === 'navigate') {
           if (ship.id != myShip) {
             Port.findOne({
-                id: data.port
-              })
-              .then(function(port) {
+              id: data.port
+            })
+              .then(function (port) {
                 var arrival = new Date();
                 arrival = arrival.setTime(arrival.getTime() + calculateDistance(port.location, ship.location) * 60 * 60 * 1000);
                 ship.nextLocation = {
@@ -179,9 +179,9 @@ router.post('/', function(req, res, next) {
           }
         } else if (data.action === 'navigate_sector') {
           Port.find({
-              "location.sector": data.sector
-            })
-            .then(function(ports) {
+            "location.sector": data.sector
+          })
+            .then(function (ports) {
               sendAvailablePorts(req.body.callback_query.from.id, ports, ship);
 
             });
@@ -198,12 +198,12 @@ router.post('/', function(req, res, next) {
   } else {
     if (parseInt(req.body.message.chat.id) > 0) {
       Ship.findOne({
-          id: req.body.message.chat.id
-        })
-        .then(function(ship) {
+        id: req.body.message.chat.id
+      })
+        .then(function (ship) {
           if (!ship) {
             Port.find({})
-              .then(function(ports) {
+              .then(function (ports) {
                 var randomPort = ports[Math.floor(Math.random() * ports.length)];
                 var newShip = new Ship({
                   id: req.body.message.chat.id,
@@ -232,17 +232,17 @@ router.post('/', function(req, res, next) {
             } else if (req.body.message.text == "Check Balance") {
               b.sendMessage(ship.id, "Your balance is " + ship.purse.balance + " Korona");
             } else if (req.body.message.text == "\ud83c\udf87 Achievements \ud83c\udf87") {
-              var portIds = ship.portHistory.map(function(port) {
+              var portIds = ship.portHistory.map(function (port) {
                 return port.port;
               });
               Port.find({
                 id: portIds
-              }).then(function(ports) {
+              }).then(function (ports) {
                 console.log(ports);
-                var count = ship.portHistory.reduce(function(portCount, port) {
+                var count = ship.portHistory.reduce(function (portCount, port) {
                   if (!portCount[port.port]) {
                     portCount[port.port] = {
-                      name: ports.find(function(foundPort) {
+                      name: ports.find(function (foundPort) {
                         return foundPort.id == port.port;
                       }).name,
                       count: 0
@@ -266,15 +266,15 @@ router.post('/', function(req, res, next) {
               if (ship.nextLocation.port) {
                 Port.findOne({
                   id: ship.nextLocation.port
-                }).then(function(port) {
+                }).then(function (port) {
                   b.sendMessage(ship.id, "You will arrive in " + calculateTime(ship.nextLocation.arrival));
                   b.sendKeyboard(ship.id, "Your ship is currently en route to " + port.name, keyboards.atSea);
                 });
               } else {
                 Port.findOne({
                   id: ship.location.port
-                }).then(function(port) {
-                  b.exportChatInviteLink(port.id).then(function(link) {
+                }).then(function (port) {
+                  b.exportChatInviteLink(port.id).then(function (link) {
                     b.sendMessage(ship.id, "You are currently docked in " + port.name + "\n " + link);
                     b.sendKeyboard(req.body.message.chat.id, "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.", keyboards.navigation);
                   });
@@ -286,44 +286,44 @@ router.post('/', function(req, res, next) {
               ship.save();
               b.sendKeyboard(req.body.message.chat.id, "A " + guest.getType(newGuest.type) + " guest just boarded your vessel", keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == '\ud83d\udcb0 Treasure \ud83d\udcb0') {
-              b.getChatMember(ship.location.port,ship.id)
-              .then(function(chatMember){
-                Port.findOne({
-                  id: ship.location.port,
-                  treasure: {
-                    $gt: 0
-                  }
-                }).then(function(port) {
-                  if (port) {
-                    b.sendMessage(ship.id, "You found " + port.treasure + " Korona in the buried treasure");
-                    b.sendMessage(port.id, ship.user.first_name + " just found " + port.treasure + " Korona here.");
-                    ship.purse.balance += port.treasure;
-                    ship.purse.transactions.push({
-                      date: new Date(),
-                      type: "Treasure",
-                      amount: port.treasure
-                    });
-                    ship.save();
-                    port.treasure = 0;
-                    port.save();
-                    Port.find({
-                      id: {
-                        $ne: ship.location.port
-                      }
-                    }).then(function(ports) {
-                      var randomPort = Math.floor(Math.random() * ports.length);
-                      ports[randomPort].treasure = Math.round(Math.random() * TREASURE + 1);
-                      ports[randomPort].save();
-                    });
-                  } else {
-                    b.sendMessage(ship.id, "No treasure here, keep searching");
-                  }
+              b.getChatMember(ship.location.port, ship.id)
+                .then(function (chatMember) {
+                  Port.findOne({
+                    id: ship.location.port,
+                    treasure: {
+                      $gt: 0
+                    }
+                  }).then(function (port) {
+                    if (port) {
+                      b.sendMessage(ship.id, "You found " + port.treasure + " Korona in the buried treasure");
+                      b.sendMessage(port.id, ship.user.first_name + " just found " + port.treasure + " Korona here.");
+                      ship.purse.balance += port.treasure;
+                      ship.purse.transactions.push({
+                        date: new Date(),
+                        type: "Treasure",
+                        amount: port.treasure
+                      });
+                      ship.save();
+                      port.treasure = 0;
+                      port.save();
+                      Port.find({
+                        id: {
+                          $ne: ship.location.port
+                        }
+                      }).then(function (ports) {
+                        var randomPort = Math.floor(Math.random() * ports.length);
+                        ports[randomPort].treasure = Math.round(Math.random() * TREASURE + 1);
+                        ports[randomPort].save();
+                      });
+                    } else {
+                      b.sendMessage(ship.id, "No treasure here, keep searching");
+                    }
+                  });
+                }, function () {
+                  b.exportChatInviteLink(ship.location.port).then(function (link) {
+                    b.sendMessage(ship.id, "You have not docked, you can only search for treasure in port\n" + link);
+                  });
                 });
-              },function(){
-                b.exportChatInviteLink(ship.location.port).then(function(link){
-                  b.sendMessage(ship.id, "You have not docked, you can only search for treasure in port\n" + link);
-                });
-              });
 
 
 
@@ -336,19 +336,21 @@ router.post('/', function(req, res, next) {
               b.sendKeyboard(req.body.message.chat.id, removedGuest, keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == '\ud83d\udc1b BUG \ud83d\udc1b') {
               b.sendKeyboard(req.body.message.chat.id, "Oh No!!! A BUG! Quick! Kill it!\n\nGo here to report the bug\n\nhttps://t.me/joinchat/HmxycxY2tSHp_aZX4mQ9QA", keyboards.home(ship.nextLocation.port));
+            } else if (req.body.message.text == '\ud83d\udc1b Suggestions \ud83d\udc1b') {
+              b.sendKeyboard(req.body.message.chat.id, "Got an idea?\n\nGo here to tell us\n\nhttps://t.me/joinchat/HmxycxOCylQHWIDtPsd7pw", keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == '\ud83c\udfdd Ports of Call \ud83c\udfdd') {
               Port.find({
                 id: {
                   $ne: ship.location.port
                 }
-              }).then(function(ports) {
-                var portsInShipSector = ports.filter(function(port) {
+              }).then(function (ports) {
+                var portsInShipSector = ports.filter(function (port) {
                   return port.location.sector === ship.location.sector;
                 }).length;
                 if (portsInShipSector === 0) {
 
                   var sectors = {};
-                  ports.forEach(function(port, i, array) {
+                  ports.forEach(function (port, i, array) {
                     if (!sectors[port.location.sector]) sectors[port.location.sector] = '';
                     sectors[port.location.sector] += port.name + ', ';
                   });
@@ -358,9 +360,9 @@ router.post('/', function(req, res, next) {
                     message += constants.sectors[i] + ': ' + sectors[i] + '\n';
                   }
                   b.sendMessage(req.body.message.chat.id, 'Below are the available continents that you can travel to. The ports of call that you can visit are listed beside the respective continents.\n\n' + message);
-                  setTimeout(function() {
+                  setTimeout(function () {
                     b.sendKeyboard(req.body.message.chat.id, "Which continent would you like to navigate to:", {
-                      inline_keyboard: Object.keys(sectors).map(function(sector) {
+                      inline_keyboard: Object.keys(sectors).map(function (sector) {
                         return [{
                           'text': constants.sectors[sector],
                           'callback_data': JSON.stringify({
@@ -384,7 +386,7 @@ router.post('/', function(req, res, next) {
                 "id": {
                   $ne: ship.location.port
                 }
-              }).then(function(ports) {
+              }).then(function (ports) {
                 sendAvailablePorts(req.body.message.chat.id, ports, ship);
               });
             } else if (req.body.message.text === 'Change Continent') {
@@ -392,9 +394,9 @@ router.post('/', function(req, res, next) {
                 "location.sector": {
                   $ne: ship.location.sector
                 }
-              }).then(function(ports) {
+              }).then(function (ports) {
                 var sectors = {};
-                ports.forEach(function(port, i, array) {
+                ports.forEach(function (port, i, array) {
                   if (!sectors[port.location.sector]) sectors[port.location.sector] = '';
                   sectors[port.location.sector] += port.name + ', ';
                 });
@@ -404,9 +406,9 @@ router.post('/', function(req, res, next) {
                   message += constants.sectors[i] + ': ' + sectors[i] + '\n';
                 }
                 b.sendMessage(req.body.message.chat.id, 'Below are the available continents that you can travel to. The ports of call that you can visit are listed beside the respective continents.\n\n' + message);
-                setTimeout(function() {
+                setTimeout(function () {
                   b.sendKeyboard(req.body.message.chat.id, "Which continent would you like to navigate to:", {
-                    inline_keyboard: Object.keys(sectors).map(function(sector) {
+                    inline_keyboard: Object.keys(sectors).map(function (sector) {
                       return [{
                         'text': constants.sectors[sector],
                         'callback_data': JSON.stringify({
@@ -425,7 +427,7 @@ router.post('/', function(req, res, next) {
               b.sendKeyboard(req.body.message.chat.id, "A document giving comprehensive details of a ship and its cargo and other contents, passengers, and crew for the use of customs officers.", keyboards.manifest);
             } else if (req.body.message.text == '\ud83d\udc65 Guest Manifest \ud83d\udc65') {
               var guestList = {};
-              ship.guests.forEach(function(guest) {
+              ship.guests.forEach(function (guest) {
                 if (!guestList[guest.type]) {
                   guestList[guest.type] = 0;
 
@@ -440,9 +442,9 @@ router.post('/', function(req, res, next) {
             } else if (req.body.message.text == '\ud83c\udf87 Achievements \ud83c\udf87') {
               Ship.findOne({
                 id: ship.id
-              }).populate("portHistory.port").then(function(sameShip) {
+              }).populate("portHistory.port").then(function (sameShip) {
                 var message = "<b>Your Port History:</b>";
-                sameShip.portHistory.forEach(function(stop) {
+                sameShip.portHistory.forEach(function (stop) {
                   var arrivalDate = moment(stop.arrivalDate);
                   var departureDate = moment(stop.departureDate);
                   message += "\n" + stop.port.name + " | " + arrivalDate.diff(departureDate, "days");
@@ -452,7 +454,7 @@ router.post('/', function(req, res, next) {
 
             } else if (req.body.message.text == 'Port \ud83d\udea2') {
               console.log("log here");
-              b.exportChatInviteLink('-1001399879250').then(function(link) {
+              b.exportChatInviteLink('-1001399879250').then(function (link) {
                 console.log(link);
                 b.sendMessage(req.body.message.chat.id, link);
               });
@@ -462,12 +464,12 @@ router.post('/', function(req, res, next) {
         });
     } else {
       Port.findOne({
-          id: req.body.message.chat.id
-        })
-        .then(function(port) {
+        id: req.body.message.chat.id
+      })
+        .then(function (port) {
           if (!port) {
             if (req.body.message.chat.id == myShip) {
-              b.getChat(req.body.message.chat.id).then(function(chat) {
+              b.getChat(req.body.message.chat.id).then(function (chat) {
                 console.log(chat);
                 var newPort = new Port({
                   id: req.body.message.chat.id,
@@ -486,13 +488,13 @@ router.post('/', function(req, res, next) {
               b.kick(req.body.message.chat.id, req.body.message.from.id, 1);
               Ship.findOne({
                 "user.id": req.body.message.from.id
-              }).then(function(ship) {
+              }).then(function (ship) {
                 b.sendMessage(ship.id, "You've been kicked from " + port.name);
               });
             } else if (req.body.message.new_chat_participant) {
               Ship.findOne({
                 "user.id": req.body.message.new_chat_participant.id
-              }).then(function(ship) {
+              }).then(function (ship) {
                 port.ships.push(ship._id);
                 port.save();
               });
@@ -500,8 +502,8 @@ router.post('/', function(req, res, next) {
             } else if (req.body.message.left_chat_participant) {
               Ship.findOne({
                 "user.id": req.body.message.left_chat_participant.id
-              }).then(function(ship) {
-                port.ships = port.ships.filter(function(portShip) {
+              }).then(function (ship) {
+                port.ships = port.ships.filter(function (portShip) {
                   return portShip != ship._id;
                 });
                 port.save();
@@ -509,7 +511,7 @@ router.post('/', function(req, res, next) {
             } else {
               Ship.findOne({
                 "user.id": req.body.message.from.id
-              }).then(function(ship) {
+              }).then(function (ship) {
                 var found = false;
                 for (var i in port.ships) {
                   if (port.ships[i] == ship._id) {
@@ -540,7 +542,7 @@ router.post('/', function(req, res, next) {
 
 });
 
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
   b.sendMessage('510423667', 'Received Get');
   res.json({
     message: 'get ok'
@@ -574,15 +576,15 @@ function calculateDistance(portLocation, shipLocation) {
 }
 
 function sendAvailablePorts(chat_id, ports, ship) {
-  b.sendMessage(chat_id, ports.reduce(function(message, port) {
+  b.sendMessage(chat_id, ports.reduce(function (message, port) {
     message += '<b>' + port.name + "</b>\n";
     message += port.description + "\n\n";
     message += "Distance to port <b>" + calculateDistance(port.location, ship.location) + "</b> hours\n";
     message += "Ships in port <b>" + port.ships.length + "</b>\n\n";
     return message;
   }, ''));
-  setTimeout(function() {
-    var keyboard = ports.map(function(port) {
+  setTimeout(function () {
+    var keyboard = ports.map(function (port) {
       return {
         'text': port.name,
         'callback_data': JSON.stringify({
