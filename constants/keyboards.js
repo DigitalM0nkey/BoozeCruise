@@ -22,14 +22,14 @@ module.exports = {
         },
         {
           'text': '\ud83d\udcb0 Treasure \ud83d\udcb0'
-        },
-        {
+        }],
+        [{
           'text': '\ud83d\udc1b BUG \ud83d\udc1b'
         },
         {
           'text': '\ud83d\udc1b Suggestions \ud83d\udc1b'
         }
-          ],
+        ],
       ],
       resize_keyboard: true
     };
