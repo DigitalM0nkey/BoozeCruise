@@ -3,3 +3,6 @@ private
 config.js
 desktop.ini
 Docs
+.DS_Store
+.vagrant
+Vagrantfile
