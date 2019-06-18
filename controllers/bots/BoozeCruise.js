@@ -1,3 +1,4 @@
+var mixology = require('../../mini-game/mixology');
 var router = require('express').Router();
 var schedule = require('node-schedule');
 var moment = require('moment');
@@ -57,6 +58,7 @@ var dailyEvent = schedule.scheduleJob('0 0 8 * * *', function () {
 });
 
 var minutelyEvent = schedule.scheduleJob('0 */1 * * * *', function () {
+  mixology.getCocktail();
   Port.find({}).then(function (ports) {
     Ship.find({
       'nextLocation.arrival': {
