@@ -7,7 +7,7 @@ var Cocktail = db.model('Cocktail', {
   glass: { type: String, required: false },
   instructions: { type: String, required: false },
   catagory: { type: String, required: false },
-  alcoholic: { type: Boolean, required: false },
+  alcoholic: { type: String, required: false },
 });
 module.exports = Cocktail;
 
