@@ -10,7 +10,7 @@ var TOKEN = config.tokens.telegram.BoozeCruise;
 var HSECTORS = 4;
 var VSECTORS = 3;
 var TREASURE = 500;
-var myShip = '5be3d50298ae6843394411ee';
+var MYSHIP = '5be3d50298ae6843394411ee';
 var Port = require('../../models/port');
 var Ship = require('../../models/ship');
 var guest = require('../../types/guest');
@@ -154,7 +154,7 @@ router.post('/', function (req, res, next) {
         if (parseInt(req.body.callback_query.from.id) > 0) { } else { }
         var data = JSON.parse(req.body.callback_query.data);
         if (data.action === 'navigate') {
-          if (ship.id != myShip) {
+          if (ship.id != MYSHIP) {
             Port.findOne({
               id: data.port
             })
@@ -325,11 +325,10 @@ router.post('/', function (req, res, next) {
                   });
                 });
 
-
-
-
-
-
+            } else if (req.body.message.text.substring(0, req.body.message.text.indexOf(' ')) == "/broadcast") {
+              if (ship._id == MYSHIP) {
+                broadcast(req.body.message.text.substring(req.body.message.text.indexOf(' ') + 1))
+              }
             } else if (req.body.message.text == "/removeGuest") {
               var removedGuest = ship.guests.pop();
               ship.save();
@@ -468,7 +467,7 @@ router.post('/', function (req, res, next) {
       })
         .then(function (port) {
           if (!port) {
-            if (req.body.message.chat.id == myShip) {
+            if (req.body.message.chat.id == MYSHIP) {
               b.getChat(req.body.message.chat.id).then(function (chat) {
                 console.log(chat);
                 var newPort = new Port({
@@ -574,11 +573,14 @@ function calculateDistance(portLocation, shipLocation) {
     return Math.abs((x + y) * 24);
   }
 }
-Ship.find({}).then(function (ships) {
-  b.broadcast(ships.map(function (ship) {
-    return ship.id;
-  }), "This is your captain speaking\n\"This is a test\"")
-})
+function broadcast(message) {
+  Ship.find({}).then(function (ships) {
+    b.broadcast(ships.map(function (ship) {
+      return ship.id;
+    }), message);
+  });
+}
+
 
 function sendAvailablePorts(chat_id, ports, ship) {
   b.sendMessage(chat_id, ports.reduce(function (message, port) {
