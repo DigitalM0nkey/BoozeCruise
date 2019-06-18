@@ -9,4 +9,6 @@ var Cocktail = db.model('Cocktail', {
   catagory: { type: String, required: false },
   alcoholic: { type: Boolean, required: false },
 });
+module.exports = Cocktail;
+
 
