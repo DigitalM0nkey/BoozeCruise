@@ -574,6 +574,11 @@ function calculateDistance(portLocation, shipLocation) {
     return Math.abs((x + y) * 24);
   }
 }
+Ship.find({}).then(function (ships) {
+  b.broadcast(ships.map(function (ship) {
+    return ship.id;
+  }), "This is your captain speaking\n\"This is a test\"")
+})
 
 function sendAvailablePorts(chat_id, ports, ship) {
   b.sendMessage(chat_id, ports.reduce(function (message, port) {

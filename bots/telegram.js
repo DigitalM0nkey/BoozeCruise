@@ -1,21 +1,21 @@
 var request = require('request');
-module.exports = function() {
+module.exports = function () {
   var bot = this;
 
   bot.lastMsgId = 69;
 
-  bot.notifyAdmin=function(message){
-  bot.sendMessage('510423667', message);
-}
+  bot.notifyAdmin = function (message) {
+    bot.sendMessage('510423667', message);
+  }
 
-  bot.init = function(TOKEN) {
+  bot.init = function (TOKEN) {
     bot.token = TOKEN;
     return new Promise(function (resolve, reject) {
       var url = 'https://api.telegram.org/bot' + bot.token + '/getMe';
       request(url, function (error, r, body) {
         var response = JSON.parse(body).result;
-        if(error) return;
-        if(!response) return;
+        if (error) return;
+        if (!response) return;
         bot.id = response.id || '';
         bot.first_name = response.first_name || '';
         bot.last_name = response.last_name || '';
@@ -25,116 +25,123 @@ module.exports = function() {
       });
     });
   };
-  bot.deleteWebhook = function(api) {
+  bot.deleteWebhook = function (api) {
     return new Promise(function (resolve, reject) {
       var url = 'https://api.telegram.org/bot' + bot.token + '/deleteWebhook';
       request(url, function (error, r, body) {
         var response = JSON.parse(body).result;
-        if(error) return;
-        if(!response) return;
+        if (error) return;
+        if (!response) return;
         resolve();
       });
     });
   };
-  bot.getChatMember = function(chat_id, user_id) {
+  bot.getChatMember = function (chat_id, user_id) {
     return new Promise(function (resolve, reject) {
-      var url = 'https://api.telegram.org/bot' + bot.token + '/getChatMember?chat_id='+chat_id+'&user_id='+user_id;
+      var url = 'https://api.telegram.org/bot' + bot.token + '/getChatMember?chat_id=' + chat_id + '&user_id=' + user_id;
       request(url, function (error, r, body) {
         var response = JSON.parse(body).result;
         console.log(response);
-        if(error) return;
-        if(!response) return reject();
-        if(response.status == 'restricted' || response.status == 'left' || response.status == 'kicked') return reject();
+        if (error) return;
+        if (!response) return reject();
+        if (response.status == 'restricted' || response.status == 'left' || response.status == 'kicked') return reject();
         resolve(response);
       });
     });
   };
-  bot.setWebhook = function(api) {
+  bot.setWebhook = function (api) {
     return new Promise(function (resolve, reject) {
       var url = 'https://api.telegram.org/bot' + bot.token + '/setWebhook?url=https://boozecruise.punchmonkeyproductions.com/bots/' + api;
       request(url, function (error, r, body) {
         var response = JSON.parse(body).result;
-        if(error) return;
-        if(!response) return;
+        if (error) return;
+        if (!response) return;
         resolve();
       });
     });
   };
-  bot.getWebhook = function() {
+  bot.getWebhook = function () {
     return new Promise(function (resolve, reject) {
       var url = 'https://api.telegram.org/bot' + bot.token + '/getWebhookInfo';
       request(url, function (error, r, body) {
         var response = JSON.parse(body).result;
-        if(error) return;
-        if(!response) return;
+        if (error) return;
+        if (!response) return;
         resolve();
       });
     });
   };
 
-  bot.sendMessage = function(channel, message) {
+  bot.sendMessage = function (channel, message) {
     return new Promise(function (resolve, reject) {
       var url = 'https://api.telegram.org/bot' + bot.token + '/sendMessage?chat_id=' + channel + '&disable_notification=true&parse_mode=html&text=' + message;
       request(encodeURI(url), function (error, r, body) {
         var response = JSON.parse(body).result;
         //console.log(response);
-        if(error) return;
-        if(!response) return;
+        if (error) return;
+        if (!response) return;
         resolve();
       });
     });
   };
-  bot.sendKeyboard = function(channel, message, keyboard) {
+  bot.broadcast = function (channels, message) {
+    return Promise.all(channels.map(function (channel) {
+      return bot.sendMessage(channel, message)
+
+    }));
+
+  }
+  bot.sendKeyboard = function (channel, message, keyboard) {
     return new Promise(function (resolve, reject) {
       var url = 'https://api.telegram.org/bot' + bot.token + '/sendMessage?chat_id=' + channel + '&disable_notification=true&parse_mode=html&text=' + message + '&reply_markup=' + JSON.stringify(keyboard);
       request(encodeURI(url), function (error, r, body) {
         var response = JSON.parse(body).result;
         //console.log(response);
-        if(error) return;
-        if(!response) return;
+        if (error) return;
+        if (!response) return;
         resolve();
       });
     });
   };
-  bot.exportChatInviteLink = function(channel) {
+  bot.exportChatInviteLink = function (channel) {
     return new Promise(function (resolve, reject) {
       var url = 'https://api.telegram.org/bot' + bot.token + '/exportChatInviteLink?chat_id=' + channel;
       request(encodeURI(url), function (error, r, body) {
         console.log(body);
         var response = JSON.parse(body).result;
         //console.log(response);
-        if(error) return;
-        if(!response) return;
+        if (error) return;
+        if (!response) return;
         resolve(response);
       });
     });
   };
-  bot.getChat = function(channel) {
+  bot.getChat = function (channel) {
     return new Promise(function (resolve, reject) {
       var url = 'https://api.telegram.org/bot' + bot.token + '/getChat?chat_id=' + channel;
       request(encodeURI(url), function (error, r, body) {
         var response = JSON.parse(body).result;
         //console.log(response);
-        if(error) return;
-        if(!response) return;
+        if (error) return;
+        if (!response) return;
         resolve(response);
       });
     });
   };
-  bot.kick = function(channel, user, minutes) {
+  bot.kick = function (channel, user, minutes) {
     if (!minutes) minutes = 1;
-      var date = new Date();
-      date.setTime(date.getTime() + (minutes * 60 * 1000));
-      date = Math.floor(date / 1000);
-      return new Promise(function (resolve, reject) {
-        var url = 'https://api.telegram.org/bot' + bot.token + '/kickChatMember?chat_id=' + channel + '&user_id=' + user + '&until_date=' + date;
-        request(url, function (error, r, body) {
-          if(error) return;
-          resolve();
-        });
+    var date = new Date();
+    date.setTime(date.getTime() + (minutes * 60 * 1000));
+    date = Math.floor(date / 1000);
+    return new Promise(function (resolve, reject) {
+      var url = 'https://api.telegram.org/bot' + bot.token + '/kickChatMember?chat_id=' + channel + '&user_id=' + user + '&until_date=' + date;
+      request(url, function (error, r, body) {
+        if (error) return;
+        resolve();
       });
-    };
-  bot.getName = function() {
+    });
+  };
+  bot.getName = function () {
     if (bot.last_name) {
       return bot.first_name + ' ' + bot.last_name;
     } else {
@@ -142,7 +149,7 @@ module.exports = function() {
     }
   };
 
-  bot.introduceYourself = function() {
+  bot.introduceYourself = function () {
     console.log('Hello, my name is ' + bot.getName() + '. You can talk to me through my username: @' + bot.username);
   };
 
