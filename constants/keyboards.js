@@ -1,9 +1,10 @@
 module.exports = {
+  var map = "\ud83d\uddfa";
   home: function (seaDay) {
     return {
       keyboard: [
         [{
-          'text': '\ud83d\uddfa Navigation \ud83d\uddfa'
+          'text': map + 'Navigation' + map
         },
         {
           'text': '\ud83d\udc65 Manifest \ud83d\udc65'
