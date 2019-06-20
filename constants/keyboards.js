@@ -59,7 +59,7 @@ module.exports = {
     ],
     resize_keyboard: true
   },
-  decision: {
+  linkDecision: {
     keyboard: [
       [{
         'text': 'Yes'
