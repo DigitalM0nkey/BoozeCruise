@@ -279,8 +279,8 @@ router.post('/', function (req, res, next) {
                   id: ship.location.port
                 }).then(function (port) {
                   b.exportChatInviteLink(port.id).then(function (link) {
+                    b.sendMessage(ship.id, "You are currently docked in " + port.name + "\n " + link);
                     setTimeout(function () {
-                      b.sendMessage(ship.id, "You are currently docked in " + port.name + "\n " + link);
                       b.sendKeyboard(req.body.message.chat.id, "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.", keyboards.navigation);
                     }, 5000);
                   });
