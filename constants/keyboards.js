@@ -26,7 +26,7 @@ module.exports = {
           'text': moneyBag + 'Treasure' + moneyBag
         }],
         [{
-          'text': bug + 'maintenance' + bug
+          'text': bug + 'Maintenance' + bug
         }
         ],
       ],
