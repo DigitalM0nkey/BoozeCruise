@@ -4,8 +4,8 @@ module.exports = {
       keyboard: [
         [{
           'text': '\ud83d\uddfa Navigation \ud83d\uddfa'
-        }],
-        [{
+        },
+        {
           'text': '\ud83d\udc65 Manifest \ud83d\udc65'
         }],
         [{

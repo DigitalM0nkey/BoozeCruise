@@ -15,7 +15,7 @@ var MYSHIP = '5be3d50298ae6843394411ee';
 var Port = require('../../models/port');
 var Ship = require('../../models/ship');
 var guest = require('../../types/guest');
-//console.log(Chat)
+var welcomeMessage = "Welcome To Booze Cruise\!\n\nThis is your ship, go ahead and look around. Press all the buttons, it\'s the only way you\'ll know what they do.\nThis is not a fast-paced game, it occurs in real time.\nBoozeCruise is an in-development game, meaning that the game is constantly evolving.\n\nWant to send the developers a message, or suggest a feature? There's a button for that and we would love fo you to use it.\n\nIn BoozeCruise you will travel from port to port, in each port you will meet other sailors like yourself, go ahead introduce your self to whoever else is in port. \n\nThere is treasure hidden in one of the ports, make sure you look for teasure while you are docked. You could dig up some Korona.\n\nWhere would you like to go ?";
 var b = new TelegramBot();
 b.init(TOKEN).then(function () {
   b.introduceYourself();
@@ -25,9 +25,9 @@ b.init(TOKEN).then(function () {
 
 console.log(guest.pick());
 
-//TODO -- Add sector to new player.
-//TODO -- Add Home Port (Everyone has the same home port? everyone is assigined a random home port).
-//TODO -- When player chats(arrives?) in port, a meassage is sent to their ship. (Acheivement, stats, other ships in port)
+//TODO -- Add 'Get back to ship' command in port.
+//TODO -- comment out keyboard keys that are not currently in use.
+//TODO -- When a ship arrives in port, a meassage is sent to the ship. The message should include information about acheivement, stats, other ships in port, etc.
 
 //var dailyEvent = schedule.scheduleJob('30 * * * * *', function(){
 var dailyEvent = schedule.scheduleJob('0 0 8 * * *', function () {
@@ -229,8 +229,8 @@ router.post('/', function (req, res, next) {
 
           } else {
             if (req.body.message.text == "/start") {
-              //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
-              b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home(ship.nextLocation.port));
+              //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
+              b.sendKeyboard(req.body.message.chat.id, welcomeMessage, keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == "Check Balance") {
               b.sendMessage(ship.id, "Your balance is " + ship.purse.balance + " Korona");
             } else if (req.body.message.text == "\ud83c\udf87 Achievements \ud83c\udf87") {
@@ -337,6 +337,8 @@ router.post('/', function (req, res, next) {
               b.sendKeyboard(req.body.message.chat.id, removedGuest, keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == '\ud83d\udc1b BUG \ud83d\udc1b') {
               b.sendKeyboard(req.body.message.chat.id, "Oh No!!! A BUG! Quick! Kill it!\n\nGo here to report the bug\n\nhttps://t.me/joinchat/HmxycxY2tSHp_aZX4mQ9QA", keyboards.home(ship.nextLocation.port));
+            } else if (req.body.message.text == 'Deposit') {
+              b.sendMessage(ship.id, "This feature is coming soon");
             } else if (req.body.message.text == '\ud83d\udc1b Suggestions \ud83d\udc1b') {
               b.sendKeyboard(req.body.message.chat.id, "Got an idea?\n\nGo here to tell us\n\nhttps://t.me/joinchat/HmxycxOCylQHWIDtPsd7pw", keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == '\ud83c\udfdd Ports of Call \ud83c\udfdd') {
@@ -482,10 +484,10 @@ router.post('/', function (req, res, next) {
             }
           } else {
             if (req.body.message.text == "/start") {
-              //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
-              b.sendKeyboard(req.body.message.chat.id, "Welcome To Booze Cruise!\nWhere would you like to go?", keyboards.home(ship.nextLocation.port));
+              //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
+              b.sendKeyboard(req.body.message.chat.id, welcomeMessage, keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == "/kick") {
-              //    b.sendMessage(req.body.message.chat.id, 'Welcome To Booze Cruise!\nWhere would you like to go?');
+              //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
               b.kick(req.body.message.chat.id, req.body.message.from.id, 1);
               Ship.findOne({
                 "user.id": req.body.message.from.id
