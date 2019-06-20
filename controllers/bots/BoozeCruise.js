@@ -275,33 +275,33 @@ router.post('/', function (req, res, next) {
                   b.sendKeyboard(ship.id, "Your ship is currently en route to " + port.name, keyboards.atSea);
                 });
               } else {
-                Port.findOne({
-                  id: ship.location.port
-                }).then(function (port) {
-                  b.exportChatInviteLink(port.id).then(function (link) {
-                    b.sendKeyboard(ship.id, "You are currently docked in " + port.name + "\nDo you need the link again?", keyboards.linkDecision);
-
-                    /* setTimeout(function () {
-                       
-                     }, 5000);
-                   */
+                setTimeout(function () {
+                  Port.findOne({
+                    id: ship.location.port
+                  }).then(function (port) {
+                    b.exportChatInviteLink(port.id).then(function (link) {
+                      b.sendKeyboard(ship.id, "You are currently docked in " + port.name + "\nDo you need the link again?", keyboards.linkDecision);
+                      /* setTimeout(function () {
+                         
+                       }, 5000);
+                     */
+                    });
                   });
-
-
-                });
+                }, 5000);
               }
+
             }
             // Decison keyboard promped
             else if (req.body.message.text == "Yes") {
-              setTimeout(function () {
-                Port.findOne({
-                  id: ship.location.port
-                }).then(function (port) {
-                  b.exportChatInviteLink(port.id).then(function (link) {
-                    b.sendKeyboard(ship.id, link, keyboards.navigation);
-                  });
+
+              Port.findOne({
+                id: ship.location.port
+              }).then(function (port) {
+                b.exportChatInviteLink(port.id).then(function (link) {
+                  b.sendKeyboard(ship.id, link, keyboards.navigation);
                 });
-              }, 5000);
+              });
+
             } else if (req.body.message.text == "No") {
               b.sendKeyboard(req.body.message.chat.id, "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.", keyboards.navigation);
             } else if (req.body.message.text == "\ud83d\udea2 Home Port \ud83d\udea2" || req.body.message.text == "/addGuest") {
