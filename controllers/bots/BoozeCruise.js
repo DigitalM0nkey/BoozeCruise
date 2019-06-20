@@ -280,7 +280,7 @@ router.post('/', function (req, res, next) {
                 }).then(function (port) {
 
                   b.exportChatInviteLink(port.id).then(function (link) {
-                    b.sendMessage(ship.id, "You are currently docked in " + port.name + "\n "/* + link*/, { inline_keyboard: link }
+                    b.sendMessage(ship.id, "You are currently docked in " + port.name + "\n "/* + link*/, { inline_keyboard: [link] }
                     );
                     setTimeout(function () {
                       b.sendKeyboard(req.body.message.chat.id, "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.", keyboards.navigation);
