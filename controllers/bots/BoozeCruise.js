@@ -291,8 +291,12 @@ router.post('/', function (req, res, next) {
                 });
               }
             } else if (req.body.message.text == "Yes") {
-              b.exportChatInviteLink(port.id).then(function (link) {
-                b.sendKeyboard(ship.id, link, keyboards.navigation);
+              Port.findOne({
+                id: ship.location.port
+              }).then(function (port) {
+                b.exportChatInviteLink(port.id).then(function (link) {
+                  b.sendKeyboard(ship.id, link, keyboards.navigation);
+                });
               });
             } else if (req.body.message.text == "No") {
               b.sendKeyboard(req.body.message.chat.id, "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.", keyboards.navigation);
