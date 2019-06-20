@@ -275,19 +275,19 @@ router.post('/', function (req, res, next) {
                   b.sendKeyboard(ship.id, "Your ship is currently en route to " + port.name, keyboards.atSea);
                 });
               } else {
-                setTimeout(function () {
-                  Port.findOne({
-                    id: ship.location.port
-                  }).then(function (port) {
-                    b.exportChatInviteLink(port.id).then(function (link) {
-                      b.sendKeyboard(ship.id, "You are currently docked in " + port.name + "\nDo you need the link again?", keyboards.linkDecision);
-                      /* setTimeout(function () {
-                         
-                       }, 5000);
-                     */
-                    });
+
+                Port.findOne({
+                  id: ship.location.port
+                }).then(function (port) {
+                  b.exportChatInviteLink(port.id).then(function (link) {
+                    b.sendKeyboard(ship.id, "You are currently docked in " + port.name + "\nDo you need the link again?", keyboards.linkDecision);
+                    /* setTimeout(function () {
+                       
+                     }, 5000);
+                   */
                   });
-                }, 5000);
+                });
+
               }
 
             }
