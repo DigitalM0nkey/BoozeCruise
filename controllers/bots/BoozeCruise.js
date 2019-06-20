@@ -280,15 +280,20 @@ router.post('/', function (req, res, next) {
                 }).then(function (port) {
                   b.exportChatInviteLink(port.id).then(function (link) {
                     b.sendKeyboard(ship.id, "You are currently docked in " + port.name + "\nDo you need the link again?"/* + link*/, keyboards.decision);
-                    if (req.body.message.text == "Yes") {
+
+                    /* setTimeout(function () {
+                       
+                     }, 5000);
+                   */
+                  });
+
+                  if (req.body.message.text == "Yes") {
+                    b.exportChatInviteLink(port.id).then(function (link) {
                       b.sendKeyboard(ship.id, link, keyboards.navigation);
-                    } else {
-                      b.sendKeyboard(req.body.message.chat.id, "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.", keyboards.navigation);
-                    }
-                   /* setTimeout(function () {
-                      
-                    }, 5000);
-                  */});
+                    });
+                  } else {
+                    b.sendKeyboard(req.body.message.chat.id, "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.", keyboards.navigation);
+                  }
                 });
               }
             } else if (req.body.message.text == "\ud83d\udea2 Home Port \ud83d\udea2" || req.body.message.text == "/addGuest") {

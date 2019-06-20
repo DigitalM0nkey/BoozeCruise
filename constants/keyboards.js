@@ -66,6 +66,9 @@ module.exports = {
       }],
       [{
         'text': 'No'
+      }],
+      [{
+        'text': '\u2630 Main Menu \u2630'
       }]
     ],
     resize_keyboard: true
