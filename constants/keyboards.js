@@ -59,6 +59,17 @@ module.exports = {
     ],
     resize_keyboard: true
   },
+  decision: {
+    keyboard: [
+      [{
+        'text': 'Yes'
+      }],
+      [{
+        'text': 'No'
+      }]
+    ],
+    resize_keyboard: true
+  },
   atSea: {
     keyboard: [
       [{

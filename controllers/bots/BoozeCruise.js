@@ -278,10 +278,11 @@ router.post('/', function (req, res, next) {
                 Port.findOne({
                   id: ship.location.port
                 }).then(function (port) {
-
                   b.exportChatInviteLink(port.id).then(function (link) {
-                    b.sendMessage(ship.id, "You are currently docked in " + port.name + "\n "/* + link*/, { inline_keyboard: [link] }
-                    );
+                    b.sendKeyboard(ship.id, "You are currently docked in " + port.name + "\nDo you need the link again?"/* + link*/, keyboards.decision);
+                    if (req.body.message.text == "Yes") {
+                      b.sendMessage(ship.id, link);
+                    }
                     setTimeout(function () {
                       b.sendKeyboard(req.body.message.chat.id, "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.", keyboards.navigation);
                     }, 5000);
