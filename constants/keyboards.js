@@ -1,34 +1,32 @@
-var map = "\ud83d\uddfa";
+var map = " \ud83d\uddfa ";
+var people = " \ud83d\udc65 ";
+var fireworks = " \ud83c\udf87 ";
+var moneyBag = " \ud83d\udcb0 ";
+var bug = " \ud83d\udc1b ";
 module.exports = {
   home: function (seaDay) {
     return {
       keyboard: [
         [{
-          'text': map + ' Navigation ' + map
+          'text': map + 'Navigation' + map
         },
         {
-          'text': '\ud83d\udc65 Manifest \ud83d\udc65'
+          'text': people + 'Manifest' + people
         }],
         [{
-          'text': '\ud83c\udf87 Achievements \ud83c\udf87'
+          'text': fireworks + 'Achievements' + fireworks
         }],
         seaDay ? [{
-          'text': '\ud83d\udcb0 Purser \ud83d\udcb0'
-        },
-        {
-          'text': '\ud83d\udc1b BUG \ud83d\udc1b'
+          'text': moneyBag + 'Purser' + moneyBag
         }
         ] : [{
-          'text': '\ud83d\udcb0 Purser \ud83d\udcb0'
+          'text': moneyBag + 'Purser' + moneyBag
         },
         {
-          'text': '\ud83d\udcb0 Treasure \ud83d\udcb0'
+          'text': moneyBag + 'Treasure' + moneyBag
         }],
         [{
-          'text': '\ud83d\udc1b BUG \ud83d\udc1b'
-        },
-        {
-          'text': '\ud83d\udc1b Suggestions \ud83d\udc1b'
+          'text': bug + 'maintenance' + bug
         }
         ],
       ],
@@ -46,6 +44,17 @@ module.exports = {
       ],
       [{
         'text': '\u2630 Main Menu \u2630'
+      }]
+    ],
+    resize_keyboard: true
+  },
+  maintenance: {
+    keyboard: [
+      [{
+        'text': bug + 'BUG' + bug
+      }],
+      [{
+        'text': bug + 'Suggestions' + bug
       }]
     ],
     resize_keyboard: true
