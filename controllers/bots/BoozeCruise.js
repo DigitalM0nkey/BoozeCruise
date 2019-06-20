@@ -287,15 +287,15 @@ router.post('/', function (req, res, next) {
                    */
                   });
 
-                  if (req.body.message.text == "Yes") {
-                    b.exportChatInviteLink(port.id).then(function (link) {
-                      b.sendKeyboard(ship.id, link, keyboards.navigation);
-                    });
-                  } else {
-                    b.sendKeyboard(req.body.message.chat.id, "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.", keyboards.navigation);
-                  }
+
                 });
               }
+            } else if (req.body.message.text == "Yes") {
+              b.exportChatInviteLink(port.id).then(function (link) {
+                b.sendKeyboard(ship.id, link, keyboards.navigation);
+              });
+            } else if (req.body.message.text == "No") {
+              b.sendKeyboard(req.body.message.chat.id, "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.", keyboards.navigation);
             } else if (req.body.message.text == "\ud83d\udea2 Home Port \ud83d\udea2" || req.body.message.text == "/addGuest") {
               var newGuest = guest.pick();
               ship.guests.push(newGuest);
