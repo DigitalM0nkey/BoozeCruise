@@ -1,3 +1,4 @@
+//image/emoji/Unicode Character varaibles
 var map = " \ud83d\uddfa ";
 var people = " \ud83d\udc65 ";
 var fireworks = " \ud83c\udf87 ";
@@ -38,7 +39,7 @@ module.exports = {
   manifest: {
     keyboard: [
       [{
-        'text': '\ud83d\udc65 Guest Manifest \ud83d\udc65'
+        'text': people + 'Guest Manifest' + people
       },
       {
         'text': '\ud83d\udc81 Crew Manifest \ud83d\udc81'

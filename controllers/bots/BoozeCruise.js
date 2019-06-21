@@ -263,6 +263,8 @@ router.post('/', function (req, res, next) {
 
             } else if (req.body.message.text == "\ud83d\udc1b Maintenance \ud83d\udc1b") {
               b.sendKeyboard(req.body.message.chat.id, "\ud83d\udc1b Maintenance \ud83d\udc1b", keyboards.maintenance);
+            } else if (req.body.message.text == "\ud83d\udc81 Crew Manifest \ud83d\udc81") {
+              b.sendMessage(ship.id, "There are plenty of crew on your ship. You'll meet them when the time is right.")
             } else if (req.body.message.text == "\u2630 Main Menu \u2630") {
               b.sendKeyboard(req.body.message.chat.id, "\u2630 Main Menu \u2630", keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == "\ud83d\uddfa Navigation \ud83d\uddfa" || req.body.message.text == "\ud83d\udccd Current Location \ud83d\udccd") {
