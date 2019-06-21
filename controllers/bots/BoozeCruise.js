@@ -367,7 +367,7 @@ router.post('/', function (req, res, next) {
             } else if (req.body.message.text == '\ud83d\udc1b BUG \ud83d\udc1b') {
               b.sendKeyboard(req.body.message.chat.id, "Oh No!!! A BUG! Quick! Kill it!\n\nGo here to report the bug\n\nhttps://t.me/joinchat/HmxycxY2tSHp_aZX4mQ9QA", keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == 'Deposit') {
-              b.sendMessage(ship.id, "This feature is coming soon");
+              b.sendMessage(ship.id, "This feature is coming soon\! \n\nIn the meantime you should look for treasure the next time you are in port");
             } else if (req.body.message.text == '\ud83d\udc1b Suggestions \ud83d\udc1b') {
               b.sendKeyboard(req.body.message.chat.id, "Got an idea?\n\nGo here to tell us\n\nhttps://t.me/joinchat/HmxycxOCylQHWIDtPsd7pw", keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == '\ud83c\udfdd Ports of Call \ud83c\udfdd') {
