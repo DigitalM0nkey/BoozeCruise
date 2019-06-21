@@ -237,7 +237,7 @@ router.post('/', function (req, res, next) {
               //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
               b.sendKeyboard(req.body.message.chat.id, WELCOME, keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == "Check Balance") {
-              b.sendMessage(ship.id, "Your balance is " + ship.purse.balance + KORONA);
+              b.sendMessage(ship.id, "Your balance is " + ship.purse.balance + " " + KORONA);
             } else if (req.body.message.text == "\ud83c\udf87 Achievements \ud83c\udf87") {
               var portIds = ship.portHistory.map(function (port) {
                 return port.port;
@@ -454,7 +454,7 @@ router.post('/', function (req, res, next) {
               });
 
             } else if (req.body.message.text == '\ud83d\udcb0 Purser \ud83d\udcb0') {
-              b.sendKeyboard(req.body.message.chat.id, "A ship's purser is the person on a ship principally responsible for the handling of money on board.\n\nHow may I help you today?", keyboards.purser);
+              b.sendKeyboard(req.body.message.chat.id, "A ship's purser is the person on a ship principally responsible for the handling of money on board.\n\nThe currency is Korona or " + KORONA + " for short. \n\n How may I help you today?", keyboards.purser);
             } else if (req.body.message.text == '\ud83d\udc65 Manifest \ud83d\udc65') {
               b.sendKeyboard(req.body.message.chat.id, "A document giving comprehensive details of a ship and its cargo and other contents, passengers, and crew for the use of customs officers.", keyboards.manifest);
             } else if (req.body.message.text == '\ud83d\udc65 Guest Manifest \ud83d\udc65') {
