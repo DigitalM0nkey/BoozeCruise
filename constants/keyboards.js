@@ -4,6 +4,7 @@ var people = " \ud83d\udc65 ";
 var fireworks = " \ud83c\udf87 ";
 var moneyBag = " \ud83d\udcb0 ";
 var bug = " \ud83d\udc1b ";
+var korona = " \u24C0 ";
 var mainMenu = "\u2630 Main Menu \u2630";
 var navigation = map + 'Navigation' + map;
 module.exports = {
