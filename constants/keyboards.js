@@ -3,12 +3,14 @@ var people = " \ud83d\udc65 ";
 var fireworks = " \ud83c\udf87 ";
 var moneyBag = " \ud83d\udcb0 ";
 var bug = " \ud83d\udc1b ";
+var mainMenu = "\u2630 Main Menu \u2630";
+var navigation = map + 'Navigation' + map;
 module.exports = {
   home: function (seaDay) {
     return {
       keyboard: [
         [{
-          'text': map + 'Navigation' + map
+          'text': navigation
         },
         {
           'text': people + 'Manifest' + people
@@ -55,6 +57,9 @@ module.exports = {
       }],
       [{
         'text': bug + 'Suggestions' + bug
+      }],
+      [{
+        'text': '\u2630 Main Menu \u2630'
       }]
     ],
     resize_keyboard: true
