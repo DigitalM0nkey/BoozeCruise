@@ -237,7 +237,7 @@ router.post('/', function (req, res, next) {
               //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
               b.sendKeyboard(req.body.message.chat.id, WELCOME, keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == "Check Balance") {
-              b.sendMessage(ship.id, "Your balance is " + ship.purse.balance + " " + KORONA);
+              b.sendMessage(ship.id, "Your balance is " + KORONA + ship.purse.balance);
             } else if (req.body.message.text == "\ud83c\udf87 Achievements \ud83c\udf87") {
               var portIds = ship.portHistory.map(function (port) {
                 return port.port;
