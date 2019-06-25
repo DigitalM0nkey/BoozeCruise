@@ -1,5 +1,7 @@
 var request = require('request');
-module.exports = function () {
+var config = require('../config');
+
+function TelegramBot() {
   var bot = this;
 
   bot.lastMsgId = 69;
@@ -152,5 +154,14 @@ module.exports = function () {
   bot.introduceYourself = function () {
     console.log('Hello, my name is ' + bot.getName() + '. You can talk to me through my username: @' + bot.username);
   };
-
 };
+
+
+var boozecruiseBot = new TelegramBot();
+boozecruiseBot.init(config.tokens.telegram.BoozeCruise).then(function () {
+  boozecruiseBot.introduceYourself();
+  //b.deleteWebhook();
+  boozecruiseBot.setWebhook('BoozeCruise');
+});
+
+exports.boozecruiseBot = boozecruiseBot;
