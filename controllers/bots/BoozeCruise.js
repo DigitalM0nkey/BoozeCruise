@@ -352,7 +352,7 @@ router.post('/', function (req, res, next) {
 
             } else if (req.body.message.text.substring(0, req.body.message.text.indexOf(' ')) == "/log") {
               if (ship._id == MYSHIP) {
-                b.sendMessage('510423667', "log test");
+                b.sendMessage('510423667', req.body.message.text.substring(req.body.message.text.indexOf(' ') + 1));
               }
             }
 
