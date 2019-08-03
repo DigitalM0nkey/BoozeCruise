@@ -355,14 +355,14 @@ router.post('/', function (req, res, next) {
             } else if (req.body.message.text.substring(0, req.body.message.text.indexOf(' ')) == "/log") {
               if (ship._id == MYSHIP) {
                 b.sendMessage('510423667', "Captain's Log: " + req.body.message.text.substring(req.body.message.text.indexOf(' ') + 1));
-                b.getChatMember(ship.location.port, ship.id)
-                  .then(
-                    ship.communication.message.push({
-                      date: new Date(),
-                      type: "log",
-                      transcript: req.body.message.text.substring(req.body.message.text.indexOf(' ') + 1)
-                    }));
-                ship.save();
+                // b.getChatMember(ship.location.port, ship.id)
+                //   .then(
+                //     ship.communication.message.push({
+                //       date: new Date(),
+                //       type: "log",
+                //       transcript: req.body.message.text.substring(req.body.message.text.indexOf(' ') + 1)
+                //     }));
+                // ship.save();
               }
             }
 
