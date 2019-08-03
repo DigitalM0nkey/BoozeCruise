@@ -57,7 +57,7 @@ var dailyEvent = schedule.scheduleJob('0 0 8 * * *', function () {
 });
 
 var minutelyEvent = schedule.scheduleJob('0 */1 * * * *', function () {
-//  mixology.getCocktail();
+  //  mixology.getCocktail();
   Port.find({}).then(function (ports) {
     Ship.find({
       'nextLocation.arrival': {
@@ -350,7 +350,11 @@ router.post('/', function (req, res, next) {
                   });
                 });
 
-            } else if (req.body.message.text.substring(0, req.body.message.text.indexOf(' ')) == "/broadcast") {
+            } else if (req.body.message.text.substring(0, req.body.message.text.indexOf(' ')) == "/log") {
+              b.sendKeyboard('510423667', '/log Test', keyboards.home(false));
+            }
+
+            else if (req.body.message.text.substring(0, req.body.message.text.indexOf(' ')) == "/broadcast") {
               if (ship._id == MYSHIP) {
                 broadcast(req.body.message.text.substring(req.body.message.text.indexOf(' ') + 1))
               }
