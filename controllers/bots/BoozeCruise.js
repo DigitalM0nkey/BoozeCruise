@@ -351,7 +351,9 @@ router.post('/', function (req, res, next) {
                 });
 
             } else if (req.body.message.text.substring(0, req.body.message.text.indexOf(' ')) == "/log") {
-              b.sendKeyboard('510423667', '/log Test', keyboards.home(false));
+              if (ship._id == MYSHIP) {
+                b.sendMessage('510423667', "log test");
+              }
             }
 
             else if (req.body.message.text.substring(0, req.body.message.text.indexOf(' ')) == "/broadcast") {
