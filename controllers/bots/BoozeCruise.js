@@ -508,7 +508,8 @@ router.post('/', function (req, res, next) {
               }
             }
             res.sendStatus(200);
-          });
+          }
+        });
     } else {
       Port.findOne({
         id: req.body.message.chat.id
