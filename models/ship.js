@@ -1,42 +1,51 @@
 var db = require('../db');
-var Ship = db.model('Ship',{
-  id: {type: String, required: true},
-  name: {type: String, required: false},
-  startDate: {type: Date, required: false},
+var Ship = db.model('Ship', {
+  id: { type: String, required: true },
+  name: { type: String, required: false },
+  startDate: { type: Date, required: false },
   user: {
-    id:{type: String, required: true},
-    first_name:{type: String, required: true},
-    last_name:{type: String, required: false},
-    username:{type: String, required: false}
+    id: { type: String, required: true },
+    first_name: { type: String, required: true },
+    last_name: { type: String, required: false },
+    username: { type: String, required: false }
   },
   guests: [{
-    type: {type: String, required: true},
-    purse: {type: Number, required: true}
+    type: { type: String, required: true },
+    purse: { type: Number, required: true }
   }],
   location: {
-    sector: {type: Number, required: false},
-    x: {type: Number, required: false},
-    y: {type: Number, required: false},
-    port: {type: String,ref: "Port", required: false},
-    homePort: {type: String,ref: "Port", required: false}
+    sector: { type: Number, required: false },
+    x: { type: Number, required: false },
+    y: { type: Number, required: false },
+    port: { type: String, ref: "Port", required: false },
+    homePort: { type: String, ref: "Port", required: false }
   },
   nextLocation: {
-    arrival: {type: Date, required: false},
-    port: {type: String, ref: "Port", required: false}
+    arrival: { type: Date, required: false },
+    port: { type: String, ref: "Port", required: false }
   },
   portHistory: [{
-      port: {type: String,ref: "Port", required: true},
-      arrivalDate: {type: Date, required: true},
-      departureDate: {type: Date, required: false},
-      }
+    port: { type: String, ref: "Port", required: true },
+    arrivalDate: { type: Date, required: true },
+    departureDate: { type: Date, required: false },
+  }
   ],
+  communication: {
+    message: [
+      {
+        date: { type: Date, required: true },
+        type: { type: String, required: true },
+        transcript: { type: String, required: true }
+      }
+    ]
+  },
   purse: {
-    balance: {type: Number, required: true, default: 100},
+    balance: { type: Number, required: true, default: 100 },
     transactions: [
       {
-        date: {type: Date, required: true},
-        type: {type: String, required: true},
-        amount: {type: Number, required: true}
+        date: { type: Date, required: true },
+        type: { type: String, required: true },
+        amount: { type: Number, required: true }
       }
     ]
   }
