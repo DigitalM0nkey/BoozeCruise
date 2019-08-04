@@ -30,15 +30,12 @@ var Ship = db.model('Ship', {
     departureDate: { type: Date, required: false },
   }
   ],
-  communication: {
-    message: [
-      {
-        date: { type: Date, required: true },
-        type: { type: String, required: true },
-        transcript: { type: String, required: true }
-      }
-    ]
-  },
+  communication: [{
+    date: { type: Date, required: true },
+    type: { type: String, required: true },
+    transcript: { type: String, required: true }
+  }
+  ],
   purse: {
     balance: { type: Number, required: true, default: 100 },
     transactions: [
