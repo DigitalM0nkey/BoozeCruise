@@ -375,7 +375,7 @@ router.post('/', function (req, res, next) {
               }).forEach(element => {
                 message += "\n" + ship.communication.date + " | " + ship.communication.transcript;
               });
-              b.sendMessage(ship.id, message;
+              b.sendMessage(ship.id, message);
 
 
               // Ship.findOne({
