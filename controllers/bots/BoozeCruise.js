@@ -368,6 +368,19 @@ router.post('/', function (req, res, next) {
                 });
 
               }
+            } else if (req.body.message.text == "/report") {
+              Ship.findOne({
+                id: ship.id
+              }).populate("communication.transcript").then(function (sameShip) {
+                var message = "<b>Your Ships Log:</b>";
+                sameShip.communication.forEach(function (stop) {
+                  var date = moment(stop.date);
+                  var type = moment(stop.type);
+                  var transcript = moment(stop.transcript);
+                  message += "\n" + date + " | " + transcript;
+                });
+                b.sendMessage(req.body.message.chat.id, message);
+              });
 
 
               // Broadcast
