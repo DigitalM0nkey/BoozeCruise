@@ -492,106 +492,104 @@ router.post('/', function (req, res, next) {
               for (var i in guestList) {
                 message += i + ": " + guestList[i] + "\n";
               }
-
-            }
-            b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest:\n" + message, keyboards.home(ship.nextLocation.port));
-          } else if (req.body.message.text == '\ud83c\udf87 Achievements \ud83c\udf87') {
-            Ship.findOne({
-              id: ship.id
-            }).populate("portHistory.port").then(function (sameShip) {
-              var message = "<b>Your Port History:</b>";
-              sameShip.portHistory.forEach(function (stop) {
-                var arrivalDate = moment(stop.arrivalDate);
-                var departureDate = moment(stop.departureDate);
-                message += "\n" + stop.port.name + " | " + arrivalDate.diff(departureDate, "days");
+              b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest:\n" + message, keyboards.home(ship.nextLocation.port));
+            } else if (req.body.message.text == '\ud83c\udf87 Achievements \ud83c\udf87') {
+              Ship.findOne({
+                id: ship.id
+              }).populate("portHistory.port").then(function (sameShip) {
+                var message = "<b>Your Port History:</b>";
+                sameShip.portHistory.forEach(function (stop) {
+                  var arrivalDate = moment(stop.arrivalDate);
+                  var departureDate = moment(stop.departureDate);
+                  message += "\n" + stop.port.name + " | " + arrivalDate.diff(departureDate, "days");
+                });
+                b.sendMessage(req.body.message.chat.id, message);
               });
-              b.sendMessage(req.body.message.chat.id, message);
-            });
 
-          } else if (req.body.message.text == 'Port \ud83d\udea2') {
-            console.log("log here");
-            b.exportChatInviteLink('-1001399879250').then(function (link) {
-              console.log(link);
-              b.sendMessage(req.body.message.chat.id, link);
-            });
+            } else if (req.body.message.text == 'Port \ud83d\udea2') {
+              console.log("log here");
+              b.exportChatInviteLink('-1001399879250').then(function (link) {
+                console.log(link);
+                b.sendMessage(req.body.message.chat.id, link);
+              });
+            }
           }
-        }
           res.sendStatus(200);
-    }
+        }
         );
     } else {
-  Port.findOne({
-    id: req.body.message.chat.id
-  })
-    .then(function (port) {
-      if (!port) {
-        if (req.body.message.chat.id == MYSHIP) {
-          b.getChat(req.body.message.chat.id).then(function (chat) {
-            console.log(chat);
-            var newPort = new Port({
-              id: req.body.message.chat.id,
-              name: chat.title,
-              description: chat.description
-            });
-            newPort.save();
-          });
-        }
-      } else {
-        if (req.body.message.text == "/start") {
-          //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
-          b.sendKeyboard(req.body.message.chat.id, WELCOME, keyboards.home(ship.nextLocation.port));
-        } else if (req.body.message.text == "/kick") {
-          //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
-          b.kick(req.body.message.chat.id, req.body.message.from.id, 1);
-          Ship.findOne({
-            "user.id": req.body.message.from.id
-          }).then(function (ship) {
-            b.sendMessage(ship.id, "You've been kicked from " + port.name);
-          });
-        } else if (req.body.message.new_chat_participant) {
-          Ship.findOne({
-            "user.id": req.body.message.new_chat_participant.id
-          }).then(function (ship) {
-            port.ships.push(ship._id);
-            port.save();
-          });
-
-        } else if (req.body.message.left_chat_participant) {
-          Ship.findOne({
-            "user.id": req.body.message.left_chat_participant.id
-          }).then(function (ship) {
-            port.ships = port.ships.filter(function (portShip) {
-              return portShip != ship._id;
-            });
-            port.save();
-          });
-        } else {
-          Ship.findOne({
-            "user.id": req.body.message.from.id
-          }).then(function (ship) {
-            var found = false;
-            for (var i in port.ships) {
-              if (port.ships[i] == ship._id) {
-                found = true;
-                break;
-              }
+      Port.findOne({
+        id: req.body.message.chat.id
+      })
+        .then(function (port) {
+          if (!port) {
+            if (req.body.message.chat.id == MYSHIP) {
+              b.getChat(req.body.message.chat.id).then(function (chat) {
+                console.log(chat);
+                var newPort = new Port({
+                  id: req.body.message.chat.id,
+                  name: chat.title,
+                  description: chat.description
+                });
+                newPort.save();
+              });
             }
-            if (!found) {
-              port.ships.push(ship._id);
-              port.save();
+          } else {
+            if (req.body.message.text == "/start") {
+              //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
+              b.sendKeyboard(req.body.message.chat.id, WELCOME, keyboards.home(ship.nextLocation.port));
+            } else if (req.body.message.text == "/kick") {
+              //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
+              b.kick(req.body.message.chat.id, req.body.message.from.id, 1);
+              Ship.findOne({
+                "user.id": req.body.message.from.id
+              }).then(function (ship) {
+                b.sendMessage(ship.id, "You've been kicked from " + port.name);
+              });
+            } else if (req.body.message.new_chat_participant) {
+              Ship.findOne({
+                "user.id": req.body.message.new_chat_participant.id
+              }).then(function (ship) {
+                port.ships.push(ship._id);
+                port.save();
+              });
+
+            } else if (req.body.message.left_chat_participant) {
+              Ship.findOne({
+                "user.id": req.body.message.left_chat_participant.id
+              }).then(function (ship) {
+                port.ships = port.ships.filter(function (portShip) {
+                  return portShip != ship._id;
+                });
+                port.save();
+              });
+            } else {
+              Ship.findOne({
+                "user.id": req.body.message.from.id
+              }).then(function (ship) {
+                var found = false;
+                for (var i in port.ships) {
+                  if (port.ships[i] == ship._id) {
+                    found = true;
+                    break;
+                  }
+                }
+                if (!found) {
+                  port.ships.push(ship._id);
+                  port.save();
+                }
+                ship.location = port.location;
+                ship.location.port = port.id;
+                ship.save();
+              });
+
             }
-            ship.location = port.location;
-            ship.location.port = port.id;
-            ship.save();
-          });
-
-        }
 
 
-      }
-    });
-  res.sendStatus(200);
-}
+          }
+        });
+      res.sendStatus(200);
+    }
 
 
 
