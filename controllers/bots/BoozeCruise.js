@@ -369,6 +369,9 @@ router.post('/', function (req, res, next) {
 
               }
             } else if (req.body.message.text == "/report") {
+              Ship.findOne({
+                id: ship.id
+              })
               var message = "<b>Your Ships Log:</b>\n";
               message += "\n" + ship.communication.date + " | " + ship.communication.transcript;
               // Ship.findOne({
