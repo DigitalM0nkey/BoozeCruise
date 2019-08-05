@@ -369,7 +369,7 @@ router.post('/', function (req, res, next) {
 
               }
             } else if (req.body.message.text == "/report") {
-              var logReport = "";
+              var logReport = "<b>Captain's Log:</b>\n";
               ship.communication.forEach(function (element) {
 
                 logReport += moment(element.date).format('LL') + " | " + element.transcript + "\n\n";
