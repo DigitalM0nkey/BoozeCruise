@@ -369,10 +369,10 @@ router.post('/', function (req, res, next) {
 
               }
             } else if (req.body.message.text == "/report") {
-              var logReport = {};
+              var logReport = "";
               ship.communication.forEach(function (element) {
 
-                logReport = [element.transcript];
+                logReport = element.date + " | " + element.transcript;
               });
               b.sendMessage(ship.id, logReport);
 
