@@ -371,15 +371,18 @@ router.post('/', function (req, res, next) {
             } else if (req.body.message.text == "/report") {
               Ship.findOne({
                 id: ship.id
+              }).then(function (ship) {
+                var message = "<b>Your Ships Log:</b>\n";
+                message += "\n" + ship.communication.date + " | " + ship.communication.transcript;
+                b.sendMessage(ship.id, message);
               })
-              var message = "<b>Your Ships Log:</b>\n";
-              message += "\n" + ship.communication.date + " | " + ship.communication.transcript;
+
               // Ship.findOne({
               //   id: ship.id
               // }).forEach(element => {
               //   message += "\n" + ship.communication.date + " | " + ship.communication.transcript;
               // });
-              b.sendMessage(ship.id, message);
+
 
 
               // Ship.findOne({
