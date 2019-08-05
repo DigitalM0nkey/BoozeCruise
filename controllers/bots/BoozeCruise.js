@@ -490,6 +490,13 @@ router.post('/', function (req, res, next) {
               });
               var message = '';
               for (var i in guestList) {
+                if (i === 0) {
+                  i = "Poor";
+                } else if (i === 1) {
+                  i = "Middle Class";
+                } else {
+                  i = "Rich";
+                }
                 message += i + ": " + guestList[i] + "\n";
               }
               b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest:\n" + message, keyboards.home(ship.nextLocation.port));
