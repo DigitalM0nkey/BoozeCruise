@@ -491,14 +491,11 @@ router.post('/', function (req, res, next) {
               var message = '';
               for (var i in guestList) {
                 if (i === [0]) {
-                  i = "Poor";
-                  message += i + ": " + guestList[i] + "\n";
+                  message += "Poor" + ": " + guestList[i] + "\n";
                 } else if (i === [1]) {
-                  i = "Middle Class";
-                  message += i + ": " + guestList[i] + "\n";
+                  message += "Middle Class" + ": " + guestList[i] + "\n";
                 } else if (i === [2]) {
-                  i = "Rich";
-                  message += i + ": " + guestList[i] + "\n";
+                  message += "Rich" + ": " + guestList[i] + "\n";
                 }
 
               }
