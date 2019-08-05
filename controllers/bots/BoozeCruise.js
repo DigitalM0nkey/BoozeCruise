@@ -364,9 +364,9 @@ router.post('/', function (req, res, next) {
                     type: "log",
                     transcript: message
                   })
+                  ship.save();
                 });
 
-                ship.save();
               }
 
 
