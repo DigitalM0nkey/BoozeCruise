@@ -369,13 +369,23 @@ router.post('/', function (req, res, next) {
 
               }
             } else if (req.body.message.text == "/report") {
-              Ship.findOne({
-                id: ship.id
-              }).then(function (ship) {
-                var message = "<b>Your Ships Log:</b>\n";
-                message += "\n" + ship.communication.date + " | " + ship.communication.transcript;
-                b.sendMessage(ship.id, message);
-              })
+              var logReport = {};
+              ship.communication.forEach(function (element) {
+
+                logReport = [element.transcript];
+              });
+              b.sendMessage(ship.id, logReport);
+
+
+
+
+              // Ship.findOne({
+              //   id: ship.id
+              // }).then(function (ship) {
+              //   var message = "<b>Your Ships Log:</b>\n";
+              //   message += "\n" + ship.communication.date + " | " + ship.communication.transcript;
+              //   b.sendMessage(ship.id, message);
+              // })
 
               // Ship.findOne({
               //   id: ship.id
