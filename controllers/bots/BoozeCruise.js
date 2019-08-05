@@ -354,14 +354,15 @@ router.post('/', function (req, res, next) {
 
             } else if (req.body.message.text.substring(0, req.body.message.text.indexOf(' ')) == "/log") {
               if (ship._id == MYSHIP) {
-                b.sendMessage(ship.id, "Captain's Log: " + req.body.message.text.substring(req.body.message.text.indexOf(' ') + 1));
+                var message = req.body.message.text.substring(req.body.message.text.indexOf(' ') + 1);
+                b.sendMessage(ship.id, "Captain's Log: " + message);
                 Ship.findOne({
                   id: ship.id
                 }).then(function (ship) {
                   ship.communication.push({
                     date: new Date(),
                     type: "log",
-                    transcript: req.body.message.text.substring(req.body.message.text.indexOf(' ') + 1)
+                    transcript: message
                   })
                 });
 
