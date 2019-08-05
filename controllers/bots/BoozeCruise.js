@@ -490,11 +490,11 @@ router.post('/', function (req, res, next) {
               });
               var message = '';
               for (var i in guestList) {
-                if (i === [0]) {
+                if (i === 0) {
                   message += "Poor" + ": " + guestList[i] + "\n";
-                } else if (i === [1]) {
+                } else if (i === 1) {
                   message += "Middle Class" + ": " + guestList[i] + "\n";
-                } else if (i === [2]) {
+                } else if (i === 2) {
                   message += "Rich" + ": " + guestList[i] + "\n";
                 }
 
