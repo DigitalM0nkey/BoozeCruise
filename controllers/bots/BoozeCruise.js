@@ -492,12 +492,15 @@ router.post('/', function (req, res, next) {
               for (var i in guestList) {
                 if (i === 0) {
                   i = "Poor";
+                  message += i + ": " + guestList[i] + "\n";
                 } else if (i === 1) {
                   i = "Middle Class";
-                } else if (i === 2 ) {
+                  message += i + ": " + guestList[i] + "\n";
+                } else if (i === 2) {
                   i = "Rich";
+                  message += i + ": " + guestList[i] + "\n";
                 }
-                message += i + ": " + guestList[i] + "\n";
+
               }
               b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest:\n" + message, keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == '\ud83c\udf87 Achievements \ud83c\udf87') {
