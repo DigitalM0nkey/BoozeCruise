@@ -370,11 +370,12 @@ router.post('/', function (req, res, next) {
               }
             } else if (req.body.message.text == "/report") {
               var message = "<b>Your Ships Log:</b>\n";
-              Ship.findOne({
-                id: ship.id
-              }).forEach(element => {
-                message += "\n" + ship.communication.date + " | " + ship.communication.transcript;
-              });
+              message += "\n" + ship.communication.date + " | " + ship.communication.transcript;
+              // Ship.findOne({
+              //   id: ship.id
+              // }).forEach(element => {
+              //   message += "\n" + ship.communication.date + " | " + ship.communication.transcript;
+              // });
               b.sendMessage(ship.id, message);
 
 
