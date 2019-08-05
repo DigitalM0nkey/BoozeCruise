@@ -372,7 +372,7 @@ router.post('/', function (req, res, next) {
               var logReport = "";
               ship.communication.forEach(function (element) {
 
-                logReport = element.date + " | " + element.transcript;
+                logReport += element.date + " | " + element.transcript + "\n";
               });
               b.sendMessage(ship.id, logReport);
 
