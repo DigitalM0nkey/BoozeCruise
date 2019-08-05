@@ -353,21 +353,18 @@ router.post('/', function (req, res, next) {
               // Captains Log:
 
             } else if (req.body.message.text.substring(0, req.body.message.text.indexOf(' ')) == "/log") {
-              if (ship._id == MYSHIP) {
-                var message = req.body.message.text.substring(req.body.message.text.indexOf(' ') + 1);
-                b.sendMessage(ship.id, "Captain's Log: " + message);
-                Ship.findOne({
-                  id: ship.id
-                }).then(function (ship) {
-                  ship.communication.push({
-                    date: new Date(),
-                    type: "log",
-                    transcript: message
-                  })
-                  ship.save();
-                });
-
-              }
+              var message = req.body.message.text.substring(req.body.message.text.indexOf(' ') + 1);
+              b.sendMessage(ship.id, "Captain's Log: " + message);
+              Ship.findOne({
+                id: ship.id
+              }).then(function (ship) {
+                ship.communication.push({
+                  date: new Date(),
+                  type: "log",
+                  transcript: message
+                })
+                ship.save();
+              });
             } else if (req.body.message.text == "/report") {
               var logReport = "<b>Captain's Log:</b>\n";
               ship.communication.forEach(function (element) {
@@ -375,38 +372,6 @@ router.post('/', function (req, res, next) {
                 logReport += moment(element.date).format('LL') + " | " + element.transcript + "\n\n";
               });
               b.sendMessage(ship.id, logReport);
-
-
-
-
-              // Ship.findOne({
-              //   id: ship.id
-              // }).then(function (ship) {
-              //   var message = "<b>Your Ships Log:</b>\n";
-              //   message += "\n" + ship.communication.date + " | " + ship.communication.transcript;
-              //   b.sendMessage(ship.id, message);
-              // })
-
-              // Ship.findOne({
-              //   id: ship.id
-              // }).forEach(element => {
-              //   message += "\n" + ship.communication.date + " | " + ship.communication.transcript;
-              // });
-
-
-
-              // Ship.findOne({
-              //   id: ship.id
-              // }).populate("communication.transcript").then(function (sameShip) {
-              //   var message = "<b>Your Ships Log:</b>";
-              //   sameShip.communication.forEach(function (stop) {
-              //     var date = moment(stop.date);
-              //     var type = moment(stop.type);
-              //     var transcript = moment(stop.transcript);
-              //     message += "\n" + date + " | " + transcript;
-              //   });
-              //   b.sendMessage(req.body.message.chat.id, message);
-              // });
 
 
               // Broadcast
