@@ -354,24 +354,25 @@ router.post('/', function (req, res, next) {
 
             } else if (req.body.message.text.substring(0, req.body.message.text.indexOf(' ')) == "/log") {
               if (ship._id == MYSHIP) {
-                b.sendMessage('510423667', "Captain's Log: " + req.body.message.text.substring(req.body.message.text.indexOf(' ') + 1));
-                b.getChatMember(ship.location.port, ship.id)
-                  .then(function (message) {
-                    var date = new Date();
-                    date = date.setTime(date.getTime() * 60 * 60 * 1000);
-                    ship.communication.message.push({
-                      date: date,
-                      type: "log",
-                      transcript: req.body.message.text.substring(req.body.message.text.indexOf(' ') + 1)
-                    });
-                    ship.save();
+                b.sendMessage(ship.id, "Captain's Log: " + req.body.message.text.substring(req.body.message.text.indexOf(' ') + 1));
+                Ship.findOne({
+                  id: ship.id
+                }).then(function (ship) {
+                  ship.communication.push({
+                    date: new Date(),
+                    type: "log",
+                    transcript: req.body.message.text.substring(req.body.message.text.indexOf(' ') + 1)
                   })
+                });
 
-
-                // Broadcast
-
-
+                ship.save();
               }
+
+
+              // Broadcast
+
+
+
             } else if (req.body.message.text.substring(0, req.body.message.text.indexOf(' ')) == "/broadcast") {
               if (ship._id == MYSHIP) {
                 broadcast(req.body.message.text.substring(req.body.message.text.indexOf(' ') + 1))
