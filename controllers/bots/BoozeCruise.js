@@ -494,7 +494,7 @@ router.post('/', function (req, res, next) {
                   i = "Poor";
                 } else if (i === 1) {
                   i = "Middle Class";
-                } else {
+                } else if (i === 2 ) {
                   i = "Rich";
                 }
                 message += i + ": " + guestList[i] + "\n";
