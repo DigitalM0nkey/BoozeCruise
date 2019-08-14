@@ -14,6 +14,7 @@ const roll = function numbers(player1Guess, player2Guess) {
     } else if (player2 > player1 && player2 < house) {
       console.log("\nPlayer 2 Wins!\nHouse picked: " + house + "\nPlayer 1 guessed: " + player1Guess + "\nPlayer 2 guessed: " + player2Guess);
     }
+    console.log("If it makes it here, Check your rule. maybe you need an else statment");
   }
 
 
