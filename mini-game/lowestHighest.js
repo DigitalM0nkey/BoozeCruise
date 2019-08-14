@@ -7,15 +7,15 @@ const roll = function numbers(player1Guess, player2Guess) {
   if (player1Guess === player2Guess) {
     console.log("House Wins! \nPlayer 1 guessed: " + player1Guess + "\nPlayer 2 guessed: " + player2Guess);
   } else if (house < player1Guess && house < player2Guess) {
-    console.log("House Wins! \n\n House picked: " + house + "\nPlayer 1 guessed: " + player1Guess + "\nPlayer 2 guessed: " + player2Guess);
+    console.log("House Wins! \n\nHouse picked: " + house + "\nPlayer 1 guessed: " + player1Guess + "\nPlayer 2 guessed: " + player2Guess);
   } else if (house > player1Guess || house > player2Guess) {
     if (player1 > player2) {
-      console.log("Player 1 Wins! \n\n House picked: " + house + "\nPlayer 1 guessed: " + player1Guess + "\nPlayer 2 guessed: " + player2Guess);
+      console.log("Player 1 Wins!\n\nHouse picked: " + house + "\nPlayer 1 guessed: " + player1Guess + "\nPlayer 2 guessed: " + player2Guess);
     } else {
-      console.log("Player 2 Wins! \n\n House picked: " + house + "\nPlayer 1 guessed: " + player1Guess + "\nPlayer 2 guessed: " + player2Guess);
+      console.log("Player 2 Wins!\n\nHouse picked: " + house + "\nPlayer 1 guessed: " + player1Guess + "\nPlayer 2 guessed: " + player2Guess);
     }
   }
-  console.log(house);
+
 
 
 }
