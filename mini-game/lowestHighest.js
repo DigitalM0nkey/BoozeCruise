@@ -5,14 +5,14 @@ let player2 = 0;
 const roll = function numbers(player1Guess, player2Guess) {
   house = Math.floor(Math.random() * 100);
   if (player1Guess === player2Guess) {
-    console.log("House Wins! \nPlayer 1 guessed: " + player1Guess + "\nPlayer 2 guessed: " + player2Guess);
+    console.log("\nHouse Wins!\nPLAYER DRAW\nPlayer 1 guessed: " + player1Guess + "\nPlayer 2 guessed: " + player2Guess);
   } else if (house < player1Guess && house < player2Guess) {
-    console.log("House Wins! \n\nHouse picked: " + house + "\nPlayer 1 guessed: " + player1Guess + "\nPlayer 2 guessed: " + player2Guess);
+    console.log("\nHouse Wins!\nHouse picked: " + house + "\nPlayer 1 guessed: " + player1Guess + "\nPlayer 2 guessed: " + player2Guess);
   } else if (house > player1Guess || house > player2Guess) {
     if (player1 > player2) {
-      console.log("Player 1 Wins!\n\nHouse picked: " + house + "\nPlayer 1 guessed: " + player1Guess + "\nPlayer 2 guessed: " + player2Guess);
+      console.log("\nPlayer 1 Wins!\nHouse picked: " + house + "\nPlayer 1 guessed: " + player1Guess + "\nPlayer 2 guessed: " + player2Guess);
     } else {
-      console.log("Player 2 Wins!\n\nHouse picked: " + house + "\nPlayer 1 guessed: " + player1Guess + "\nPlayer 2 guessed: " + player2Guess);
+      console.log("\nPlayer 2 Wins!\nHouse picked: " + house + "\nPlayer 1 guessed: " + player1Guess + "\nPlayer 2 guessed: " + player2Guess);
     }
   }
 
