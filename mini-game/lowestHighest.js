@@ -8,3 +8,5 @@ const roll = function numbers(player1Guess, player2Guess) {
 
 
 }
+
+roll(6, 30);
