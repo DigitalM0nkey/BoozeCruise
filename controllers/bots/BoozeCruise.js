@@ -291,7 +291,7 @@ router.post('/', function (req, res, next) {
                 });
 
               }
-            } else if (req.body.message.text == "Yes\n" + LOWESTHIGHEST) {
+            } else if (req.body.message.text == "Yes,\n" + LOWESTHIGHEST) {
               console.log(ship);
 
               if (ship.purse.balance >= 5) {
