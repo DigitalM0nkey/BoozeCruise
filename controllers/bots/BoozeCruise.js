@@ -19,7 +19,7 @@ var LOWESTHIGHEST = "Play Lowest Highest for " + KORONA + " 5"
 var Port = require('../../models/port');
 var Ship = require('../../models/ship');
 var guest = require('../../types/guest');
-var LowestHighest = require('../../models/lowestHighest');
+var LowestHighest = require('../../models/mini-games/lowestHighest');
 
 var b = TelegramBot.boozecruiseBot;
 
