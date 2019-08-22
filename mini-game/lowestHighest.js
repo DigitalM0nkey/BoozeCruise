@@ -1,6 +1,6 @@
 module.exports = function (house, player1, player2) {
 
-  let message = "House picked: " + house + "\n" + p1Name + " guessed: " + player1.guess + "\n" + p2Name + " guessed: " + player2.guess;
+  let message = "House picked: " + house + "\n" + player1.name + " guessed: " + player1.guess + "\n" + player2.name + " guessed: " + player2.guess;
 
   if (player1.guess === player2.guess) {
     return { message: "<b>House Wins!</b>\nPLAYER DRAW\n" + message };
