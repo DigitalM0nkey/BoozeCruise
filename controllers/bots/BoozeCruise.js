@@ -207,7 +207,12 @@ router.post('/', function (req, res, next) {
                   b.sendMessage(game.players[1].id, result.message);
                 })
 
+              } else {
+                b.sendMessage(game.players[0].id, result.message);
+                b.sendMessage(game.players[1].id, result.message);
               }
+              game.inProgress = false;
+              game.save();
             } else {
               LowestHighest.create({
                 players: [{
