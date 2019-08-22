@@ -1,4 +1,4 @@
-const roll = function numbers(house, player1, player2) {
+module.exports = function (house, player1, player2) {
 
   let message = "House picked: " + house + "\n" + p1Name + " guessed: " + player1.guess + "\n" + p2Name + " guessed: " + player2.guess;
 
