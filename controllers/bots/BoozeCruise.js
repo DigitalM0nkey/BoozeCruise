@@ -281,7 +281,7 @@ router.post('/', function (req, res, next) {
                   id: ship.location.port
                 }).then(function (port) {
                   b.exportChatInviteLink(port.id).then(function (link) {
-                    b.sendKeyboard(ship.id, "You are currently docked in " + port.name + "\nDo you need the link again?", keyboards.decision('this is a test'));
+                    b.sendKeyboard(ship.id, "You are currently docked in " + port.name + "\nDo you need the link again?", keyboards.decision("this is a test"));
                     /* setTimeout(function () {
                        
                      }, 5000);
