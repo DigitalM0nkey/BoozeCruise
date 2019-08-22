@@ -477,6 +477,8 @@ router.post('/', function (req, res, next) {
 
             } else if (req.body.message.text == '\ud83d\udcb0 Purser \ud83d\udcb0') {
               b.sendKeyboard(req.body.message.chat.id, "A ship's purser is the person on a ship principally responsible for the handling of money on board.\n\nThe currency is Korona or " + KORONA + " for short. \n\n How may I help you today?", keyboards.purser);
+            } else if (req.body.message.text == '\ud83d\udcb0 Casino \ud83d\udcb0') {
+              b.sendKeyboard(req.body.message.chat.id, "A ship's casino is a place where you can spend your " + KORONA + " for chance to win.", keyboards.casino);
             } else if (req.body.message.text == '\ud83d\udc65 Manifest \ud83d\udc65') {
               b.sendKeyboard(req.body.message.chat.id, "A document giving comprehensive details of a ship and its cargo and other contents, passengers, and crew for the use of customs officers.", keyboards.manifest);
             } else if (req.body.message.text == '\ud83d\udc65 Guest Manifest \ud83d\udc65') {
