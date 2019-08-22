@@ -295,7 +295,9 @@ router.post('/', function (req, res, next) {
               if (ship.purse >= 5) {
                 ship.purse -= 5;
                 ship.save();
-                b.sendInlineKeyboard(ship.id, link, keyboards.numbers());
+                console.log(keyboards.numbers());
+
+                b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers());
               }
 
               // LowestHighest.findOne({inProgress:true}).then(function(game){
