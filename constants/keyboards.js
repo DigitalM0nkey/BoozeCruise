@@ -19,6 +19,9 @@ module.exports = {
         }],
         [{
           'text': fireworks + 'Achievements' + fireworks
+        },
+        {
+          'text': moneyBag + 'Casino' + moneyBag
         }],
         seaDay ? [{
           'text': moneyBag + 'Purser' + moneyBag
@@ -59,6 +62,20 @@ module.exports = {
       }],
       [{
         'text': bug + 'Suggestions' + bug
+      }],
+      [{
+        'text': '\u2630 Main Menu \u2630'
+      }]
+    ],
+    resize_keyboard: true
+  },
+  casino: {
+    keyboard: [
+      [{
+        'text': 'Lowest Highest'
+      }],
+      [{
+        'text': 'Mixology'
       }],
       [{
         'text': '\u2630 Main Menu \u2630'
