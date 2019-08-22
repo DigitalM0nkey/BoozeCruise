@@ -9,36 +9,36 @@ module.exports = function (house, player1, player2) {
   } else if (house > player1.guess || house > player2.guess) {
     if (player1.guess > player2.guess && player1.guess < house) {
       return {
-        message: "<b>Player 1 Wins!</b>\n" + message,
+        message: "<b>" + player1.name + " Wins!</b>\n" + message,
         winner: player1.id
       };
     } else if (player2.guess > player1.guess && player2.guess < house) {
       return {
-        message: "<b>Player 2 Wins!</b>\n" + message,
+        message: "<b>" + player2.name + " Wins!</b>\n" + message,
         winner: player2.id
       };
     } else if (house > player1.guess && player2.guess > house) {
       return {
-        message: "<b>Player 1 Wins!</b>\n" + message,
+        message: "<b>" + player1.name + " Wins!</b>\n" + message,
         winner: player1.id
       };
     } else if (house > player2.guess && player1.guess > house) {
       return {
-        message: "<b>Player 2 Wins!</b>\n" + message,
+        message: "<b>" + player2.name + " Wins!</b>\n" + message,
         winner: player2.id
       };
     }
   } else if (house === player1.guess) {
     //JACKPOT PLAYER 1
     return {
-      message: "<b>---- JACKPOT PLAYER 1 ----</b>\n" + message,
+      message: "<b>---- JACKPOT " + player1.name + " ----</b>\n" + message,
       winner: player1.id,
       jackpot: true
     };
   } else if (house === player2.guess) {
     //JACKPOT PLAYER 2
     return {
-      message: "<b>---- JACKPOT PLAYER 2 ----</b>\n" + message,
+      message: "<b>---- JACKPOT " + player2.name + " ----</b>\n" + message,
       winner: player2.id,
       jackpot: true
     };
