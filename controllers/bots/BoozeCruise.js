@@ -197,6 +197,8 @@ router.post('/', function (req, res, next) {
                 guess: data.number
               })
               let result = lowestHighest(game.houseGuess, game.players[0], game.players[1]);
+              console.log(result);
+
               if (result.winner) {
                 Ship.findOne({ id: result.winner }).then(function (winner) {
                   winner.purse.balance += 10;
