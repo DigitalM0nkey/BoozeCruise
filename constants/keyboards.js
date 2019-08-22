@@ -231,7 +231,7 @@ module.exports = {
     for (let i = 1; i <= 20; i++) {
       keyboard.inline_keyboard.push([])
       for (let j = 1; j <= 5; j++) {
-        keyboard.inline_keyboard[keyboard.inlinekeyboard.length - 1].push({
+        keyboard.inline_keyboard[keyboard.inline_keyboard.length - 1].push({
           text: i * j,
           callback_data: "Lowest Highest" + i * j
         })
