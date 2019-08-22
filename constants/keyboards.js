@@ -88,7 +88,7 @@ module.exports = {
     return {
       keyboard: [
         [{
-          'text': 'Yes\n' + message
+          'text': 'Yes,\n' + message
         }],
         [{
           'text': 'No'
