@@ -84,20 +84,22 @@ module.exports = {
     ],
     resize_keyboard: true
   },
-  decision: message => ({
-    keyboard: [
-      [{
-        'text': 'Yes\n' + message
-      }],
-      [{
-        'text': 'No'
-      }],
-      [{
-        'text': '\u2630 Main Menu \u2630'
-      }]
-    ],
-    resize_keyboard: true
-  }),
+  decision: function (message) {
+    return {
+      keyboard: [
+        [{
+          'text': 'Yes\n' + message
+        }],
+        [{
+          'text': 'No'
+        }],
+        [{
+          'text': '\u2630 Main Menu \u2630'
+        }]
+      ],
+      resize_keyboard: true
+    }
+  },
   atSea: {
     keyboard: [
       [{
