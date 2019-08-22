@@ -84,10 +84,10 @@ module.exports = {
     ],
     resize_keyboard: true
   },
-  decision: {
+  decision: message => ({
     keyboard: [
       [{
-        'text': 'Yes'
+        'text': 'Yes\n' + message
       }],
       [{
         'text': 'No'
@@ -97,7 +97,7 @@ module.exports = {
       }]
     ],
     resize_keyboard: true
-  },
+  }),
   atSea: {
     keyboard: [
       [{
