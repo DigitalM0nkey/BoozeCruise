@@ -14,7 +14,7 @@ var TREASURE = 500;
 var MYSHIP = '5be3d50298ae6843394411ee';
 var KORONA = "\u24C0";
 var WELCOME = "Welcome To Booze Cruise\!\n\nThis is your ship, go ahead and look around. Press all the buttons, it\'s the only way you\'ll know what they do.\nThis is not a fast-paced game, it occurs in real time.\nBoozeCruise is an in-development game, meaning that the game is constantly evolving.\n\nWant to send the developers a message, or suggest a feature? There's a button for that and we would love for you to use it.\n\nIn BoozeCruise you will travel from port to port, in each port you will meet other sailors like yourself, go ahead introduce yourself to whoever else is in port. \n\nThere is treasure hidden in one of the ports, make sure you look for teasure while you are docked. You could dig up some Korona.\n\nWhere would you like to go ?";
-
+var LOWESTHIGHEST = "Play for Lowest Highest for " + KORONA + " 5"
 
 var Port = require('../../models/port');
 var Ship = require('../../models/ship');
@@ -281,7 +281,7 @@ router.post('/', function (req, res, next) {
                   id: ship.location.port
                 }).then(function (port) {
                   b.exportChatInviteLink(port.id).then(function (link) {
-                    b.sendKeyboard(ship.id, "You are currently docked in " + port.name + "\nDo you need the link again?", keyboards.decision("this is a test"));
+                    b.sendKeyboard(ship.id, "You are currently docked in " + port.name + "\nDo you need the link again?", keyboards.decision("Send the link"));
                     /* setTimeout(function () {
                        
                      }, 5000);
@@ -293,7 +293,7 @@ router.post('/', function (req, res, next) {
 
             }
             // Decison keyboard promped
-            else if (req.body.message.text == "Yes") {
+            else if (req.body.message.text == "Yes\nSend the link") {
 
               Port.findOne({
                 id: ship.location.port
@@ -480,7 +480,7 @@ router.post('/', function (req, res, next) {
             } else if (req.body.message.text == '\ud83d\udcb0 Casino \ud83d\udcb0') {
               b.sendKeyboard(req.body.message.chat.id, "A ship's casino is a place where you can spend your " + KORONA + " for chance to win.", keyboards.casino);
             } else if (req.body.message.text == '\u2195 Lowest Highest \u2195') {
-              b.sendKeyboard(req.body.message.chat.id, "This game cost " + KORONA + " 5 to play", keyboards.decision);
+              b.sendKeyboard(req.body.message.chat.id, "This game cost " + KORONA + " 5 to play", keyboards.decision(LOWESTHIGHEST));
             } else if (req.body.message.text == '\ud83d\udc65 Manifest \ud83d\udc65') {
               b.sendKeyboard(req.body.message.chat.id, "A document giving comprehensive details of a ship and its cargo and other contents, passengers, and crew for the use of customs officers.", keyboards.manifest);
             } else if (req.body.message.text == '\ud83d\udc65 Guest Manifest \ud83d\udc65') {
