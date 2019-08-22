@@ -210,7 +210,8 @@ router.post('/', function (req, res, next) {
               LowestHighest.create({
                 players: [{
                   id: req.body.callback_query.from.id,
-                  guess: data.number
+                  guess: data.number,
+                  name: req.body.callback_query.from.first_name
                 }]
               })
             }
@@ -221,8 +222,6 @@ router.post('/', function (req, res, next) {
 
   } else if (req.body.edited_message || req.body.message.photo || req.body.message.game || req.body.message.emoji || req.body.message.voice || req.body.message.animation || req.body.message.sticker || req.body.message.reply_to_message) {
     //Ignore these messages as they're just chat interactions
-    console.log('Ignoring this message:');
-    console.log(req.body);
     return res.sendStatus(200);
   } else {
     if (parseInt(req.body.message.chat.id) > 0) {
@@ -319,12 +318,10 @@ router.post('/', function (req, res, next) {
 
               }
             } else if (req.body.message.text == "Yes,\n" + LOWESTHIGHEST) {
-              console.log(ship);
 
               if (ship.purse.balance >= 5) {
                 ship.purse.balance -= 5;
                 ship.save();
-                console.log(keyboards.numbers());
 
                 b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers());
               }
