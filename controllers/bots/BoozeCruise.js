@@ -194,7 +194,9 @@ router.post('/', function (req, res, next) {
             if (game) {
               game.players.push({
                 id: req.body.callback_query.from.id,
-                guess: data.number
+                guess: data.number,
+                name: req.body.callback_query.from.first_name
+
               })
               let result = lowestHighest(game.houseGuess, game.players[0], game.players[1]);
               console.log(result);
