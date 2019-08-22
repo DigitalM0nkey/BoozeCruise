@@ -8,13 +8,15 @@ const LowestHighest = db.model('LowestHighest', {
         ref: "Ship",
         required: true
       },
-      guess: { type: Number, required: true }
+      guess: { type: Number, required: true },
+      name: { type: String, required: true },
     }
   ],
   date: { type: Date, required: true, default: Date.now },
   inProgress: { type: Boolean, required: true, default: true },
   houseGuess: { type: Number, required: true, default: () => Math.floor(Math.random() * 98) + 2 },
-  jackpotPaid: { type: Boolean, required: true, default: false },
+  jackpotPaid: { type: Boolean, required: true, default: false }
+
 
 
 });
