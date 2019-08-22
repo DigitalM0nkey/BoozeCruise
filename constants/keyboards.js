@@ -226,4 +226,14 @@ module.exports = {
     ],
     resize_keyboard: true
   },
+  numbers: function () {
+    let keyboard = { inline_keyboard: [] }
+    for (let i = 1; i <= 20; i++) {
+      keyboard.inline_keyboard.push([])
+      for (let j = 1; j <= 5; j++) {
+        keyboard.inline_keyboard[keyboard.inlinekeyboard.length - 1].push(i * j)
+      }
+    }
+    return keyboard
+  }
 };
