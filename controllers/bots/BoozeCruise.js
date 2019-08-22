@@ -292,8 +292,8 @@ router.post('/', function (req, res, next) {
 
               }
             } else if (req.body.message.text == "Yes\n" + LOWESTHIGHEST) {
-              if (ship.purse >= 5) {
-                ship.purse -= 5;
+              if (ship.purse.balance >= 5) {
+                ship.purse.balance -= 5;
                 ship.save();
                 console.log(keyboards.numbers());
 
