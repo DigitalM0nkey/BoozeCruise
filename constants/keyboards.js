@@ -7,6 +7,7 @@ var bug = " \ud83d\udc1b ";
 var korona = " \u24C0 ";
 var mainMenu = "\u2630 Main Menu \u2630";
 var navigation = map + 'Navigation' + map;
+var upDown = "\u2195"
 module.exports = {
   home: function (seaDay) {
     return {
@@ -72,7 +73,7 @@ module.exports = {
   casino: {
     keyboard: [
       [{
-        'text': 'Lowest Highest'
+        'text': upDown + 'Lowest Highest' + upDown
       }],
       [{
         'text': 'Mixology'
