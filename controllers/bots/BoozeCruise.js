@@ -538,11 +538,11 @@ router.post('/', function (req, res, next) {
                 }
                 guestList[guest.type]++;
               });
-              var message = '';
+              var message1 = '';
               for (var i in guestList) {
-                message += i + ": " + guestList[i] + "\n";
+                message1 += i + ": " + guestList[i] + "\n";
               }
-              b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest:\n" + message, keyboards.home(ship.nextLocation.port));
+              b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest:\n" + message1, keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == '\ud83c\udf87 Achievements \ud83c\udf87') {
               Ship.findOne({
                 id: ship.id
