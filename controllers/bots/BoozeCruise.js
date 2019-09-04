@@ -15,7 +15,8 @@ var TREASURE = 500;
 var MYSHIP = '5be3d50298ae6843394411ee';
 var KORONA = "\u24C0";
 var WELCOME = "Welcome To Booze Cruise\!\n\nThis is your ship, go ahead and look around. Press all the buttons, it\'s the only way you\'ll know what they do.\nThis is not a fast-paced game, it occurs in real time.\nBoozeCruise is an in-development game, meaning that the game is constantly evolving.\n\nWant to send the developers a message, or suggest a feature? There's a button for that and we would love for you to use it.\n\nIn BoozeCruise you will travel from port to port, in each port you will meet other sailors like yourself, go ahead introduce yourself to whoever else is in port. \n\nThere is treasure hidden in one of the ports, make sure you look for teasure while you are docked. You could dig up some Korona.\n\nWhere would you like to go ?";
-var LOWESTHIGHEST = "Play Lowest Highest for " + KORONA + "5"
+var LOWESTHIGHEST = "Play Lowest Highest for " + KORONA + "5";
+const BITCOINADDRESS = '15t1A5qEwSKNtEWNpANdivZeeXp7SGDvqB';
 
 var Port = require('../../models/port');
 var Ship = require('../../models/ship');
