@@ -29,6 +29,7 @@
     "underscore": "^1.9.1"
   },
   "devDependencies": {
+    "eslint": "^6.3.0",
     "gulp": "^3.9.1",
     "gulp-nodemon": "^2.2.1"
   }

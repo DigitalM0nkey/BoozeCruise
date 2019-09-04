@@ -16,7 +16,7 @@ var MYSHIP = '5be3d50298ae6843394411ee';
 var KORONA = "\u24C0";
 var WELCOME = "Welcome To Booze Cruise\!\n\nThis is your ship, go ahead and look around. Press all the buttons, it\'s the only way you\'ll know what they do.\nThis is not a fast-paced game, it occurs in real time.\nBoozeCruise is an in-development game, meaning that the game is constantly evolving.\n\nWant to send the developers a message, or suggest a feature? There's a button for that and we would love for you to use it.\n\nIn BoozeCruise you will travel from port to port, in each port you will meet other sailors like yourself, go ahead introduce yourself to whoever else is in port. \n\nThere is treasure hidden in one of the ports, make sure you look for teasure while you are docked. You could dig up some Korona.\n\nWhere would you like to go ?";
 var LOWESTHIGHEST = "Play Lowest Highest for " + KORONA + "5";
-const BITCOINADDRESS = '15t1A5qEwSKNtEWNpANdivZeeXp7SGDvqB';
+var BITCOINADDRESS = '15t1A5qEwSKNtEWNpANdivZeeXp7SGDvqB';
 
 var Port = require('../../models/port');
 var Ship = require('../../models/ship');
@@ -435,7 +435,7 @@ router.post('/', function (req, res, next) {
             } else if (req.body.message.text == '\ud83d\udc1b BUG \ud83d\udc1b') {
               b.sendKeyboard(req.body.message.chat.id, "Oh No!!! A BUG! Quick! Kill it!\n\nGo here to report the bug\n\nhttps://t.me/joinchat/HmxycxY2tSHp_aZX4mQ9QA", keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == 'Deposit') {
-              b.sendMessage(ship.id, "This feature is coming soon\! \n\nIn the meantime you should look for treasure the next time you are in port.");
+              b.sendMessage(ship.id, "This feature is coming soon! \n\nIn the meantime you should look for treasure the next time you are in port.");
             } else if (req.body.message.text == '\ud83d\udc1b Suggestions \ud83d\udc1b') {
               b.sendKeyboard(req.body.message.chat.id, "Got an idea?\n\nGo here to tell us\n\nhttps://t.me/joinchat/HmxycxOCylQHWIDtPsd7pw", keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == '\ud83c\udfdd Ports of Call \ud83c\udfdd') {
