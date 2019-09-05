@@ -538,7 +538,7 @@ router.post('/', function (req, res, next) {
             } else if (req.body.message.text == '\ud83d\udcb0 Casino \ud83d\udcb0') {
               b.sendKeyboard(req.body.message.chat.id, "A ship's casino is a place where you can spend your " + KORONA + " for chance to win.", keyboards.casino);
             } else if (req.body.message.text == '\u2195 Lowest Highest \u2195') {
-              b.sendKeyboard(req.body.message.chat.id, "This game cost " + KORONA + "5 to play", keyboards.decision(LOWESTHIGHEST));
+              b.sendKeyboard(req.body.message.chat.id, "This game cost " + KORONA + "5 to play\n" + "Your current balance is " + KORONA + ship.purse.balance, keyboards.decision(LOWESTHIGHEST));
             } else if (req.body.message.text == '\ud83d\udc65 Manifest \ud83d\udc65') {
               b.sendKeyboard(req.body.message.chat.id, "A document giving comprehensive details of a ship and its cargo and other contents, passengers, and crew for the use of customs officers.", keyboards.manifest);
             } else if (req.body.message.text == '\ud83d\udc65 Guest Manifest \ud83d\udc65') {
