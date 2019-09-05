@@ -25,7 +25,6 @@ var LowestHighest = require('../../models/mini-games/lowestHighest/lowestHighest
 
 var b = TelegramBot.boozecruiseBot;
 
-console.log(guest.pick());
 
 //TODO -- Add 'Get back to ship' command in port.
 //TODO -- comment out keyboard keys that are not currently in use.
@@ -155,7 +154,7 @@ router.post('/', function (req, res, next) {
       id: req.body.callback_query.from.id
     })
       .then(function (ship) {
-        if (parseInt(req.body.callback_query.from.id) > 0) { } else { }
+        //if (parseInt(req.body.callback_query.from.id) > 0) { } else { }
         var data = JSON.parse(req.body.callback_query.data);
         if (data.action === 'navigate') {
           if (ship.id != MYSHIP) {
@@ -564,7 +563,7 @@ router.post('/', function (req, res, next) {
               });
             }
           }
-          //res.sendStatus(200);
+          res.sendStatus(200);
         }
         );
     } else {

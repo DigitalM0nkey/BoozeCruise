@@ -226,20 +226,21 @@ module.exports = {
     ],
     resize_keyboard: true
   },
-  numbers: function () {
-    let keyboard = { inline_keyboard: [] }
+  numbers: function (gameId) {
+    let keyboard = { inline_keyboard: [] };
     for (let i = 0; i < 20; i++) {
-      keyboard.inline_keyboard.push([])
+      keyboard.inline_keyboard.push([]);
       for (let j = 1; j <= 5; j++) {
         keyboard.inline_keyboard[keyboard.inline_keyboard.length - 1].push({
           text: i * 5 + j,
           callback_data: JSON.stringify({
             game: "LH",
-            number: i * 5 + j
+            number: i * 5 + j,
+            id: gameId
           })
-        })
+        });
       }
     }
-    return keyboard
+    return keyboard;
   }
 };
