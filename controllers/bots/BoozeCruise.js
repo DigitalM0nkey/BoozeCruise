@@ -190,7 +190,7 @@ router.post('/', function (req, res, next) {
             });
 
         } else if (data.game.indexOf("LH_") === 0) {
-          LowestHighest.findOne({ _id: data.game.split("_")[1] }).then(function (game) {
+          LowestHighest.findOne({ inProgress: true, _id: data.game.split("_")[1] }).then(function (game) {
             if (game) {
               console.log(game);
               console.log(_.find(game.players, player => player.id === req.body.callback_query.from.id));
@@ -226,6 +226,8 @@ router.post('/', function (req, res, next) {
                 }
                 game.save();
               }
+            } else {
+              b.sendMessage(req.body.callback_query.from.id, "This game is alredy finished. Stop picking numbers")
             }
           })
         }
