@@ -189,12 +189,12 @@ router.post('/', function (req, res, next) {
 
             });
 
-        } else if (data.game === "LH") {
-          LowestHighest.findOne({ _id: data.id }).then(function (game) {
+        } else if (data.game.indexOf("LH_") === 0) {
+          LowestHighest.findOne({ _id: data.game.split("_")[1] }).then(function (game) {
             if (game) {
               game.players.push({
                 id: req.body.callback_query.from.id,
-                guess: data.number,
+                guess: data.num,
                 name: req.body.callback_query.from.first_name
 
               })
