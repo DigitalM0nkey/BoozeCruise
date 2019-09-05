@@ -223,11 +223,13 @@ router.post('/', function (req, res, next) {
                   }
                   game.inProgress = false;
 
+                } else {
+                  b.sendMessage(req.body.callback_query.from.id, "You have selected " + data.num)
                 }
                 game.save();
               }
             } else {
-              b.sendMessage(req.body.callback_query.from.id, "This game is alredy finished. Stop picking numbers")
+              b.sendMessage(req.body.callback_query.from.id, "This game is already finished. Stop picking numbers")
             }
           })
         }
