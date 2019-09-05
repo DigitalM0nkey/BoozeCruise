@@ -192,32 +192,36 @@ router.post('/', function (req, res, next) {
         } else if (data.game.indexOf("LH_") === 0) {
           LowestHighest.findOne({ _id: data.game.split("_")[1] }).then(function (game) {
             if (game) {
-              game.players.push({
-                id: req.body.callback_query.from.id,
-                guess: data.num,
-                name: req.body.callback_query.from.first_name
+              if (_.find(game.players, player => player.id === req.body.callback_query.from.id)) {
+                b.sendMessage(req.body.callback_query.from.id, "You have already picked a number for this game")
+              } else {
+                game.players.push({
+                  id: req.body.callback_query.from.id,
+                  guess: data.num,
+                  name: req.body.callback_query.from.first_name
 
-              })
-              if (game.players.length === 2) {
-                let result = lowestHighest(game.houseGuess, game.players[0], game.players[1]);
-                console.log(result);
+                })
+                if (game.players.length === 2) {
+                  let result = lowestHighest(game.houseGuess, game.players[0], game.players[1]);
+                  console.log(result);
 
-                if (result.winner) {
-                  Ship.findOne({ id: result.winner }).then(function (winner) {
-                    winner.purse.balance += 10;
-                    winner.save();
+                  if (result.winner) {
+                    Ship.findOne({ id: result.winner }).then(function (winner) {
+                      winner.purse.balance += 10;
+                      winner.save();
+                      b.sendMessage(game.players[0].id, result.message);
+                      b.sendMessage(game.players[1].id, result.message);
+                    })
+
+                  } else {
                     b.sendMessage(game.players[0].id, result.message);
                     b.sendMessage(game.players[1].id, result.message);
-                  })
+                  }
+                  game.inProgress = false;
 
-                } else {
-                  b.sendMessage(game.players[0].id, result.message);
-                  b.sendMessage(game.players[1].id, result.message);
                 }
-                game.inProgress = false;
-
+                game.save();
               }
-              game.save();
             }
           })
         }
