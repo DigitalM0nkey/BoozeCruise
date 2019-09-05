@@ -237,7 +237,7 @@ module.exports = {
             game: "LH",
             number: i * 5 + j,
             id: gameId
-          })
+          }).replace(/\s/g, "")
         });
       }
     }
