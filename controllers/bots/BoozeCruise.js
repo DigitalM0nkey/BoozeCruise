@@ -280,6 +280,7 @@ router.post('/', function (req, res, next) {
                   }
                 });
                 newShip.save();
+                b.sendKeyboard(req.body.message.chat.id, WELCOME, keyboards.home(ship.nextLocation.port));
                 console.log(randomPort);
               });
 
@@ -567,7 +568,7 @@ router.post('/', function (req, res, next) {
               b.sendKeyboard(req.body.message.chat.id, "A ship's casino is a place where you can spend your " + KORONA + " for chance to win.", keyboards.casino);
             } else if (req.body.message.text == '\u2195 Lowest Highest \u2195') {
               LowestHighest.find({ jackpotPaid: false }).then(games => {
-                b.sendKeyboard(req.body.message.chat.id, "This game cost " + KORONA + "5 to play\n" + "Your current balance is " + KORONA + ship.purse.balance + "\nCurrent jackpot is " + KORONA + 2 * games.length, keyboards.decision(LOWESTHIGHEST));
+                b.sendKeyboard(req.body.message.chat.id, "This game cost " + KORONA + "5 to play\n" + "Your current balance is " + KORONA + ship.purse.balance + "\nCurrent jackpot is " + KORONA + 2 * games.length + "\n\nSelect a number higher than your opponent but lower than the House.", keyboards.decision(LOWESTHIGHEST));
               })
             } else if (req.body.message.text == '\ud83d\udc65 Manifest \ud83d\udc65') {
               b.sendKeyboard(req.body.message.chat.id, "A document giving comprehensive details of a ship and its cargo and other contents, passengers, and crew for the use of customs officers.", keyboards.manifest);
