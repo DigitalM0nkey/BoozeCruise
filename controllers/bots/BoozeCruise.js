@@ -212,20 +212,22 @@ router.post('/', function (req, res, next) {
                   if (result.winner) {
                     Ship.findOne({ id: result.winner }).then(function (winner) {
                       winner.purse.balance += 10;
-                      winner.save();
+
                       if (result.jackpot) {
                         LowestHighest.find({ jackpotPaid: false }).then(games => {
                           winner.purse.balance += 2 * games.length;
+                          winner.save();
                           b.sendMessage(game.players[0].id, result.message);
                           b.sendMessage(game.players[1].id, result.message);
                           games.forEach(game => {
                             game.jackpotPaid = true;
-                            game.save;
+                            game.save();
                           })
                         })
                       } else {
                         b.sendMessage(game.players[0].id, result.message);
                         b.sendMessage(game.players[1].id, result.message);
+                        winner.save();
                       }
                     })
 
