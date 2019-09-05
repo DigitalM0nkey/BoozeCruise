@@ -280,7 +280,7 @@ router.post('/', function (req, res, next) {
                   }
                 });
                 newShip.save();
-                b.sendKeyboard(req.body.message.chat.id, WELCOME, keyboards.home(ship.nextLocation.port));
+                b.sendKeyboard(req.body.message.chat.id, WELCOME, keyboards.home());
                 console.log(randomPort);
               });
 
