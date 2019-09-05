@@ -221,9 +221,9 @@ router.post('/', function (req, res, next) {
             }
           })
         }
-        //return res.sendStatus(200);
-      });
 
+      });
+    return res.sendStatus(200);
   } else if (req.body.edited_message || req.body.message.photo || req.body.message.game || req.body.message.emoji || req.body.message.voice || req.body.message.animation || req.body.message.sticker || req.body.message.reply_to_message) {
     //Ignore these messages as they're just chat interactions
     return res.sendStatus(200);
