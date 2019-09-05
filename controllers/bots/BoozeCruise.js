@@ -329,7 +329,7 @@ router.post('/', function (req, res, next) {
                   if (err) console.error(err);
                   LowestHighest.findOne({ inProgress: true }).then(function (game) {
                     if (game) {
-
+                      console.log(game);
                       b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id));
                     } else {
                       LowestHighest.create({
