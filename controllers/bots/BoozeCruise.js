@@ -573,8 +573,9 @@ router.post('/', function (req, res, next) {
                 b.sendMessage(req.body.message.chat.id, link);
               });
             }
+            res.sendStatus(200);
           }
-          res.sendStatus(200);
+
         }
         );
     } else {
