@@ -333,7 +333,9 @@ router.post('/', function (req, res, next) {
                       b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id));
                     } else {
                       LowestHighest.create({
-                      }).then((game) => {
+                      }, (err, game) => {
+                        console.log(game);
+
                         b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id));
                       })
                     }
