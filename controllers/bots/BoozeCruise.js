@@ -190,7 +190,7 @@ router.post('/', function (req, res, next) {
             });
 
         } else if (data.game === "LH") {
-          LowestHighest.findOne({ inProgress: true }).then(function (game) {
+          LowestHighest.findOne({ _id: data.id }).then(function (game) {
             if (game) {
               game.players.push({
                 id: req.body.callback_query.from.id,
@@ -198,31 +198,26 @@ router.post('/', function (req, res, next) {
                 name: req.body.callback_query.from.first_name
 
               })
-              let result = lowestHighest(game.houseGuess, game.players[0], game.players[1]);
-              console.log(result);
+              if (game.players.length === 2) {
+                let result = lowestHighest(game.houseGuess, game.players[0], game.players[1]);
+                console.log(result);
 
-              if (result.winner) {
-                Ship.findOne({ id: result.winner }).then(function (winner) {
-                  winner.purse.balance += 10;
-                  winner.save();
+                if (result.winner) {
+                  Ship.findOne({ id: result.winner }).then(function (winner) {
+                    winner.purse.balance += 10;
+                    winner.save();
+                    b.sendMessage(game.players[0].id, result.message);
+                    b.sendMessage(game.players[1].id, result.message);
+                  })
+
+                } else {
                   b.sendMessage(game.players[0].id, result.message);
                   b.sendMessage(game.players[1].id, result.message);
-                })
+                }
+                game.inProgress = false;
 
-              } else {
-                b.sendMessage(game.players[0].id, result.message);
-                b.sendMessage(game.players[1].id, result.message);
               }
-              game.inProgress = false;
               game.save();
-            } else {
-              LowestHighest.create({
-                players: [{
-                  id: req.body.callback_query.from.id,
-                  guess: data.number,
-                  name: req.body.callback_query.from.first_name
-                }]
-              })
             }
           })
         }
@@ -330,9 +325,25 @@ router.post('/', function (req, res, next) {
 
               if (ship.purse.balance >= 5) {
                 ship.purse.balance -= 5;
-                ship.save();
+                ship.save((err, saved, rows) => {
+                  if (err) console.error(err);
+                  LowestHighest.findOne({ inProgress: true }).then(function (game) {
+                    if (game) {
 
-                b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers());
+                      b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id));
+                    } else {
+                      LowestHighest.create({
+                      }).then((game) => {
+                        b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id));
+                      })
+                    }
+                  })
+
+
+
+                });
+
+
               }
 
             }
