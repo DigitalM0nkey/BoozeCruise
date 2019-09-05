@@ -331,14 +331,14 @@ router.post('/', function (req, res, next) {
                     if (game) {
                       console.log(game);
                       b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id));
-                      b.sendKeyboard(req.body.callback_query.from.id, "Pick a number", keyboards.casino);
+                      b.sendKeyboard(ship.id, "Pick a number", keyboards.casino);
                     } else {
                       LowestHighest.create({
                       }, (err, game) => {
                         console.log(game);
 
                         b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id));
-                        b.sendKeyboard(req.body.callback_query.from.id, "Pick a number", keyboards.casino);
+                        b.sendKeyboard(ship.id, "Pick a number", keyboards.casino);
                       })
                     }
                   })
