@@ -234,10 +234,9 @@ module.exports = {
         keyboard.inline_keyboard[keyboard.inline_keyboard.length - 1].push({
           text: i * 5 + j,
           callback_data: JSON.stringify({
-            game: "LH",
-            number: i * 5 + j,
-            id: gameId
-          }).replace(/\s/g, "")
+            game: "LH_" + gameId,
+            num: i * 5 + j
+          })
         });
       }
     }
