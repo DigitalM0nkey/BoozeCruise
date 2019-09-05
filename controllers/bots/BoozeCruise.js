@@ -193,9 +193,9 @@ router.post('/', function (req, res, next) {
           LowestHighest.findOne({ inProgress: true, _id: data.game.split("_")[1] }).then(function (game) {
             if (game) {
               console.log(game);
-              console.log(_.find(game.players, player => player.id === req.body.callback_query.from.id));
+              console.log(_.find(game.players, player => player.id == req.body.callback_query.from.id));
 
-              if (_.find(game.players, player => player.id === req.body.callback_query.from.id)) {
+              if (_.find(game.players, player => player.id == req.body.callback_query.from.id)) {
                 b.sendMessage(req.body.callback_query.from.id, "You have already picked a number for this game")
 
               } else {
