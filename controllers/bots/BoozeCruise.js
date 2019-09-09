@@ -439,7 +439,7 @@ router.post('/', function (req, res, next) {
 
               // Captains Log:
 
-            } else if (req.body.message.text.substring(0, req.body.message.text.indexOf(' ')) == "/log") {
+            } else if (req.body.message.text.substring(0, req.body.message.text.indexOf(' ')) == "\u2388 Capt's Log \u2388") {
               var message = req.body.message.text.substring(req.body.message.text.indexOf(' ') + 1);
               b.sendMessage(ship.id, "Captain's Log: " + message);
               Ship.findOne({

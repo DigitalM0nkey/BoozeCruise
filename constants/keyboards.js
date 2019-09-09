@@ -9,6 +9,7 @@ var mainMenu = "\u2630 Main Menu \u2630";
 var navigation = map + 'Navigation' + map;
 var upDown = " \u2195 "
 var anchor = " \u2693 "
+var helm = " \u2388 "
 module.exports = {
   home: function (seaDay) {
     return {
@@ -36,6 +37,9 @@ module.exports = {
         }],
         [{
           'text': bug + 'Maintenance' + bug
+        },
+        {
+          'text': helm + "Capt's Log" + helm
         }
         ],
       ],
