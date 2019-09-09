@@ -188,7 +188,7 @@ router.post('/', function (req, res, next) {
               sendAvailablePorts(req.body.callback_query.from.id, ports, ship);
 
             });
-
+          // Start Mini-game Lowest-Highest
         } else if (data.game.indexOf("LH_") === 0) {
           LowestHighest.findOne({ inProgress: true, _id: data.game.split("_")[1] }).then(function (game) {
             if (game) {
@@ -247,7 +247,7 @@ router.post('/', function (req, res, next) {
             }
           })
         }
-
+        // End Mini-game Lowest-Highest
       });
     return res.sendStatus(200);
   } else if (req.body.edited_message || req.body.message.photo || req.body.message.game || req.body.message.emoji || req.body.message.voice || req.body.message.animation || req.body.message.sticker || req.body.message.reply_to_message) {
@@ -339,7 +339,7 @@ router.post('/', function (req, res, next) {
                   id: ship.location.port
                 }).then(function (port) {
                   b.exportChatInviteLink(port.id).then(function (link) {
-                    b.sendKeyboard(ship.id, "You are currently docked in " + port.name + "\nDo you need the link again?", keyboards.decision("Send the link"));
+                    b.sendKeyboard(ship.id, "You are currently in the " + port.name + " harbour.", keyboards.navigation);
                     /* setTimeout(function () {
                        
                      }, 5000);
@@ -380,7 +380,7 @@ router.post('/', function (req, res, next) {
             }
 
             // Decison keyboard promped
-            else if (req.body.message.text == "Yes\nSend the link") {
+            else if (req.body.message.text == "Dock") {
 
               Port.findOne({
                 id: ship.location.port
@@ -433,7 +433,7 @@ router.post('/', function (req, res, next) {
                   });
                 }, function () {
                   b.exportChatInviteLink(ship.location.port).then(function (link) {
-                    b.sendMessage(ship.id, "You have not docked, you can only search for treasure in port\n" + link);
+                    b.sendMessage(ship.id, "You have arrived in port. However, have not docked, you can only search for treasure once you have docked in port\n" + link);
                   });
                 });
 

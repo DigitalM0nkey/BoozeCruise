@@ -114,6 +114,9 @@ module.exports = {
   navigation: {
     keyboard: [
       [{
+        'text': 'Dock'
+      },],
+      [{
         'text': '\ud83d\udea2 Home Port \ud83d\udea2'
       },],
       [{
