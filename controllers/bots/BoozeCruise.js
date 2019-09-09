@@ -380,7 +380,7 @@ router.post('/', function (req, res, next) {
             }
 
             // Decison keyboard promped
-            else if (req.body.message.text == "Dock") {
+            else if (req.body.message.text == "\u2693 Dock \u2693") {
 
               Port.findOne({
                 id: ship.location.port

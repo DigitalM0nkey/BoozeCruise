@@ -8,6 +8,7 @@ var korona = " \u24C0 ";
 var mainMenu = "\u2630 Main Menu \u2630";
 var navigation = map + 'Navigation' + map;
 var upDown = " \u2195 "
+var anchor = " \u2693 "
 module.exports = {
   home: function (seaDay) {
     return {
@@ -114,7 +115,7 @@ module.exports = {
   navigation: {
     keyboard: [
       [{
-        'text': 'Dock'
+        'text': anchor + 'Dock' + anchor
       },],
       [{
         'text': '\ud83d\udea2 Home Port \ud83d\udea2'
