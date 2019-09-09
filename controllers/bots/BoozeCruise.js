@@ -454,7 +454,7 @@ router.post('/', function (req, res, next) {
                 ship.save();
               });
             } else if (req.body.message.text == "\u2388 Capt's Log \u2388") {
-              b.sendMessage(ship.id, "The Captian's Log is a place for you to keep notes or other information. Each entry will be date stamped and displayed below. To create a new entry type /log followed by your message. \neg. /log This is my first Captians Log.");
+              b.sendMessage(ship.id, "The Captian's Log is a place for you to keep notes or other information. Each entry will be date stamped and displayed below. \nTo create a new entry, type /log followed by your message. \n\neg. /log This is my first Captians Log.");
               var logReport = "<b>Captain's Log:</b>\n";
               ship.communication.forEach(function (element) {
 
