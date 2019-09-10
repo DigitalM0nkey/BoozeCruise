@@ -433,7 +433,7 @@ router.post('/', function (req, res, next) {
                   });
                 }, function () {
                   b.exportChatInviteLink(ship.location.port).then(function (link) {
-                    b.sendMessage(ship.id, "You have arrived in port. However, have not docked, you can only search for treasure once you have docked in port\n" + link);
+                    b.sendMessage(ship.id, "You have arrived in port. However, you have not docked, you can only search for treasure once you have docked in port.\n" + link);
                   });
                 });
 
