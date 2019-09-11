@@ -193,7 +193,7 @@ router.post('/', function (req, res, next) {
         } else if (data.action === 'product') {
           Product.findOne({ _id: data.product }).then(product => {
             b.sendPhoto(req.body.callback_query.from.id, product.image, product.name + "\n" + product.description);
-            b.sendKeyboard(req.body.callback_query.from.id, "--------", keyboards.product(product));
+            setTimeout(function () { b.sendKeyboard(req.body.callback_query.from.id, "Options", keyboards.product(product)) }, 500);
             console.log(product);
 
           })
