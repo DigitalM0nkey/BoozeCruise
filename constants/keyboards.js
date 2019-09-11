@@ -280,15 +280,14 @@ module.exports = {
           'text': 'BUY',
           callback_data: JSON.stringify({
             action: "buy",
-            product: product._id
+            id: product._id
           })
-
         },
         {
           'text': 'SELL',
           callback_data: JSON.stringify({
             action: "sell",
-            product: product._id
+            id: product._id
           })
         },
         ],
