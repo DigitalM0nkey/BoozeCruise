@@ -193,6 +193,8 @@ router.post('/', function (req, res, next) {
         } else if (data.action === 'product') {
           Product.findOne({ _id: data.product }).then(product => {
             b.sendPhoto(req.body.callback_query.from.id, product.image, product.description);
+            console.log(product);
+
           })
         } else if (data.action.indexOf("LH_") === 0) {
           LowestHighest.findOne({ inProgress: true, _id: data.game.split("_")[1] }).then(function (game) {
