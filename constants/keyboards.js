@@ -282,16 +282,16 @@ module.exports = {
             action: "buy",
             id: product._id
           })
-        },
-        {
-          'text': 'SELL',
-          callback_data: JSON.stringify({
-            action: "sell",
-            id: product._id
-          })
-        },
-        ],
-      ],
+        }
+          // {
+          //   'text': 'SELL',
+          //   callback_data: JSON.stringify({
+          //     action: "sell",
+          //     id: product._id
+          //   })
+          // },
+        ]
+      ]
     }
 
   }

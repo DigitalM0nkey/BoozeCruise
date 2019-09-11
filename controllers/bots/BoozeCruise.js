@@ -193,12 +193,12 @@ router.post('/', function (req, res, next) {
         } else if (data.action === 'product') {
           Product.findOne({ _id: data.product }).then(product => {
             b.sendPhoto(req.body.callback_query.from.id, product.image, product.name + "\n" + product.description);
-            setTimeout(function () { b.sendKeyboard(req.body.callback_query.from.id, "Price: " + KORONA + product.price + "\nExpiry Date: " + product.expiry + "\nQuantity Avalible: " + product.quantity, keyboards.product(product)) }, 500);
+            setTimeout(function () { b.sendKeyboard(req.body.callback_query.from.id, "Price: " + KORONA + product.price + "\nExpiry: " + product.expiry + "\nQuantity Avalible: " + product.quantity, keyboards.product(product)) }, 500);
             console.log(product);
 
           })
         } else if (data.action.indexOf("LH_") === 0) {
-          LowestHighest.findOne({ inProgress: true, _id: data.game.split("_")[1] }).then(function (game) {
+          LowestHighest.findOne({ inProgress: true, _id: data.action.split("_")[1] }).then(function (game) {
             if (game) {
               console.log(game);
               console.log(_.find(game.players, player => player.id == req.body.callback_query.from.id));
