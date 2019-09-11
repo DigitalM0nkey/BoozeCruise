@@ -275,7 +275,7 @@ module.exports = {
   },
   product: function (product) {
     return {
-      inLine_keyboard: [
+      inline_keyboard: [
         [{
           'text': 'BUY',
           callback_data: JSON.stringify({
