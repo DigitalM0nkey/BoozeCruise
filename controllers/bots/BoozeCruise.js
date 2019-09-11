@@ -247,6 +247,10 @@ router.post('/', function (req, res, next) {
               b.sendMessage(req.body.callback_query.from.id, "This game is already finished. Stop picking numbers")
             }
           })
+        } else if (data.product) {
+          Product.findOne({ _id: data.product }).then(product => {
+            b.sendMessage(req.body.callback_query.from.id, product.image);
+          })
         }
         // End Mini-game Lowest-Highest
       });
