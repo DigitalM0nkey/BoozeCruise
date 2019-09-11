@@ -30,7 +30,7 @@ module.exports = {
           'text': moneyBag + 'Purser' + moneyBag
         },
         {
-
+          'text': moneyBag + 'Gift Shop' + moneyBag
         }
         ] : [{
           'text': moneyBag + 'Purser' + moneyBag
