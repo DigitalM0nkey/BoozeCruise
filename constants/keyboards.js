@@ -28,6 +28,9 @@ module.exports = {
         }],
         seaDay ? [{
           'text': moneyBag + 'Purser' + moneyBag
+        },
+        {
+
         }
         ] : [{
           'text': moneyBag + 'Purser' + moneyBag
