@@ -5,9 +5,9 @@ module.exports = function (house, player1, player2) {
   let title = "<pre>Lowest-Highest Results</pre>\n\n";
 
   if (player1.guess === player2.guess) {
-    return { message: "<b>House Wins!</b>\nPLAYER DRAW\n" + message };
+    return { message: title + "<b>House Wins!</b>\nPLAYER DRAW\n" + message };
   } else if (house < player1.guess && house < player2.guess) {
-    return { message: "<b>House Wins!</b>\n" + message };
+    return { message: title + "<b>House Wins!</b>\n" + message };
   } else if (house > player1.guess || house > player2.guess) {
     if (player1.guess > player2.guess && player1.guess < house) {
       return {
