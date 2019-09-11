@@ -454,7 +454,10 @@ router.post('/', function (req, res, next) {
                 })
                 ship.save();
               });
-            } else if (req.body.message.text == "\u2388 Capt's Log \u2388") {
+            } else if (req.body.message.text == '\ud83d\udcb0 Shop \ud83d\udcb0') {
+              b.sendKeyboard(req.body.message.chat.id, "This is the ship's gift shop.\n\n From here you can buy trinkets and whositswhatsits that will benefit you in the game", keyboards.shop);
+            }
+            else if (req.body.message.text == "\u2388 Capt's Log \u2388") {
               b.sendMessage(ship.id, "The Captian's Log is a place for you to keep notes or other information. Each entry will be date stamped and displayed below. \nTo create a new entry, type /log followed by your message. \n\neg. /log This is my first Captians Log.");
               var logReport = "<b>Captain's Log:</b>\n";
               ship.communication.forEach(function (element) {

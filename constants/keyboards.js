@@ -55,6 +55,18 @@ module.exports = {
     ],
     resize_keyboard: true
   },
+  shop: {
+    keyboard: [
+      [{
+        'text': "products"
+      }
+      ],
+      [{
+        'text': '\u2630 Main Menu \u2630'
+      }]
+    ],
+    resize_keyboard: true
+  },
   maintenance: {
     keyboard: [
       [{
