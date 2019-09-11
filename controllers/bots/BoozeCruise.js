@@ -189,14 +189,15 @@ router.post('/', function (req, res, next) {
               sendAvailablePorts(req.body.callback_query.from.id, ports, ship);
 
             });
-          // Start Mini-game Lowest-Highest
+          // Start Product list
         } else if (data.action === 'product') {
           Product.findOne({ _id: data.product }).then(product => {
             b.sendPhoto(req.body.callback_query.from.id, product.image, product.name + "\n" + product.type + "\n" + product.description);
             setTimeout(function () { b.sendKeyboard(req.body.callback_query.from.id, "Price: " + KORONA + product.price + "\nQuantity Avalible: " + product.quantity + "\nExpiry: " + product.expiry, keyboards.product(product)) }, 500);
-            console.log(product);
-
           })
+          // End Product list
+
+          // Start Mini-game Lowest-Highest
         } else if (data.action.indexOf("LH_") === 0) {
           LowestHighest.findOne({ inProgress: true, _id: data.action.split("_")[1] }).then(function (game) {
             if (game) {
@@ -356,6 +357,9 @@ router.post('/', function (req, res, next) {
                 });
 
               }
+
+              // Start Mini-game Lowest-Highest
+
             } else if (req.body.message.text == "Yes,\n" + LOWESTHIGHEST) {
 
               if (ship.purse.balance >= 5) {
@@ -377,15 +381,10 @@ router.post('/', function (req, res, next) {
                       })
                     }
                   })
-
-
-
                 });
-
-
               }
-
             }
+            // End Mini-game Lowest-Highest
 
             // Decison keyboard promped
             else if (req.body.message.text == "\u2693 Dock \u2693") {
