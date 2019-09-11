@@ -190,7 +190,11 @@ router.post('/', function (req, res, next) {
 
             });
           // Start Mini-game Lowest-Highest
-        } else if (data.game.indexOf("LH_") === 0) {
+        } else if (data.action === 'product') {
+          Product.findOne({ _id: data.product }).then(product => {
+            b.sendMessage(req.body.callback_query.from.id, product.image);
+          })
+        } else if (data.action.indexOf("LH_") === 0) {
           LowestHighest.findOne({ inProgress: true, _id: data.game.split("_")[1] }).then(function (game) {
             if (game) {
               console.log(game);
@@ -246,10 +250,6 @@ router.post('/', function (req, res, next) {
             } else {
               b.sendMessage(req.body.callback_query.from.id, "This game is already finished. Stop picking numbers")
             }
-          })
-        } else if (data.product) {
-          Product.findOne({ _id: data.product }).then(product => {
-            b.sendMessage(req.body.callback_query.from.id, product.image);
           })
         }
         // End Mini-game Lowest-Highest

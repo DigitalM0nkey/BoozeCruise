@@ -249,7 +249,7 @@ module.exports = {
         keyboard.inline_keyboard[keyboard.inline_keyboard.length - 1].push({
           text: i * 5 + j,
           callback_data: JSON.stringify({
-            game: "LH_" + gameId,
+            action: "LH_" + gameId,
             num: i * 5 + j
           })
         });
@@ -265,6 +265,7 @@ module.exports = {
       keyboard.inline_keyboard[keyboard.inline_keyboard.length - 1].push({
         text: products[i].name,
         callback_data: JSON.stringify({
+          action: "product",
           product: products[i]._id
         })
       });
