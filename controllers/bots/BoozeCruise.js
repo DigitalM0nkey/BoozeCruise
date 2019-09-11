@@ -192,7 +192,7 @@ router.post('/', function (req, res, next) {
           // Start Mini-game Lowest-Highest
         } else if (data.action === 'product') {
           Product.findOne({ _id: data.product }).then(product => {
-            b.sendPhoto(req.body.callback_query.from.id, product.image, product.name + " " + product.description);
+            b.sendPhoto(req.body.callback_query.from.id, product.image, product.name + "\n" + product.description);
             console.log(product);
 
           })
