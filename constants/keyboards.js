@@ -27,7 +27,7 @@ module.exports = {
         seaDay ? [
           { 'text': moneyBag + 'Purser' + moneyBag },
           { 'text': moneyBag + 'Casino' + moneyBag },
-          { 'text': moneyBag + 'Gift Shop' + moneyBag }
+          { 'text': moneyBag + 'Shop' + moneyBag }
         ] : [
             { 'text': moneyBag + 'Purser' + moneyBag },
             { 'text': moneyBag + 'Treasure' + moneyBag }
