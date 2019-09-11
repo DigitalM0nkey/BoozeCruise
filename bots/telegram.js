@@ -75,7 +75,7 @@ function TelegramBot() {
   };
   bot.sendPhoto = function (channel, photo, caption) {
     return new Promise(function (resolve, reject) {
-      var url = 'https://api.telegram.org/bot' + bot.token + '/sendPhoto?chat_id=' + channel + '&disable_notification=true&parse_mode=html&photo=' + encodeURIComponent(photo) + "&caption=" + caption;
+      var url = 'https://api.telegram.org/bot' + bot.token + '/sendPhoto?chat_id=' + channel + '&disable_notification=true&parse_mode=html&photo=' + encodeURIComponent(photo) + "&caption=" + encodeURIComponent(caption);
       request(url, function (error, r, body) {
         var response = JSON.parse(body).result;
         //console.log(response);
