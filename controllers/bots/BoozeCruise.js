@@ -193,7 +193,7 @@ router.post('/', function (req, res, next) {
         } else if (data.action === 'product') {
           Product.findOne({ _id: data.product }).then(product => {
             b.sendPhoto(req.body.callback_query.from.id, product.image, product.name + "\n" + product.type + "\n" + product.description);
-            setTimeout(function () { b.sendKeyboard(req.body.callback_query.from.id, "Price: " + KORONA + product.price + "\nQuantity Avalible: " + product.quantity + "\nExpiry: " + product.expiry, keyboards.product(product)) }, 500);
+            setTimeout(function () { b.sendKeyboard(req.body.callback_query.from.id, "Price: " + KORONA + product.price + "\nQuantity Avalible: " + product.quantity + "\nExpiry: " + product.expiry, keyboards.product(product)) }, 1500);
           })
           // End Product list
 
