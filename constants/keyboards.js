@@ -262,14 +262,13 @@ module.exports = {
     let keyboard = { inline_keyboard: [] };
     for (let i = 0; i < products.length; i++) {
       keyboard.inline_keyboard.push([]);
-      for (let j = 1; j <= 5; j++) {
-        keyboard.inline_keyboard[keyboard.inline_keyboard.length - 1].push({
-          text: products[i].name,
-          callback_data: JSON.stringify({
-            product: products[i]._id
-          })
-        });
-      }
+      keyboard.inline_keyboard[keyboard.inline_keyboard.length - 1].push({
+        text: products[i].name,
+        callback_data: JSON.stringify({
+          product: products[i]._id
+        })
+      });
+
     }
     return keyboard;
   }
