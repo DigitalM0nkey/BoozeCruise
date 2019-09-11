@@ -22,28 +22,19 @@ module.exports = {
         }],
         [{
           'text': fireworks + 'Achievements' + fireworks
-        },
-        {
-          'text': moneyBag + 'Casino' + moneyBag
-        }],
-        seaDay ? [{
-          'text': moneyBag + 'Purser' + moneyBag
-        },
-        {
-          'text': moneyBag + 'Gift Shop' + moneyBag
         }
-        ] : [{
-          'text': moneyBag + 'Purser' + moneyBag
-        },
-        {
-          'text': moneyBag + 'Treasure' + moneyBag
-        }],
-        [{
-          'text': bug + 'Maintenance' + bug
-        },
-        {
-          'text': helm + "Capt's Log" + helm
-        }
+        ],
+        seaDay ? [
+          { 'text': moneyBag + 'Purser' + moneyBag },
+          { 'text': moneyBag + 'Casino' + moneyBag },
+          { 'text': moneyBag + 'Gift Shop' + moneyBag }
+        ] : [
+            { 'text': moneyBag + 'Purser' + moneyBag },
+            { 'text': moneyBag + 'Treasure' + moneyBag }
+          ],
+        [
+          { 'text': bug + 'Maintenance' + bug },
+          { 'text': helm + "Capt's Log" + helm }
         ],
       ],
       resize_keyboard: true
