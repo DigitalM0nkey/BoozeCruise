@@ -20,6 +20,7 @@ var BITCOINADDRESS = '15t1A5qEwSKNtEWNpANdivZeeXp7SGDvqB';
 
 var Port = require('../../models/port');
 var Ship = require('../../models/ship');
+var Product = require('../../models/product');
 var guest = require('../../types/guest');
 var LowestHighest = require('../../models/mini-games/lowestHighest/lowestHighest');
 
@@ -470,6 +471,14 @@ router.post('/', function (req, res, next) {
             } else if (req.body.message.text.substring(0, req.body.message.text.indexOf(' ')) == "/broadcast") {
               if (ship._id == MYSHIP) {
                 broadcast(req.body.message.text.substring(req.body.message.text.indexOf(' ') + 1))
+              }
+            } else if (req.body.message.text.substring(0, req.body.message.text.indexOf(' ')) == "/product") {
+              if (ship._id == MYSHIP) {
+                var product = req.body.message.text.substring(req.body.message.text.indexOf(' ') + 1)
+                Product.create({
+                  name: product,
+
+                })
               }
             } else if (req.body.message.text == "/removeGuest") {
               var removedGuest = ship.guests.pop();

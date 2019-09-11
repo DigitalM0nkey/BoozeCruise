@@ -1,4 +1,5 @@
 var db = require('../db');
+var moment = require("moment");
 var Product = db.model('Product', {
   name: {
     type: String,
@@ -6,37 +7,62 @@ var Product = db.model('Product', {
   },
   description: {
     type: String,
-    required: false
+    required: false,
+    default: "This is a description"
   },
   price: {
     type: Number,
-    required: true
+    required: true,
+    default: 25
   },
   quantity: {
     type: Number,
-    required: false
+    required: false,
+    default: 5
   },
   rarity: {
     type: Number,
-    required: false
+    required: false,
+    default: 0
   },
   expiry: {
     type: Date,
-    required: false
+    required: false,
+    default: moment().add(10, "days")
   },
   type: {
     type: String,
-    required: false
+    required: false,
+    default: "Booze"
   },
   image: {
     type: String,
-    required: false
+    required: false,
+    default: "https://www.nextlevelfairs.com/assets/images/image-not-available.png"
   },
   available: {
     type: Boolean,
     required: true,
     default: true
   },
+  perk: {
+    name: {
+      type: String,
+      required: false
+    },
+    description: {
+      type: String,
+      required: false
+    },
+    operator: {
+      type: String,
+      required: false
+    },
+    amount: {
+      type: Number,
+      required: false
+    },
+  }
 });
 
 module.exports = Product;
