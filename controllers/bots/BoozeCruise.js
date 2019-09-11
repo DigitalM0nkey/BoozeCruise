@@ -504,6 +504,8 @@ router.post('/', function (req, res, next) {
               b.sendKeyboard(req.body.message.chat.id, removedGuest, keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == '\ud83d\udc1b BUG \ud83d\udc1b') {
               b.sendKeyboard(req.body.message.chat.id, "Oh No!!! A BUG! Quick! Kill it!\n\nGo here to report the bug\n\nhttps://t.me/joinchat/HmxycxY2tSHp_aZX4mQ9QA", keyboards.home(ship.nextLocation.port));
+            } else if (req.body.message.text == '\uD83C\uDF78 Mixology \uD83C\uDF78') {
+              b.sendMessage(ship.id, "This feature is coming soon! \n\nIn the meantime you should look for treasure the next time you are in port.");
             } else if (req.body.message.text == 'Deposit') {
               b.sendMessage(ship.id, "This feature is coming soon! \n\nIn the meantime you should look for treasure the next time you are in port.");
             } else if (req.body.message.text == '\ud83d\udc1b Suggestions \ud83d\udc1b') {

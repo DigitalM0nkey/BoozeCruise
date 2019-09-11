@@ -10,6 +10,7 @@ var navigation = map + 'Navigation' + map;
 var upDown = " \u2195 "
 var anchor = " \u2693 "
 var helm = " \u2388 "
+let cocktail = " \uD83C\uDF78 "
 
 module.exports = {
   home: function (seaDay) {
@@ -88,7 +89,7 @@ module.exports = {
         'text': upDown + 'Lowest Highest' + upDown
       }],
       [{
-        'text': 'Mixology'
+        'text': cocktail + 'Mixology' + cocktail
       }],
       [{
         'text': '\u2630 Main Menu \u2630'
