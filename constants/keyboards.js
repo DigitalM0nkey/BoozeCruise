@@ -10,6 +10,7 @@ var navigation = map + 'Navigation' + map;
 var upDown = " \u2195 "
 var anchor = " \u2693 "
 var helm = " \u2388 "
+
 module.exports = {
   home: function (seaDay) {
     return {
@@ -58,7 +59,7 @@ module.exports = {
   shop: {
     keyboard: [
       [{
-        'text': "products"
+        'text': "Products"
       }
       ],
       [{
@@ -250,6 +251,22 @@ module.exports = {
           callback_data: JSON.stringify({
             game: "LH_" + gameId,
             num: i * 5 + j
+          })
+        });
+      }
+    }
+    return keyboard;
+  },
+  // PRODUCT KEYBOARD
+  products: function (products) {
+    let keyboard = { inline_keyboard: [] };
+    for (let i = 0; i < products.length; i++) {
+      keyboard.inline_keyboard.push([]);
+      for (let j = 1; j <= 5; j++) {
+        keyboard.inline_keyboard[keyboard.inline_keyboard.length - 1].push({
+          text: products[i].name,
+          callback_data: JSON.stringify({
+            product: products[i]._id
           })
         });
       }
