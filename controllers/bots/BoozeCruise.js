@@ -192,7 +192,7 @@ router.post('/', function (req, res, next) {
           // Start Mini-game Lowest-Highest
         } else if (data.action === 'product') {
           Product.findOne({ _id: data.product }).then(product => {
-            b.sendPhoto(req.body.callback_query.from.id, product.image, product.name + "\n" + product.description);
+            b.sendPhoto(req.body.callback_query.from.id, product.image, product.name + "\n" + product.type + "\n" + product.description);
             setTimeout(function () { b.sendKeyboard(req.body.callback_query.from.id, "Price: " + KORONA + product.price + "\nExpiry: " + product.expiry + "\nQuantity Avalible: " + product.quantity, keyboards.product(product)) }, 500);
             console.log(product);
 
