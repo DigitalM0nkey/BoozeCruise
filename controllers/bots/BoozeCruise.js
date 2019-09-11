@@ -585,7 +585,7 @@ router.post('/', function (req, res, next) {
               });
               var message1 = '';
               for (var i in guestList) {
-                message1 += i + ": " + guestList[i] + "\n";
+                message1 += guest.getType(i) + ": " + guestList[i] + "\n";
               }
               b.sendKeyboard(req.body.message.chat.id, "The Guest Manifest:\n" + message1, keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == '\ud83c\udf87 Achievements \ud83c\udf87') {
