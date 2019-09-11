@@ -272,5 +272,28 @@ module.exports = {
 
     }
     return keyboard;
+  },
+  product: function (product) {
+    return {
+      inLine_keyboard: [
+        [{
+          'text': 'BUY',
+          callback_data: JSON.stringify({
+            action: "buy",
+            product: product._id
+          })
+
+        },
+        {
+          'text': 'SELL',
+          callback_data: JSON.stringify({
+            action: "sell",
+            product: product._id
+          })
+        },
+        ],
+      ],
+    }
+
   }
 };
