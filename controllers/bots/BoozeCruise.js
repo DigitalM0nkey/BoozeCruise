@@ -413,7 +413,7 @@ router.post('/', function (req, res, next) {
               mixology.getCocktail().then(cocktail => {
                 console.log(cocktail);
 
-                b.sendPhoto(ship.id, cocktail.image, "<pre>" + cocktail.name + "</pre>" + "\n" + cocktail.instructions);
+                b.sendPhoto(ship.id, cocktail.image, "<pre>" + cocktail.name + "</pre>" + "\n" + cocktail.instructions + "<code>" + cocktail.ingredients.map(ingredient => '\n - ' + ingredient) + "</code>");
               })
               // b.sendMessage(ship.id, "This feature is coming soon! \n\nIn the meantime you should look for treasure the next time you are in port.");
             } else if (req.body.message.text == 'Deposit') {
