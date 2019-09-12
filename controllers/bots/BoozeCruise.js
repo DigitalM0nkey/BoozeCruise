@@ -416,7 +416,7 @@ router.post('/', function (req, res, next) {
               })
             } else if (req.body.message.text == '\ud83c\udf78 Lounge \ud83c\udf78') {
 
-              b.sendKeyboard(req.body.message.chat.id, "Welcome to the ships cocktail lounge. Stay a while, order a drink", keyboards.lounge);
+              b.sendKeyboard(req.body.message.chat.id, "Welcome to the ships cocktail lounge. Stay a while, order a drink.", keyboards.lounge);
 
             } else if (req.body.message.text == 'Deposit') {
               b.sendMessage(ship.id, "This feature is coming soon! \n\nIn the meantime you should look for treasure the next time you are in port.");
