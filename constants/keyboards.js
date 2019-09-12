@@ -1,42 +1,30 @@
-//image/emoji/Unicode Character varaibles
-var map = " \ud83d\uddfa ";
-var people = " \ud83d\udc65 ";
-var fireworks = " \ud83c\udf87 ";
-var moneyBag = " \ud83d\udcb0 ";
-var bug = " \ud83d\udc1b ";
-var korona = " \u24C0 ";
-var mainMenu = "\u2630 Main Menu \u2630";
-var navigation = map + 'Navigation' + map;
-var upDown = " \u2195 "
-var anchor = " \u2693 "
-var helm = " \u2388 "
-let cocktail = " \uD83C\uDF78 "
+const emoji = require('./emoji');
 
 module.exports = {
   home: function (seaDay) {
     return {
       keyboard: [
         [{
-          'text': navigation
+          'text': emoji.navigation
         },
         {
-          'text': people + 'Manifest' + people
+          'text': emoji.people + 'Manifest' + emoji.people
         }],
         [{
-          'text': fireworks + 'Achievements' + fireworks
+          'text': emoji.fireworks + 'Achievements' + emoji.fireworks
         }
         ],
         seaDay ? [
-          { 'text': moneyBag + 'Purser' + moneyBag },
-          { 'text': moneyBag + 'Casino' + moneyBag },
-          { 'text': moneyBag + 'Shop' + moneyBag }
+          { 'text': emoji.moneyBag + 'Purser' + emoji.moneyBag },
+          { 'text': emoji.moneyBag + 'Casino' + emoji.moneyBag },
+          { 'text': emoji.moneyBag + 'Shop' + emoji.moneyBag }
         ] : [
-            { 'text': moneyBag + 'Purser' + moneyBag },
-            { 'text': moneyBag + 'Treasure' + moneyBag }
+            { 'text': emoji.moneyBag + 'Purser' + emoji.moneyBag },
+            { 'text': emoji.moneyBag + 'Treasure' + emoji.moneyBag }
           ],
         [
-          { 'text': bug + 'Maintenance' + bug },
-          { 'text': helm + "Capt's Log" + helm }
+          { 'text': emoji.bug + 'Maintenance' + emoji.bug },
+          { 'text': emoji.helm + "Capt's Log" + emoji.helm }
         ],
       ],
       resize_keyboard: true
@@ -45,7 +33,7 @@ module.exports = {
   manifest: {
     keyboard: [
       [{
-        'text': people + 'Guest Manifest' + people
+        'text': emoji.people + 'Guest Manifest' + emoji.people
       },
       {
         'text': '\ud83d\udc81 Crew Manifest \ud83d\udc81'
@@ -72,10 +60,10 @@ module.exports = {
   maintenance: {
     keyboard: [
       [{
-        'text': bug + 'BUG' + bug
+        'text': emoji.bug + 'BUG' + emoji.bug
       }],
       [{
-        'text': bug + 'Suggestions' + bug
+        'text': emoji.bug + 'Suggestions' + emoji.bug
       }],
       [{
         'text': '\u2630 Main Menu \u2630'
@@ -86,10 +74,10 @@ module.exports = {
   casino: {
     keyboard: [
       [{
-        'text': upDown + 'Lowest Highest' + upDown
+        'text': emoji.upDown + 'Lowest Highest' + emoji.upDown
       }],
       [{
-        'text': cocktail + 'Mixology' + cocktail
+        'text': emoji.cocktail + 'Mixology'
       }],
       [{
         'text': '\u2630 Main Menu \u2630'
@@ -101,7 +89,7 @@ module.exports = {
     return {
       keyboard: [
         [{
-          'text': 'Yes,\n' + message
+          'text': 'Yes,\n' + emoji.message
         }],
         [{
           'text': 'No'
@@ -127,7 +115,7 @@ module.exports = {
   navigation: {
     keyboard: [
       [{
-        'text': anchor + 'Dock' + anchor
+        'text': emoji.anchor + 'Dock' + emoji.anchor
       },],
       [{
         'text': '\ud83d\udea2 Home Port \ud83d\udea2'
