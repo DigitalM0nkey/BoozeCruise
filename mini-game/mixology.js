@@ -41,7 +41,7 @@ exports.getCocktail = () => {
 const getCocktail = () => {
   return new Promise((resolve, reject) => {
     Cocktail.find({ alcoholic: "Alcoholic" }).exec((err, cocktails) => {
-      resolve(getFakeCocktail(cocktails[Math.floor(Math.random() * cocktails.length)]));
+      resolve(cocktails[Math.floor(Math.random() * cocktails.length)]);
     })
   })
 }
@@ -72,6 +72,7 @@ function getFakeCocktail(cocktail) {
       ingredients.splice(random, 1);
     } theCocktail = cocktail;
     theCocktail.fakeIngredients = fakeIngredients;
+
   })
 }
 exports.getCocktail = getCocktail;
