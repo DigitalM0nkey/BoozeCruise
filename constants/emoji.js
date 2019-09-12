@@ -11,5 +11,5 @@ module.exports = {
   upDown: " \u2195 ",
   anchor: " \u2693 ",
   helm: " \u2388 ",
-  cocktail: " \uD83C\uDF78 ",
+  cocktail: " \ud83c\udf78 ",
 }
