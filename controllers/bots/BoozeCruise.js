@@ -407,14 +407,17 @@ router.post('/', function (req, res, next) {
               b.sendKeyboard(req.body.message.chat.id, removedGuest, keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == '\ud83d\udc1b BUG \ud83d\udc1b') {
               b.sendKeyboard(req.body.message.chat.id, "Oh No!!! A BUG! Quick! Kill it!\n\nGo here to report the bug\n\nhttps://t.me/joinchat/HmxycxY2tSHp_aZX4mQ9QA", keyboards.home(ship.nextLocation.port));
-            } else if (req.body.message.text == '\ud83c\udf78 Mixology \ud83c\udf78') {
+            } else if (req.body.message.text == '\ud83c\udf78 Cocktail \ud83c\udf78') {
 
               mixology.getCocktail().then(cocktail => {
                 console.log(cocktail);
 
                 b.sendPhoto(ship.id, cocktail.image, "<pre>" + cocktail.name + "</pre>" + "\n" + cocktail.instructions + "<code>" + cocktail.ingredients.map(ingredient => '\n - ' + ingredient) + "</code>");
               })
-              // b.sendMessage(ship.id, "This feature is coming soon! \n\nIn the meantime you should look for treasure the next time you are in port.");
+            } else if (req.body.message.text == '\ud83c\udf78 Lounge \ud83c\udf78') {
+
+              b.sendKeyboard(req.body.message.chat.id, "Welcome to the ships cocktail lounge. Stay a while, order a drink", keyboards.lounge);
+
             } else if (req.body.message.text == 'Deposit') {
               b.sendMessage(ship.id, "This feature is coming soon! \n\nIn the meantime you should look for treasure the next time you are in port.");
             } else if (req.body.message.text == '\ud83d\udc1b Suggestions \ud83d\udc1b') {

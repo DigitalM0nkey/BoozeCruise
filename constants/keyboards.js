@@ -12,6 +12,8 @@ module.exports = {
         }],
         [{
           'text': emoji.fireworks + 'Achievements' + emoji.fireworks
+        }, {
+          'text': emoji.cocktail + 'Lounge' + emoji.cocktail
         }
         ],
         seaDay ? [
@@ -40,6 +42,17 @@ module.exports = {
       }
       ],
       [{
+        'text': '\u2630 Main Menu \u2630'
+      }]
+    ],
+    resize_keyboard: true
+  },
+  lounge: {
+    keyboard: [
+      [{
+        'text': emoji.cocktail + 'Cocktail' + emoji.cocktail
+      },
+      {
         'text': '\u2630 Main Menu \u2630'
       }]
     ],
