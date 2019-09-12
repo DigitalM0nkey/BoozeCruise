@@ -41,6 +41,8 @@ exports.getCocktail = () => {
 const getCocktail = () => {
   return new Promise((resolve, reject) => {
     Cocktail.find({ alcoholic: "Alcoholic" }).exec((err, cocktails) => {
+      console.log(cocktails[Math.floor(Math.random() * cocktails.length)]);
+
       resolve(cocktails[Math.floor(Math.random() * cocktails.length)]);
     })
   })
