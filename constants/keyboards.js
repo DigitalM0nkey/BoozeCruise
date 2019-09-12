@@ -77,7 +77,7 @@ module.exports = {
         'text': emoji.upDown + 'Lowest Highest' + emoji.upDown
       }],
       [{
-        'text': emoji.cocktail + 'Mixology'
+        'text': emoji.cocktail + 'Mixology' + emoji.cocktail
       }],
       [{
         'text': '\u2630 Main Menu \u2630'

@@ -37,12 +37,11 @@ exports.getCocktail = () => {
     }
   });
 } */
-let theCocktail
 
 const getCocktail = () => {
   return new Promise((resolve, reject) => {
     Cocktail.find({ alcoholic: "Alcoholic" }).exec((err, cocktails) => {
-      resolve(cocktails[Math.floor(Math.random() * cocktails.length)]);
+      resolve(getFakeCocktail(cocktails[Math.floor(Math.random() * cocktails.length)]));
     })
   })
 }
@@ -62,9 +61,9 @@ const getIngredients = (cocktailIngredients) => {
   })
 
 }
-
-getCocktail().then(cocktail => {
-  console.log(cocktail);
+// Adds fake ingredients to cocktail
+function getFakeCocktail(cocktail) {
+  let theCocktail;
   getIngredients(cocktail.ingredients).then(ingredients => {
     let fakeIngredients = [];
     for (let i = 0; i < 10 - cocktail.ingredients.length; i++) {
@@ -73,9 +72,7 @@ getCocktail().then(cocktail => {
       ingredients.splice(random, 1);
     } theCocktail = cocktail;
     theCocktail.fakeIngredients = fakeIngredients;
-    console.log(fakeIngredients);
   })
-
-
-})
+}
+exports.getCocktail = getCocktail;
 exports.getID = () => portID;
