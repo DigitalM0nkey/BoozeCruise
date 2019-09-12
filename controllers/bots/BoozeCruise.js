@@ -150,6 +150,7 @@ var moves = {
 
 router.post('/', function (req, res, next) {
   console.log(req.body);
+  console.log(req.body.message.text == emoji.cocktail + 'Mixology' + emoji.cocktail);
 
   if (req.body.callback_query) {
     Ship.findOne({
