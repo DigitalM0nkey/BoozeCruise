@@ -36,6 +36,11 @@ var Ship = db.model('Ship', {
     transcript: { type: String, required: true }
   }
   ],
+  products: [{
+    expiry: { type: Date, required: true },
+    product: { type: String, ref: 'Product', required: true },
+  }
+  ],
   purse: {
     balance: { type: Number, required: true, default: 100 },
     transactions: [

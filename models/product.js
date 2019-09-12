@@ -1,5 +1,4 @@
 var db = require('../db');
-var moment = require("moment");
 var Product = db.model('Product', {
   name: {
     type: String,
@@ -26,9 +25,9 @@ var Product = db.model('Product', {
     default: 0
   },
   expiry: {
-    type: Date,
+    type: Number,
     required: false,
-    default: moment().add(10, "days")
+    default: 10
   },
   type: {
     type: String,
