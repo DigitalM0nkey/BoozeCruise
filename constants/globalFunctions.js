@@ -3,7 +3,7 @@ const moment = require("moment");
 
 var HSECTORS = 4;
 var VSECTORS = 3;
-var TelegramBot = require('../../bots/telegram');
+var TelegramBot = require('../bots/telegram');
 var b = TelegramBot.boozecruiseBot;
 
 
