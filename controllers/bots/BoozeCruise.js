@@ -408,6 +408,8 @@ router.post('/', function (req, res, next) {
             } else if (req.body.message.text == '\ud83d\udc1b BUG \ud83d\udc1b') {
               b.sendKeyboard(req.body.message.chat.id, "Oh No!!! A BUG! Quick! Kill it!\n\nGo here to report the bug\n\nhttps://t.me/joinchat/HmxycxY2tSHp_aZX4mQ9QA", keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == emoji.cocktail + 'Mixology' + emoji.cocktail) {
+              console.log("HERE");
+
               mixology.getCocktail().then(cocktail => {
                 console.log(cocktail);
 
