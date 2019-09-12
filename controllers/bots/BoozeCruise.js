@@ -7,10 +7,10 @@ var constants = require('../../constants');
 var _ = require('underscore');
 var TelegramBot = require('../../bots/telegram');
 var keyboards = require('../../constants/keyboards');
-var lowestHighest = require('../../mini-game/lowestHighest');
+var callbackQueries = require('../../constants/callbackQueries');
+let globalFunctions = require('../../constants/globalFunctions');
 
-var HSECTORS = 4;
-var VSECTORS = 3;
+
 var TREASURE = 500;
 var MYSHIP = '5be3d50298ae6843394411ee';
 var KORONA = "\u24C0";
@@ -157,105 +157,7 @@ router.post('/', function (req, res, next) {
       .then(function (ship) {
         //if (parseInt(req.body.callback_query.from.id) > 0) { } else { }
         var data = JSON.parse(req.body.callback_query.data);
-        if (data.action === 'navigate') {
-          if (ship.id != MYSHIP) {
-            Port.findOne({
-              id: data.port
-            })
-              .then(function (port) {
-                var arrival = new Date();
-                arrival = arrival.setTime(arrival.getTime() + calculateDistance(port.location, ship.location) * 60 * 60 * 1000);
-                ship.nextLocation = {
-                  arrival: arrival,
-                  port: data.port,
-                  portName: port.name
-                };
-                if (ship.portHistory.length > 0) {
-                  ship.portHistory[ship.portHistory.length - 1].departureDate = new Date();
-                }
-                b.kick(ship.location.port, ship.id, 1);
-                ship.location.port = undefined;
-                ship.save();
-                console.log(data);
-                b.sendMessage(ship.id, "Your ship is now en route to " + port.name + "\nyou will arrive in " + calculateTime(arrival));
-                b.sendKeyboard(ship.id, "--------", keyboards.home(ship.nextLocation.port));
-              });
-          }
-        } else if (data.action === 'navigate_sector') {
-          Port.find({
-            "location.sector": data.sector
-          })
-            .then(function (ports) {
-              sendAvailablePorts(req.body.callback_query.from.id, ports, ship);
-
-            });
-          // Start Product list
-        } else if (data.action === 'product') {
-          Product.findOne({ _id: data.product }).then(product => {
-            b.sendPhoto(req.body.callback_query.from.id, product.image, product.name + "\n" + product.type + "\n" + product.description);
-            setTimeout(function () { b.sendKeyboard(req.body.callback_query.from.id, "Price: " + KORONA + product.price + "\nQuantity Available: " + product.quantity + "\nExpiry: " + product.expiry, keyboards.product(product)) }, 1500);
-          })
-          // End Product list
-
-          // Start Mini-game Lowest-Highest
-        } else if (data.action.indexOf("LH_") === 0) {
-          LowestHighest.findOne({ inProgress: true, _id: data.action.split("_")[1] }).then(function (game) {
-            if (game) {
-              console.log(game);
-              console.log(_.find(game.players, player => player.id == req.body.callback_query.from.id));
-
-              if (_.find(game.players, player => player.id == req.body.callback_query.from.id)) {
-                b.sendMessage(req.body.callback_query.from.id, "You have already picked a number for this game")
-
-              } else {
-                game.players.push({
-                  id: req.body.callback_query.from.id,
-                  guess: data.num,
-                  name: req.body.callback_query.from.first_name
-
-                })
-                if (game.players.length === 2) {
-                  let result = lowestHighest(game.houseGuess, game.players[0], game.players[1]);
-                  console.log(result);
-
-                  if (result.winner) {
-                    Ship.findOne({ id: result.winner }).then(function (winner) {
-                      winner.purse.balance += 10;
-
-                      if (result.jackpot) {
-                        LowestHighest.find({ jackpotPaid: false }).then(games => {
-                          winner.purse.balance += 4 * games.length;
-                          winner.save();
-                          b.sendMessage(game.players[0].id, result.message);
-                          b.sendMessage(game.players[1].id, result.message);
-                          games.forEach(game => {
-                            game.jackpotPaid = true;
-                            game.save();
-                          })
-                        })
-                      } else {
-                        b.sendMessage(game.players[0].id, result.message);
-                        b.sendMessage(game.players[1].id, result.message);
-                        winner.save();
-                      }
-                    })
-
-                  } else {
-                    b.sendMessage(game.players[0].id, result.message);
-                    b.sendMessage(game.players[1].id, result.message);
-                  }
-                  game.inProgress = false;
-
-                } else {
-                  b.sendMessage(req.body.callback_query.from.id, "You have selected " + data.num)
-                }
-                game.save();
-              }
-            } else {
-              b.sendMessage(req.body.callback_query.from.id, "This game is already finished. Stop picking numbers")
-            }
-          })
-        }
+        callbackQueries(req.body.callback_query.from, ship, data);
         // End Mini-game Lowest-Highest
       });
     return res.sendStatus(200);
@@ -339,7 +241,7 @@ router.post('/', function (req, res, next) {
                 Port.findOne({
                   id: ship.nextLocation.port
                 }).then(function (port) {
-                  b.sendMessage(ship.id, "You will arrive in " + calculateTime(ship.nextLocation.arrival));
+                  b.sendMessage(ship.id, "You will arrive in " + globalFunctions.calculateTime(ship.nextLocation.arrival));
                   b.sendKeyboard(ship.id, "Your ship is currently en route to " + port.name, keyboards.atSea);
                 });
               } else {
@@ -546,7 +448,7 @@ router.post('/', function (req, res, next) {
                     });
                   }, 5000);
                 } else if (portsInShipSector === ports.length) {
-                  sendAvailablePorts(req.body.message.chat.id, ports, ship);
+                  globalFunctions.sendAvailablePorts(req.body.message.chat.id, ports, ship);
                 } else {
                   b.sendKeyboard(req.body.message.chat.id, "A port of call is an intermediate stop for a ship on its sailing itinerary.\n\nWhere would you like to go?", keyboards.ports);
                 }
@@ -559,7 +461,7 @@ router.post('/', function (req, res, next) {
                   $ne: ship.location.port
                 }
               }).then(function (ports) {
-                sendAvailablePorts(req.body.message.chat.id, ports, ship);
+                globalFunctions.sendAvailablePorts(req.body.message.chat.id, ports, ship);
               });
             } else if (req.body.message.text === 'Change Continent') {
               Port.find({
@@ -732,28 +634,6 @@ b.sendKeyboard('510423667', 'Server Restarted', keyboards.home(false));
 
 module.exports = router;
 
-function calculateTime(arrival) {
-  return Math.abs(moment().diff(arrival, 'hours')) + " hours " + Math.abs(moment().diff(arrival, 'minutes') % 60) + " minutes";
-}
-
-function calculateDistance(portLocation, shipLocation) {
-  if (portLocation.sector === shipLocation.sector) {
-    var distance = Math.abs(portLocation.x - shipLocation.x) + Math.abs(portLocation.y - shipLocation.y);
-    return (distance + 1) * 3;
-  } else {
-    var portSector = {
-      x: portLocation.sector % HSECTORS,
-      y: Math.floor(portLocation.sector / HSECTORS)
-    };
-    var shipSector = {
-      x: shipLocation.sector % HSECTORS,
-      y: Math.floor(shipLocation.sector / HSECTORS)
-    };
-    var x = Math.abs(portSector.x - shipSector.x) > HSECTORS - Math.abs(portSector.x - shipSector.x) ? HSECTORS - Math.abs(portSector.x - shipSector.x) : Math.abs(portSector.x - shipSector.x);
-    var y = Math.abs(portSector.y - shipSector.y) > VSECTORS - Math.abs(portSector.y - shipSector.y) ? VSECTORS - Math.abs(portSector.y - shipSector.y) : Math.abs(portSector.y - shipSector.y);
-    return Math.abs((x + y) * 24);
-  }
-}
 function broadcast(message) {
   Ship.find({}).then(function (ships) {
     b.broadcast(ships.map(function (ship) {
@@ -763,29 +643,4 @@ function broadcast(message) {
 }
 
 
-function sendAvailablePorts(chat_id, ports, ship) {
-  b.sendMessage(chat_id, ports.reduce(function (message, port) {
-    message += '<b>' + port.name + "</b>\n";
-    message += port.description + "\n\n";
-    message += "Distance to port <b>" + calculateDistance(port.location, ship.location) + "</b> hours\n";
-    message += "Ships in port <b>" + port.ships.length + "</b>\n\n";
-    return message;
-  }, ''));
-  setTimeout(function () {
-    var keyboard = ports.map(function (port) {
-      return {
-        'text': port.name,
-        'callback_data': JSON.stringify({
-          action: "navigate",
-          port: port.id,
-          ship: ship.id,
-        })
-      };
-    });
-    console.log(keyboard);
-    b.sendKeyboard(chat_id, "Navigate to:", {
-      inline_keyboard: [keyboard]
-    });
-  }, 3000);
 
-}
