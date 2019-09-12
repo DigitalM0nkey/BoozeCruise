@@ -51,8 +51,8 @@ module.exports = {
     keyboard: [
       [{
         'text': emoji.cocktail + 'Cocktail' + emoji.cocktail
-      },
-      {
+      }],
+      [{
         'text': '\u2630 Main Menu \u2630'
       }]
     ],
