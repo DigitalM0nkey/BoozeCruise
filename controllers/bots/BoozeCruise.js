@@ -409,12 +409,11 @@ router.post('/', function (req, res, next) {
             } else if (req.body.message.text == '\ud83d\udc1b BUG \ud83d\udc1b') {
               b.sendKeyboard(req.body.message.chat.id, "Oh No!!! A BUG! Quick! Kill it!\n\nGo here to report the bug\n\nhttps://t.me/joinchat/HmxycxY2tSHp_aZX4mQ9QA", keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == '\ud83c\udf78 Mixology \ud83c\udf78') {
-              console.log("HERE");
 
               mixology.getCocktail().then(cocktail => {
                 console.log(cocktail);
 
-                b.sendMessage(ship.id, cocktail.image + "\n" + cocktail.name + "\n" + cocktail.instructions);
+                b.sendPhoto(ship.id, cocktail.image, "<pre>" + cocktail.name + "</pre>" + "\n" + cocktail.instructions);
               })
               // b.sendMessage(ship.id, "This feature is coming soon! \n\nIn the meantime you should look for treasure the next time you are in port.");
             } else if (req.body.message.text == 'Deposit') {
