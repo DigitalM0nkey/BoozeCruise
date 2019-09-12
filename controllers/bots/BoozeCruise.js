@@ -409,6 +409,8 @@ router.post('/', function (req, res, next) {
               b.sendKeyboard(req.body.message.chat.id, "Oh No!!! A BUG! Quick! Kill it!\n\nGo here to report the bug\n\nhttps://t.me/joinchat/HmxycxY2tSHp_aZX4mQ9QA", keyboards.home(ship.nextLocation.port));
             } else if (req.body.message.text == emoji.cocktail + 'Mixology' + emoji.cocktail) {
               mixology.getCocktail().then(cocktail => {
+                console.log(cocktail);
+
                 b.sendMessage(ship.id, cocktail.image + "\n" + cocktail.name + "\n" + cocktail.instructions);
               })
               // b.sendMessage(ship.id, "This feature is coming soon! \n\nIn the meantime you should look for treasure the next time you are in port.");
