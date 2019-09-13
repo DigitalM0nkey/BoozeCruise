@@ -19,7 +19,7 @@ module.exports = {
         seaDay ? [
           { 'text': emoji.moneyBag + 'Purser' + emoji.moneyBag },
           { 'text': emoji.joker + 'Casino' + emoji.joker },
-          { 'text': emoji.moneyBag + 'Shop' + emoji.moneyBag }
+          { 'text': emoji.gift + 'Shop' + emoji.gift }
         ] : [
             { 'text': emoji.moneyBag + 'Purser' + emoji.moneyBag },
             { 'text': emoji.moneyBag + 'Treasure' + emoji.moneyBag }
