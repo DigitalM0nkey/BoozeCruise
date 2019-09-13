@@ -414,7 +414,7 @@ router.post('/', function (req, res, next) {
 
                 b.sendPhoto(ship.id, cocktail.image, "<pre>" + cocktail.name + "</pre>" + "\n" + cocktail.instructions + "<code>" + cocktail.ingredients.map(ingredient => '\n - ' + ingredient) + "</code>");
               })
-            } else if (req.body.message.text == '\ud83c\udf78 Lounge \ud83c\udf78') {
+            } else if (req.body.message.text.indexOf('Lounge') >= 0) {
 
               b.sendKeyboard(req.body.message.chat.id, "Welcome to the ships cocktail lounge. Stay a while, order a drink.", keyboards.lounge);
 

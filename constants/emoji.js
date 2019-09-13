@@ -12,4 +12,5 @@ module.exports = {
   anchor: " \u2693 ",
   helm: " \u2388 ",
   cocktail: " \ud83c\udf78 ",
+  joker: " 🃏 "
 }
