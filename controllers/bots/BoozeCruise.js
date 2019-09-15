@@ -585,8 +585,8 @@ router.post('/', function (req, res, next) {
               b.sendKeyboard(req.body.message.chat.id, "Click Here => @BoozeCruise_bot", keyboards.port);
             } else if (req.body.message.text == "Return to Ship") {
               console.log(req.body);
-
-              b.sendKeyboard(req.body.message.chat.id, "@BoozeCruise_bot", keyboards.port);
+              b.sendMessage(req.body.message.chat.id, "@BoozeCruise_bot");
+              // b.sendKeyboard(req.body.message.chat.id, "@BoozeCruise_bot", keyboards.port);
             } else if (req.body.message.text == "/kick") {
               //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
               b.kick(req.body.message.chat.id, req.body.message.from.id, 1);
