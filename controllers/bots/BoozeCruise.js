@@ -192,6 +192,7 @@ router.post('/', function (req, res, next) {
                   }
                 });
                 newShip.save();
+
                 b.sendKeyboard(req.body.message.chat.id, WELCOME, keyboards.home());
                 console.log(randomPort);
               });
@@ -232,6 +233,10 @@ router.post('/', function (req, res, next) {
 
             } else if (req.body.message.text == "\ud83d\udc1b Maintenance \ud83d\udc1b") {
               b.sendKeyboard(req.body.message.chat.id, "\ud83d\udc1b Maintenance \ud83d\udc1b", keyboards.maintenance);
+            } else if (req.body.message.text == "/return") {
+              b.sendKeyboard(req.body.message.chat.id, "@BoozeCruise_bot", keyboards.port);
+            } else if (req.body.message.text == "Return to Ship") {
+              b.sendKeyboard(req.body.message.chat.id, "@BoozeCruise_bot", keyboards.port);
             } else if (req.body.message.text == "\ud83d\udc81 Crew Manifest \ud83d\udc81") {
               b.sendMessage(ship.id, "There are plenty of crew on your ship. You'll meet them when the time is right.")
             } else if (req.body.message.text == "\u2630 Main Menu \u2630") {
@@ -300,7 +305,7 @@ router.post('/', function (req, res, next) {
                 });
               });
 
-            } else if (req.body.message.text == "/Nav") {
+            } else if (req.body.message.text == "/nav") {
               b.sendKeyboard(req.body.message.chat.id, "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.", keyboards.navigation);
             } else if (req.body.message.text == "\ud83d\udea2 Home Port \ud83d\udea2" || req.body.message.text == "/addGuest") {
               var newGuest = guest.pick();

@@ -32,6 +32,15 @@ module.exports = {
       resize_keyboard: true
     };
   },
+  port: {
+    keyboard: [
+      [{
+        'text': "Return to Ship"
+      },
+      ]
+    ],
+    resize_keyboard: true
+  },
   manifest: {
     keyboard: [
       [{
