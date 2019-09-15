@@ -162,7 +162,7 @@ router.post('/', function (req, res, next) {
         // End Mini-game Lowest-Highest
       });
     return res.sendStatus(200);
-  } else if (req.body.edited_message || req.body.message.photo || req.body.message.game || req.body.message.emoji || req.body.message.voice || req.body.message.animation || req.body.message.sticker || req.body.message.reply_to_message) {
+  } else if (req.body.edited_message || req.body.message.photo || req.body.message.game || req.body.message.emoji || req.body.message.voice || req.body.message.animation || req.body.message.sticker /*|| req.body.message.reply_to_message*/) {
     //Ignore these messages as they're just chat interactions
     return res.sendStatus(200);
   } else {
