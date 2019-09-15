@@ -197,6 +197,7 @@ router.post('/', function (req, res, next) {
                 console.log(randomPort);
               });
 
+
           } else {
             if (req.body.message.text == "/start") {
               //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
@@ -580,6 +581,10 @@ router.post('/', function (req, res, next) {
             if (req.body.message.text == "/start") {
               //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
               b.sendKeyboard(req.body.message.chat.id, WELCOME, keyboards.home(ship.nextLocation.port));
+            } else if (req.body.message.text == "/return") {
+              b.sendKeyboard(req.body.message.chat.id, "@BoozeCruise_bot", keyboards.port);
+            } else if (req.body.message.text == "Return to Ship") {
+              b.sendKeyboard(req.body.message.chat.id, "@BoozeCruise_bot", keyboards.port);
             } else if (req.body.message.text == "/kick") {
               //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
               b.kick(req.body.message.chat.id, req.body.message.from.id, 1);
