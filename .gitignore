@@ -6,3 +6,7 @@ Docs
 .DS_Store
 .vagrant
 Vagrantfile
+.Icon
+cd/Icon
+images/Screenshots/Icon
+test/Icon
