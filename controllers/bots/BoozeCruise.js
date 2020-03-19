@@ -2,7 +2,6 @@ var mixology = require('../../mini-game/mixology');
 var router = require('express').Router();
 var schedule = require('node-schedule');
 var moment = require('moment');
-var config = require('../../config');
 var constants = require('../../constants');
 var _ = require('underscore');
 var TelegramBot = require('../../bots/telegram');
@@ -259,7 +258,7 @@ router.post('/', function (req, res, next) {
                   b.exportChatInviteLink(port.id).then(function (link) {
                     b.sendKeyboard(ship.id, "You are currently in the " + port.name + " harbour.", keyboards.navigation);
                     /* setTimeout(function () {
-                       
+
                      }, 5000);
                    */
                   });
@@ -663,6 +662,3 @@ function broadcast(message) {
     }), message);
   });
 }
-
-
-

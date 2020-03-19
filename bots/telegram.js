@@ -1,5 +1,4 @@
 var request = require('request');
-var config = require('../config');
 
 function TelegramBot() {
   var bot = this;
@@ -8,7 +7,7 @@ function TelegramBot() {
 
   bot.notifyAdmin = function (message) {
     bot.sendMessage('510423667', message);
-  }
+  };
 
   bot.init = function (TOKEN) {
     bot.token = TOKEN;
@@ -165,11 +164,11 @@ function TelegramBot() {
   bot.introduceYourself = function () {
     console.log('Hello, my name is ' + bot.getName() + '. You can talk to me through my username: @' + bot.username);
   };
-};
+}
 
 
 var boozecruiseBot = new TelegramBot();
-boozecruiseBot.init(config.tokens.telegram.BoozeCruise).then(function () {
+boozecruiseBot.init(process.env.BOOZECRUISE).then(function () {
   boozecruiseBot.introduceYourself();
   //b.deleteWebhook();
   boozecruiseBot.setWebhook('BoozeCruise');
