@@ -52,7 +52,7 @@ function TelegramBot() {
   };
   bot.setWebhook = function (api) {
     return new Promise(function (resolve, reject) {
-      var url = 'https://api.telegram.org/bot' + bot.token + '/setWebhook?url=https://boozecruise.punchmonkeyproductions.com/bots/' + api;
+      var url = 'https://api.telegram.org/bot' + bot.token + '/setWebhook?url=https://booze-cruise.herokuapp.com/bots/' + api;
       request(url, function (error, r, body) {
         var response = JSON.parse(body).result;
         if (error) return;
