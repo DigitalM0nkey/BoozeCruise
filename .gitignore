@@ -11,3 +11,4 @@ cd/Icon
 images/Screenshots/Icon
 test/Icon
 Vagrantfile
+.env
