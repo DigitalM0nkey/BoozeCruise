@@ -383,7 +383,7 @@ router.post("/", ({ body }, res, next) => {
               `A ${guest.getType(
                 newGuest.type
               )} guest just boarded your vessel`,
-              keyboards.home(ship.nextLocation.port)
+              keyboards.navigation
             );
           } else if (
             body.message.text == "\ud83d\udcb0 Treasure \ud83d\udcb0"
