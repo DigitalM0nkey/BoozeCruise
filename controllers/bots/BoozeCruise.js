@@ -801,6 +801,18 @@ router.post("/", ({ body }, res, next) => {
             }).then(({ _id }) => {
               port.ships.push(_id);
               port.save();
+              // FIX THIS CODE START
+              const newGuest = guest.pick();
+              ship.guests.push(newGuest);
+              ship.save();
+              b.sendKeyboard(
+                body.message.chat.id,
+                `A ${guest.getType(
+                  newGuest.type
+                )} guest just boarded your vessel`,
+                keyboards.navigation
+              );
+              // FIX THIS CODE END
             });
           } else if (body.message.left_chat_participant) {
             Ship.findOne({
