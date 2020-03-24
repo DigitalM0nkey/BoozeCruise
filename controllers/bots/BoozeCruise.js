@@ -805,12 +805,11 @@ router.post("/", ({ body }, res, next) => {
               const newGuest = guest.pick();
               ship.guests.push(newGuest);
               ship.save();
-              b.sendKeyboard(
+              b.sendMessage(
                 body.message.chat.id,
                 `A ${guest.getType(
                   newGuest.type
-                )} guest just boarded your vessel`,
-                keyboards.navigation
+                )} guest just boarded your vessel`
               );
               // FIX THIS CODE END
             });
