@@ -803,8 +803,8 @@ router.post("/", ({ body }, res, next) => {
               port.save();
               // FIX THIS CODE START
               const newGuest = guest.pick();
-              ship.guests.push(newGuest);
-              ship.save();
+              // ship.guests.push(newGuest);
+              // ship.save();
               b.sendMessage(
                 body.message.chat.id,
                 `A ${guest.getType(
