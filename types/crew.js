@@ -1,21 +1,22 @@
 var crew = {};
 
 crew.pick = function() {
-  var crewTypes = [{
+  var crewTypes = [
+    {
       title: "Social Host",
       crewStatus: "Staff"
     },
     {
-      title:"Cruise Director",
-      crewStatus:"Officer"
+      title: "Cruise Director",
+      crewStatus: "Officer"
     },
     {
-      title:"Art Auctioneer",
-      crewStatus:"Staff"
-    };
+      title: "Art Auctioneer",
+      crewStatus: "Staff"
+    },
     {
       title: "Gift Shop Manager",
-      crewStatus:"Staff"
+      crewStatus: "Staff"
     },
     {
       title: "Gift Shop Attendent",
@@ -40,20 +41,17 @@ crew.pick = function() {
     {
       title: "Dancer",
       crewStatus: "Staff"
-    },
-  ]
-}
-return crewTypes[Math.floor(Math.random() * crewTypes.length)];
+    }
+  ];
+  return crewTypes[Math.floor(Math.random() * crewTypes.length)];
 };
 
-crew.board = function() {
-
-}
+crew.board = function() {};
 
 module.exports = crew;
 
-var events = [{
-      name: "Embarcation Day",
-      description: "New passangers are boarding your ship",
-      keyboard: keyboards.home
-    },
+// const events = [{
+//       name: "Embarcation Day",
+//       description: "New passangers are boarding your ship",
+//       keyboard: keyboards.home
+//     }]
