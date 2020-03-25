@@ -662,15 +662,14 @@ router.post("/", ({ body }, res, next) => {
           } else if (body.message.new_chat_participant) {
             Ship.findOne({
               "user.id": body.message.new_chat_participant.id
-            }).then(({ _id }) => {
-              port.ships.push(_id);
+            }).then(ship => {
+              port.ships.push(ship._id);
               port.save();
-              // FIX THIS CODE START
+
               const newGuest = guest.pick();
-              // ship.guests.push(newGuest);
-              // ship.save();
-              b.sendMessage(body.message.chat.id, `A ${guest.getType(newGuest.type)} guest just boarded your vessel`);
-              // FIX THIS CODE END
+              ship.guests.push(newGuest);
+              ship.save();
+              b.sendMessage(ship.id, `A ${guest.getType(newGuest.type)} guest just boarded your vessel`);
             });
           } else if (body.message.left_chat_participant) {
             Ship.findOne({
