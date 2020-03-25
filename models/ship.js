@@ -21,6 +21,7 @@ var Ship = db.model("Ship", {
       crew_status: { type: String, required: true }
     }
   ],
+  capacity: { type: Number, required: true, default: 650 },
   location: {
     sector: { type: Number, required: false },
     x: { type: Number, required: false },
