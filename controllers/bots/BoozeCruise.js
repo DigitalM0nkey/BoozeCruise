@@ -661,7 +661,7 @@ router.post("/", ({ body }, res, next) => {
               while (i--) {
                 newGuests.push(guest.pick());
               }
-              let leavingGuests;
+              let leavingGuests = [];
               i = Math.floor(Math.random() * ship.guests.length);
               while (i--) {
                 leavingGuests.concat(ship.guests.splice(Math.floor(Math.random() * ship.guests.length), 1));
