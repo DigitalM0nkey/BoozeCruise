@@ -409,121 +409,68 @@ router.post("/", ({ body }, res, next) => {
           } else if (body.message.text.substring(0, body.message.text.indexOf(" ")) == "/broadcast") {
             if (ship._id == MYSHIP) {
               broadcast(body.message.text.substring(body.message.text.indexOf(" ") + 1));
-            } else if (body.message.text.substring(0, body.message.text.indexOf(" ")) == "/product") {
-              if (ship._id == MYSHIP) {
-                const product = body.message.text.substring(body.message.text.indexOf(" ") + 1);
-                Product.create({
-                  name: product
-                });
-              }
-            } else if (body.message.text == "/admin") {
-              //if (ship._id == MYSHIP) {
-              b.sendMessage(body.message.chat.id, "Admin triggered");
-              b.sendKeyboard(body.message.chat.id, "Welcome to the admin panel", keyboards.admin);
-              //}
-            } else if (body.message.text == "/removeGuest") {
-              const removedGuest = ship.guests.pop();
-              ship.save();
-              b.sendKeyboard(body.message.chat.id, removedGuest, keyboards.home(ship.nextLocation.port));
-            } else if (body.message.text == "\ud83d\udc1b BUG \ud83d\udc1b") {
-              b.sendKeyboard(
-                body.message.chat.id,
-                "Oh No!!! A BUG! Quick! Kill it!\n\nGo here to report the bug\n\nhttps://t.me/joinchat/HmxycxY2tSHp_aZX4mQ9QA",
-                keyboards.home(ship.nextLocation.port)
-              );
-            } else if (body.message.text == "\ud83c\udf78 Cocktail \ud83c\udf78") {
-              mixology.getCocktail().then(cocktail => {
-                console.log(cocktail);
+            }
+          } else if (body.message.text.substring(0, body.message.text.indexOf(" ")) == "/product") {
+            if (ship._id == MYSHIP) {
+              const product = body.message.text.substring(body.message.text.indexOf(" ") + 1);
+              Product.create({
+                name: product
+              });
+            }
+          } else if (body.message.text == "/admin") {
+            //if (ship._id == MYSHIP) {
+            b.sendMessage(body.message.chat.id, "Admin triggered");
+            b.sendKeyboard(body.message.chat.id, "Welcome to the admin panel", keyboards.admin);
+            //}
+          } else if (body.message.text == "/removeGuest") {
+            const removedGuest = ship.guests.pop();
+            ship.save();
+            b.sendKeyboard(body.message.chat.id, removedGuest, keyboards.home(ship.nextLocation.port));
+          } else if (body.message.text == "\ud83d\udc1b BUG \ud83d\udc1b") {
+            b.sendKeyboard(
+              body.message.chat.id,
+              "Oh No!!! A BUG! Quick! Kill it!\n\nGo here to report the bug\n\nhttps://t.me/joinchat/HmxycxY2tSHp_aZX4mQ9QA",
+              keyboards.home(ship.nextLocation.port)
+            );
+          } else if (body.message.text == "\ud83c\udf78 Cocktail \ud83c\udf78") {
+            mixology.getCocktail().then(cocktail => {
+              console.log(cocktail);
 
-                b.sendPhoto(
-                  ship.id,
-                  cocktail.image,
-                  `<pre>${cocktail.name}</pre>\n${cocktail.instructions}<code>${cocktail.ingredients.map(
-                    ingredient => `\n - ${ingredient}`
-                  )}</code>`
-                );
-              });
-            } else if (body.message.text.includes("Lounge")) {
-              b.sendKeyboard(
-                body.message.chat.id,
-                "Welcome to the ships cocktail lounge. Stay a while, order a drink.",
-                keyboards.lounge
-              );
-            } else if (body.message.text == "Deposit") {
-              b.sendMessage(
+              b.sendPhoto(
                 ship.id,
-                "This feature is coming soon! \n\nIn the meantime you should look for treasure the next time you are in port."
+                cocktail.image,
+                `<pre>${cocktail.name}</pre>\n${cocktail.instructions}<code>${cocktail.ingredients.map(
+                  ingredient => `\n - ${ingredient}`
+                )}</code>`
               );
-            } else if (body.message.text == "\ud83d\udc1b Suggestions \ud83d\udc1b") {
-              b.sendKeyboard(
-                body.message.chat.id,
-                "Got an idea?\n\nGo here to tell us\n\nhttps://t.me/joinchat/HmxycxOCylQHWIDtPsd7pw",
-                keyboards.home(ship.nextLocation.port)
-              );
-            } else if (body.message.text == "\ud83c\udfdd Ports of Call \ud83c\udfdd") {
-              Port.find({
-                id: {
-                  $ne: ship.location.port
-                }
-              }).then(ports => {
-                const portsInShipSector = ports.filter(({ location }) => {
-                  return location.sector === ship.location.sector;
-                }).length;
-                if (portsInShipSector === 0) {
-                  const sectors = {};
-                  ports.forEach(({ location, name }, i, array) => {
-                    if (!sectors[location.sector]) sectors[location.sector] = "";
-                    sectors[location.sector] += `${name}, `;
-                  });
-                  let message = "";
-                  for (const i in sectors) {
-                    sectors[i] = sectors[i].substring(0, sectors[i].length - 2);
-                    message += `${constants.sectors[i]}: ${sectors[i]}\n`;
-                  }
-                  b.sendMessage(
-                    body.message.chat.id,
-                    `Below are the available continents that you can travel to. The ports of call that you can visit are listed beside the respective continents.\n\n${message}`
-                  );
-                  setTimeout(() => {
-                    b.sendKeyboard(body.message.chat.id, "Which continent would you like to navigate to:", {
-                      inline_keyboard: Object.keys(sectors).map(sector => {
-                        return [
-                          {
-                            text: constants.sectors[sector],
-                            callback_data: JSON.stringify({
-                              action: "navigate_sector",
-                              sector
-                            })
-                          }
-                        ];
-                      })
-                    });
-                  }, 5000);
-                } else if (portsInShipSector === ports.length) {
-                  globalFunctions.sendAvailablePorts(body.message.chat.id, ports, ship);
-                } else {
-                  b.sendKeyboard(
-                    body.message.chat.id,
-                    "A port of call is an intermediate stop for a ship on its sailing itinerary.\n\nWhere would you like to go?",
-                    keyboards.ports
-                  );
-                }
-              });
-            } else if (body.message.text == "Same Continent") {
-              Port.find({
-                "location.sector": ship.location.sector,
-                id: {
-                  $ne: ship.location.port
-                }
-              }).then(ports => {
-                globalFunctions.sendAvailablePorts(body.message.chat.id, ports, ship);
-              });
-            } else if (body.message.text === "Change Continent") {
-              Port.find({
-                "location.sector": {
-                  $ne: ship.location.sector
-                }
-              }).then(ports => {
+            });
+          } else if (body.message.text.includes("Lounge")) {
+            b.sendKeyboard(
+              body.message.chat.id,
+              "Welcome to the ships cocktail lounge. Stay a while, order a drink.",
+              keyboards.lounge
+            );
+          } else if (body.message.text == "Deposit") {
+            b.sendMessage(
+              ship.id,
+              "This feature is coming soon! \n\nIn the meantime you should look for treasure the next time you are in port."
+            );
+          } else if (body.message.text == "\ud83d\udc1b Suggestions \ud83d\udc1b") {
+            b.sendKeyboard(
+              body.message.chat.id,
+              "Got an idea?\n\nGo here to tell us\n\nhttps://t.me/joinchat/HmxycxOCylQHWIDtPsd7pw",
+              keyboards.home(ship.nextLocation.port)
+            );
+          } else if (body.message.text == "\ud83c\udfdd Ports of Call \ud83c\udfdd") {
+            Port.find({
+              id: {
+                $ne: ship.location.port
+              }
+            }).then(ports => {
+              const portsInShipSector = ports.filter(({ location }) => {
+                return location.sector === ship.location.sector;
+              }).length;
+              if (portsInShipSector === 0) {
                 const sectors = {};
                 ports.forEach(({ location, name }, i, array) => {
                   if (!sectors[location.sector]) sectors[location.sector] = "";
@@ -553,77 +500,130 @@ router.post("/", ({ body }, res, next) => {
                     })
                   });
                 }, 5000);
-              });
-            } else if (body.message.text == "\ud83d\udcb0 Purser \ud83d\udcb0") {
-              b.sendKeyboard(
-                body.message.chat.id,
-                `A ship's purser is the person on a ship principally responsible for the handling of money on board.\n\nThe currency is Korona or ${KORONA} for short. \n\n How may I help you today?`,
-                keyboards.purser
-              );
-            } else if (body.message.text.includes("Casino")) {
-              b.sendKeyboard(
-                body.message.chat.id,
-                `A ship's casino is a place where you can spend your ${KORONA} for chance to win.`,
-                keyboards.casino
-              );
-            } else if (body.message.text == "\u2195 Lowest Highest \u2195") {
-              LowestHighest.find({ jackpotPaid: false }).then(({ length }) => {
+              } else if (portsInShipSector === ports.length) {
+                globalFunctions.sendAvailablePorts(body.message.chat.id, ports, ship);
+              } else {
                 b.sendKeyboard(
                   body.message.chat.id,
-                  `This game cost ${KORONA}5 to play.\nYour current balance is ${KORONA}${
-                    ship.purse.balance
-                  }.\n${KORONA}10 is awarded to the winner.\n\n<pre>INSTRUCTIONS</pre>\nSelect a number higher than your opponent but lower than the House to win.\n\nThe jackpot is awarded to the player which picks the same number as the House.\n\n<code>Current jackpot is ${KORONA}${4 *
-                    length}</code>`,
-                  keyboards.decision(LOWESTHIGHEST)
+                  "A port of call is an intermediate stop for a ship on its sailing itinerary.\n\nWhere would you like to go?",
+                  keyboards.ports
                 );
-              });
-            } else if (body.message.text == "\ud83d\udc65 Manifest \ud83d\udc65") {
-              b.sendKeyboard(
-                body.message.chat.id,
-                "A document giving comprehensive details of a ship and its cargo and other contents, passengers, and crew for the use of customs officers.",
-                keyboards.manifest
-              );
-            } else if (body.message.text == "\ud83d\udc65 Guest Manifest \ud83d\udc65") {
-              const guestList = {};
-              ship.guests.forEach(({ type }) => {
-                if (!guestList[type]) {
-                  guestList[type] = 0;
-                }
-                guestList[type]++;
-              });
-              let message1 = "";
-              for (const i in guestList) {
-                message1 += `${guest.getType(i)}: ${guestList[i]}\n`;
               }
+            });
+          } else if (body.message.text == "Same Continent") {
+            Port.find({
+              "location.sector": ship.location.sector,
+              id: {
+                $ne: ship.location.port
+              }
+            }).then(ports => {
+              globalFunctions.sendAvailablePorts(body.message.chat.id, ports, ship);
+            });
+          } else if (body.message.text === "Change Continent") {
+            Port.find({
+              "location.sector": {
+                $ne: ship.location.sector
+              }
+            }).then(ports => {
+              const sectors = {};
+              ports.forEach(({ location, name }, i, array) => {
+                if (!sectors[location.sector]) sectors[location.sector] = "";
+                sectors[location.sector] += `${name}, `;
+              });
+              let message = "";
+              for (const i in sectors) {
+                sectors[i] = sectors[i].substring(0, sectors[i].length - 2);
+                message += `${constants.sectors[i]}: ${sectors[i]}\n`;
+              }
+              b.sendMessage(
+                body.message.chat.id,
+                `Below are the available continents that you can travel to. The ports of call that you can visit are listed beside the respective continents.\n\n${message}`
+              );
+              setTimeout(() => {
+                b.sendKeyboard(body.message.chat.id, "Which continent would you like to navigate to:", {
+                  inline_keyboard: Object.keys(sectors).map(sector => {
+                    return [
+                      {
+                        text: constants.sectors[sector],
+                        callback_data: JSON.stringify({
+                          action: "navigate_sector",
+                          sector
+                        })
+                      }
+                    ];
+                  })
+                });
+              }, 5000);
+            });
+          } else if (body.message.text == "\ud83d\udcb0 Purser \ud83d\udcb0") {
+            b.sendKeyboard(
+              body.message.chat.id,
+              `A ship's purser is the person on a ship principally responsible for the handling of money on board.\n\nThe currency is Korona or ${KORONA} for short. \n\n How may I help you today?`,
+              keyboards.purser
+            );
+          } else if (body.message.text.includes("Casino")) {
+            b.sendKeyboard(
+              body.message.chat.id,
+              `A ship's casino is a place where you can spend your ${KORONA} for chance to win.`,
+              keyboards.casino
+            );
+          } else if (body.message.text == "\u2195 Lowest Highest \u2195") {
+            LowestHighest.find({ jackpotPaid: false }).then(({ length }) => {
               b.sendKeyboard(
                 body.message.chat.id,
-                `The Guest Manifest:\n${message1}`,
-                keyboards.home(ship.nextLocation.port)
+                `This game cost ${KORONA}5 to play.\nYour current balance is ${KORONA}${
+                  ship.purse.balance
+                }.\n${KORONA}10 is awarded to the winner.\n\n<pre>INSTRUCTIONS</pre>\nSelect a number higher than your opponent but lower than the House to win.\n\nThe jackpot is awarded to the player which picks the same number as the House.\n\n<code>Current jackpot is ${KORONA}${4 *
+                  length}</code>`,
+                keyboards.decision(LOWESTHIGHEST)
               );
-            } else if (body.message.text == "\ud83c\udf87 Achievements \ud83c\udf87") {
-              Ship.findOne({
-                id: ship.id
-              })
-                .populate("portHistory.port")
-                .then(({ portHistory }) => {
-                  let message = "<b>Your Port History:</b>";
-                  portHistory.forEach(stop => {
-                    const arrivalDate = moment(stop.arrivalDate);
-                    const departureDate = moment(stop.departureDate);
-                    message += `\n${stop.port.name} | ${arrivalDate.diff(departureDate, "days")}`;
-                  });
-                  b.sendMessage(body.message.chat.id, message);
-                });
-            } else if (body.message.text == "Port \ud83d\udea2") {
-              console.log("log here");
-              b.exportChatInviteLink("-1001399879250").then(link => {
-                console.log(link);
-                b.sendMessage(body.message.chat.id, link);
-              });
+            });
+          } else if (body.message.text == "\ud83d\udc65 Manifest \ud83d\udc65") {
+            b.sendKeyboard(
+              body.message.chat.id,
+              "A document giving comprehensive details of a ship and its cargo and other contents, passengers, and crew for the use of customs officers.",
+              keyboards.manifest
+            );
+          } else if (body.message.text == "\ud83d\udc65 Guest Manifest \ud83d\udc65") {
+            const guestList = {};
+            ship.guests.forEach(({ type }) => {
+              if (!guestList[type]) {
+                guestList[type] = 0;
+              }
+              guestList[type]++;
+            });
+            let message1 = "";
+            for (const i in guestList) {
+              message1 += `${guest.getType(i)}: ${guestList[i]}\n`;
             }
+            b.sendKeyboard(
+              body.message.chat.id,
+              `The Guest Manifest:\n${message1}`,
+              keyboards.home(ship.nextLocation.port)
+            );
+          } else if (body.message.text == "\ud83c\udf87 Achievements \ud83c\udf87") {
+            Ship.findOne({
+              id: ship.id
+            })
+              .populate("portHistory.port")
+              .then(({ portHistory }) => {
+                let message = "<b>Your Port History:</b>";
+                portHistory.forEach(stop => {
+                  const arrivalDate = moment(stop.arrivalDate);
+                  const departureDate = moment(stop.departureDate);
+                  message += `\n${stop.port.name} | ${arrivalDate.diff(departureDate, "days")}`;
+                });
+                b.sendMessage(body.message.chat.id, message);
+              });
+          } else if (body.message.text == "Port \ud83d\udea2") {
+            console.log("log here");
+            b.exportChatInviteLink("-1001399879250").then(link => {
+              console.log(link);
+              b.sendMessage(body.message.chat.id, link);
+            });
           }
-          //res.sendStatus(200);
         }
+        //res.sendStatus(200);
       });
     } else {
       Port.findOne({
