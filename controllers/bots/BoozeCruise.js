@@ -661,7 +661,7 @@ router.post("/", ({ body }, res, next) => {
               }
               ship.guests = ship.guests.getRandom(Math.floor(Math.random() * ship.guests.length)).concat(newGuests);
               ship.save();
-              b.sendMessage(ship.id, `New guests just boarded your vessel: ${globalFunctions.generateManifest(newGuests)}`);
+              b.sendMessage(ship.id, `New guests just boarded your vessel:\n${globalFunctions.generateManifest(newGuests)}`);
             });
             // you are here bro!
           } else if (body.message.left_chat_participant) {
