@@ -659,7 +659,12 @@ router.post("/", ({ body }, res, next) => {
               while (i--) {
                 newGuests.push(guest.pick());
               }
-              ship.guests = ship.guests.getRandom(Math.floor(Math.random() * ship.guests.length)).concat(newGuests);
+              let leavingGuests;
+              i = Math.floor(Math.random() * ship.guests.length);
+              while (i--) {
+                leavingGuests.concat(ship.guests.splice(Math.floor(Math.random() * ship.guests.length), 1));
+              }
+              ship.guests = ship.guests.concat(newGuests);
               ship.save();
               b.sendMessage(ship.id, `New guests just boarded your vessel:\n${globalFunctions.generateManifest(newGuests)}`);
             });
