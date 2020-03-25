@@ -2,6 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const app = express();
+const prototypes = require('./prototypes');
+
 app.use(bodyParser.json());
 app.use(logger("dev"));
 app.use("/bots/BoozeCruise", require("./controllers/bots/BoozeCruise"));

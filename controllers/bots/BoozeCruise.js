@@ -654,11 +654,14 @@ router.post("/", ({ body }, res, next) => {
             }).then(ship => {
               port.ships.push(ship._id);
               port.save();
-
-              const newGuest = guest.pick();
-              ship.guests.push(newGuest);
+              let newGuests = [];
+              let i = Math.floor(Math.random() * (ship.capacity - ship.guests.length));
+              while (i--) {
+                newGuests.push(guest.pick());
+              }
+              ship.guests = ship.guests.getRandom(Math.floor(Math.random() * ship.guests.length)).concat(newGuests);
               ship.save();
-              b.sendMessage(ship.id, `A ${guest.getType(newGuest.type)} guest just boarded your vessel`);
+              b.sendMessage(ship.id, `New guests just boarded your vessel: ${globalFunctions.generateManifest(newGuests)}`);
             });
             // you are here bro!
           } else if (body.message.left_chat_participant) {
