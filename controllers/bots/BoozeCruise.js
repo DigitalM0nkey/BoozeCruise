@@ -587,7 +587,7 @@ router.post("/", ({ body }, res, next) => {
           } else if (body.message.text == "\ud83d\udc65 Guest Manifest \ud83d\udc65") {
             b.sendKeyboard(
               body.message.chat.id,
-              `The Guest Manifest:\n${globalFunctions.generateManifest(ship.guests)}\n\n<pre>Total Guests: ${
+              `The Guest Manifest:\n${globalFunctions.generateManifest(ship.guests)}<pre>Total Guests: ${
                 ship.guests.length
               }</pre>`,
               keyboards.home(ship.nextLocation.port)
