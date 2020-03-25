@@ -205,19 +205,10 @@ router.post("/", ({ body }, res, next) => {
         } else {
           if (body.message.text == "/start") {
             //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
-            b.sendKeyboard(
-              body.message.chat.id,
-              WELCOME,
-              keyboards.home(ship.nextLocation.port)
-            );
+            b.sendKeyboard(body.message.chat.id, WELCOME, keyboards.home(ship.nextLocation.port));
           } else if (body.message.text == "Check Balance") {
-            b.sendMessage(
-              ship.id,
-              `Your balance is ${KORONA}${ship.purse.balance}`
-            );
-          } else if (
-            body.message.text == "\ud83c\udf87 Achievements \ud83c\udf87"
-          ) {
+            b.sendMessage(ship.id, `Your balance is ${KORONA}${ship.purse.balance}`);
+          } else if (body.message.text == "\ud83c\udf87 Achievements \ud83c\udf87") {
             const portIds = ship.portHistory.map(port => {
               return port.port;
             });
@@ -242,44 +233,18 @@ router.post("/", ({ body }, res, next) => {
               for (const key in count) {
                 message += `\n${count[key].name} (${count[key].count})`;
               }
-              b.sendMessage(
-                ship.id,
-                `You have been to the following ports: ${message}`
-              );
+              b.sendMessage(ship.id, `You have been to the following ports: ${message}`);
             });
-          } else if (
-            body.message.text == "\ud83d\udc1b Maintenance \ud83d\udc1b"
-          ) {
-            b.sendKeyboard(
-              body.message.chat.id,
-              "\ud83d\udc1b Maintenance \ud83d\udc1b",
-              keyboards.maintenance
-            );
+          } else if (body.message.text == "\ud83d\udc1b Maintenance \ud83d\udc1b") {
+            b.sendKeyboard(body.message.chat.id, "\ud83d\udc1b Maintenance \ud83d\udc1b", keyboards.maintenance);
           } else if (body.message.text == "/return") {
-            b.sendKeyboard(
-              body.message.chat.id,
-              "@BoozeCruise_bot",
-              keyboards.port
-            );
+            b.sendKeyboard(body.message.chat.id, "@BoozeCruise_bot", keyboards.port);
           } else if (body.message.text == "Return to Ship") {
-            b.sendKeyboard(
-              body.message.chat.id,
-              "@BoozeCruise_bot",
-              keyboards.port
-            );
-          } else if (
-            body.message.text == "\ud83d\udc81 Crew Manifest \ud83d\udc81"
-          ) {
-            b.sendMessage(
-              ship.id,
-              "There are plenty of crew on your ship. You'll meet them when the time is right."
-            );
+            b.sendKeyboard(body.message.chat.id, "@BoozeCruise_bot", keyboards.port);
+          } else if (body.message.text == "\ud83d\udc81 Crew Manifest \ud83d\udc81") {
+            b.sendMessage(ship.id, "There are plenty of crew on your ship. You'll meet them when the time is right.");
           } else if (body.message.text == "\u2630 Main Menu \u2630") {
-            b.sendKeyboard(
-              body.message.chat.id,
-              "\u2630 Main Menu \u2630",
-              keyboards.home(ship.nextLocation.port)
-            );
+            b.sendKeyboard(body.message.chat.id, "\u2630 Main Menu \u2630", keyboards.home(ship.nextLocation.port));
           } else if (
             body.message.text == "\ud83d\uddfa Navigation \ud83d\uddfa" ||
             body.message.text == "\ud83d\udccd Current Location \ud83d\udccd"
@@ -291,26 +256,16 @@ router.post("/", ({ body }, res, next) => {
               }).then(({ name }) => {
                 b.sendMessage(
                   ship.id,
-                  `You will arrive in ${globalFunctions.calculateTime(
-                    ship.nextLocation.arrival
-                  )}`
+                  `You will arrive in ${globalFunctions.calculateTime(ship.nextLocation.arrival)}`
                 );
-                b.sendKeyboard(
-                  ship.id,
-                  `Your ship is currently en route to ${name}`,
-                  keyboards.atSea
-                );
+                b.sendKeyboard(ship.id, `Your ship is currently en route to ${name}`, keyboards.atSea);
               });
             } else {
               Port.findOne({
                 id: ship.location.port
               }).then(({ id, name }) => {
                 b.exportChatInviteLink(id).then(link => {
-                  b.sendKeyboard(
-                    ship.id,
-                    `You are currently in the ${name} harbour.`,
-                    keyboards.navigation
-                  );
+                  b.sendKeyboard(ship.id, `You are currently in the ${name} harbour.`, keyboards.navigation);
                   /* setTimeout(function () {
 
                      }, 5000);
@@ -328,26 +283,14 @@ router.post("/", ({ body }, res, next) => {
                 LowestHighest.findOne({ inProgress: true }).then(game => {
                   if (game) {
                     console.log(game);
-                    b.sendKeyboard(
-                      ship.id,
-                      "Pick a number",
-                      keyboards.numbers(game._id)
-                    );
+                    b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id));
                     b.sendKeyboard(ship.id, "Pick a number", keyboards.casino);
                   } else {
                     LowestHighest.create({}, (err, game) => {
                       console.log(game);
 
-                      b.sendKeyboard(
-                        ship.id,
-                        "Pick a number",
-                        keyboards.numbers(game._id)
-                      );
-                      b.sendKeyboard(
-                        ship.id,
-                        "Pick a number",
-                        keyboards.casino
-                      );
+                      b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id));
+                      b.sendKeyboard(ship.id, "Pick a number", keyboards.casino);
                     });
                   }
                 });
@@ -371,23 +314,16 @@ router.post("/", ({ body }, res, next) => {
               "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.",
               keyboards.navigation
             );
-          } else if (
-            body.message.text == "\ud83d\udea2 Home Port \ud83d\udea2" ||
-            body.message.text == "/addGuest"
-          ) {
+          } else if (body.message.text == "\ud83d\udea2 Home Port \ud83d\udea2" || body.message.text == "/addGuest") {
             const newGuest = guest.pick();
             ship.guests.push(newGuest);
             ship.save();
             b.sendKeyboard(
               body.message.chat.id,
-              `A ${guest.getType(
-                newGuest.type
-              )} guest just boarded your vessel`,
+              `A ${guest.getType(newGuest.type)} guest just boarded your vessel`,
               keyboards.navigation
             );
-          } else if (
-            body.message.text == "\ud83d\udcb0 Treasure \ud83d\udcb0"
-          ) {
+          } else if (body.message.text == "\ud83d\udcb0 Treasure \ud83d\udcb0") {
             b.getChatMember(ship.location.port, ship.id).then(
               chatMember => {
                 Port.findOne({
@@ -397,14 +333,8 @@ router.post("/", ({ body }, res, next) => {
                   }
                 }).then(port => {
                   if (port) {
-                    b.sendMessage(
-                      ship.id,
-                      `You found ${port.treasure} Korona in the buried treasure`
-                    );
-                    b.sendMessage(
-                      port.id,
-                      `${ship.user.first_name} just found ${port.treasure} Korona here.`
-                    );
+                    b.sendMessage(ship.id, `You found ${port.treasure} Korona in the buried treasure`);
+                    b.sendMessage(port.id, `${ship.user.first_name} just found ${port.treasure} Korona here.`);
                     ship.purse.balance += port.treasure;
                     ship.purse.transactions.push({
                       date: new Date(),
@@ -419,12 +349,8 @@ router.post("/", ({ body }, res, next) => {
                         $ne: ship.location.port
                       }
                     }).then(ports => {
-                      const randomPort = Math.floor(
-                        Math.random() * ports.length
-                      );
-                      ports[randomPort].treasure = Math.round(
-                        Math.random() * TREASURE + 1
-                      );
+                      const randomPort = Math.floor(Math.random() * ports.length);
+                      ports[randomPort].treasure = Math.round(Math.random() * TREASURE + 1);
                       ports[randomPort].save();
                     });
                   } else {
@@ -443,13 +369,8 @@ router.post("/", ({ body }, res, next) => {
             );
 
             // Captains Log:
-          } else if (
-            body.message.text.substring(0, body.message.text.indexOf(" ")) ==
-            "/log"
-          ) {
-            const message = body.message.text.substring(
-              body.message.text.indexOf(" ") + 1
-            );
+          } else if (body.message.text.substring(0, body.message.text.indexOf(" ")) == "/log") {
+            const message = body.message.text.substring(body.message.text.indexOf(" ") + 1);
             b.sendMessage(ship.id, `Captain's Log: ${message}`);
             Ship.findOne({
               id: ship.id
@@ -471,11 +392,7 @@ router.post("/", ({ body }, res, next) => {
             );
           } else if (body.message.text == "Products") {
             Product.find({}).then(products => {
-              b.sendKeyboard(
-                body.message.chat.id,
-                "Buy something.",
-                keyboards.products(products)
-              );
+              b.sendKeyboard(body.message.chat.id, "Buy something.", keyboards.products(products));
             });
           } else if (body.message.text == "\u2388 Capt's Log \u2388") {
             b.sendMessage(
@@ -489,61 +406,39 @@ router.post("/", ({ body }, res, next) => {
             b.sendMessage(ship.id, logReport);
 
             // Broadcast
-          } else if (
-            body.message.text.substring(0, body.message.text.indexOf(" ")) ==
-            "/broadcast"
-          ) {
+          } else if (body.message.text.substring(0, body.message.text.indexOf(" ")) == "/broadcast") {
             if (ship._id == MYSHIP) {
-              broadcast(
-                body.message.text.substring(body.message.text.indexOf(" ") + 1)
-              );
-            } else if (
-              body.message.text.substring(0, body.message.text.indexOf(" ")) ==
-              "/product"
-            ) {
+              broadcast(body.message.text.substring(body.message.text.indexOf(" ") + 1));
+            } else if (body.message.text.substring(0, body.message.text.indexOf(" ")) == "/product") {
               if (ship._id == MYSHIP) {
-                const product = body.message.text.substring(
-                  body.message.text.indexOf(" ") + 1
-                );
+                const product = body.message.text.substring(body.message.text.indexOf(" ") + 1);
                 Product.create({
                   name: product
                 });
               }
             } else if (body.message.text == "/admin") {
               //if (ship._id == MYSHIP) {
-              b.sendMessage(body.message.chat.id, 'Admin triggered');
-                b.sendKeyboard(
-                  body.message.chat.id,
-                  "Welcome to the admin panel",
-                  keyboards.admin
-                );
+              b.sendMessage(body.message.chat.id, "Admin triggered");
+              b.sendKeyboard(body.message.chat.id, "Welcome to the admin panel", keyboards.admin);
               //}
             } else if (body.message.text == "/removeGuest") {
               const removedGuest = ship.guests.pop();
               ship.save();
-              b.sendKeyboard(
-                body.message.chat.id,
-                removedGuest,
-                keyboards.home(ship.nextLocation.port)
-              );
+              b.sendKeyboard(body.message.chat.id, removedGuest, keyboards.home(ship.nextLocation.port));
             } else if (body.message.text == "\ud83d\udc1b BUG \ud83d\udc1b") {
               b.sendKeyboard(
                 body.message.chat.id,
                 "Oh No!!! A BUG! Quick! Kill it!\n\nGo here to report the bug\n\nhttps://t.me/joinchat/HmxycxY2tSHp_aZX4mQ9QA",
                 keyboards.home(ship.nextLocation.port)
               );
-            } else if (
-              body.message.text == "\ud83c\udf78 Cocktail \ud83c\udf78"
-            ) {
+            } else if (body.message.text == "\ud83c\udf78 Cocktail \ud83c\udf78") {
               mixology.getCocktail().then(cocktail => {
                 console.log(cocktail);
 
                 b.sendPhoto(
                   ship.id,
                   cocktail.image,
-                  `<pre>${cocktail.name}</pre>\n${
-                    cocktail.instructions
-                  }<code>${cocktail.ingredients.map(
+                  `<pre>${cocktail.name}</pre>\n${cocktail.instructions}<code>${cocktail.ingredients.map(
                     ingredient => `\n - ${ingredient}`
                   )}</code>`
                 );
@@ -559,17 +454,13 @@ router.post("/", ({ body }, res, next) => {
                 ship.id,
                 "This feature is coming soon! \n\nIn the meantime you should look for treasure the next time you are in port."
               );
-            } else if (
-              body.message.text == "\ud83d\udc1b Suggestions \ud83d\udc1b"
-            ) {
+            } else if (body.message.text == "\ud83d\udc1b Suggestions \ud83d\udc1b") {
               b.sendKeyboard(
                 body.message.chat.id,
                 "Got an idea?\n\nGo here to tell us\n\nhttps://t.me/joinchat/HmxycxOCylQHWIDtPsd7pw",
                 keyboards.home(ship.nextLocation.port)
               );
-            } else if (
-              body.message.text == "\ud83c\udfdd Ports of Call \ud83c\udfdd"
-            ) {
+            } else if (body.message.text == "\ud83c\udfdd Ports of Call \ud83c\udfdd") {
               Port.find({
                 id: {
                   $ne: ship.location.port
@@ -581,8 +472,7 @@ router.post("/", ({ body }, res, next) => {
                 if (portsInShipSector === 0) {
                   const sectors = {};
                   ports.forEach(({ location, name }, i, array) => {
-                    if (!sectors[location.sector])
-                      sectors[location.sector] = "";
+                    if (!sectors[location.sector]) sectors[location.sector] = "";
                     sectors[location.sector] += `${name}, `;
                   });
                   let message = "";
@@ -595,30 +485,22 @@ router.post("/", ({ body }, res, next) => {
                     `Below are the available continents that you can travel to. The ports of call that you can visit are listed beside the respective continents.\n\n${message}`
                   );
                   setTimeout(() => {
-                    b.sendKeyboard(
-                      body.message.chat.id,
-                      "Which continent would you like to navigate to:",
-                      {
-                        inline_keyboard: Object.keys(sectors).map(sector => {
-                          return [
-                            {
-                              text: constants.sectors[sector],
-                              callback_data: JSON.stringify({
-                                action: "navigate_sector",
-                                sector
-                              })
-                            }
-                          ];
-                        })
-                      }
-                    );
+                    b.sendKeyboard(body.message.chat.id, "Which continent would you like to navigate to:", {
+                      inline_keyboard: Object.keys(sectors).map(sector => {
+                        return [
+                          {
+                            text: constants.sectors[sector],
+                            callback_data: JSON.stringify({
+                              action: "navigate_sector",
+                              sector
+                            })
+                          }
+                        ];
+                      })
+                    });
                   }, 5000);
                 } else if (portsInShipSector === ports.length) {
-                  globalFunctions.sendAvailablePorts(
-                    body.message.chat.id,
-                    ports,
-                    ship
-                  );
+                  globalFunctions.sendAvailablePorts(body.message.chat.id, ports, ship);
                 } else {
                   b.sendKeyboard(
                     body.message.chat.id,
@@ -634,11 +516,7 @@ router.post("/", ({ body }, res, next) => {
                   $ne: ship.location.port
                 }
               }).then(ports => {
-                globalFunctions.sendAvailablePorts(
-                  body.message.chat.id,
-                  ports,
-                  ship
-                );
+                globalFunctions.sendAvailablePorts(body.message.chat.id, ports, ship);
               });
             } else if (body.message.text === "Change Continent") {
               Port.find({
@@ -661,28 +539,22 @@ router.post("/", ({ body }, res, next) => {
                   `Below are the available continents that you can travel to. The ports of call that you can visit are listed beside the respective continents.\n\n${message}`
                 );
                 setTimeout(() => {
-                  b.sendKeyboard(
-                    body.message.chat.id,
-                    "Which continent would you like to navigate to:",
-                    {
-                      inline_keyboard: Object.keys(sectors).map(sector => {
-                        return [
-                          {
-                            text: constants.sectors[sector],
-                            callback_data: JSON.stringify({
-                              action: "navigate_sector",
-                              sector
-                            })
-                          }
-                        ];
-                      })
-                    }
-                  );
+                  b.sendKeyboard(body.message.chat.id, "Which continent would you like to navigate to:", {
+                    inline_keyboard: Object.keys(sectors).map(sector => {
+                      return [
+                        {
+                          text: constants.sectors[sector],
+                          callback_data: JSON.stringify({
+                            action: "navigate_sector",
+                            sector
+                          })
+                        }
+                      ];
+                    })
+                  });
                 }, 5000);
               });
-            } else if (
-              body.message.text == "\ud83d\udcb0 Purser \ud83d\udcb0"
-            ) {
+            } else if (body.message.text == "\ud83d\udcb0 Purser \ud83d\udcb0") {
               b.sendKeyboard(
                 body.message.chat.id,
                 `A ship's purser is the person on a ship principally responsible for the handling of money on board.\n\nThe currency is Korona or ${KORONA} for short. \n\n How may I help you today?`,
@@ -705,17 +577,13 @@ router.post("/", ({ body }, res, next) => {
                   keyboards.decision(LOWESTHIGHEST)
                 );
               });
-            } else if (
-              body.message.text == "\ud83d\udc65 Manifest \ud83d\udc65"
-            ) {
+            } else if (body.message.text == "\ud83d\udc65 Manifest \ud83d\udc65") {
               b.sendKeyboard(
                 body.message.chat.id,
                 "A document giving comprehensive details of a ship and its cargo and other contents, passengers, and crew for the use of customs officers.",
                 keyboards.manifest
               );
-            } else if (
-              body.message.text == "\ud83d\udc65 Guest Manifest \ud83d\udc65"
-            ) {
+            } else if (body.message.text == "\ud83d\udc65 Guest Manifest \ud83d\udc65") {
               const guestList = {};
               ship.guests.forEach(({ type }) => {
                 if (!guestList[type]) {
@@ -732,9 +600,7 @@ router.post("/", ({ body }, res, next) => {
                 `The Guest Manifest:\n${message1}`,
                 keyboards.home(ship.nextLocation.port)
               );
-            } else if (
-              body.message.text == "\ud83c\udf87 Achievements \ud83c\udf87"
-            ) {
+            } else if (body.message.text == "\ud83c\udf87 Achievements \ud83c\udf87") {
               Ship.findOne({
                 id: ship.id
               })
@@ -744,10 +610,7 @@ router.post("/", ({ body }, res, next) => {
                   portHistory.forEach(stop => {
                     const arrivalDate = moment(stop.arrivalDate);
                     const departureDate = moment(stop.departureDate);
-                    message += `\n${stop.port.name} | ${arrivalDate.diff(
-                      departureDate,
-                      "days"
-                    )}`;
+                    message += `\n${stop.port.name} | ${arrivalDate.diff(departureDate, "days")}`;
                   });
                   b.sendMessage(body.message.chat.id, message);
                 });
@@ -781,23 +644,12 @@ router.post("/", ({ body }, res, next) => {
         } else {
           if (body.message.text == "/start") {
             //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
-            b.sendKeyboard(
-              body.message.chat.id,
-              WELCOME,
-              keyboards.home(ship.nextLocation.port)
-            );
+            b.sendKeyboard(body.message.chat.id, WELCOME, keyboards.home(ship.nextLocation.port));
           } else if (body.message.text == "/return") {
-            b.sendKeyboard(
-              body.message.chat.id,
-              "Click Here => @BoozeCruise_bot",
-              keyboards.port
-            );
+            b.sendKeyboard(body.message.chat.id, "Click Here => @BoozeCruise_bot", keyboards.port);
           } else if (body.message.text == "Return to Ship") {
             console.log("here here");
-            b.sendMessage(
-              body.message.chat.id,
-              "Click Here => @BoozeCruise_bot"
-            );
+            b.sendMessage(body.message.chat.id, "Click Here => @BoozeCruise_bot");
             // b.sendKeyboard(req.body.message.chat.id, "@BoozeCruise_bot", keyboards.port);
           } else if (body.message.text == "/kick") {
             //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
@@ -817,12 +669,7 @@ router.post("/", ({ body }, res, next) => {
               const newGuest = guest.pick();
               // ship.guests.push(newGuest);
               // ship.save();
-              b.sendMessage(
-                body.message.chat.id,
-                `A ${guest.getType(
-                  newGuest.type
-                )} guest just boarded your vessel`
-              );
+              b.sendMessage(body.message.chat.id, `A ${guest.getType(newGuest.type)} guest just boarded your vessel`);
               // FIX THIS CODE END
             });
           } else if (body.message.left_chat_participant) {
