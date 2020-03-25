@@ -587,7 +587,9 @@ router.post("/", ({ body }, res, next) => {
           } else if (body.message.text == "\ud83d\udc65 Guest Manifest \ud83d\udc65") {
             b.sendKeyboard(
               body.message.chat.id,
-              `The Guest Manifest:\n${globalFunctions.generateManifest(ship.guests)}`,
+              `The Guest Manifest:\n${globalFunctions.generateManifest(ship.guests)}<pre>Total Guests: ${
+                ship.guests.length
+              }</pre>`,
               keyboards.home(ship.nextLocation.port)
             );
           } else if (body.message.text == "\ud83c\udf87 Achievements \ud83c\udf87") {
@@ -666,7 +668,10 @@ router.post("/", ({ body }, res, next) => {
               }
               ship.guests = ship.guests.concat(newGuests);
               ship.save();
-              b.sendMessage(ship.id, `New guests just boarded your vessel:\n${globalFunctions.generateManifest(newGuests)}`);
+              b.sendMessage(
+                ship.id,
+                `New guests just boarded your vessel:\n${globalFunctions.generateManifest(newGuests)}`
+              );
             });
             // you are here bro!
           } else if (body.message.left_chat_participant) {
