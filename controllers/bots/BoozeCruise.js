@@ -672,10 +672,9 @@ router.post("/", ({ body }, res, next) => {
                 ship.id,
                 `You have just docked in ${
                   port.name
-                },\nThe following guests disembark today:\n${leavingGuests}\nTheses are the new guests boarding your vessel:\n${globalFunctions.generateManifest(
+                },\n\nThe following guests disembark today:\n${leavingGuests}\nTheses new guests just boarded your vessel:\n${globalFunctions.generateManifest(
                   newGuests
-                )}`,
-                `This is your updated Guest Manifest:\n${globalFunctions.generateManifest(
+                )}\nThis is your updated Guest Manifest:\n${globalFunctions.generateManifest(
                   ship.guests
                 )}<pre>Total Guests: ${ship.guests.length}</pre>`
               );
