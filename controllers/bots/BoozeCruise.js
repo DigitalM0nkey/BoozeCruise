@@ -497,14 +497,6 @@ router.post("/", ({ body }, res, next) => {
               broadcast(
                 body.message.text.substring(body.message.text.indexOf(" ") + 1)
               );
-            } else if (body.message.text == "/admin") {
-              if (ship._id == MYSHIP) {
-                b.sendKeyboard(
-                  body.message.chat.id,
-                  "Welcome to the admin panel",
-                  keyboards.admin
-                );
-              }
             } else if (
               body.message.text.substring(0, body.message.text.indexOf(" ")) ==
               "/product"
@@ -516,6 +508,14 @@ router.post("/", ({ body }, res, next) => {
                 Product.create({
                   name: product
                 });
+              }
+            } else if (body.message.text == "/admin") {
+              if (ship._id == MYSHIP) {
+                b.sendKeyboard(
+                  body.message.chat.id,
+                  "Welcome to the admin panel",
+                  keyboards.admin
+                );
               }
             } else if (body.message.text == "/removeGuest") {
               const removedGuest = ship.guests.pop();
