@@ -510,13 +510,14 @@ router.post("/", ({ body }, res, next) => {
                 });
               }
             } else if (body.message.text == "/admin") {
-              if (ship._id == MYSHIP) {
+              //if (ship._id == MYSHIP) {
+              b.sendMessage(body.message.chat.id, 'Admin triggered');
                 b.sendKeyboard(
                   body.message.chat.id,
                   "Welcome to the admin panel",
                   keyboards.admin
                 );
-              }
+              //}
             } else if (body.message.text == "/removeGuest") {
               const removedGuest = ship.guests.pop();
               ship.save();
