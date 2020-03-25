@@ -1,15 +1,19 @@
-
 const moment = require("moment");
+const guest = require("../types/guest");
 
 var HSECTORS = 4;
 var VSECTORS = 3;
-var TelegramBot = require('../bots/telegram');
+var TelegramBot = require("../bots/telegram");
 var b = TelegramBot.boozecruiseBot;
 
-
-exports.calculateTime = (arrival) => {
-  return Math.abs(moment().diff(arrival, 'hours')) + " hours " + Math.abs(moment().diff(arrival, 'minutes') % 60) + " minutes";
-}
+exports.calculateTime = arrival => {
+  return (
+    Math.abs(moment().diff(arrival, "hours")) +
+    " hours " +
+    Math.abs(moment().diff(arrival, "minutes") % 60) +
+    " minutes"
+  );
+};
 function calculateDistance(portLocation, shipLocation) {
   if (portLocation.sector === shipLocation.sector) {
     var distance = Math.abs(portLocation.x - shipLocation.x) + Math.abs(portLocation.y - shipLocation.y);
@@ -23,8 +27,14 @@ function calculateDistance(portLocation, shipLocation) {
       x: shipLocation.sector % HSECTORS,
       y: Math.floor(shipLocation.sector / HSECTORS)
     };
-    var x = Math.abs(portSector.x - shipSector.x) > HSECTORS - Math.abs(portSector.x - shipSector.x) ? HSECTORS - Math.abs(portSector.x - shipSector.x) : Math.abs(portSector.x - shipSector.x);
-    var y = Math.abs(portSector.y - shipSector.y) > VSECTORS - Math.abs(portSector.y - shipSector.y) ? VSECTORS - Math.abs(portSector.y - shipSector.y) : Math.abs(portSector.y - shipSector.y);
+    var x =
+      Math.abs(portSector.x - shipSector.x) > HSECTORS - Math.abs(portSector.x - shipSector.x)
+        ? HSECTORS - Math.abs(portSector.x - shipSector.x)
+        : Math.abs(portSector.x - shipSector.x);
+    var y =
+      Math.abs(portSector.y - shipSector.y) > VSECTORS - Math.abs(portSector.y - shipSector.y)
+        ? VSECTORS - Math.abs(portSector.y - shipSector.y)
+        : Math.abs(portSector.y - shipSector.y);
     return Math.abs((x + y) * 24);
   }
 }
@@ -32,21 +42,24 @@ function calculateDistance(portLocation, shipLocation) {
 exports.calculateDistance = calculateDistance;
 
 exports.sendAvailablePorts = (chat_id, ports, ship) => {
-  b.sendMessage(chat_id, ports.reduce(function (message, port) {
-    message += '<b>' + port.name + "</b>\n";
-    message += port.description + "\n\n";
-    message += "Distance to port <b>" + calculateDistance(port.location, ship.location) + "</b> hours\n";
-    message += "Ships in port <b>" + port.ships.length + "</b>\n\n";
-    return message;
-  }, ''));
-  setTimeout(function () {
-    var keyboard = ports.map(function (port) {
+  b.sendMessage(
+    chat_id,
+    ports.reduce(function(message, port) {
+      message += "<b>" + port.name + "</b>\n";
+      message += port.description + "\n\n";
+      message += "Distance to port <b>" + calculateDistance(port.location, ship.location) + "</b> hours\n";
+      message += "Ships in port <b>" + port.ships.length + "</b>\n\n";
+      return message;
+    }, "")
+  );
+  setTimeout(function() {
+    var keyboard = ports.map(function(port) {
       return {
-        'text': port.name,
-        'callback_data': JSON.stringify({
+        text: port.name,
+        callback_data: JSON.stringify({
           action: "navigate",
           port: port.id,
-          ship: ship.id,
+          ship: ship.id
         })
       };
     });
@@ -55,5 +68,19 @@ exports.sendAvailablePorts = (chat_id, ports, ship) => {
       inline_keyboard: [keyboard]
     });
   }, 3000);
+};
 
-}
+exports.generateManifest = guests => {
+  const guestList = {};
+  guests.forEach(({ type }) => {
+    if (!guestList[type]) {
+      guestList[type] = 0;
+    }
+    guestList[type]++;
+  });
+  let message = "";
+  for (const i in guestList) {
+    message += `${guest.getType(i)}: ${guestList[i]}\n`;
+  }
+  return message;
+};

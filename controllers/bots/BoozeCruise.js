@@ -585,20 +585,9 @@ router.post("/", ({ body }, res, next) => {
               keyboards.manifest
             );
           } else if (body.message.text == "\ud83d\udc65 Guest Manifest \ud83d\udc65") {
-            const guestList = {};
-            ship.guests.forEach(({ type }) => {
-              if (!guestList[type]) {
-                guestList[type] = 0;
-              }
-              guestList[type]++;
-            });
-            let message1 = "";
-            for (const i in guestList) {
-              message1 += `${guest.getType(i)}: ${guestList[i]}\n`;
-            }
             b.sendKeyboard(
               body.message.chat.id,
-              `The Guest Manifest:\n${message1}`,
+              `The Guest Manifest:\n${globalFunctions.generateManifest(ship.guests)}`,
               keyboards.home(ship.nextLocation.port)
             );
           } else if (body.message.text == "\ud83c\udf87 Achievements \ud83c\udf87") {
@@ -671,6 +660,7 @@ router.post("/", ({ body }, res, next) => {
               ship.save();
               b.sendMessage(ship.id, `A ${guest.getType(newGuest.type)} guest just boarded your vessel`);
             });
+            // you are here bro!
           } else if (body.message.left_chat_participant) {
             Ship.findOne({
               "user.id": body.message.left_chat_participant.id
