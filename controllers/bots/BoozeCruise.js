@@ -716,13 +716,68 @@ router.post("/", ({ body }, res, next) => {
   }
 });
 
+// Positive quotes on server restart.
+const quotes = [
+  "Age is an issue of mind over matter. If you don't mind, it doesn't matter",
+  "Anyone who stops learning is old, whether at twenty or eighty. Anyone who keeps learning stays young. The greatest thing in life is to keep your mind young.",
+  "Wrinkles should merely indicate where smiles have been.",
+  "True terror is to wake up one morning and discover that your high school class is running the country.",
+  "A diplomat is a man who always remembers a woman's birthday but never remembers her age.",
+  "As I grow older, I pay less attention to what men say. I just watch what they do.",
+  "How incessant and great are the ills with which a prolonged old age is replete.",
+  "Old age, believe me, is a good and pleasant thing. It is true you are gently shouldered off the stage, but then you are given such a comfortable front stall as spectator.",
+  "Genius is one percent inspiration and ninety-nine percent perspiration.",
+  "You can observe a lot just by watching.",
+  "A house divided against itself cannot stand.",
+  "Difficulties increase the nearer we get to the goal.",
+  "Fate is in your hands and no one elses",
+  "Be the chief but never the lord.",
+  "Nothing happens unless first we dream.",
+  "Well begun is half done.",
+  "Life is a learning experience, only if you learn.",
+  "Self-complacency is fatal to progress.",
+  "Peace comes from within. Do not seek it without.",
+  "What you give is what you get.",
+  "We can only learn to love by loving.",
+  "Life is change. Growth is optional. Choose wisely.",
+  "You'll see it when you believe it.",
+  "Today is the tomorrow we worried about yesterday.",
+  "It's easier to see the mistakes on someone else's paper.",
+  "Every man dies. Not every man really lives.",
+  "To lead people walk behind them.",
+  "Having nothing, nothing can he lose.",
+  "Trouble is only opportunity in work clothes.",
+  "A rolling stone gathers no moss.",
+  "Ideas are the beginning points of all fortunes.",
+  "Everything in life is luck.",
+  "Doing nothing is better than being busy doing nothing.",
+  "Trust yourself. You know more than you think you do.",
+  "Study the past, if you would divine the future.",
+  "The day is already blessed, find peace within it.",
+  "From error to error one discovers the entire truth.",
+  "Well done is better than well said.",
+  "Bite off more than you can chew, then chew it.",
+  "Work out your own salvation. Do not depend on others.",
+  "One today is worth two tomorrows.",
+  "Once you choose hope, anythings possible.",
+  "God always takes the simplest way.",
+  "One fails forward toward success."
+];
+
+const randomQuote = quotes => {
+  let randomNum = Math.floor(Math.random() * quotes.length);
+  let output = quotes[randomNum];
+  console.log(output);
+  return output;
+};
+
 router.get("/", (req, res, next) => {
   b.sendMessage("510423667", "Received Get");
   res.json({
     message: "get ok"
   });
 });
-b.sendKeyboard("510423667", "Server Restarted", keyboards.home(false));
+b.sendKeyboard("510423667", `${randomQuote(quotes)} \n\nAlso the server restarted`, keyboards.home(false));
 
 module.exports = router;
 
