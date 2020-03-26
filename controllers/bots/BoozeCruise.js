@@ -718,7 +718,7 @@ router.post("/", ({ body }, res, next) => {
 
 // Positive quotes on server restart.
 const quotes = [
-  "Age is an issue of mind over matter. If you don't mind, it doesn't matter",
+  "Age is an issue of mind over matter. If you don't mind, it doesn't matter.",
   "Anyone who stops learning is old, whether at twenty or eighty. Anyone who keeps learning stays young. The greatest thing in life is to keep your mind young.",
   "Wrinkles should merely indicate where smiles have been.",
   "True terror is to wake up one morning and discover that your high school class is running the country.",
@@ -730,7 +730,7 @@ const quotes = [
   "You can observe a lot just by watching.",
   "A house divided against itself cannot stand.",
   "Difficulties increase the nearer we get to the goal.",
-  "Fate is in your hands and no one elses",
+  "Fate is in your hands and no one elses.",
   "Be the chief but never the lord.",
   "Nothing happens unless first we dream.",
   "Well begun is half done.",
@@ -767,7 +767,6 @@ const quotes = [
 const randomQuote = quotes => {
   let randomNum = Math.floor(Math.random() * quotes.length);
   let output = quotes[randomNum];
-  console.log(output);
   return output;
 };
 
