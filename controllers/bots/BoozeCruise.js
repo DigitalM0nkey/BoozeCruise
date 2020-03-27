@@ -665,9 +665,11 @@ router.post("/", ({ body }, res, next) => {
               i = Math.floor(Math.random() * ship.guests.length);
               while (i--) {
                 leavingGuests.concat(ship.guests.splice(Math.floor(Math.random() * ship.guests.length), 1));
+                console.log("leaving guests Loop=> ", leavingGuests);
               }
               ship.guests = ship.guests.concat(newGuests);
-              console.log("leaving guests => ", globalFunctions.generateManifest(leavingGuests));
+              console.log("leaving guests => ", leavingGuests);
+              console.log("leaving guests Global=> ", globalFunctions.generateManifest(leavingGuests));
 
               ship.save();
               b.sendMessage(
