@@ -661,7 +661,7 @@ router.post("/", ({ body }, res, next) => {
               while (i--) {
                 newGuests.push(guest.pick());
               }
-              console.log("NEW GUESTS =>", newGuest);
+              console.log("NEW GUESTS =>", newGuests);
 
               let leavingGuests = [];
               i = Math.floor(Math.random() * ship.guests.length);
