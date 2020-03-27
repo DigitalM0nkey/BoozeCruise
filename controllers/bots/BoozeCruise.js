@@ -661,11 +661,12 @@ router.post("/", ({ body }, res, next) => {
               while (i--) {
                 newGuests.push(guest.pick());
               }
+              console.log("NEW GUESTS =>", newGuest);
+
               let leavingGuests = [];
               i = Math.floor(Math.random() * ship.guests.length);
               while (i--) {
                 leavingGuests.push(ship.guests.splice(Math.floor(Math.random() * ship.guests.length), 1));
-                console.log("leaving guests Loop=> ", leavingGuests);
               }
               ship.guests = ship.guests.concat(newGuests);
               console.log(leavingGuests);
