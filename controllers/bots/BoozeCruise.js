@@ -664,11 +664,8 @@ router.post("/", ({ body }, res, next) => {
               let leavingGuests = [];
               i = Math.floor(Math.random() * ship.guests.length);
               while (i--) {
-                leavingGuests.concat(ship.guests.splice(Math.floor(Math.random() * ship.guests.length), 1));
-                console.log(
-                  "leaving guests Loop=> ",
-                  leavingGuests.concat(ship.guests.splice(Math.floor(Math.random() * ship.guests.length), 1))
-                );
+                leavingGuests.push(ship.guests.splice(Math.floor(Math.random() * ship.guests.length), 1));
+                console.log("leaving guests Loop=> ", leavingGuests);
               }
               ship.guests = ship.guests.concat(newGuests);
               console.log(leavingGuests);
