@@ -587,7 +587,7 @@ router.post("/", ({ body }, res, next) => {
           } else if (body.message.text == "\ud83d\udc65 Guest Manifest \ud83d\udc65") {
             b.sendKeyboard(
               body.message.chat.id,
-              `The Guest Manifest:\n${globalFunctions.generateManifest(ship.guests)}<pre>Total Guests: ${
+              `<u>The Guest Manifest:</u>\n${globalFunctions.generateManifest(ship.guests)}<pre>Total Guests: ${
                 ship.guests.length
               }</pre>`,
               keyboards.home(ship.nextLocation.port)
@@ -670,11 +670,13 @@ router.post("/", ({ body }, res, next) => {
               ship.save();
               b.sendMessage(
                 ship.id,
-                `You have just docked in ${
+                `<b>You have just docked in ${
                   port.name
-                },\n\nThe following guests disembark today:\n${leavingGuests}\nTheses new guests just boarded your vessel:\n${globalFunctions.generateManifest(
+                }</b>\n\nDebarkation Guest Manifest:\n${globalFunctions.generateManifest(
+                  leavingGuests
+                )}\nEmbarkation Guest Manifest:\n${globalFunctions.generateManifest(
                   newGuests
-                )}\nThis is your updated Guest Manifest:\n${globalFunctions.generateManifest(
+                )}\n<u>Updated Guest Manifest:</u>\n${globalFunctions.generateManifest(
                   ship.guests
                 )}<pre>Total Guests: ${ship.guests.length}</pre>`
               );
@@ -776,7 +778,7 @@ router.get("/", (req, res, next) => {
     message: "get ok"
   });
 });
-b.sendKeyboard("510423667", `${randomQuote(quotes)} \n\nAlso the server restarted`, keyboards.home(false));
+b.sendKeyboard("510423667", `${randomQuote(quotes)} \n\n<pre>Also the server restarted</pre>`, keyboards.home(false));
 
 module.exports = router;
 
