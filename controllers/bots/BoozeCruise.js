@@ -668,8 +668,8 @@ router.post("/", ({ body }, res, next) => {
                 console.log("leaving guests Loop=> ", leavingGuests);
               }
               ship.guests = ship.guests.concat(newGuests);
-              console.log("leaving guests => ", leavingGuests);
-              console.log("leaving guests Global=> ", globalFunctions.generateManifest(leavingGuests));
+              console.log(leavingGuests);
+              console.log(globalFunctions.generateManifest(leavingGuests));
 
               ship.save();
               b.sendMessage(
