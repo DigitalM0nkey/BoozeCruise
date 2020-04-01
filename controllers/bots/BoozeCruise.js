@@ -680,8 +680,8 @@ router.post("/", ({ body }, res, next) => {
                 ship.guests = ship.guests.concat(newGuests);
                 ship.save();
                 let perkMessage = "";
-                if (embarkationGuarantee) {
-                  perkMessage = `An additional ${embarkationGuarantee} guests boarded your vessel because of your gift shop purcheses. \n`;
+                if (embarkationGuarantee > 0) {
+                  perkMessage = `An additional ${embarkationGuarantee} guests boarded your vessel because of your ${embarkationBoost}% boost. \n`;
                 }
                 b.sendMessage(
                   ship.id,
@@ -693,7 +693,9 @@ router.post("/", ({ body }, res, next) => {
                     newGuests
                   )}\n${perkMessage}<u>Updated Guest Manifest:</u>\n${globalFunctions.generateManifest(
                     ship.guests
-                  )}<pre>Total Guests: ${ship.guests.length}</pre>`
+                  )}<pre>Total Guests: ${
+                    ship.guests.length
+                  }</pre>\nEG =>${embarkationGuarantee}\nEB =>${embarkationBoost}`
                 );
               });
             // you are here bro!
