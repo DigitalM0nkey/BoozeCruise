@@ -695,7 +695,7 @@ router.post("/", ({ body }, res, next) => {
                     ship.guests
                   )}<pre>Total Guests: ${
                     ship.guests.length
-                  }</pre>\n\n${perkMessage}EG =>${embarkationGuarantee}\nEB =>${embarkationBoost}`
+                  }</pre>\n\n${perkMessage}EG =>${embarkationGuarantee} extra guests\nEB =>${embarkationBoost}% boost`
                 );
               });
             // you are here bro!
