@@ -36,7 +36,7 @@ const dailyEvent = schedule.scheduleJob("0 0 8 * * *", () => {
   Port.find({}).then(ports => {
     ports.forEach(port => {
       b.getChat(port.id).then(chat => {
-        console.log(chat);
+        // console.log(chat);
         port.description = chat.description;
         port.name = chat.title;
         port.save();
@@ -200,7 +200,6 @@ router.post("/", ({ body }, res, next) => {
             newShip.save();
 
             b.sendKeyboard(body.message.chat.id, WELCOME, keyboards.home());
-            console.log(randomPort);
           });
         } else {
           if (body.message.text == "/start") {
@@ -215,7 +214,6 @@ router.post("/", ({ body }, res, next) => {
             Port.find({
               id: portIds
             }).then(ports => {
-              console.log(ports);
               const count = ship.portHistory.reduce((portCount, port) => {
                 if (!portCount[port.port]) {
                   portCount[port.port] = {
@@ -228,7 +226,7 @@ router.post("/", ({ body }, res, next) => {
                 portCount[port.port].count++;
                 return portCount;
               }, {});
-              console.log(count);
+
               let message = "";
               for (const key in count) {
                 message += `\n${count[key].name} (${count[key].count})`;
@@ -249,7 +247,6 @@ router.post("/", ({ body }, res, next) => {
             body.message.text == "\ud83d\uddfa Navigation \ud83d\uddfa" ||
             body.message.text == "\ud83d\udccd Current Location \ud83d\udccd"
           ) {
-            console.log(ship.nextLocation);
             if (ship.nextLocation.port) {
               Port.findOne({
                 id: ship.nextLocation.port
@@ -282,13 +279,10 @@ router.post("/", ({ body }, res, next) => {
                 if (err) console.error(err);
                 LowestHighest.findOne({ inProgress: true }).then(game => {
                   if (game) {
-                    console.log(game);
                     b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id));
                     b.sendKeyboard(ship.id, "Pick a number", keyboards.casino);
                   } else {
                     LowestHighest.create({}, (err, game) => {
-                      console.log(game);
-
                       b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id));
                       b.sendKeyboard(ship.id, "Pick a number", keyboards.casino);
                     });
@@ -434,8 +428,6 @@ router.post("/", ({ body }, res, next) => {
             );
           } else if (body.message.text == "\ud83c\udf78 Cocktail \ud83c\udf78") {
             mixology.getCocktail().then(cocktail => {
-              console.log(cocktail);
-
               b.sendPhoto(
                 ship.id,
                 cocktail.image,
@@ -607,9 +599,7 @@ router.post("/", ({ body }, res, next) => {
                 b.sendMessage(body.message.chat.id, message);
               });
           } else if (body.message.text == "Port \ud83d\udea2") {
-            console.log("log here");
             b.exportChatInviteLink("-1001399879250").then(link => {
-              console.log(link);
               b.sendMessage(body.message.chat.id, link);
             });
           }
@@ -623,7 +613,6 @@ router.post("/", ({ body }, res, next) => {
         if (!port) {
           if (body.message.chat.id == MYSHIP) {
             b.getChat(body.message.chat.id).then(chat => {
-              console.log(chat);
               const newPort = new Port({
                 id: body.message.chat.id,
                 name: chat.title,
@@ -639,7 +628,6 @@ router.post("/", ({ body }, res, next) => {
           } else if (body.message.text == "/return") {
             b.sendKeyboard(body.message.chat.id, "Click Here => @BoozeCruise_bot", keyboards.port);
           } else if (body.message.text == "Return to Ship") {
-            console.log("here here");
             b.sendMessage(body.message.chat.id, "Click Here => @BoozeCruise_bot");
             // b.sendKeyboard(req.body.message.chat.id, "@BoozeCruise_bot", keyboards.port);
           } else if (body.message.text == "/kick") {
@@ -664,9 +652,9 @@ router.post("/", ({ body }, res, next) => {
                 port.save();
                 let newGuests = [];
                 const embarkationBoost = perks.reduce((boost, perk) => {
-                  console.log(perk);
+                  console.log("PERK => ", perk);
                   boost += perk.code === "PORTENTRY_EMBARKATION" ? perk.amount : 0;
-                  console.log(boost);
+                  console.log("BOOST => ", boost);
                   return boost > 100 ? 100 : boost;
                 }, 0);
                 const spaceAvailable = ship.capacity - ship.guests.length;
