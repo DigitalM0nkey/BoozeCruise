@@ -667,7 +667,7 @@ router.post("/", ({ body }, res, next) => {
               }, 0);
               const spaceAvailable = ship.capacity - ship.guests.length;
               const embarkationGuarantee = Math.floor(spaceAvailable * embarkationBoost / 100);
-              let i = Math.floor(Math.random() * (spaceAvailable - embarkationGuarantee));
+              let i = Math.floor(Math.random() * (spaceAvailable - embarkationGuarantee)) + embarkationGuarantee;
               while (i--) {
                 newGuests.push(guest.pick());
               }
