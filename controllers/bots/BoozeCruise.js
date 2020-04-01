@@ -653,7 +653,7 @@ router.post("/", ({ body }, res, next) => {
                 let newGuests = [];
                 const embarkationBoost = perks.reduce((boost, perk) => {
                   console.log("PERK => ", perk);
-                  boost += perk.code === "PORTENTRY_EMBARKATION" ? perk.amount : 0;
+                  boost += perks.code === "PORTENTRY_EMBARKATION" ? perks.amount : 0;
                   console.log("BOOST => ", boost);
                   return boost > 100 ? 100 : boost;
                 }, 0);
