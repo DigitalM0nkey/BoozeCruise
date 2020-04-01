@@ -122,18 +122,18 @@ module.exports = (from, ship, data) => {
       } else {
         b.sendMessage(from.id, "This game is already finished. Stop picking numbers");
       }
-    })
+    });
   } else if (data.action === "buy") {
     Product.findOne({ _id: data.id })
       .then(product => {
         ship.products.push({
           product: product._id,
           expiry: moment().add(product.expiry, "days")
-        })
+        });
         ship.save();
         product.quantity--;
         product.save();
-      })
+      });
     // } else if (something) {
   }
 };

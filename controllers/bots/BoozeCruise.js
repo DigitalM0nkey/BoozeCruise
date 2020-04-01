@@ -651,13 +651,23 @@ router.post("/", ({ body }, res, next) => {
               b.sendMessage(id, `You've been kicked from ${port.name}`);
             });
           } else if (body.message.new_chat_participant) {
+            //PORTENTRY
             Ship.findOne({
               "user.id": body.message.new_chat_participant.id
-            }).then(ship => {
+            })
+            .populate('products.product')
+            .then(ship => {
+              const perks = ship.products.filter(product => product.product.code.indexOf("PORTENTRY") === 0 && product.expiry > moment());
               port.ships.push(ship._id);
               port.save();
               let newGuests = [];
-              let i = Math.floor(Math.random() * (ship.capacity - ship.guests.length));
+              const embarkationBoost = perks.reduce((boost, perk) => {
+                boost += perk.code === "PORTENTRY_EMBARKATION" ? perk.amount : 0;
+                return boost > 100 ? 100 : boost;
+              }, 0);
+              const spaceAvailable = ship.capacity - ship.guests.length;
+              const embarkationGuarantee = Math.floor(spaceAvailable * embarkationBoost / 100);
+              let i = Math.floor(Math.random() * (spaceAvailable - embarkationGuarantee));
               while (i--) {
                 newGuests.push(guest.pick());
               }

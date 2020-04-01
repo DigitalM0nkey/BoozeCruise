@@ -45,6 +45,10 @@ var Product = db.model('Product', {
     default: true
   },
   perk: {
+    code: {
+      type: String,
+      required: false
+    },
     name: {
       type: String,
       required: false
