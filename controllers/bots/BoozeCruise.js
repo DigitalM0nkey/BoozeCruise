@@ -664,7 +664,7 @@ router.post("/", ({ body }, res, next) => {
                 port.save();
                 let newGuests = [];
                 const embarkationBoost = perks.reduce((boost, perk) => {
-                  boost += perk.code === "PORTENTRY_EMBARKATION" ? perk.amount : 0;
+                  boost += perk.code === "PORTENTRY_EMBARKATION" ? perk.amount : 50;
                   return boost > 100 ? 100 : boost;
                 }, 0);
                 const spaceAvailable = ship.capacity - ship.guests.length;
@@ -695,7 +695,7 @@ router.post("/", ({ body }, res, next) => {
                     ship.guests
                   )}<pre>Total Guests: ${
                     ship.guests.length
-                  }</pre>\nEG =>${embarkationGuarantee}\nEB =>${embarkationBoost}`
+                  }</pre>\n\nEG =>${embarkationGuarantee}\nEB =>${embarkationBoost}`
                 );
               });
             // you are here bro!
