@@ -11,7 +11,7 @@ var Ship = db.model("Ship", {
   },
   guests: [
     {
-      type: { type: String, required: true },
+      type: { type: Number, required: true },
       purse: { type: Number, required: true }
     }
   ],
