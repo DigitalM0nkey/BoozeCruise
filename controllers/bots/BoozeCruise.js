@@ -669,8 +669,7 @@ router.post("/", ({ body }, res, next) => {
                 leavingGuests.concat(ship.guests.splice(Math.floor(Math.random() * ship.guests.length), 1));
               }
               ship.guests = ship.guests.concat(newGuests);
-              console.log(leavingGuests);
-              console.log(globalFunctions.generateManifest(leavingGuests));
+              console.log("Leaving GUESTS =>", leavingGuests);
 
               ship.save();
               b.sendMessage(
