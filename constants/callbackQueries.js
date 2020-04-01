@@ -31,6 +31,7 @@ module.exports = (from, ship, data) => {
             ship.portHistory[ship.portHistory.length - 1].departureDate = new Date();
           }
           b.kick(ship.location.port, ship.id, 1);
+          b.sendMessage(ship.location.port, `${ship.user.first_name} just left port and is heading to ${ship.location.portName}`);
           ship.location.port = undefined;
           ship.save();
           console.log(data);
