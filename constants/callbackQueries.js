@@ -113,7 +113,7 @@ module.exports = (from, ship, data) => {
         b.sendMessage(from.id, "This game is already finished. Stop picking numbers")
       }
     })
-  } else if (data.action === "BUY") {
+  } else if (data.action === "buy") {
     Product.findOne({ _id: data.product })
       .then(product => {
         ship.products.push({
