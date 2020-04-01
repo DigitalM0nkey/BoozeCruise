@@ -664,7 +664,7 @@ router.post("/", ({ body }, res, next) => {
                 port.save();
                 let newGuests = [];
                 const embarkationBoost = perks.reduce((boost, perk) => {
-                  boost += perk.code === "PORTENTRY_EMBARKATION" ? perk.amount : 50;
+                  boost += perk.code === "PORTENTRY_EMBARKATION" ? perk.amount : 0;
                   return boost > 100 ? 100 : boost;
                 }, 0);
                 const spaceAvailable = ship.capacity - ship.guests.length;
@@ -681,7 +681,7 @@ router.post("/", ({ body }, res, next) => {
                 ship.save();
                 let perkMessage = "";
                 if (embarkationGuarantee > 0) {
-                  perkMessage = `An additional ${embarkationGuarantee} guests boarded your vessel because of your ${embarkationBoost}% boost. \n`;
+                  perkMessage = `<code>An additional ${embarkationGuarantee} guests boarded your vessel because of your ${embarkationBoost}% boost.</code>\n\n`;
                 }
                 b.sendMessage(
                   ship.id,
@@ -691,11 +691,11 @@ router.post("/", ({ body }, res, next) => {
                     leavingGuests
                   )}\nEmbarkation Guest Manifest:\n${globalFunctions.generateManifest(
                     newGuests
-                  )}\n${perkMessage}<u>Updated Guest Manifest:</u>\n${globalFunctions.generateManifest(
+                  )}\n<u>Updated Guest Manifest:</u>\n${globalFunctions.generateManifest(
                     ship.guests
                   )}<pre>Total Guests: ${
                     ship.guests.length
-                  }</pre>\n\nEG =>${embarkationGuarantee}\nEB =>${embarkationBoost}`
+                  }</pre>\n\n${perkMessage}EG =>${embarkationGuarantee}\nEB =>${embarkationBoost}`
                 );
               });
             // you are here bro!
