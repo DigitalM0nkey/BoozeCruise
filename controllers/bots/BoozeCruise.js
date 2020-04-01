@@ -664,10 +664,13 @@ router.post("/", ({ body }, res, next) => {
               console.log("NEW GUESTS =>", newGuests);
 
               let leavingGuests = [];
-              i = Math.floor(Math.random() * ship.guests.length);
-              while (i--) {
+              // i = Math.floor(Math.random() * ship.guests.length);
+              for (let i = 0; i <= Math.floor(Math.random() * ship.guests.length); i++) {
                 leavingGuests.concat(ship.guests.splice(Math.floor(Math.random() * ship.guests.length), 1));
               }
+              // while (i--) {
+              //   leavingGuests.concat(ship.guests.splice(Math.floor(Math.random() * ship.guests.length), 1));
+              // }
               ship.guests = ship.guests.concat(newGuests);
               console.log("Leaving GUESTS =>", leavingGuests);
 
