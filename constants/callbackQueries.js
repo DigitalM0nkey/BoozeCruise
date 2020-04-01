@@ -124,7 +124,7 @@ module.exports = (from, ship, data) => {
       }
     })
   } else if (data.action === "buy") {
-    Product.findOne({ _id: data.product })
+    Product.findOne({ _id: data.id })
       .then(product => {
         ship.products.push({
           product: product._id,
