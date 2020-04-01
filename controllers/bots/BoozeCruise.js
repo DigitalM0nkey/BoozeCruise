@@ -661,21 +661,11 @@ router.post("/", ({ body }, res, next) => {
               while (i--) {
                 newGuests.push(guest.pick());
               }
-              console.log("NEW GUESTS =>", newGuests);
-
               let leavingGuests = [];
-              // i = Math.floor(Math.random() * ship.guests.length);
               for (let i = 0; i <= Math.floor(Math.random() * ship.guests.length); i++) {
-                const leftGuest = ship.guests.splice(Math.floor(Math.random() * ship.guests.length), 1)[0];
-                console.log(leftGuest);
-                leavingGuests.push(leftGuest);
+                leavingGuests.push(ship.guests.splice(Math.floor(Math.random() * ship.guests.length), 1)[0]);
               }
-              // while (i--) {
-              //   leavingGuests.concat(ship.guests.splice(Math.floor(Math.random() * ship.guests.length), 1));
-              // }
               ship.guests = ship.guests.concat(newGuests);
-              console.log("Leaving GUESTS =>", leavingGuests);
-
               ship.save();
               b.sendMessage(
                 ship.id,
