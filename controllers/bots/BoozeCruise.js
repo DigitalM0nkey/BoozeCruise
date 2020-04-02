@@ -652,9 +652,8 @@ router.post("/", ({ body }, res, next) => {
                 port.save();
                 let newGuests = [];
                 const embarkationBoost = perks.reduce((boost, perk) => {
-                  console.log("PERK => ", perk);
                   boost += perk.product.perk.code === "PORTENTRY_EMBARKATION" ? perk.product.perk.amount : 0;
-                  console.log("BOOST => ", boost);
+
                   return boost > 100 ? 100 : boost;
                 }, 0);
                 const spaceAvailable = ship.capacity - ship.guests.length;
@@ -671,21 +670,19 @@ router.post("/", ({ body }, res, next) => {
                 ship.save();
                 let perkMessage = "";
                 if (embarkationGuarantee > 0) {
-                  perkMessage = `<code>An additional ${embarkationGuarantee} guests boarded your vessel because of your ${embarkationBoost}% boost.</code>\n\n`;
+                  perkMessage = `<code>** An additional ${embarkationGuarantee} guests boarded your vessel because of your ${embarkationBoost}% boost.</code>\n\n`;
                 }
                 b.sendMessage(
                   ship.id,
                   `<b>You have just docked in ${
                     port.name
-                  }</b>\n\nDebarkation Guest Manifest:\n${globalFunctions.generateManifest(
+                  }</b>\n\n<i>Debarkation Guest Manifest:</i>\n${globalFunctions.generateManifest(
                     leavingGuests
-                  )}\nEmbarkation Guest Manifest:\n${globalFunctions.generateManifest(
+                  )}\n<i>Embarkation Guest Manifest:</i>\n${globalFunctions.generateManifest(
                     newGuests
-                  )}\n<u>Updated Guest Manifest:</u>\n${globalFunctions.generateManifest(
+                  )}\n<i><b>Updated Guest Manifest:</b></i>\n${globalFunctions.generateManifest(
                     ship.guests
-                  )}<pre>Total Guests: ${
-                    ship.guests.length
-                  }</pre>\n\n${perkMessage}EG =>${embarkationGuarantee} extra guests\nEB =>${embarkationBoost}% boost`
+                  )}<pre>Total Guests: ${ship.guests.length}</pre>\n\n${perkMessage}`
                 );
               });
             // you are here bro!
