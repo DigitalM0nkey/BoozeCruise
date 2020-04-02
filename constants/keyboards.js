@@ -30,10 +30,7 @@ module.exports = {
               { text: emoji.moneyBag + "Purser" + emoji.moneyBag },
               { text: emoji.moneyBag + "Treasure" + emoji.moneyBag }
             ],
-        [
-          { text: emoji.bug + "Maintenance" + emoji.bug },
-          { text: emoji.helm + "Capt's Log" + emoji.helm }
-        ]
+        [{ text: emoji.bug + "Maintenance" + emoji.bug }, { text: emoji.helm + "Capt's Log" + emoji.helm }]
       ],
       resize_keyboard: true
     };
@@ -56,6 +53,11 @@ module.exports = {
         },
         {
           text: "\u2630 Main Menu \u2630"
+        }
+      ],
+      [
+        {
+          text: "/dock"
         }
       ]
     ]
