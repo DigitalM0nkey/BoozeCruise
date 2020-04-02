@@ -417,7 +417,7 @@ router.post("/", ({ body }, res, next) => {
             b.sendKeyboard(body.message.chat.id, "Welcome to the admin panel", keyboards.admin);
             //}
           } else if (body.message.text == "/dock") {
-            ship.nextLocation.arrival = new Date();
+            ship.nextLocation.arrival.date = new Date();
             ship.save;
           } else if (body.message.text == "/removeGuest") {
             const removedGuest = ship.guests.pop();
