@@ -680,6 +680,7 @@ router.post("/", ({ body }, res, next) => {
                   return income;
                 });
                 console.log("INCOME FROM NEW GUESTS =>", income);
+                ship.purse.balance += income;
 
                 ship.save();
                 let perkMessage = "";
@@ -694,12 +695,14 @@ router.post("/", ({ body }, res, next) => {
                     leavingGuests
                   )}\n<i>Embarkation Guest Manifest:</i>\n${globalFunctions.generateManifest(
                     newGuests
-                  )}\n<i><b>Updated Guest Manifest:</b></i>\n${globalFunctions.generateManifest(
+                  )}Income from new guests: ${income}\n<i><b>Updated Guest Manifest:</b></i>\n${globalFunctions.generateManifest(
                     ship.guests
-                  )}<pre>Total Guests: ${ship.guests.length}</pre>\n\n${perkMessage}`
+                  )}<pre>Total Guests: ${ship.guests.length}\nBalance: ${KORONA}${
+                    ship.purse.balance
+                  }</pre>\n\n${perkMessage}`
                 );
               });
-            // you are here bro!
+            // you are here bro! `Your balance is ${KORONA}${ship.purse.balance}`
           } else if (body.message.left_chat_participant) {
             Ship.findOne({
               "user.id": body.message.left_chat_participant.id
