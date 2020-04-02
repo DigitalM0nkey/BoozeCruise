@@ -668,6 +668,18 @@ router.post("/", ({ body }, res, next) => {
                 }
                 ship.guests = ship.guests.concat(newGuests);
                 console.log("SHIP GUESTS =>", ship.guests);
+                let income = 0;
+                ship.guest.forEach(guest => {
+                  if (guest.type === 0) {
+                    income += 1;
+                  } else if (guest.type === 1) {
+                    income += 2;
+                  } else {
+                    income += 3;
+                  }
+                  return income;
+                });
+                console.log("INCOME FROM NEW GUESTS =>", income);
 
                 ship.save();
                 let perkMessage = "";
