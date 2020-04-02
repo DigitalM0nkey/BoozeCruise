@@ -667,6 +667,8 @@ router.post("/", ({ body }, res, next) => {
                   leavingGuests.push(ship.guests.splice(Math.floor(Math.random() * ship.guests.length), 1)[0]);
                 }
                 ship.guests = ship.guests.concat(newGuests);
+                console.log("SHIP GUESTS =>", ship.guests);
+
                 ship.save();
                 let perkMessage = "";
                 if (embarkationGuarantee > 0) {
