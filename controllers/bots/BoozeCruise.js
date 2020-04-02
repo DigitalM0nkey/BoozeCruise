@@ -695,9 +695,9 @@ router.post("/", ({ body }, res, next) => {
                     leavingGuests
                   )}\n<i>Embarkation Guest Manifest:</i>\n${globalFunctions.generateManifest(
                     newGuests
-                  )}Income from new guests: ${income}\n<i><b>Updated Guest Manifest:</b></i>\n${globalFunctions.generateManifest(
+                  )}Income from new guests: ${KORONA}${income}\n\n<i><b>Updated Guest Manifest:</b></i>\n${globalFunctions.generateManifest(
                     ship.guests
-                  )}<pre>Total Guests: ${ship.guests.length}\nBalance: ${KORONA}${
+                  )}<pre>Total Guests: ${ship.guests.length}\nCapacity: ${ship.capacity}\nBalance: ${KORONA}${
                     ship.purse.balance
                   }</pre>\n\n${perkMessage}`
                 );
