@@ -667,9 +667,9 @@ router.post("/", ({ body }, res, next) => {
                   leavingGuests.push(ship.guests.splice(Math.floor(Math.random() * ship.guests.length), 1)[0]);
                 }
                 ship.guests = ship.guests.concat(newGuests);
-                console.log("SHIP GUESTS =>", ship.guests);
+                console.log("NEW GUESTS =>", newGuests);
                 let income = 0;
-                ship.guests.forEach(guest => {
+                newGuests.forEach(guest => {
                   if (guest.type === 0) {
                     income += 1;
                   } else if (guest.type === 1) {
