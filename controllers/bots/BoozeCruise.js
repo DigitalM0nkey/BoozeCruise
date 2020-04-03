@@ -418,7 +418,7 @@ router.post("/", ({ body }, res, next) => {
             //}
           } else if (body.message.text == "/dock") {
             ship.nextLocation.arrival.date = new Date();
-            ship.save;
+            ship.save();
           } else if (body.message.text == "/removeGuest") {
             const removedGuest = ship.guests.pop();
             ship.save();
