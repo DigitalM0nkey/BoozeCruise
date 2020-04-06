@@ -671,6 +671,7 @@ router.post("/", ({ body }, res, next) => {
                 }
                 ship.guests = ship.guests.concat(newGuests);
                 console.log("NEW GUESTS =>", newGuests);
+                // INCOME FOR GUESTS JOINING YOUR SHIP
                 let income = 0;
                 newGuests.forEach(guest => {
                   if (guest.type === 0) {
