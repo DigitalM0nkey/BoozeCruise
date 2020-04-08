@@ -37,7 +37,7 @@
 
   const slots = (bet) => {
     bet = parseInt(bet, 10);
-    halfBet = Math.floor(bet / 2);
+    halfBet = Math.round(bet / 2);
     let odds = 0;
     if (bet <= 30) {
       odds = 3;
@@ -47,7 +47,7 @@
       odds = 10;
     }
     let balance = Number(document.getElementById("balance").innerHTML) - bet;
-    console.log("BALANCE = ", balance - bet);
+    console.log("BALANCE = ", balance);
 
     document.getElementById("balance").innerHTML = balance;
     const house = new Array(odds);
