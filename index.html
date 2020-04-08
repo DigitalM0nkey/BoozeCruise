@@ -13,17 +13,19 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <link href="index.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
     <h1>Slots</h1>
 
     <div class="slots">
-      <h1 id="slots"></h1>
       <h3>Balance:</h3>
       <h2 id="balance">100</h2>
-      <div class="form-group">
+      <h1 id="slots"></h1>
+      <div class="form-group imput">
         <label>Bet:</label>
-        <input class="form-control" id="bet" type="number" type="number" value="2" />
+        <input class="form-control" id="bet" type="number" type="number" value="100" />
       </div>
       <br />
       <button class="btn btn-success" onclick="slots(document.getElementById('bet').value)">

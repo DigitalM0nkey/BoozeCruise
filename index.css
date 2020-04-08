@@ -1,0 +1,18 @@
+.slots {
+  background-color: rgb(170, 170, 255);
+  padding: 10vw;
+  text-align: center;
+}
+
+#bet {
+  text-align: center;
+  display: flex;
+  width: 50%;
+  align-self: center;
+}
+
+.imput {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
