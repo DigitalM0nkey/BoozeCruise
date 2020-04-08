@@ -21,9 +21,14 @@
     <h1 id="slots"></h1>
     <h3>Balance:</h3>
     <h2 id="balance">100</h2>
-    Bet:<input class="form-control" id="bet" type="number" type="number" value="2" />
-    <br />
-    Odds:<input class="form-control" id="odds" placeholder="5" type="number" value="5" />
+    <div class="form-group">
+      <label>Bet:</label>
+      <input class="form-control" id="bet" type="number" type="number" value="2" />
+    </div>
+    <div class="form-group">
+      <label>Odds:</label>
+      <input class="form-control" id="odds" placeholder="5" type="number" value="5" />
+    </div>
     <br />
     <button class="btn" onclick="slots(document.getElementById('bet').value,document.getElementById('odds').value)">
       Click Me
