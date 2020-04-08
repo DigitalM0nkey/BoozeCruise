@@ -46,10 +46,10 @@
     } else {
       odds = 10;
     }
-    let balance = Number(document.getElementById("balance").innerHTML);
+    let balance = Number(document.getElementById("balance").innerHTML) - bet;
     console.log("BALANCE = ", balance - bet);
 
-    document.getElementById("balance").innerHTML = balance - bet;
+    document.getElementById("balance").innerHTML = balance;
     const house = new Array(odds);
     let houseString = "";
 
@@ -75,7 +75,7 @@
         i++;
       }
       prize = Math.ceil(Math.pow(prize, power));
-      document.getElementById("balance").innerHTML = Math.floor(document.getElementById("balance").innerHTML) + prize;
+      document.getElementById("balance").innerHTML = balance + prize;
       console.log(`Prize: ${prize}`);
       console.log(`Bet: ${bet}`);
       console.log(`Half Bet: ${halfBet}`);
