@@ -74,9 +74,11 @@
         power += 0.1;
         i++;
       }
-      prize = Math.pow(prize, power);
+      prize = Math.ceil(Math.pow(prize, power));
       document.getElementById("balance").innerHTML = Math.floor(document.getElementById("balance").innerHTML) + prize;
-      console.log(prize * bet);
+      console.log(`Prize: ${prize}`);
+      console.log(`Bet: ${bet}`);
+      console.log(`Half Bet: ${halfBet}`);
       // if (house[i] === "🍒") {
       //   document.getElementById("balance").innerHTML = balance + parseInt(bet, 10);
       // }
