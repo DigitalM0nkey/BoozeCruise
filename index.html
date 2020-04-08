@@ -1,91 +1,92 @@
 <!DOCTYPE html>
 <html>
-<head>
-  BoozeCruise
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <head>
+    BoozeCruise
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
 
-  <!-- jQuery library -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-  <!-- Popper JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
-  <!-- Latest compiled JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-</head>
-<body>
-  <h1>Slots</h1>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <h1>Slots</h1>
 
-  <div class="slots">
-    <h1 id="slots"></h1>
-    <h3>Balance:</h3>
-    <h2 id="balance">100</h2>
-    <div class="form-group">
-      <label>Bet:</label>
-      <input class="form-control" id="bet" type="number" type="number" value="2" />
+    <div class="slots">
+      <h1 id="slots"></h1>
+      <h3>Balance:</h3>
+      <h2 id="balance">100</h2>
+      <div class="form-group">
+        <label>Bet:</label>
+        <input class="form-control" id="bet" type="number" type="number" value="2" />
+      </div>
+      <br />
+      <button class="btn btn-success" onclick="slots(document.getElementById('bet').value)">
+        Click Me
+      </button>
     </div>
-    <br />
-    <button class="btn btn-success" onclick="slots(document.getElementById('bet').value)">
-      Click Me
-    </button>
-  </div>
-</body>
+  </body>
 
-<script>
-  const symbols = ["🍒", "🛳", "🏝", "🌊", "☀️"];
+  <script>
+    const symbols = ["🍒", "🛳", "🏝", "🌊", "☀️", "⚓️"];
 
-  const slots = (bet) => {
-    bet = parseInt(bet, 10);
-    halfBet = Math.round(bet / 2);
-    let odds = 0;
-    if (bet <= 30) {
-      odds = 3;
-    } else if (bet <= 100) {
-      odds = Math.ceil((bet + 1) / 10);
-    } else {
-      odds = 10;
-    }
-    let balance = Number(document.getElementById("balance").innerHTML) - bet;
-    console.log("BALANCE = ", balance);
+    const slots = (bet) => {
+      bet = parseInt(bet, 10);
+      halfBet = Math.round(bet / 2);
+      let odds = 0;
+      if (bet <= 30) {
+        odds = 3;
+      } else if (bet <= 100) {
+        odds = Math.ceil((bet + 1) / 10);
+      } else {
+        odds = 10;
+      }
+      let balance = Number(document.getElementById("balance").innerHTML) - bet;
+      console.log("BALANCE = ", balance);
 
-    document.getElementById("balance").innerHTML = balance;
-    const house = new Array(odds);
-    for (let i = 0; i < odds; i++) {
-      house[i] = symbols[Math.floor(Math.random() * symbols.length)];
-    }
-
-    const print = () => {
+      document.getElementById("balance").innerHTML = balance;
+      const house = new Array(odds);
       for (let i = 0; i < odds; i++) {
-        setTimeout(function () {
-          document.getElementById("slots").innerHTML = house.reduce((msg, symbol, j) => msg + (i >= j ? symbol : ""), "");
-        }, 1000 * i);
+        house[i] = symbols[Math.floor(Math.random() * symbols.length)];
       }
-      setTimeout(() => {
-        prizes();
-      }, (odds - 1) * 1000);
+
+      const print = () => {
+        for (let i = 0; i < odds; i++) {
+          setTimeout(function () {
+            document.getElementById("slots").innerHTML = house.reduce(
+              (msg, symbol, j) => msg + (i >= j ? symbol : ""),
+              ""
+            );
+          }, 1000 * i);
+        }
+        setTimeout(() => {
+          prizes();
+        }, (odds - 1) * 1000);
+      };
+
+      const prizes = () => {
+        i = 0;
+        prize = house.reduce((prize, symbol) => prize + (symbol === "🍒" ? halfBet : 0), 0);
+        let power = 1;
+        while (house[i] === "🍒") {
+          power += 0.1;
+          i++;
+        }
+        prize = Math.ceil(Math.pow(prize, power));
+        document.getElementById("balance").innerHTML = balance + prize;
+        console.log(`Prize: ${prize}`);
+        console.log(`Bet: ${bet}`);
+        console.log(`Half Bet: ${halfBet}`);
+        // if (house[i] === "🍒") {
+        //   document.getElementById("balance").innerHTML = balance + parseInt(bet, 10);
+        // }
+      };
+      print();
     };
-
-    const prizes = () => {
-      i = 0;
-      prize = house.reduce((prize, symbol) => prize + (symbol === "🍒" ? halfBet : 0), 0);
-      let power = 1;
-      while (house[i] === "🍒") {
-        power += 0.1;
-        i++;
-      }
-      prize = Math.ceil(Math.pow(prize, power));
-      document.getElementById("balance").innerHTML = balance + prize;
-      console.log(`Prize: ${prize}`);
-      console.log(`Bet: ${bet}`);
-      console.log(`Half Bet: ${halfBet}`);
-      // if (house[i] === "🍒") {
-      //   document.getElementById("balance").innerHTML = balance + parseInt(bet, 10);
-      // }
-    };
-    print();
-  };
-</script>
-
-
+  </script>
 </html>
