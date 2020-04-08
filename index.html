@@ -25,12 +25,8 @@
       <label>Bet:</label>
       <input class="form-control" id="bet" type="number" type="number" value="2" />
     </div>
-    <div class="form-group">
-      <label>Odds:</label>
-      <input class="form-control" id="odds" placeholder="5" type="number" value="5" />
-    </div>
     <br />
-    <button class="btn" onclick="slots(document.getElementById('bet').value,document.getElementById('odds').value)">
+    <button class="btn btn-success" onclick="slots(document.getElementById('bet').value)">
       Click Me
     </button>
   </div>
@@ -39,7 +35,17 @@
 <script>
   const symbols = ["🍒", "🛳", "🏝", "🌊", "☀️"];
 
-  const slots = (bet, odds) => {
+  const slots = (bet) => {
+    bet = parseInt(bet, 10);
+    halfBet = Math.floor(bet / 2);
+    let odds = 0;
+    if (bet <= 30) {
+      odds = 3;
+    } else if (bet <= 100) {
+      odds = Math.ceil((bet + 1) / 10);
+    } else {
+      odds = 10;
+    }
     let balance = Number(document.getElementById("balance").innerHTML);
     console.log("BALANCE = ", balance - bet);
 
@@ -62,12 +68,13 @@
 
     const prizes = () => {
       i = 0;
-      prize = 0;
+      prize = house.reduce((prize, symbol) => prize + (house[i] === "🍒" ? halfBet : 0), 0);
+      let power = 1;
       while (house[i] === "🍒") {
-        prize += parseInt(bet, 10);
+        power += 0.1;
         i++;
       }
-      prize = Math.pow(prize, bet);
+      prize = Math.pow(prize, power);
       document.getElementById("balance").innerHTML = Math.floor(document.getElementById("balance").innerHTML) + prize;
       console.log(prize * bet);
       // if (house[i] === "🍒") {
