@@ -68,7 +68,7 @@
 
     const prizes = () => {
       i = 0;
-      prize = house.reduce((prize, symbol) => prize + (house[i] === "🍒" ? halfBet : 0), 0);
+      prize = house.reduce((prize, symbol) => prize + (symbol === "🍒" ? halfBet : 0), 0);
       let power = 1;
       while (house[i] === "🍒") {
         power += 0.1;
