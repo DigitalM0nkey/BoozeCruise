@@ -1,4 +1,4 @@
-const symbols = [🍒,⚓️,🛳,🏝,🌊,☀️]
+const symbols = ["🍒","⚓️","🛳","🏝","🌊","☀️"];
 
 const slots = (bet, odds) => {
   const house = new Array(odds);
@@ -6,7 +6,7 @@ const slots = (bet, odds) => {
       house[i] =  symbols[Math.floor(Math.random() * odds)];
       console.log(house[i]);
   }
-  document.getElementById("slots").innerHTML = "SLOTS"
+  document.getElementById("slots").innerHTML = "SLOTS";
 };
 
 slots(5, 3);

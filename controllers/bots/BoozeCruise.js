@@ -646,67 +646,43 @@ router.post("/", ({ body }, res, next) => {
             Ship.findOne({
               "user.id": body.message.new_chat_participant.id
             })
-              .populate("products.product")
-              .then(ship => {
-                const perks = ship.products.filter(
-                  product => product.product.perk.code.indexOf("PORTENTRY") === 0 && product.expiry > moment()
-                );
-                port.ships.push(ship._id);
-                port.save();
-                let newGuests = [];
-                const embarkationBoost = perks.reduce((boost, perk) => {
-                  boost += perk.product.perk.code === "PORTENTRY_EMBARKATION" ? perk.product.perk.amount : 0;
-
-                  return boost > 100 ? 100 : boost;
-                }, 0);
-                const spaceAvailable = ship.capacity - ship.guests.length;
-                const embarkationGuarantee = Math.floor((spaceAvailable * embarkationBoost) / 100);
-                let i = Math.floor(Math.random() * (spaceAvailable - embarkationGuarantee)) + embarkationGuarantee;
-                while (i--) {
-                  newGuests.push(guest.pick());
-                }
-                let leavingGuests = [];
-                for (let i = 0; i <= Math.floor(Math.random() * ship.guests.length); i++) {
-                  leavingGuests.push(ship.guests.splice(Math.floor(Math.random() * ship.guests.length), 1)[0]);
-                }
-                ship.guests = ship.guests.concat(newGuests);
-                console.log("NEW GUESTS =>", newGuests);
-                // INCOME FOR GUESTS JOINING YOUR SHIP
-                let income = 0;
-                newGuests.forEach(guest => {
-                  if (guest.type === 0) {
-                    income += 1;
-                  } else if (guest.type === 1) {
-                    income += 2;
-                  } else {
-                    income += 3;
-                  }
-                  return income;
-                });
-                console.log("INCOME FROM NEW GUESTS =>", income);
-                ship.purse.balance += income;
-
-                ship.save();
-                let perkMessage = "";
-                if (embarkationGuarantee > 0) {
-                  perkMessage = `<code>** An additional ${embarkationGuarantee} guests boarded your vessel because of your ${embarkationBoost}% boost.</code>\n\n`;
-                }
-                b.sendMessage(
-                  ship.id,
-                  `<b>You have just docked in ${
-                    port.name
-                  }</b>\n\n<i>Debarkation Guest Manifest:</i>\n${globalFunctions.generateManifest(
-                    leavingGuests
-                  )}\n<i>Embarkation Guest Manifest:</i>\n${globalFunctions.generateManifest(
-                    newGuests
-                  )}Income from new guests: ${KORONA}${income}\n\n<i><b>Updated Guest Manifest:</b></i>\n${globalFunctions.generateManifest(
-                    ship.guests
-                  )}<pre>Total Guests: ${ship.guests.length}\nCapacity: ${ship.capacity}\nBalance: ${KORONA}${
-                    ship.purse.balance
-                  }</pre>\n\n${perkMessage}`
-                );
-              });
-            // you are here bro! `Your balance is ${KORONA}${ship.purse.balance}`
+            .populate('products.product')
+            .then(ship => {
+              const perks = ship.products.filter(product => product.product.code.indexOf("PORTENTRY") === 0 && product.expiry > moment());
+              port.ships.push(ship._id);
+              port.save();
+              let newGuests = [];
+              const embarkationBoost = perks.reduce((boost, perk) => {
+                boost += perk.code === "PORTENTRY_EMBARKATION" ? perk.amount : 0;
+                return boost > 100 ? 100 : boost;
+              }, 0);
+              const spaceAvailable = ship.capacity - ship.guests.length;
+              const embarkationGuarantee = Math.floor(spaceAvailable * embarkationBoost / 100);
+              let i = Math.floor(Math.random() * (spaceAvailable - embarkationGuarantee)) + embarkationGuarantee;
+              while (i--) {
+                newGuests.push(guest.pick());
+              }
+              let leavingGuests = [];
+              i = Math.floor(Math.random() * ship.guests.length);
+              while (i--) {
+                leavingGuests.push(ship.guests.splice(Math.floor(Math.random() * ship.guests.length), 1)[0]);
+              }
+              ship.guests = ship.guests.concat(newGuests);
+              ship.save();
+              b.sendMessage(
+                ship.id,
+                `<b>You have just docked in ${
+                  port.name
+                }</b>\n\nDebarkation Guest Manifest:\n${globalFunctions.generateManifest(
+                  leavingGuests
+                )}\nEmbarkation Guest Manifest:\n${globalFunctions.generateManifest(
+                  newGuests
+                )}\n<u>Updated Guest Manifest:</u>\n${globalFunctions.generateManifest(
+                  ship.guests
+                )}<pre>Total Guests: ${ship.guests.length}</pre>`
+              );
+            });
+            // you are here bro!
           } else if (body.message.left_chat_participant) {
             Ship.findOne({
               "user.id": body.message.left_chat_participant.id

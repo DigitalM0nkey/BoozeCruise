@@ -1,5 +1,18 @@
+<!DOCTYPE html>
+<html>
 <head>
   BoozeCruise
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
   <h1>Slots</h1>
@@ -8,11 +21,11 @@
     <h1 id="slots"></h1>
     <h3>Balance:</h3>
     <h2 id="balance">100</h2>
-    Bet:<input id="bet" type="number" type="number" value="2" />
+    Bet:<input class="form-control" id="bet" type="number" type="number" value="2" />
     <br />
-    Odds:<input id="odds" placeholder="5" type="number" value="5" />
+    Odds:<input class="form-control" id="odds" placeholder="5" type="number" value="5" />
     <br />
-    <button onclick="slots(document.getElementById('bet').value,document.getElementById('odds').value)">
+    <button class="btn" onclick="slots(document.getElementById('bet').value,document.getElementById('odds').value)">
       Click Me
     </button>
   </div>
@@ -59,3 +72,6 @@
     print();
   };
 </script>
+
+
+</html>
