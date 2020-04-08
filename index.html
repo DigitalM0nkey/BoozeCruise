@@ -51,19 +51,19 @@
 
     document.getElementById("balance").innerHTML = balance;
     const house = new Array(odds);
-    let houseString = "";
+    for (let i = 0; i < odds; i++) {
+      house[i] = symbols[Math.floor(Math.random() * symbols.length)];
+    }
 
     const print = () => {
       for (let i = 0; i < odds; i++) {
         setTimeout(function () {
-          house[i] = symbols[Math.floor(Math.random() * symbols.length)];
-          houseString += house[i];
-          document.getElementById("slots").innerHTML = houseString;
+          document.getElementById("slots").innerHTML = house.reduce((msg, symbol) => msg + symbol, "");
         }, 1000 * i);
       }
       setTimeout(() => {
         prizes();
-      }, odds * 1000);
+      }, (odds - 1) * 1000);
     };
 
     const prizes = () => {
