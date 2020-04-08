@@ -59,7 +59,7 @@
         for (let i = 0; i < odds; i++) {
           setTimeout(function () {
             document.getElementById("slots").innerHTML = house.reduce(
-              (msg, symbol, j) => msg + (i >= j ? symbol : ""),
+              (msg, symbol, j) => msg + (i >= j ? symbol : "❓"),
               ""
             );
           }, 1000 * i);
