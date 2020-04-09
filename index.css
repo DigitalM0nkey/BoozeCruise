@@ -1,7 +1,12 @@
 .slots {
   background-color: rgb(170, 170, 255);
+  margin: 2rem;
   padding: 10vw;
   text-align: center;
+}
+
+#slots {
+  font-size: calc(2vw + 2vh + 1vmin);
 }
 
 #bet {

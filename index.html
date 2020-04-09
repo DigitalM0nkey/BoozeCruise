@@ -20,9 +20,12 @@
     <h1>Slots</h1>
 
     <div class="slots">
-      <h3>Balance:</h3>
-      <h2 id="balance">100</h2>
-      <h1 id="slots"></h1>
+      <h1 id="slots">❓|❓|❓|❓|❓|❓|❓|❓|❓|❓|❓</h1>
+      <div class="balance">
+        <h3>Balance:</h3>
+        <h2 id="balance">100</h2>
+      </div>
+
       <div class="form-group imput">
         <label>Bet:</label>
         <input class="form-control" id="bet" type="number" type="number" value="100" />
@@ -31,6 +34,30 @@
       <button class="btn btn-success" onclick="slots(document.getElementById('bet').value)">
         Click Me
       </button>
+    </div>
+    <div>
+      <h1>How to play</h1>
+      <ul>
+        <li>Odds for each item are 6:1</li>
+        <li>A 🍒 in any location is worth 50% of your bet.</li>
+        <li>
+          A 🍒 in the beginning of a row plus any directly consecutive 🍒s will increase your prize to the power of the
+          amount of cherrys in a row.
+        </li>
+        <li>
+          The amount that you bet directly impacts how many emojis are displayed in a row.
+          <ul>
+            <li>01-30 = 🍒|🍒|🍒</li>
+            <li>31-40 = 🍒|🍒|🍒|🍒</li>
+            <li>41-50 = 🍒|🍒|🍒|🍒|🍒</li>
+            <li>51-60 = 🍒|🍒|🍒|🍒|🍒|🍒</li>
+            <li>61-70 = 🍒|🍒|🍒|🍒|🍒|🍒|🍒</li>
+            <li>71-80 = 🍒|🍒|🍒|🍒|🍒|🍒|🍒|🍒</li>
+            <li>81-90 = 🍒|🍒|🍒|🍒|🍒|🍒|🍒|🍒|🍒</li>
+            <li>91-100 = 🍒|🍒|🍒|🍒|🍒|🍒|🍒|🍒|🍒|🍒</li>
+          </ul>
+        </li>
+      </ul>
     </div>
   </body>
 
@@ -61,7 +88,9 @@
         for (let i = 0; i < odds; i++) {
           setTimeout(function () {
             document.getElementById("slots").innerHTML = house.reduce(
-              (msg, symbol, j) => msg + (i >= j ? symbol : "❓"),
+              (msg, symbol, j) =>
+                msg +
+                (i >= j ? (j === house.length - 1 ? symbol : symbol + "|") : j === house.length - 1 ? "❓" : "❓|"),
               ""
             );
           }, 1000 * i);
