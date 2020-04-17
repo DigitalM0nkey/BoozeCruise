@@ -73,7 +73,7 @@ const minutelyEvent = schedule.scheduleJob("0 */1 * * * *", () => {
           b.sendKeyboard(
             ship.id,
             `This is the ${nextPort.name} port authority \nUse this link to dock.\n`,
-            { inline_keyboard: [link] }
+            { inline_keyboard: [[link]] }
             // keyboards.arrival
             // keyboards.home(false)
           );
