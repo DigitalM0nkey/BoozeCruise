@@ -300,7 +300,9 @@ router.post("/", ({ body }, res, next) => {
               id: ship.location.port,
             }).then(({ id }) => {
               b.exportChatInviteLink(id).then((link) => {
-                b.sendKeyboard(ship.id, link, keyboards.docked);
+                b.sendKeyboard(ship.id, link, { inline_keyboard: ["Dock", link] });
+                // inline_keyboard: tes;
+                // b.sendKeyboard(ship.id, link, keyboards.docked);
               });
             });
           } else if (body.message.text == "/nav") {
