@@ -72,8 +72,9 @@ const minutelyEvent = schedule.scheduleJob("0 */1 * * * *", () => {
         b.exportChatInviteLink(nextPort.id).then((link) => {
           b.sendKeyboard(
             ship.id,
-            `This is the ${nextPort.name} port authority \nUse this link to dock.\n${link}`,
-            keyboards.arrival
+            `This is the ${nextPort.name} port authority \nUse this link to dock.\n`,
+            { inline_keyboard: [link] }
+            // keyboards.arrival
             // keyboards.home(false)
           );
           ship.location = nextPort.location;
@@ -300,9 +301,9 @@ router.post("/", ({ body }, res, next) => {
               id: ship.location.port,
             }).then(({ id }) => {
               b.exportChatInviteLink(id).then((link) => {
-                b.sendKeyboard(ship.id, link, { inline_keyboard: ["Dock", link] });
+                // b.sendKeyboard(ship.id, link, { inline_keyboard: ["Dock", link] });
                 // inline_keyboard: tes;
-                // b.sendKeyboard(ship.id, link, keyboards.docked);
+                b.sendKeyboard(ship.id, link, keyboards.docked);
               });
             });
           } else if (body.message.text == "/nav") {
