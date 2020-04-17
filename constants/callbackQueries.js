@@ -117,7 +117,7 @@ module.exports = (from, ship, data) => {
           } else {
             b.sendMessage(from.id, "You have selected " + data.num);
             broadcast(
-              `${from.id} just picked a number in casino game Lowest Highest and is waiting for an opponent. Think you can beat ${from.id}? Go to the casino (only avalible while sailing) and pick a number that is lower then their number but heigher than the house. Good Luck`
+              `${from.first_name} just picked a number in casino game <pre>Lowest Highest</pre> and is waiting for an opponent. <b>Think you can beat ${from.first_name}?</b> Go to the casino <i>(only avalible while sailing)</i> and pick a number that is higher⬆️ then their number but lower⬇️ than the house. Good Luck`
             );
           }
           game.save();
