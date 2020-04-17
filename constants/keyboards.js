@@ -26,14 +26,26 @@ module.exports = {
               { text: emoji.joker + "Casino" + emoji.joker },
               { text: emoji.gift + "Shop" + emoji.gift },
             ]
-          : [
-              { text: emoji.moneyBag + "Purser" + emoji.moneyBag },
-              { text: emoji.moneyBag + "Treasure" + emoji.moneyBag },
-            ],
+          : [{ text: emoji.moneyBag + "Purser" + emoji.moneyBag }],
         [{ text: emoji.bug + "Maintenance" + emoji.bug }, { text: emoji.helm + "Capt's Log" + emoji.helm }],
       ],
       resize_keyboard: true,
     };
+  },
+  docked: {
+    keyboard: [
+      [
+        {
+          text: emoji.moneyBag + "Treasure" + emoji.moneyBag,
+        },
+      ],
+      [
+        {
+          text: "\u2630 Main Menu \u2630",
+        },
+      ],
+    ],
+    resize_keyboard: true,
   },
   port: {
     keyboard: [
@@ -187,13 +199,23 @@ module.exports = {
     ],
     resize_keyboard: true,
   },
-  navigation: {
+  arrival: {
     keyboard: [
       [
         {
           text: emoji.anchor + "Dock" + emoji.anchor,
         },
       ],
+      [
+        {
+          text: "\u2630 Main Menu \u2630",
+        },
+      ],
+    ],
+    resize_keyboard: true,
+  },
+  navigation: {
+    keyboard: [
       [
         {
           text: "\ud83d\udea2 Home Port \ud83d\udea2",

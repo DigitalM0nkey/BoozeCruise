@@ -33,9 +33,9 @@ const b = TelegramBot.boozecruiseBot;
 //var dailyEvent = schedule.scheduleJob('30 * * * * *', function(){
 const dailyEvent = schedule.scheduleJob("0 0 8 * * *", () => {
   console.log("The answer to life, the universe, and everything!");
-  Port.find({}).then(ports => {
-    ports.forEach(port => {
-      b.getChat(port.id).then(chat => {
+  Port.find({}).then((ports) => {
+    ports.forEach((port) => {
+      b.getChat(port.id).then((chat) => {
         // console.log(chat);
         port.description = chat.description;
         port.name = chat.title;
@@ -59,34 +59,35 @@ const dailyEvent = schedule.scheduleJob("0 0 8 * * *", () => {
 
 const minutelyEvent = schedule.scheduleJob("0 */1 * * * *", () => {
   //  mixology.getCocktail();
-  Port.find({}).then(ports => {
+  Port.find({}).then((ports) => {
     Ship.find({
       "nextLocation.arrival": {
-        $lte: new Date()
-      }
-    }).then(ships => {
-      ships.forEach(ship => {
+        $lte: new Date(),
+      },
+    }).then((ships) => {
+      ships.forEach((ship) => {
         const nextPort = _.find(ports, ({ id }) => {
           return id == ship.nextLocation.port;
         });
-        b.exportChatInviteLink(nextPort.id).then(link => {
+        b.exportChatInviteLink(nextPort.id).then((link) => {
           b.sendKeyboard(
             ship.id,
             `This is the ${nextPort.name} port authority \nUse this link to dock.\n${link}`,
-            keyboards.home(false)
+            keyboards.arrival
+            // keyboards.home(false)
           );
           ship.location = nextPort.location;
           ship.location.port = nextPort.id;
           ship.nextLocation = undefined;
           ship.portHistory.push({
             port: ship.location.port,
-            arrivalDate: new Date()
+            arrivalDate: new Date(),
           });
           ship.save().then(
-            savedShip => {
+            (savedShip) => {
               console.log(savedShip);
             },
-            e => {
+            (e) => {
               console.error(e);
             }
           );
@@ -141,8 +142,8 @@ const moves = {
   cocktailLounge: {
     guests() {
       guest.pick();
-    }
-  }
+    },
+  },
 };
 
 //b.exportChatInviteLink('')
@@ -154,8 +155,8 @@ router.post("/", ({ body }, res, next) => {
 
   if (body.callback_query) {
     Ship.findOne({
-      id: body.callback_query.from.id
-    }).then(ship => {
+      id: body.callback_query.from.id,
+    }).then((ship) => {
       //if (parseInt(req.body.callback_query.from.id) > 0) { } else { }
       const data = JSON.parse(body.callback_query.data);
       callbackQueries(body.callback_query.from, ship, data);
@@ -176,10 +177,10 @@ router.post("/", ({ body }, res, next) => {
   } else {
     if (parseInt(body.message.chat.id) > 0) {
       Ship.findOne({
-        id: body.message.chat.id
-      }).then(ship => {
+        id: body.message.chat.id,
+      }).then((ship) => {
         if (!ship) {
-          Port.find({}).then(ports => {
+          Port.find({}).then((ports) => {
             const randomPort = ports[Math.floor(Math.random() * ports.length)];
             const newShip = new Ship({
               id: body.message.chat.id,
@@ -187,15 +188,15 @@ router.post("/", ({ body }, res, next) => {
                 id: body.message.from.id,
                 first_name: body.message.from.first_name,
                 last_name: body.message.from.last_name,
-                username: body.message.from.username
+                username: body.message.from.username,
               },
               location: {
                 sector: randomPort.location.sector,
                 x: randomPort.location.x,
                 y: randomPort.location.y,
                 port: randomPort.id,
-                homePort: randomPort.id
-              }
+                homePort: randomPort.id,
+              },
             });
             newShip.save();
 
@@ -208,19 +209,19 @@ router.post("/", ({ body }, res, next) => {
           } else if (body.message.text == "Check Balance") {
             b.sendMessage(ship.id, `Your balance is ${KORONA}${ship.purse.balance}`);
           } else if (body.message.text == "\ud83c\udf87 Achievements \ud83c\udf87") {
-            const portIds = ship.portHistory.map(port => {
+            const portIds = ship.portHistory.map((port) => {
               return port.port;
             });
             Port.find({
-              id: portIds
-            }).then(ports => {
+              id: portIds,
+            }).then((ports) => {
               const count = ship.portHistory.reduce((portCount, port) => {
                 if (!portCount[port.port]) {
                   portCount[port.port] = {
                     name: ports.find(({ id }) => {
                       return id == port.port;
                     }).name,
-                    count: 0
+                    count: 0,
                   };
                 }
                 portCount[port.port].count++;
@@ -249,7 +250,7 @@ router.post("/", ({ body }, res, next) => {
           ) {
             if (ship.nextLocation.port) {
               Port.findOne({
-                id: ship.nextLocation.port
+                id: ship.nextLocation.port,
               }).then(({ name }) => {
                 b.sendMessage(
                   ship.id,
@@ -259,9 +260,9 @@ router.post("/", ({ body }, res, next) => {
               });
             } else {
               Port.findOne({
-                id: ship.location.port
+                id: ship.location.port,
               }).then(({ id, name }) => {
-                b.exportChatInviteLink(id).then(link => {
+                b.exportChatInviteLink(id).then((link) => {
                   b.sendKeyboard(ship.id, `You are currently in the ${name} harbour.`, keyboards.navigation);
                   /* setTimeout(function () {
 
@@ -277,7 +278,7 @@ router.post("/", ({ body }, res, next) => {
               ship.purse.balance -= 5;
               ship.save((err, saved, rows) => {
                 if (err) console.error(err);
-                LowestHighest.findOne({ inProgress: true }).then(game => {
+                LowestHighest.findOne({ inProgress: true }).then((game) => {
                   if (game) {
                     b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id));
                     b.sendKeyboard(ship.id, "Pick a number", keyboards.casino);
@@ -296,10 +297,10 @@ router.post("/", ({ body }, res, next) => {
           // Decison keyboard promped
           else if (body.message.text == "\u2693 Dock \u2693") {
             Port.findOne({
-              id: ship.location.port
+              id: ship.location.port,
             }).then(({ id }) => {
-              b.exportChatInviteLink(id).then(link => {
-                b.sendKeyboard(ship.id, link, keyboards.navigation);
+              b.exportChatInviteLink(id).then((link) => {
+                b.sendKeyboard(ship.id, link, keyboards.docked);
               });
             });
           } else if (body.message.text == "/nav") {
@@ -319,13 +320,13 @@ router.post("/", ({ body }, res, next) => {
             );
           } else if (body.message.text == "\ud83d\udcb0 Treasure \ud83d\udcb0") {
             b.getChatMember(ship.location.port, ship.id).then(
-              chatMember => {
+              (chatMember) => {
                 Port.findOne({
                   id: ship.location.port,
                   treasure: {
-                    $gt: 0
-                  }
-                }).then(port => {
+                    $gt: 0,
+                  },
+                }).then((port) => {
                   if (port) {
                     b.sendMessage(ship.id, `You found ${port.treasure} Korona in the buried treasure`);
                     b.sendMessage(port.id, `${ship.user.first_name} just found ${port.treasure} Korona here.`);
@@ -333,16 +334,16 @@ router.post("/", ({ body }, res, next) => {
                     ship.purse.transactions.push({
                       date: new Date(),
                       type: "Treasure",
-                      amount: port.treasure
+                      amount: port.treasure,
                     });
                     ship.save();
                     port.treasure = 0;
                     port.save();
                     Port.find({
                       id: {
-                        $ne: ship.location.port
-                      }
-                    }).then(ports => {
+                        $ne: ship.location.port,
+                      },
+                    }).then((ports) => {
                       const randomPort = Math.floor(Math.random() * ports.length);
                       ports[randomPort].treasure = Math.round(Math.random() * TREASURE + 1);
                       ports[randomPort].save();
@@ -353,7 +354,7 @@ router.post("/", ({ body }, res, next) => {
                 });
               },
               () => {
-                b.exportChatInviteLink(ship.location.port).then(link => {
+                b.exportChatInviteLink(ship.location.port).then((link) => {
                   b.sendMessage(
                     ship.id,
                     `You have arrived in port. However, you have not docked, you can only search for treasure once you have docked in port.\n${link}`
@@ -367,12 +368,12 @@ router.post("/", ({ body }, res, next) => {
             const message = body.message.text.substring(body.message.text.indexOf(" ") + 1);
             b.sendMessage(ship.id, `Captain's Log: ${message}`);
             Ship.findOne({
-              id: ship.id
-            }).then(ship => {
+              id: ship.id,
+            }).then((ship) => {
               ship.communication.push({
                 date: new Date(),
                 type: "log",
-                transcript: message
+                transcript: message,
               });
               ship.save();
             });
@@ -385,7 +386,7 @@ router.post("/", ({ body }, res, next) => {
               keyboards.shop
             );
           } else if (body.message.text == "Products") {
-            Product.find({}).then(products => {
+            Product.find({}).then((products) => {
               b.sendKeyboard(body.message.chat.id, "Buy something.", keyboards.products(products));
             });
           } else if (body.message.text == "\u2388 Capt's Log \u2388") {
@@ -408,7 +409,7 @@ router.post("/", ({ body }, res, next) => {
             if (ship._id == MYSHIP) {
               const product = body.message.text.substring(body.message.text.indexOf(" ") + 1);
               Product.create({
-                name: product
+                name: product,
               });
             }
           } else if (body.message.text == "/admin") {
@@ -430,12 +431,12 @@ router.post("/", ({ body }, res, next) => {
               keyboards.home(ship.nextLocation.port)
             );
           } else if (body.message.text == "\ud83c\udf78 Cocktail \ud83c\udf78") {
-            mixology.getCocktail().then(cocktail => {
+            mixology.getCocktail().then((cocktail) => {
               b.sendPhoto(
                 ship.id,
                 cocktail.image,
                 `<pre>${cocktail.name}</pre>\n${cocktail.instructions}<code>${cocktail.ingredients.map(
-                  ingredient => `\n - ${ingredient}`
+                  (ingredient) => `\n - ${ingredient}`
                 )}</code>`
               );
             });
@@ -459,9 +460,9 @@ router.post("/", ({ body }, res, next) => {
           } else if (body.message.text == "\ud83c\udfdd Ports of Call \ud83c\udfdd") {
             Port.find({
               id: {
-                $ne: ship.location.port
-              }
-            }).then(ports => {
+                $ne: ship.location.port,
+              },
+            }).then((ports) => {
               const portsInShipSector = ports.filter(({ location }) => {
                 return location.sector === ship.location.sector;
               }).length;
@@ -482,17 +483,17 @@ router.post("/", ({ body }, res, next) => {
                 );
                 setTimeout(() => {
                   b.sendKeyboard(body.message.chat.id, "Which continent would you like to navigate to:", {
-                    inline_keyboard: Object.keys(sectors).map(sector => {
+                    inline_keyboard: Object.keys(sectors).map((sector) => {
                       return [
                         {
                           text: constants.sectors[sector],
                           callback_data: JSON.stringify({
                             action: "navigate_sector",
-                            sector
-                          })
-                        }
+                            sector,
+                          }),
+                        },
                       ];
-                    })
+                    }),
                   });
                 }, 5000);
               } else if (portsInShipSector === ports.length) {
@@ -509,17 +510,17 @@ router.post("/", ({ body }, res, next) => {
             Port.find({
               "location.sector": ship.location.sector,
               id: {
-                $ne: ship.location.port
-              }
-            }).then(ports => {
+                $ne: ship.location.port,
+              },
+            }).then((ports) => {
               globalFunctions.sendAvailablePorts(body.message.chat.id, ports, ship);
             });
           } else if (body.message.text === "Change Continent") {
             Port.find({
               "location.sector": {
-                $ne: ship.location.sector
-              }
-            }).then(ports => {
+                $ne: ship.location.sector,
+              },
+            }).then((ports) => {
               const sectors = {};
               ports.forEach(({ location, name }, i, array) => {
                 if (!sectors[location.sector]) sectors[location.sector] = "";
@@ -536,17 +537,17 @@ router.post("/", ({ body }, res, next) => {
               );
               setTimeout(() => {
                 b.sendKeyboard(body.message.chat.id, "Which continent would you like to navigate to:", {
-                  inline_keyboard: Object.keys(sectors).map(sector => {
+                  inline_keyboard: Object.keys(sectors).map((sector) => {
                     return [
                       {
                         text: constants.sectors[sector],
                         callback_data: JSON.stringify({
                           action: "navigate_sector",
-                          sector
-                        })
-                      }
+                          sector,
+                        }),
+                      },
                     ];
-                  })
+                  }),
                 });
               }, 5000);
             });
@@ -568,8 +569,9 @@ router.post("/", ({ body }, res, next) => {
                 body.message.chat.id,
                 `This game cost ${KORONA}5 to play.\nYour current balance is ${KORONA}${
                   ship.purse.balance
-                }.\n${KORONA}10 is awarded to the winner.\n\n<pre>INSTRUCTIONS</pre>\nSelect a number higher than your opponent but lower than the House to win.\n\nThe jackpot is awarded to the player which picks the same number as the House.\n\n<code>Current jackpot is ${KORONA}${4 *
-                  length}</code>`,
+                }.\n${KORONA}10 is awarded to the winner.\n\n<pre>INSTRUCTIONS</pre>\nSelect a number higher than your opponent but lower than the House to win.\n\nThe jackpot is awarded to the player which picks the same number as the House.\n\n<code>Current jackpot is ${KORONA}${
+                  4 * length
+                }</code>`,
                 keyboards.decision(LOWESTHIGHEST)
               );
             });
@@ -589,12 +591,12 @@ router.post("/", ({ body }, res, next) => {
             );
           } else if (body.message.text == "\ud83c\udf87 Achievements \ud83c\udf87") {
             Ship.findOne({
-              id: ship.id
+              id: ship.id,
             })
               .populate("portHistory.port")
               .then(({ portHistory }) => {
                 let message = "<b>Your Port History:</b>";
-                portHistory.forEach(stop => {
+                portHistory.forEach((stop) => {
                   const arrivalDate = moment(stop.arrivalDate);
                   const departureDate = moment(stop.departureDate);
                   message += `\n${stop.port.name} | ${arrivalDate.diff(departureDate, "days")}`;
@@ -602,7 +604,7 @@ router.post("/", ({ body }, res, next) => {
                 b.sendMessage(body.message.chat.id, message);
               });
           } else if (body.message.text == "Port \ud83d\udea2") {
-            b.exportChatInviteLink("-1001399879250").then(link => {
+            b.exportChatInviteLink("-1001399879250").then((link) => {
               b.sendMessage(body.message.chat.id, link);
             });
           }
@@ -611,15 +613,15 @@ router.post("/", ({ body }, res, next) => {
       });
     } else {
       Port.findOne({
-        id: body.message.chat.id
-      }).then(port => {
+        id: body.message.chat.id,
+      }).then((port) => {
         if (!port) {
           if (body.message.chat.id == MYSHIP) {
-            b.getChat(body.message.chat.id).then(chat => {
+            b.getChat(body.message.chat.id).then((chat) => {
               const newPort = new Port({
                 id: body.message.chat.id,
                 name: chat.title,
-                description: chat.description
+                description: chat.description,
               });
               newPort.save();
             });
@@ -637,65 +639,67 @@ router.post("/", ({ body }, res, next) => {
             //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
             b.kick(body.message.chat.id, body.message.from.id, 1);
             Ship.findOne({
-              "user.id": body.message.from.id
+              "user.id": body.message.from.id,
             }).then(({ id }) => {
               b.sendMessage(id, `You've been kicked from ${port.name}`);
             });
           } else if (body.message.new_chat_participant) {
             //PORTENTRY
             Ship.findOne({
-              "user.id": body.message.new_chat_participant.id
+              "user.id": body.message.new_chat_participant.id,
             })
-            .populate('products.product')
-            .then(ship => {
-              const perks = ship.products.filter(product => product.product.code.indexOf("PORTENTRY") === 0 && product.expiry > moment());
-              port.ships.push(ship._id);
-              port.save();
-              let newGuests = [];
-              const embarkationBoost = perks.reduce((boost, perk) => {
-                boost += perk.code === "PORTENTRY_EMBARKATION" ? perk.amount : 0;
-                return boost > 100 ? 100 : boost;
-              }, 0);
-              const spaceAvailable = ship.capacity - ship.guests.length;
-              const embarkationGuarantee = Math.floor(spaceAvailable * embarkationBoost / 100);
-              let i = Math.floor(Math.random() * (spaceAvailable - embarkationGuarantee)) + embarkationGuarantee;
-              while (i--) {
-                newGuests.push(guest.pick());
-              }
-              let leavingGuests = [];
-              i = Math.floor(Math.random() * ship.guests.length);
-              while (i--) {
-                leavingGuests.push(ship.guests.splice(Math.floor(Math.random() * ship.guests.length), 1)[0]);
-              }
-              ship.guests = ship.guests.concat(newGuests);
-              ship.save();
-              b.sendMessage(
-                ship.id,
-                `<b>You have just docked in ${
-                  port.name
-                }</b>\n\nDebarkation Guest Manifest:\n${globalFunctions.generateManifest(
-                  leavingGuests
-                )}\nEmbarkation Guest Manifest:\n${globalFunctions.generateManifest(
-                  newGuests
-                )}\n<u>Updated Guest Manifest:</u>\n${globalFunctions.generateManifest(
-                  ship.guests
-                )}<pre>Total Guests: ${ship.guests.length}</pre>`
-              );
-            });
+              .populate("products.product")
+              .then((ship) => {
+                const perks = ship.products.filter(
+                  (product) => product.product.code.indexOf("PORTENTRY") === 0 && product.expiry > moment()
+                );
+                port.ships.push(ship._id);
+                port.save();
+                let newGuests = [];
+                const embarkationBoost = perks.reduce((boost, perk) => {
+                  boost += perk.code === "PORTENTRY_EMBARKATION" ? perk.amount : 0;
+                  return boost > 100 ? 100 : boost;
+                }, 0);
+                const spaceAvailable = ship.capacity - ship.guests.length;
+                const embarkationGuarantee = Math.floor((spaceAvailable * embarkationBoost) / 100);
+                let i = Math.floor(Math.random() * (spaceAvailable - embarkationGuarantee)) + embarkationGuarantee;
+                while (i--) {
+                  newGuests.push(guest.pick());
+                }
+                let leavingGuests = [];
+                i = Math.floor(Math.random() * ship.guests.length);
+                while (i--) {
+                  leavingGuests.push(ship.guests.splice(Math.floor(Math.random() * ship.guests.length), 1)[0]);
+                }
+                ship.guests = ship.guests.concat(newGuests);
+                ship.save();
+                b.sendMessage(
+                  ship.id,
+                  `<b>You have just docked in ${
+                    port.name
+                  }</b>\n\nDebarkation Guest Manifest:\n${globalFunctions.generateManifest(
+                    leavingGuests
+                  )}\nEmbarkation Guest Manifest:\n${globalFunctions.generateManifest(
+                    newGuests
+                  )}\n<u>Updated Guest Manifest:</u>\n${globalFunctions.generateManifest(
+                    ship.guests
+                  )}<pre>Total Guests: ${ship.guests.length}</pre>`
+                );
+              });
             // you are here bro!
           } else if (body.message.left_chat_participant) {
             Ship.findOne({
-              "user.id": body.message.left_chat_participant.id
+              "user.id": body.message.left_chat_participant.id,
             }).then(({ _id }) => {
-              port.ships = port.ships.filter(portShip => {
+              port.ships = port.ships.filter((portShip) => {
                 return portShip != _id;
               });
               port.save();
             });
           } else {
             Ship.findOne({
-              "user.id": body.message.from.id
-            }).then(ship => {
+              "user.id": body.message.from.id,
+            }).then((ship) => {
               let found = false;
               for (const i in port.ships) {
                 if (port.ships[i] == ship._id) {
@@ -764,10 +768,10 @@ const quotes = [
   "One today is worth two tomorrows.",
   "Once you choose hope, anythings possible.",
   "God always takes the simplest way.",
-  "One fails forward toward success."
+  "One fails forward toward success.",
 ];
 
-const randomQuote = quotes => {
+const randomQuote = (quotes) => {
   let randomNum = Math.floor(Math.random() * quotes.length);
   let output = quotes[randomNum];
   return output;
@@ -776,7 +780,7 @@ const randomQuote = quotes => {
 router.get("/", (req, res, next) => {
   b.sendMessage("510423667", "Received Get");
   res.json({
-    message: "get ok"
+    message: "get ok",
   });
 });
 b.sendKeyboard("510423667", `${randomQuote(quotes)} \n\n<pre>Also the server restarted</pre>`, keyboards.home(false));
@@ -784,7 +788,7 @@ b.sendKeyboard("510423667", `${randomQuote(quotes)} \n\n<pre>Also the server res
 module.exports = router;
 
 function broadcast(message) {
-  Ship.find({}).then(ships => {
+  Ship.find({}).then((ships) => {
     b.broadcast(
       ships.map(({ id }) => {
         return id;
