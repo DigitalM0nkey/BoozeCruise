@@ -70,10 +70,11 @@ const minutelyEvent = schedule.scheduleJob("0 */1 * * * *", () => {
           return id == ship.nextLocation.port;
         });
         b.exportChatInviteLink(nextPort.id).then((link) => {
+          console.log("LINK =>", link);
           b.sendKeyboard(
             ship.id,
             `This is the ${nextPort.name} port authority \nUse this link to dock.\n`,
-            { inline_keyboard: [[{ url: link }]] }
+            { inline_keyboard: [[{ text: nextPort.name, url: link }]] }
             // keyboards.arrival
             // keyboards.home(false)
           );
