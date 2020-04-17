@@ -17,8 +17,8 @@ module.exports = (from, ship, data) => {
   if (data.action === "navigate") {
     if (ship.id != MYSHIP) {
       Port.findOne({
-        id: data.port
-      }).then(function(port) {
+        id: data.port,
+      }).then(function (port) {
         var arrival = new Date();
         arrival = arrival.setTime(
           arrival.getTime() + globalFunctions.calculateDistance(port.location, ship.location) * 60 * 60 * 1000
@@ -26,7 +26,7 @@ module.exports = (from, ship, data) => {
         ship.nextLocation = {
           arrival: arrival,
           port: data.port,
-          portName: port.name
+          portName: port.name,
         };
         if (ship.portHistory.length > 0) {
           ship.portHistory[ship.portHistory.length - 1].departureDate = new Date();
@@ -40,20 +40,20 @@ module.exports = (from, ship, data) => {
           ship.id,
           "Your ship is now en route to " + port.name + "\nyou will arrive in " + globalFunctions.calculateTime(arrival)
         );
-        b.sendKeyboard(ship.id, "🌊🛳🗺🌊", keyboards.home(ship.nextLocation.port));
+        b.sendKeyboard(ship.id, "🌊🛳🌊", keyboards.home(ship.nextLocation.port));
       });
     }
   } else if (data.action === "navigate_sector") {
     Port.find({
-      "location.sector": data.sector
-    }).then(function(ports) {
+      "location.sector": data.sector,
+    }).then(function (ports) {
       globalFunctions.sendAvailablePorts(from.id, ports, ship);
     });
     // Start Product list
   } else if (data.action === "product") {
-    Product.findOne({ _id: data.product }).then(product => {
+    Product.findOne({ _id: data.product }).then((product) => {
       b.sendPhoto(from.id, product.image, product.name + "\n" + product.type + "\n" + product.description);
-      setTimeout(function() {
+      setTimeout(function () {
         b.sendKeyboard(
           from.id,
           "Price: " +
@@ -71,34 +71,34 @@ module.exports = (from, ship, data) => {
 
     // Start Mini-game Lowest-Highest
   } else if (data.action.indexOf("LH_") === 0) {
-    LowestHighest.findOne({ inProgress: true, _id: data.action.split("_")[1] }).then(function(game) {
+    LowestHighest.findOne({ inProgress: true, _id: data.action.split("_")[1] }).then(function (game) {
       if (game) {
         console.log(game);
-        console.log(_.find(game.players, player => player.id == from.id));
+        console.log(_.find(game.players, (player) => player.id == from.id));
 
-        if (_.find(game.players, player => player.id == from.id)) {
+        if (_.find(game.players, (player) => player.id == from.id)) {
           b.sendMessage(from.id, "You have already picked a number for this game");
         } else {
           game.players.push({
             id: from.id,
             guess: data.num,
-            name: from.first_name
+            name: from.first_name,
           });
           if (game.players.length === 2) {
             let result = lowestHighest(game.houseGuess, game.players[0], game.players[1]);
             console.log(result);
 
             if (result.winner) {
-              Ship.findOne({ id: result.winner }).then(function(winner) {
+              Ship.findOne({ id: result.winner }).then(function (winner) {
                 winner.purse.balance += 10;
 
                 if (result.jackpot) {
-                  LowestHighest.find({ jackpotPaid: false }).then(games => {
+                  LowestHighest.find({ jackpotPaid: false }).then((games) => {
                     winner.purse.balance += 4 * games.length;
                     winner.save();
                     b.sendMessage(game.players[0].id, result.message);
                     b.sendMessage(game.players[1].id, result.message);
-                    games.forEach(game => {
+                    games.forEach((game) => {
                       game.jackpotPaid = true;
                       game.save();
                     });
@@ -116,6 +116,9 @@ module.exports = (from, ship, data) => {
             game.inProgress = false;
           } else {
             b.sendMessage(from.id, "You have selected " + data.num);
+            broadcast(
+              `${from.id} just picked a number in casino game Lowest Highest and is waiting for an opponent. Think you can beat ${from.id}? Go to the casino (only avalible while sailing) and pick a number that is lower then their number but heigher than the house. Good Luck`
+            );
           }
           game.save();
         }
@@ -124,16 +127,25 @@ module.exports = (from, ship, data) => {
       }
     });
   } else if (data.action === "buy") {
-    Product.findOne({ _id: data.id })
-      .then(product => {
-        ship.products.push({
-          product: product._id,
-          expiry: moment().add(product.expiry, "days")
-        });
-        ship.save();
-        product.quantity--;
-        product.save();
+    Product.findOne({ _id: data.id }).then((product) => {
+      ship.products.push({
+        product: product._id,
+        expiry: moment().add(product.expiry, "days"),
       });
+      ship.save();
+      product.quantity--;
+      product.save();
+    });
     // } else if (something) {
+  }
+  function broadcast(message) {
+    Ship.find({}).then((ships) => {
+      b.broadcast(
+        ships.map(({ id }) => {
+          return id;
+        }),
+        message
+      );
+    });
   }
 };

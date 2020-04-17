@@ -28,7 +28,7 @@
 
       <div class="form-group imput">
         <label>Bet:</label>
-        <input class="form-control" id="bet" type="number" type="number" value="100" />
+        <input class="form-control" id="bet" type="number" type="number" value="50" />
       </div>
       <br />
       <button class="btn btn-success" onclick="slots(document.getElementById('bet').value)">
@@ -62,7 +62,8 @@
   </body>
 
   <script>
-    const symbols = ["🍒", "🛳", "🏝", "🌊", "☀️", "⚓️"];
+    const symbols = ["🍒", "🛳", "🏝", "🌊", "☀️"];
+    // const symbols = ["🍒", "🛳", "🏝", "🌊", "☀️", "⚓️"];
 
     const slots = (bet) => {
       bet = parseInt(bet, 10);
@@ -117,6 +118,13 @@
         //   document.getElementById("balance").innerHTML = balance + parseInt(bet, 10);
         // }
       };
+
+      const bonus = () => {
+        if (house) {
+          console.log("Hello");
+        }
+      };
+
       print();
     };
   </script>

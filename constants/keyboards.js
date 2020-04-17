@@ -1,340 +1,340 @@
 const emoji = require("./emoji");
 
 module.exports = {
-  home: function(seaDay) {
+  home: function (seaDay) {
     return {
       keyboard: [
         [
           {
-            text: emoji.navigation
+            text: emoji.navigation,
           },
           {
-            text: emoji.people + "Manifest" + emoji.people
-          }
+            text: emoji.people + "Manifest" + emoji.people,
+          },
         ],
         [
           {
-            text: emoji.fireworks + "Achievements" + emoji.fireworks
+            text: emoji.fireworks + "Achievements" + emoji.fireworks,
           },
           {
-            text: emoji.cocktail + "Lounge" + emoji.cocktail
-          }
+            text: emoji.cocktail + "Lounge" + emoji.cocktail,
+          },
         ],
         seaDay
           ? [
               { text: emoji.moneyBag + "Purser" + emoji.moneyBag },
               { text: emoji.joker + "Casino" + emoji.joker },
-              { text: emoji.gift + "Shop" + emoji.gift }
+              { text: emoji.gift + "Shop" + emoji.gift },
             ]
           : [
               { text: emoji.moneyBag + "Purser" + emoji.moneyBag },
-              { text: emoji.moneyBag + "Treasure" + emoji.moneyBag }
+              { text: emoji.moneyBag + "Treasure" + emoji.moneyBag },
             ],
-        [{ text: emoji.bug + "Maintenance" + emoji.bug }, { text: emoji.helm + "Capt's Log" + emoji.helm }]
+        [{ text: emoji.bug + "Maintenance" + emoji.bug }, { text: emoji.helm + "Capt's Log" + emoji.helm }],
       ],
-      resize_keyboard: true
+      resize_keyboard: true,
     };
   },
   port: {
     keyboard: [
       [
         {
-          text: "Return to Ship"
-        }
-      ]
+          text: "Return to Ship",
+        },
+      ],
     ],
-    resize_keyboard: true
+    resize_keyboard: true,
   },
   admin: {
     keyboard: [
       [
         {
-          text: "ADMIN"
+          text: "ADMIN",
         },
         {
-          text: "\u2630 Main Menu \u2630"
-        }
+          text: "\u2630 Main Menu \u2630",
+        },
       ],
       [
         {
-          text: "/dock"
-        }
-      ]
-    ]
+          text: "/dock",
+        },
+      ],
+    ],
   },
   manifest: {
     keyboard: [
       [
         {
-          text: emoji.people + "Guest Manifest" + emoji.people
+          text: emoji.people + "Guest Manifest" + emoji.people,
         },
         {
-          text: "\ud83d\udc81 Crew Manifest \ud83d\udc81"
-        }
+          text: "\ud83d\udc81 Crew Manifest \ud83d\udc81",
+        },
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630"
-        }
-      ]
+          text: "\u2630 Main Menu \u2630",
+        },
+      ],
     ],
-    resize_keyboard: true
+    resize_keyboard: true,
   },
   lounge: {
     keyboard: [
       [
         {
-          text: emoji.cocktail + "Cocktail" + emoji.cocktail
-        }
+          text: emoji.cocktail + "Cocktail" + emoji.cocktail,
+        },
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630"
-        }
-      ]
+          text: "\u2630 Main Menu \u2630",
+        },
+      ],
     ],
-    resize_keyboard: true
+    resize_keyboard: true,
   },
   shop: {
     keyboard: [
       [
         {
-          text: "Products"
-        }
+          text: "Products",
+        },
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630"
-        }
-      ]
+          text: "\u2630 Main Menu \u2630",
+        },
+      ],
     ],
-    resize_keyboard: true
+    resize_keyboard: true,
   },
   maintenance: {
     keyboard: [
       [
         {
-          text: emoji.bug + "BUG" + emoji.bug
-        }
+          text: emoji.bug + "BUG" + emoji.bug,
+        },
       ],
       [
         {
-          text: emoji.bug + "Suggestions" + emoji.bug
-        }
+          text: emoji.bug + "Suggestions" + emoji.bug,
+        },
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630"
-        }
-      ]
+          text: "\u2630 Main Menu \u2630",
+        },
+      ],
     ],
-    resize_keyboard: true
+    resize_keyboard: true,
   },
   casino: {
     keyboard: [
       [
         {
-          text: emoji.upDown + "Lowest Highest" + emoji.upDown
-        }
+          text: emoji.upDown + "Lowest Highest" + emoji.upDown,
+        },
       ],
+      // [
+      //   {
+      //     text: emoji.cocktail + "Mixology" + emoji.cocktail
+      //   }
+      // ],
       [
         {
-          text: emoji.cocktail + "Mixology" + emoji.cocktail
-        }
+          text: "\u2630 Main Menu \u2630",
+        },
       ],
-      [
-        {
-          text: "\u2630 Main Menu \u2630"
-        }
-      ]
     ],
-    resize_keyboard: true
+    resize_keyboard: true,
   },
-  decision: function(message) {
+  decision: function (message) {
     return {
       keyboard: [
         [
           {
-            text: "Yes,\n" + message
-          }
+            text: "Yes,\n" + message,
+          },
         ],
         [
           {
-            text: "No"
-          }
+            text: "No",
+          },
         ],
         [
           {
-            text: "\u2630 Main Menu \u2630"
-          }
-        ]
+            text: "\u2630 Main Menu \u2630",
+          },
+        ],
       ],
-      resize_keyboard: true
+      resize_keyboard: true,
     };
   },
   atSea: {
     keyboard: [
       [
         {
-          text: "\ud83d\udccd Current Location \ud83d\udccd"
-        }
+          text: "\ud83d\udccd Current Location \ud83d\udccd",
+        },
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630"
-        }
-      ]
+          text: "\u2630 Main Menu \u2630",
+        },
+      ],
     ],
-    resize_keyboard: true
+    resize_keyboard: true,
   },
   navigation: {
     keyboard: [
       [
         {
-          text: emoji.anchor + "Dock" + emoji.anchor
-        }
+          text: emoji.anchor + "Dock" + emoji.anchor,
+        },
       ],
       [
         {
-          text: "\ud83d\udea2 Home Port \ud83d\udea2"
-        }
+          text: "\ud83d\udea2 Home Port \ud83d\udea2",
+        },
       ],
       [
         {
-          text: "\ud83c\udfdd Ports of Call \ud83c\udfdd"
-        }
+          text: "\ud83c\udfdd Ports of Call \ud83c\udfdd",
+        },
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630"
-        }
-      ]
+          text: "\u2630 Main Menu \u2630",
+        },
+      ],
     ],
-    resize_keyboard: true
+    resize_keyboard: true,
   },
   purser: {
     keyboard: [
       [
         {
-          text: "Check Balance"
-        }
+          text: "Check Balance",
+        },
       ],
       [
         {
-          text: "Deposit"
-        }
+          text: "Deposit",
+        },
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630"
-        }
-      ]
+          text: "\u2630 Main Menu \u2630",
+        },
+      ],
     ],
-    resize_keyboard: true
+    resize_keyboard: true,
   },
   event1: {
     keyboard: [
       [
         {
-          text: "Debarcation \ud83c\udf05"
+          text: "Debarcation \ud83c\udf05",
         },
         {
-          text: "Clean \ud83d\udc4b"
+          text: "Clean \ud83d\udc4b",
         },
         {
-          text: "Embarcation \ud83d\udea2"
-        }
+          text: "Embarcation \ud83d\udea2",
+        },
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630"
-        }
-      ]
+          text: "\u2630 Main Menu \u2630",
+        },
+      ],
     ],
-    resize_keyboard: true
+    resize_keyboard: true,
   },
   event2: {
     keyboard: [
       [
         {
-          text: "rando1 \ud83c\udf78"
+          text: "rando1 \ud83c\udf78",
         },
         {
-          text: "rando2 \ud83c\udf06"
+          text: "rando2 \ud83c\udf06",
         },
         {
-          text: "rando3 \ud83c\udf87"
-        }
+          text: "rando3 \ud83c\udf87",
+        },
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630"
-        }
-      ]
+          text: "\u2630 Main Menu \u2630",
+        },
+      ],
     ],
-    resize_keyboard: true
+    resize_keyboard: true,
   },
   event3: {
     keyboard: [
       [
         {
-          text: "hjbsfd Lounge \ud83c\udf78"
+          text: "hjbsfd Lounge \ud83c\udf78",
         },
         {
-          text: "The fdsggCity \ud83c\udf06"
+          text: "The fdsggCity \ud83c\udf06",
         },
         {
-          text: "Achfgdgfdievements \ud83c\udf87"
-        }
+          text: "Achfgdgfdievements \ud83c\udf87",
+        },
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630"
-        }
-      ]
+          text: "\u2630 Main Menu \u2630",
+        },
+      ],
     ],
-    resize_keyboard: true
+    resize_keyboard: true,
   },
   event4: {
     keyboard: [
       [
         {
-          text: "rando4 \ud83c\udf78"
+          text: "rando4 \ud83c\udf78",
         },
         {
-          text: "rando4 \ud83c\udf06"
+          text: "rando4 \ud83c\udf06",
         },
         {
-          text: "rando4 \ud83c\udf87"
-        }
+          text: "rando4 \ud83c\udf87",
+        },
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630"
-        }
-      ]
+          text: "\u2630 Main Menu \u2630",
+        },
+      ],
     ],
-    resize_keyboard: true
+    resize_keyboard: true,
   },
   ports: {
     keyboard: [
       [
         {
-          text: "Same Continent"
+          text: "Same Continent",
         },
         {
-          text: "Change Continent"
-        }
+          text: "Change Continent",
+        },
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630"
-        }
-      ]
+          text: "\u2630 Main Menu \u2630",
+        },
+      ],
     ],
-    resize_keyboard: true
+    resize_keyboard: true,
   },
-  numbers: function(gameId) {
+  numbers: function (gameId) {
     let keyboard = { inline_keyboard: [] };
     for (let i = 0; i < 20; i++) {
       keyboard.inline_keyboard.push([]);
@@ -343,15 +343,15 @@ module.exports = {
           text: i * 5 + j,
           callback_data: JSON.stringify({
             action: "LH_" + gameId,
-            num: i * 5 + j
-          })
+            num: i * 5 + j,
+          }),
         });
       }
     }
     return keyboard;
   },
   // PRODUCT KEYBOARD
-  products: function(products) {
+  products: function (products) {
     let keyboard = { inline_keyboard: [] };
     for (let i = 0; i < products.length; i++) {
       keyboard.inline_keyboard.push([]);
@@ -359,13 +359,13 @@ module.exports = {
         text: products[i].name,
         callback_data: JSON.stringify({
           action: "product",
-          product: products[i]._id
-        })
+          product: products[i]._id,
+        }),
       });
     }
     return keyboard;
   },
-  product: function(product) {
+  product: function (product) {
     return {
       inline_keyboard: [
         [
@@ -373,9 +373,9 @@ module.exports = {
             text: "BUY",
             callback_data: JSON.stringify({
               action: "buy",
-              id: product._id
-            })
-          }
+              id: product._id,
+            }),
+          },
           // {
           //   'text': 'SELL',
           //   callback_data: JSON.stringify({
@@ -383,8 +383,8 @@ module.exports = {
           //     id: product._id
           //   })
           // },
-        ]
-      ]
+        ],
+      ],
     };
-  }
+  },
 };
