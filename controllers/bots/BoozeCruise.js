@@ -677,7 +677,7 @@ router.post("/", ({ body }, res, next) => {
                 }
                 ship.guests = ship.guests.concat(newGuests);
                 ship.save();
-                b.sendMessage(
+                b.sendKeyboard(
                   ship.id,
                   `<b>You have just docked in ${
                     port.name
@@ -687,7 +687,12 @@ router.post("/", ({ body }, res, next) => {
                     newGuests
                   )}\n<u>Updated Guest Manifest:</u>\n${globalFunctions.generateManifest(
                     ship.guests
-                  )}<pre>Total Guests: ${ship.guests.length}</pre>`
+                  )}<pre>Total Guests: ${ship.guests.length}</pre>`,
+                  {
+                    inline_keyboard: [
+                      [{ text: `💰Look for treasure💰`, callback_data: emoji.moneyBag + "Treasure" + emoji.moneyBag }],
+                    ],
+                  }
                 );
               });
             // you are here bro!
