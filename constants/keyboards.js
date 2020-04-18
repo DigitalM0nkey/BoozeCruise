@@ -216,11 +216,11 @@ module.exports = {
   },
   navigation: {
     keyboard: [
-      [
-        {
-          text: "\ud83d\udea2 Home Port \ud83d\udea2",
-        },
-      ],
+      // [
+      //   {
+      //     text: "\ud83d\udea2 Home Port \ud83d\udea2",
+      //   },
+      // ],
       [
         {
           text: "\ud83c\udfdd Ports of Call \ud83c\udfdd",
