@@ -323,50 +323,7 @@ router.post("/", ({ body }, res, next) => {
               keyboards.navigation
             );
           } else if (body.message.text == "\ud83d\udcb0 Treasure \ud83d\udcb0") {
-            b.getChatMember(ship.location.port, ship.id).then(
-              (chatMember) => {
-                Port.findOne({
-                  id: ship.location.port,
-                  treasure: {
-                    $gt: 0,
-                  },
-                }).then((port) => {
-                  if (port) {
-                    b.sendMessage(ship.id, `You found ${port.treasure} Korona in the buried treasure`);
-                    b.sendMessage(port.id, `${ship.user.first_name} just found ${port.treasure} Korona here.`);
-                    ship.purse.balance += port.treasure;
-                    ship.purse.transactions.push({
-                      date: new Date(),
-                      type: "Treasure",
-                      amount: port.treasure,
-                    });
-                    ship.save();
-                    port.treasure = 0;
-                    port.save();
-                    Port.find({
-                      id: {
-                        $ne: ship.location.port,
-                      },
-                    }).then((ports) => {
-                      const randomPort = Math.floor(Math.random() * ports.length);
-                      ports[randomPort].treasure = Math.round(Math.random() * TREASURE + 1);
-                      ports[randomPort].save();
-                    });
-                  } else {
-                    b.sendMessage(ship.id, "No treasure here, keep searching");
-                  }
-                });
-              },
-              () => {
-                b.exportChatInviteLink(ship.location.port).then((link) => {
-                  b.sendMessage(
-                    ship.id,
-                    `You have arrived in port. However, you have not docked, you can only search for treasure once you have docked in port.\n${link}`
-                  );
-                });
-              }
-            );
-
+            globalFunctions.lookForTreasure(ship);
             // Captains Log:
           } else if (body.message.text.substring(0, body.message.text.indexOf(" ")) == "/log") {
             const message = body.message.text.substring(body.message.text.indexOf(" ") + 1);
@@ -691,7 +648,7 @@ router.post("/", ({ body }, res, next) => {
                   //keyboards.docked
                   {
                      inline_keyboard: [
-                       [{ text: `💰Look for treasure💰`, switch_inline_query: emoji.moneyBag + "Treasure" + emoji.moneyBag }],
+                       [{ text: `💰Look for treasure💰`, callback_data: JSON.stringify({action: 'treasure'}) }],
                      ],
                   }
                 );

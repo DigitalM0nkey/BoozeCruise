@@ -137,6 +137,8 @@ module.exports = (from, ship, data) => {
       product.save();
     });
     // } else if (something) {
+  } else if (data.action === 'treasure') {
+    globalFunctions.lookForTreasure(ship);
   }
   function broadcast(message) {
     Ship.find({}).then((ships) => {
