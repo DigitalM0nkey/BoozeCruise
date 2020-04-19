@@ -91,7 +91,12 @@
       for (let i = 0; i < odds; i++) {
         const symbol = symbols[Math.floor(Math.random() * symbols.length)];
         house[i] = symbol;
-        _.find(rolls, roll => roll.symbol === symbol).count++;
+        for (let roll of rolls) {
+          if (rolls.symbol === symbol) {
+            roll.count++;
+            break;
+          }
+        }
       }
       console.log(rolls);
 
