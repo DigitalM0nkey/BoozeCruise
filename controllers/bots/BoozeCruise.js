@@ -290,7 +290,7 @@ router.post("/", ({ body }, res, next) => {
                 });
               });
             }
-          } else if (body.message.text == emoji.slots + "Slots" + emoji.slots) {
+          } else if (body.message.text == emoji.slots + " Slots " + emoji.slots) {
             console.log(keyboards.numbers('', 'SL'));
             b.sendKeyboard(ship.id, "Place your bet", keyboards.numbers('', 'SL'));
           }
