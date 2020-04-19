@@ -613,9 +613,9 @@ router.post("/", ({ body }, res, next) => {
                 const perks = ship.products.filter(
                   (product) => {
                     console.log(product);
-                    return product.code.indexOf("PORTENTRY") === 0 && product.expiry > moment();
+                    return product.perk.code.indexOf("PORTENTRY") === 0 && product.expiry > moment();
                   }
-                );
+                ).map(product => product.perk);
                 port.ships.push(ship._id);
                 port.save();
                 let newGuests = [];
