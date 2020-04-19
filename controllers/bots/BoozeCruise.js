@@ -611,7 +611,7 @@ router.post("/", ({ body }, res, next) => {
               .populate("products.product")
               .then((ship) => {
                 const perks = ship.products.filter(
-                  (product) => product.product.code.indexOf("PORTENTRY") === 0 && product.expiry > moment()
+                  (product) => product.code.indexOf("PORTENTRY") === 0 && product.expiry > moment()
                 );
                 port.ships.push(ship._id);
                 port.save();
