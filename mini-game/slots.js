@@ -12,7 +12,7 @@ let rolls = [
 let plays = 0;
 
 module.exports = (ship, bet) => {
-  new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, reject) {
     bet = parseInt(bet, 10);
     halfBet = Math.round(bet / 2);
     let odds = 0;
