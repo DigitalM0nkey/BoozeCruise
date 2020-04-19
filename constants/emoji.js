@@ -14,5 +14,5 @@ module.exports = {
   cocktail: " \ud83c\udf78 ",
   joker: " 🃏 ",
   gift: " 🎁 ",
-  slots: " &#127920 ",
+  slots: "🎰",
 };

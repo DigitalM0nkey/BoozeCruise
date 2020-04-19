@@ -156,7 +156,7 @@ module.exports = {
       // ],
       [
         {
-          text: emoji.slots + "Slots" + emoji.slots,
+          text: `${emoji.slots} Slots ${emoji.slots}`,
         },
       ],
       [

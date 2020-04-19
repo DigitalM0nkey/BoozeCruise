@@ -153,9 +153,9 @@ const moves = {
 
 router.post("/", ({ body }, res, next) => {
   console.log(body);
-  console.log(emoji.slots + "Slots" + emoji.slots);
+  console.log(`${emoji.slots} Slots ${emoji.slots}`);
   console.log(body.message.text);
-  console.log(body.message.text == emoji.slots + "Slots" + emoji.slots);
+  console.log(body.message.text == `${emoji.slots} Slots ${emoji.slots}`);
 
   if (body.callback_query) {
     Ship.findOne({
@@ -284,18 +284,18 @@ router.post("/", ({ body }, res, next) => {
                 if (err) console.error(err);
                 LowestHighest.findOne({ inProgress: true }).then((game) => {
                   if (game) {
-                    b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id, 'LH'));
+                    b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id, "LH"));
                   } else {
                     LowestHighest.create({}, (err, game) => {
-                      b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id, 'LH'));
+                      b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id, "LH"));
                     });
                   }
                 });
               });
             }
-          } else if (body.message.text == emoji.slots + "Slots" + emoji.slots) {
-            console.log(keyboards.numbers('', 'SL'));
-            b.sendKeyboard(ship.id, "Place your bet", keyboards.numbers('', 'SL'));
+          } else if (body.message.text == `${emoji.slots} Slots ${emoji.slots}`) {
+            console.log(keyboards.numbers("", "SL"));
+            b.sendKeyboard(ship.id, "Place your bet", keyboards.numbers("", "SL"));
           }
           // End Mini-game Lowest-Highest
 
@@ -614,12 +614,12 @@ router.post("/", ({ body }, res, next) => {
             })
               .populate("products.product")
               .then((ship) => {
-                const perks = ship.products.filter(
-                  (product) => {
+                const perks = ship.products
+                  .filter((product) => {
                     console.log(product);
                     return product.product.perk.code.indexOf("PORTENTRY") === 0 && product.expiry > moment();
-                  }
-                ).map(product => product.product.perk);
+                  })
+                  .map((product) => product.product.perk);
                 port.ships.push(ship._id);
                 port.save();
                 let newGuests = [];
