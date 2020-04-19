@@ -45,4 +45,4 @@ module.exports = function (house, player1, player2) {
       jackpot: true
     };
   }
-}
+};

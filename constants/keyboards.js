@@ -361,7 +361,7 @@ module.exports = {
     ],
     resize_keyboard: true,
   },
-  numbers: function (gameId) {
+  numbers: function (gameId, type) {
     let keyboard = { inline_keyboard: [] };
     for (let i = 0; i < 20; i++) {
       keyboard.inline_keyboard.push([]);
@@ -369,7 +369,7 @@ module.exports = {
         keyboard.inline_keyboard[keyboard.inline_keyboard.length - 1].push({
           text: i * 5 + j,
           callback_data: JSON.stringify({
-            action: "LH_" + gameId,
+            action: `${type}_${gameId}`,
             num: i * 5 + j,
           }),
         });

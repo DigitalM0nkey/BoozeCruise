@@ -87,7 +87,7 @@
       let balance = Number(document.getElementById("balance").innerHTML.replace(",", "")) - bet;
       console.log("BALANCE = ", balance);
 
-      document.getElementById("balance").innerHTML = balance;
+      document.getElementById("balance").innerHTML = balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       const house = new Array(odds);
       for (let i = 0; i < odds; i++) {
         const symbol = symbols[Math.floor(Math.random() * symbols.length)];

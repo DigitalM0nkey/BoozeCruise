@@ -281,17 +281,17 @@ router.post("/", ({ body }, res, next) => {
                 if (err) console.error(err);
                 LowestHighest.findOne({ inProgress: true }).then((game) => {
                   if (game) {
-                    b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id));
-                    b.sendKeyboard(ship.id, "Pick a number", keyboards.casino);
+                    b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id, 'LH'));
                   } else {
                     LowestHighest.create({}, (err, game) => {
-                      b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id));
-                      b.sendKeyboard(ship.id, "Pick a number", keyboards.casino);
+                      b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id, 'LH'));
                     });
                   }
                 });
               });
             }
+          } else if (body.message.text == emoji.slots + "Slots" + emoji.slots) {
+            b.sendKeyboard(ship.id, "Place your bet", keyboards.numbers('', 'SL'));            
           }
           // End Mini-game Lowest-Highest
 

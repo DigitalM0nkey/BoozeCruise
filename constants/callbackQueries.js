@@ -9,6 +9,7 @@ const KORONA = "\u24C0";
 const MYSHIP = "5be3d50298ae6843394411ee";
 
 const lowestHighest = require("../mini-game/lowestHighest");
+const slots = require("../mini-game/slots");
 
 const moment = require("moment");
 const _ = require("underscore");
@@ -125,6 +126,17 @@ module.exports = (from, ship, data) => {
       } else {
         b.sendMessage(from.id, "This game is already finished. Stop picking numbers");
       }
+    });
+  } else if (data.action.indexOf("SL_") === 0) {
+    //SLOTS GAME
+    //data.num = bet
+    Ship.findOne({ id: from.id }).then(function (ship) {
+      slots(data.num)
+      .then(prize => {
+        ship.purse.balance += prize;
+        ship.save();
+        b.sendMessage(from.id, `You won ${KORONA}${prize}\nNew Balance: ${KORONA}${ship.purse.balance}`);
+      });
     });
   } else if (data.action === "buy") {
     Product.findOne({ _id: data.id }).then((product) => {

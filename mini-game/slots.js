@@ -8,74 +8,74 @@ let rolls = [
 ];
 let plays = 0;
 
-const slots = (bet) => {
-  bet = parseInt(bet, 10);
-  halfBet = Math.round(bet / 2);
-  let odds = 0;
-  if (bet <= 30) {
-    odds = 3;
-  } else if (bet <= 100) {
-    odds = Math.ceil((bet + 1) / 10);
-  } else {
-    odds = 10;
-  }
-  let balance = Number(document.getElementById("balance").innerHTML.replace(",", "")) - bet;
-  console.log("BALANCE = ", balance);
+module.exports = bet => {
+  new Promise(function(resolve, reject) {
+    bet = parseInt(bet, 10);
+    halfBet = Math.round(bet / 2);
+    let odds = 0;
+    if (bet <= 30) {
+      odds = 3;
+    } else if (bet <= 100) {
+      odds = Math.ceil((bet + 1) / 10);
+    } else {
+      odds = 10;
+    }
 
-  document.getElementById("balance").innerHTML = balance;
-  const house = new Array(odds);
-  for (let i = 0; i < odds; i++) {
-    const symbol = symbols[Math.floor(Math.random() * symbols.length)];
-    house[i] = symbol;
-    for (let roll of rolls) {
-      if (roll.symbol === symbol) {
-        roll.count++;
-        break;
+    const house = new Array(odds);
+    for (let i = 0; i < odds; i++) {
+      const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+      house[i] = symbol;
+      for (let roll of rolls) {
+        if (roll.symbol === symbol) {
+          roll.count++;
+          break;
+        }
       }
     }
-  }
-  plays++;
-  console.log(`${plays} times played`);
-  console.log(rolls);
+    plays++;
+    console.log(`${plays} times played`);
+    console.log(rolls);
 
-  const print = () => {
-    for (let i = 0; i < odds; i++) {
-      setTimeout(function () {
-        document.getElementById("slots").innerHTML = house.reduce(
-          (msg, symbol, j) =>
-            msg + (i >= j ? (j === house.length - 1 ? symbol : symbol + "|") : j === house.length - 1 ? "❓" : "❓|"),
-          ""
-        );
-      }, 1000 * i);
-    }
-    setTimeout(() => {
-      prizes();
-    }, (odds - 1) * 1000);
-  };
+    const print = () => {
+      for (let i = 0; i < odds; i++) {
+        setTimeout(function () {
+          b.sendMessage(ship.id, house.reduce(
+            (msg, symbol, j) =>
+              msg + (i >= j ? (j === house.length - 1 ? symbol : symbol + "|") : j === house.length - 1 ? "❓" : "❓|"),
+            ""
+          ));
+        }, 1000 * i);
+      }
+      setTimeout(() => {
+        prizes();
+      }, (odds - 1) * 1000);
+    };
 
-  const prizes = () => {
-    i = 0;
-    prize = house.reduce((prize, symbol) => prize + (symbol === "🍒" ? halfBet : 0), 0);
-    let power = 1;
-    while (house[i] === "🍒") {
-      power += 0.1;
-      i++;
-    }
-    prize = Math.ceil(Math.pow(prize, power));
-    document.getElementById("balance").innerHTML = (balance + prize).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    console.log(`Prize: ${prize}`);
-    console.log(`Bet: ${bet}`);
-    console.log(`Half Bet: ${halfBet}`);
-    // if (house[i] === "🍒") {
-    //   document.getElementById("balance").innerHTML = balance + parseInt(bet, 10);
-    // }
-  };
+    const prizes = () => {
+      i = 0;
+      prize = house.reduce((prize, symbol) => prize + (symbol === "🍒" ? halfBet : 0), 0);
+      let power = 1;
+      while (house[i] === "🍒") {
+        power += 0.1;
+        i++;
+      }
+      prize = Math.ceil(Math.pow(prize, power));
+      b.sendMessage(ship.id, prize.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+      console.log(`Prize: ${prize}`);
+      console.log(`Bet: ${bet}`);
+      console.log(`Half Bet: ${halfBet}`);
+      resolve(prize);
+      // if (house[i] === "🍒") {
+      //   document.getElementById("balance").innerHTML = balance + parseInt(bet, 10);
+      // }
+    };
 
-  const bonus = () => {
-    if (house) {
-      console.log("Hello");
-    }
-  };
+    const bonus = () => {
+      if (house) {
+        console.log("Hello");
+      }
+    };
 
-  print();
+    print();
+  });
 };
