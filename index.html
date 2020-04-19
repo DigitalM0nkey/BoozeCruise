@@ -89,8 +89,11 @@
       document.getElementById("balance").innerHTML = balance;
       const house = new Array(odds);
       for (let i = 0; i < odds; i++) {
-        house[i] = symbols[Math.floor(Math.random() * symbols.length)];
+        const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+        house[i] = symbol;
+        _.find(rolls, roll => roll.symbol === symbol).count++;
       }
+      console.log(rolls);
 
       const print = () => {
         for (let i = 0; i < odds; i++) {
