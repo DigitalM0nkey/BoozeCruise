@@ -11,7 +11,7 @@ let rolls = [
 ];
 let plays = 0;
 
-module.exports = bet => {
+module.exports = (ship, bet) => {
   new Promise(function(resolve, reject) {
     bet = parseInt(bet, 10);
     halfBet = Math.round(bet / 2);

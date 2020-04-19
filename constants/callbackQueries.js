@@ -131,10 +131,10 @@ module.exports = (from, ship, data) => {
     //SLOTS GAME
     //data.num = bet
     Ship.findOne({ id: from.id }).then(function (ship) {
-      slots(data.num)
+      slots(ship, data.num)
       .then(prize => {
         ship.purse.balance += prize;
-        ship.save();    
+        ship.save();
         b.sendMessage(ship.id, `You won ${KORONA}${prize}\nNew Balance: ${KORONA}${ship.purse.balance}`);
       });
     });
