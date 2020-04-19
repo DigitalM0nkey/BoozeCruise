@@ -7,11 +7,12 @@ module.exports = {
   bug: " \ud83d\udc1b ",
   korona: " \u24C0 ",
   mainMenu: "\u2630 Main Menu \u2630",
-  navigation: ' \ud83d\uddfa Navigation \ud83d\uddfa ',
+  navigation: " \ud83d\uddfa Navigation \ud83d\uddfa ",
   upDown: " \u2195 ",
   anchor: " \u2693 ",
   helm: " \u2388 ",
   cocktail: " \ud83c\udf78 ",
   joker: " 🃏 ",
-  gift: " 🎁 "
-}
+  gift: " 🎁 ",
+  slots: " 🎰 ",
+};
