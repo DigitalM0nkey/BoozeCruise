@@ -84,7 +84,7 @@
       } else {
         odds = 10;
       }
-      let balance = Number(document.getElementById("balance").innerHTML) - bet;
+      let balance = Number(document.getElementById("balance").innerHTML.replace(",", "")) - bet;
       console.log("BALANCE = ", balance);
 
       document.getElementById("balance").innerHTML = balance;
@@ -128,7 +128,7 @@
           i++;
         }
         prize = Math.ceil(Math.pow(prize, power));
-        document.getElementById("balance").innerHTML = balance + prize;
+        document.getElementById("balance").innerHTML = (balance + prize).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         console.log(`Prize: ${prize}`);
         console.log(`Bet: ${bet}`);
         console.log(`Half Bet: ${halfBet}`);
