@@ -153,6 +153,9 @@ const moves = {
 
 router.post("/", ({ body }, res, next) => {
   console.log(body);
+  console.log(emoji.slots + "Slots" + emoji.slots);
+  console.log(body.message.text);
+  console.log(body.message.text == emoji.slots + "Slots" + emoji.slots);
 
   if (body.callback_query) {
     Ship.findOne({
@@ -290,7 +293,7 @@ router.post("/", ({ body }, res, next) => {
                 });
               });
             }
-          } else if (body.message.text == emoji.slots + " Slots " + emoji.slots) {
+          } else if (body.message.text == emoji.slots + "Slots" + emoji.slots) {
             console.log(keyboards.numbers('', 'SL'));
             b.sendKeyboard(ship.id, "Place your bet", keyboards.numbers('', 'SL'));
           }
