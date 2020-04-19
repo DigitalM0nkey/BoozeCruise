@@ -70,6 +70,7 @@
       {symbol: "🌊", count: 0},
       {symbol: "☀️", count: 0},
     ];
+    let plays = 0;
     // const symbols = ["🍒", "🛳", "🏝", "🌊", "☀️", "⚓️"];
 
     const slots = (bet) => {
@@ -92,12 +93,14 @@
         const symbol = symbols[Math.floor(Math.random() * symbols.length)];
         house[i] = symbol;
         for (let roll of rolls) {
-          if (rolls.symbol === symbol) {
+          if (roll.symbol === symbol) {
             roll.count++;
             break;
           }
         }
       }
+      plays++;
+      console.log(`${plays} times played`);
       console.log(rolls);
 
       const print = () => {
