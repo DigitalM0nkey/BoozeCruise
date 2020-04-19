@@ -291,7 +291,8 @@ router.post("/", ({ body }, res, next) => {
               });
             }
           } else if (body.message.text == emoji.slots + "Slots" + emoji.slots) {
-            b.sendKeyboard(ship.id, "Place your bet", keyboards.numbers('', 'SL'));            
+            console.log(keyboards.numbers('', 'SL'));
+            b.sendKeyboard(ship.id, "Place your bet", keyboards.numbers('', 'SL'));
           }
           // End Mini-game Lowest-Highest
 
