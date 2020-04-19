@@ -1,5 +1,5 @@
 
-const b = require("../../bots/telegram").boozecruiseBot;
+const b = require("../bots/telegram").boozecruiseBot;
 
 const symbols = ["🍒", "🛳", "🏝", "🌊", "☀️"];
 let rolls = [
