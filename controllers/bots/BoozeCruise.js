@@ -152,11 +152,6 @@ const moves = {
 // This post is everytime someone says something to the bot.
 
 router.post("/", ({ body }, res, next) => {
-  console.log(body);
-  console.log(`${emoji.slots} Slots ${emoji.slots}`);
-  console.log(body.message.text);
-  console.log(body.message.text == `${emoji.slots} Slots ${emoji.slots}`);
-
   if (body.callback_query) {
     Ship.findOne({
       id: body.callback_query.from.id,
