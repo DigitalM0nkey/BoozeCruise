@@ -688,12 +688,12 @@ router.post("/", ({ body }, res, next) => {
                   )}\n<u>Updated Guest Manifest:</u>\n${globalFunctions.generateManifest(
                     ship.guests
                   )}<pre>Total Guests: ${ship.guests.length}</pre>`,
-                  keyboards.docked
-                  // {
-                  //   inline_keyboard: [
-                  //     [{ text: `💰Look for treasure💰`, callback_data: emoji.moneyBag + "Treasure" + emoji.moneyBag }],
-                  //   ],
-                  // }
+                  //keyboards.docked
+                  {
+                     inline_keyboard: [
+                       [{ text: `💰Look for treasure💰`, switch_inline_query: emoji.moneyBag + "Treasure" + emoji.moneyBag }],
+                     ],
+                  }
                 );
               });
             // you are here bro!
