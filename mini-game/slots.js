@@ -63,7 +63,6 @@ module.exports = bet => {
         i++;
       }
       prize = Math.ceil(Math.pow(prize, power));
-      b.sendMessage(ship.id, prize.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
       console.log(`Prize: ${prize}`);
       console.log(`Bet: ${bet}`);
       console.log(`Half Bet: ${halfBet}`);

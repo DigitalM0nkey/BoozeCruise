@@ -134,8 +134,8 @@ module.exports = (from, ship, data) => {
       slots(data.num)
       .then(prize => {
         ship.purse.balance += prize;
-        ship.save();
-        b.sendMessage(from.id, `You won ${KORONA}${prize}\nNew Balance: ${KORONA}${ship.purse.balance}`);
+        ship.save();    
+        b.sendMessage(ship.id, `You won ${KORONA}${prize}\nNew Balance: ${KORONA}${ship.purse.balance}`);
       });
     });
   } else if (data.action === "buy") {
