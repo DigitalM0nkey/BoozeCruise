@@ -5,10 +5,11 @@ var HSECTORS = 4;
 var VSECTORS = 3;
 var TelegramBot = require("../bots/telegram");
 var b = TelegramBot.boozecruiseBot;
+const TREASURE = 500;
 
 const Port = require("../models/port");
 
-exports.calculateTime = arrival => {
+exports.calculateTime = (arrival) => {
   return (
     Math.abs(moment().diff(arrival, "hours")) +
     " hours " +
@@ -23,11 +24,11 @@ function calculateDistance(portLocation, shipLocation) {
   } else {
     var portSector = {
       x: portLocation.sector % HSECTORS,
-      y: Math.floor(portLocation.sector / HSECTORS)
+      y: Math.floor(portLocation.sector / HSECTORS),
     };
     var shipSector = {
       x: shipLocation.sector % HSECTORS,
-      y: Math.floor(shipLocation.sector / HSECTORS)
+      y: Math.floor(shipLocation.sector / HSECTORS),
     };
     var x =
       Math.abs(portSector.x - shipSector.x) > HSECTORS - Math.abs(portSector.x - shipSector.x)
@@ -46,7 +47,7 @@ exports.calculateDistance = calculateDistance;
 exports.sendAvailablePorts = (chat_id, ports, ship) => {
   b.sendMessage(
     chat_id,
-    ports.reduce(function(message, port) {
+    ports.reduce(function (message, port) {
       message += "<b>" + port.name + "</b>\n";
       message += port.description + "\n\n";
       message += "Distance to port <b>" + calculateDistance(port.location, ship.location) + "</b> hours\n";
@@ -54,25 +55,25 @@ exports.sendAvailablePorts = (chat_id, ports, ship) => {
       return message;
     }, "")
   );
-  setTimeout(function() {
-    var keyboard = ports.map(function(port) {
+  setTimeout(function () {
+    var keyboard = ports.map(function (port) {
       return {
         text: port.name,
         callback_data: JSON.stringify({
           action: "navigate",
           port: port.id,
-          ship: ship.id
-        })
+          ship: ship.id,
+        }),
       };
     });
     console.log(keyboard);
     b.sendKeyboard(chat_id, "Navigate to:", {
-      inline_keyboard: [keyboard]
+      inline_keyboard: [keyboard],
     });
   }, 3000);
 };
 
-exports.generateManifest = guests => {
+exports.generateManifest = (guests) => {
   const guestList = {};
   guests.forEach(({ type }) => {
     if (!guestList[type]) {
@@ -87,7 +88,7 @@ exports.generateManifest = guests => {
   return message;
 };
 
-exports.lookForTreasure = ship => {
+exports.lookForTreasure = (ship) => {
   b.getChatMember(ship.location.port, ship.id).then(
     (chatMember) => {
       Port.findOne({

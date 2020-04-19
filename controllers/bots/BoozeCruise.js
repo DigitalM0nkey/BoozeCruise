@@ -10,7 +10,6 @@ const emoji = require("../../constants/emoji");
 const callbackQueries = require("../../constants/callbackQueries");
 const globalFunctions = require("../../constants/globalFunctions");
 
-const TREASURE = 500;
 const MYSHIP = "5be3d50298ae6843394411ee";
 const KORONA = "\u24C0";
 const WELCOME =
@@ -633,7 +632,25 @@ router.post("/", ({ body }, res, next) => {
                   leavingGuests.push(ship.guests.splice(Math.floor(Math.random() * ship.guests.length), 1)[0]);
                 }
                 ship.guests = ship.guests.concat(newGuests);
+                let income = 0;
+                newGuests.forEach((guest) => {
+                  if (guest.type === 0) {
+                    income += 1;
+                  } else if (guest.type === 1) {
+                    income += 2;
+                  } else {
+                    income += 3;
+                  }
+                  return income;
+                });
+                console.log("INCOME FROM NEW GUESTS =>", income);
+                ship.purse.balance += income;
+
                 ship.save();
+                let perkMessage = "";
+                if (embarkationGuarantee > 0) {
+                  perkMessage = `<code>** An additional ${embarkationGuarantee} guests boarded your vessel because of your ${embarkationBoost}% boost.</code>\n\n`;
+                }
                 b.sendKeyboard(
                   ship.id,
                   `<b>You have just docked in ${
@@ -642,14 +659,15 @@ router.post("/", ({ body }, res, next) => {
                     leavingGuests
                   )}\nEmbarkation Guest Manifest:\n${globalFunctions.generateManifest(
                     newGuests
-                  )}\n<u>Updated Guest Manifest:</u>\n${globalFunctions.generateManifest(
+                  )}Income from new guests: ${KORONA}${income}\n\n<i><b>Updated Guest Manifest:</b></i>\n${globalFunctions.generateManifest(
                     ship.guests
-                  )}<pre>Total Guests: ${ship.guests.length}</pre>`,
-                  //keyboards.docked
+                  )}<pre>Total Guests: ${ship.guests.length}\nCapacity: ${ship.capacity}\nBalance: ${KORONA}${
+                    ship.purse.balance
+                  }</pre>\n\n${perkMessage}`,
                   {
-                     inline_keyboard: [
-                       [{ text: `💰Look for treasure💰`, callback_data: JSON.stringify({action: 'treasure'}) }],
-                     ],
+                    inline_keyboard: [
+                      [{ text: `💰Look for treasure💰`, callback_data: JSON.stringify({ action: "treasure" }) }],
+                    ],
                   }
                 );
               });
