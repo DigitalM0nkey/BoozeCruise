@@ -71,6 +71,7 @@ module.exports = (ship, bet) => {
     console.log(rolls);
 
     const print = () => {
+      b.sendMessage(ship.id, "❓|❓|❓", "");
       for (let i = 0; i < odds; i++) {
         setTimeout(function () {
           b.editMessageText(
