@@ -108,6 +108,8 @@ module.exports = (ship, bet, messageId) => {
       console.log(`Prize: ${prize}`);
       console.log(`Bet: ${bet}`);
       console.log(`Half Bet: ${halfBet}`);
+      console.log(`Power ${power}`);
+      
 
       resolve(prize);
       // if (house[i] === "🍒") {
