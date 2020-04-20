@@ -144,6 +144,7 @@ module.exports = (callback_query, ship, data) => {
         ship.purse.balance += prize;
         ship.save();
         b.sendMessage(ship.id, `You won ${KORONA}${prize}\nNew Balance: ${KORONA}${ship.purse.balance}`);
+        b.sendKeyboard(ship.id, "Play again?", keyboards.slots("", "SL"));
       });
     });
   } else if (data.action === "buy") {
