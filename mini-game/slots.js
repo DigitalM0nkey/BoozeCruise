@@ -74,15 +74,15 @@ module.exports = (ship, bet, messageId) => {
       // b.sendMessage(ship.id, "❓|❓|❓", "");
       for (let i = 0; i < odds; i++) {
         setTimeout(function () {
-          b.editMessageText(
+          b.sendMessage(
             ship.id,
-            messageId,
             house.reduce(
               (msg, symbol, j) =>
                 msg +
                 (i >= j ? (j === house.length - 1 ? symbol : symbol + "|") : j === house.length - 1 ? "❓" : "❓|"),
               ""
-            )
+            ),
+            messageId
           );
         }, 1000 * i);
       }
