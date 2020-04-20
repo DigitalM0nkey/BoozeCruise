@@ -73,7 +73,7 @@ module.exports = (ship, bet) => {
     const print = () => {
       for (let i = 0; i < odds; i++) {
         setTimeout(function () {
-          b.sendMessage(
+          b.editMessageText(
             ship.id,
             house.reduce(
               (msg, symbol, j) =>
