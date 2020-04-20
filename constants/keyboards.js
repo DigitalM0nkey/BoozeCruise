@@ -24,7 +24,7 @@ module.exports = {
           ? [
               { text: emoji.moneyBag + "Purser" + emoji.moneyBag },
               { text: emoji.joker + "Casino" + emoji.joker },
-              { text: emoji.gift + "Shop" + emoji.gift },
+              // { text: emoji.gift + "Shop" + emoji.gift },
             ]
           : [{ text: emoji.moneyBag + "Purser" + emoji.moneyBag }],
         [{ text: emoji.bug + "Maintenance" + emoji.bug }, { text: emoji.helm + "Capt's Log" + emoji.helm }],
@@ -157,11 +157,11 @@ module.exports = {
       //     text: emoji.cocktail + "Mixology" + emoji.cocktail
       //   }
       // ],
-      [
-        {
-          text: `${emoji.slots} Slots ${emoji.slots}`,
-        },
-      ],
+      // [
+      //   {
+      //     text: `${emoji.slots} Slots ${emoji.slots}`,
+      //   },
+      // ],
       [
         {
           text: "\u2630 Main Menu \u2630",
@@ -354,9 +354,7 @@ module.exports = {
         },
       ],
       [
-        {
-          text: "/beta",
-        },
+        { text: emoji.gift + "Shop" + emoji.gift },
         {
           text: `${emoji.slots} Slots ${emoji.slots}`,
         },
