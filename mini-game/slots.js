@@ -95,7 +95,7 @@ module.exports = (ship, bet, messageId) => {
       let prize = house.reduce((prize, symbol) => prize + (symbol === "🍒" ? halfBet : 0), 0);
       let power = 1;
       ///jackpot
-      console.log("EVERY HOUSE ", house.every(jackpot);
+      console.log("EVERY HOUSE ", house.every(jackpot));
 
       if (house.every(jackpot)) {
         power = 2;
@@ -109,7 +109,6 @@ module.exports = (ship, bet, messageId) => {
       console.log(`Bet: ${bet}`);
       console.log(`Half Bet: ${halfBet}`);
       console.log(`Power ${power}`);
-      
 
       resolve(prize);
       // if (house[i] === "🍒") {
