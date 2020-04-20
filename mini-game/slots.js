@@ -71,10 +71,10 @@ module.exports = (ship, bet, messageId) => {
     console.log(rolls);
 
     const print = () => {
-      // b.sendMessage(ship.id, "❓|❓|❓", "");
+      b.sendMessage(ship.id, "❓|❓|❓", "");
       for (let i = 0; i < odds; i++) {
         setTimeout(function () {
-          b.sendMessage(
+          b.editMessageText(
             ship.id,
             messageId,
             house.reduce(
