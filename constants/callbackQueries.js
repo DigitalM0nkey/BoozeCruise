@@ -14,7 +14,7 @@ const slots = require("../mini-game/slots");
 const moment = require("moment");
 const _ = require("underscore");
 
-module.exports = (from, ship, data) => {
+module.exports = (callback_query, ship, data) => {
   if (data.action === "navigate") {
     if (ship.id != MYSHIP) {
       Port.findOne({
@@ -48,15 +48,19 @@ module.exports = (from, ship, data) => {
     Port.find({
       "location.sector": data.sector,
     }).then(function (ports) {
-      globalFunctions.sendAvailablePorts(from.id, ports, ship);
+      globalFunctions.sendAvailablePorts(callback_query.from.id, ports, ship);
     });
     // Start Product list
   } else if (data.action === "product") {
     Product.findOne({ _id: data.product }).then((product) => {
-      b.sendPhoto(from.id, product.image, product.name + "\n" + product.type + "\n" + product.description);
+      b.sendPhoto(
+        callback_query.from.id,
+        product.image,
+        product.name + "\n" + product.type + "\n" + product.description
+      );
       setTimeout(function () {
         b.sendKeyboard(
-          from.id,
+          callback_query.from.id,
           "Price: " +
             KORONA +
             product.price +
@@ -75,15 +79,15 @@ module.exports = (from, ship, data) => {
     LowestHighest.findOne({ inProgress: true, _id: data.action.split("_")[1] }).then(function (game) {
       if (game) {
         console.log(game);
-        console.log(_.find(game.players, (player) => player.id == from.id));
+        console.log(_.find(game.players, (player) => player.id == callback_query.from.id));
 
-        if (_.find(game.players, (player) => player.id == from.id)) {
-          b.sendMessage(from.id, "You have already picked a number for this game");
+        if (_.find(game.players, (player) => player.id == callback_query.from.id)) {
+          b.sendMessage(callback_query.from.id, "You have already picked a number for this game");
         } else {
           game.players.push({
-            id: from.id,
+            id: callback_query.from.id,
             guess: data.num,
-            name: from.first_name,
+            name: callback_query.from.first_name,
           });
           if (game.players.length === 2) {
             let result = lowestHighest(game.houseGuess, game.players[0], game.players[1]);
@@ -116,23 +120,24 @@ module.exports = (from, ship, data) => {
             }
             game.inProgress = false;
           } else {
-            b.sendMessage(from.id, "You have selected " + data.num);
+            b.sendMessage(callback_query.from.id, "You have selected " + data.num);
             broadcast(
-              `<pre>Lowest-Highest</pre>\n\n${from.first_name} just played Lowest-Highest and is waiting for an opponent.\n <b>Think you can beat ${from.first_name}?</b>\n Go to the casino <i>(only avalible while sailing)</i> and pick a number that is higher ⬆️ then ${from.first_name}'s, but lower ⬇️ than the house. Good Luck`
+              `<pre>Lowest-Highest</pre>\n\n${callback_query.from.first_name} just played Lowest-Highest and is waiting for an opponent.\n <b>Think you can beat ${callback_query.from.first_name}?</b>\n Go to the casino <i>(only avalible while sailing)</i> and pick a number that is higher ⬆️ then ${callback_query.from.first_name}'s, but lower ⬇️ than the house. Good Luck`
             );
           }
           game.save();
         }
       } else {
-        b.sendMessage(from.id, "This game is already finished. Stop picking numbers");
+        b.sendMessage(callback_query.from.id, "This game is already finished. Stop picking numbers");
       }
     });
   } else if (data.action.indexOf("SL_") === 0) {
+    console.log("FORM =>", callback_query.from);
+
     //SLOTS GAME
     //data.num = bet
-    Ship.findOne({ id: from.id }).then(function (ship) {
-      slots(ship, data.num)
-      .then(prize => {
+    Ship.findOne({ id: callback_query.from.id }).then(function (ship) {
+      slots(ship, data.num).then((prize) => {
         ship.purse.balance += prize;
         ship.save();
         b.sendMessage(ship.id, `You won ${KORONA}${prize}\nNew Balance: ${KORONA}${ship.purse.balance}`);
@@ -149,7 +154,7 @@ module.exports = (from, ship, data) => {
       product.save();
     });
     // } else if (something) {
-  } else if (data.action === 'treasure') {
+  } else if (data.action === "treasure") {
     globalFunctions.lookForTreasure(ship);
   }
   function broadcast(message) {

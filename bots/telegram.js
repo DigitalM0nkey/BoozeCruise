@@ -98,13 +98,11 @@ function TelegramBot() {
         resolve();
       });
     });
-  bot.editMessageText = (channel, message) =>
+  bot.editMessageText = (channel, messageID, message) =>
     new Promise((resolve, reject) => {
       const url = `https://api.telegram.org/bot${
         bot.token
-      }/editMessageText?chat_id=${channel}&disable_notification=true&parse_mode=html&text=${encodeURIComponent(
-        message
-      )}`;
+      }/editMessageText?chat_id=${channel}&message_id=${messageID}&parse_mode=html&text=${encodeURIComponent(message)}`;
       request(url, (error, r, body) => {
         const response = JSON.parse(body).result;
         //console.log(response);

@@ -10,7 +10,7 @@ let rolls = [
 ];
 let plays = 0;
 
-module.exports = (ship, bet) => {
+module.exports = (ship, bet, messageId) => {
   return new Promise(function (resolve, reject) {
     bet = parseInt(bet, 10);
     halfBet = Math.round(bet / 2);
@@ -76,6 +76,7 @@ module.exports = (ship, bet) => {
         setTimeout(function () {
           b.sendMessage(
             ship.id,
+            messageId,
             house.reduce(
               (msg, symbol, j) =>
                 msg +

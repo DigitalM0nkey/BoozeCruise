@@ -158,7 +158,7 @@ router.post("/", ({ body }, res, next) => {
     }).then((ship) => {
       //if (parseInt(req.body.callback_query.from.id) > 0) { } else { }
       const data = JSON.parse(body.callback_query.data);
-      callbackQueries(body.callback_query.from, ship, data);
+      callbackQueries(body.callback_query, ship, data);
       // End Mini-game Lowest-Highest
     });
     return res.sendStatus(200);
