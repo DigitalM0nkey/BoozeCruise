@@ -95,6 +95,8 @@ module.exports = (ship, bet, messageId) => {
       let prize = house.reduce((prize, symbol) => prize + (symbol === "🍒" ? halfBet : 0), 0);
       let power = 1;
       ///jackpot
+      console.log("EVERY HOUSE ", house.every(house[0]));
+
       if (house.every(house[0])) {
         power = 2;
       }
