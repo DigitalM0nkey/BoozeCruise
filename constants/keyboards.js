@@ -71,6 +71,9 @@ module.exports = {
         {
           text: "/dock",
         },
+        {
+          text: "/beta",
+        },
       ],
     ],
   },
@@ -355,7 +358,7 @@ module.exports = {
           text: "/beta",
         },
         {
-          text: "Something",
+          text: `${emoji.slots} Slots ${emoji.slots}`,
         },
       ],
     ],
