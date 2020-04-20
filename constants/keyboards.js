@@ -350,6 +350,14 @@ module.exports = {
           text: "\u2630 Main Menu \u2630",
         },
       ],
+      [
+        {
+          text: "/beta",
+        },
+        {
+          text: "Something",
+        },
+      ],
     ],
     resize_keyboard: true,
   },
