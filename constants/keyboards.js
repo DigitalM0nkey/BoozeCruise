@@ -372,7 +372,7 @@ module.exports = {
     resize_keyboard: true,
   },
   slots: function () {
-    let keyboard = { inline_keyboard: [10, 30, 50, 70, 90, 100] };
+    let keyboard = { inline_keyboard: [[10, 30, 50, 70, 90, 100]] };
     return keyboard;
   },
 
