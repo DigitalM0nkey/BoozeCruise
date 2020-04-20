@@ -82,7 +82,10 @@ module.exports = (callback_query, ship, data) => {
         console.log(_.find(game.players, (player) => player.id == callback_query.from.id));
 
         if (_.find(game.players, (player) => player.id == callback_query.from.id)) {
-          b.sendMessage(callback_query.from.id, "You have already picked a number for this game");
+          b.sendMessage(
+            callback_query.from.id,
+            "You have already picked a number for this game, currently waiting for an opponent"
+          );
         } else {
           game.players.push({
             id: callback_query.from.id,
@@ -132,12 +135,12 @@ module.exports = (callback_query, ship, data) => {
       }
     });
   } else if (data.action.indexOf("SL_") === 0) {
-    console.log("FORM =>", callback_query.from);
+    console.log("FROM =>", callback_query.from);
 
     //SLOTS GAME
     //data.num = bet
     Ship.findOne({ id: callback_query.from.id }).then(function (ship) {
-      slots(ship, data.num).then((prize) => {
+      slots(ship, data.num, callback_query.from.id).then((prize) => {
         ship.purse.balance += prize;
         ship.save();
         b.sendMessage(ship.id, `You won ${KORONA}${prize}\nNew Balance: ${KORONA}${ship.purse.balance}`);
