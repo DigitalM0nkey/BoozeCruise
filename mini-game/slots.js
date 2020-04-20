@@ -74,7 +74,7 @@ module.exports = (ship, bet, messageId) => {
       // b.sendMessage(ship.id, "❓|❓|❓", "");
       for (let i = 0; i < odds; i++) {
         setTimeout(function () {
-          b.editMessageText(
+          b.sendMessage(
             ship.id,
             messageId,
             house.reduce(
