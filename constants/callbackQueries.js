@@ -135,7 +135,7 @@ module.exports = (callback_query, ship, data) => {
       }
     });
   } else if (data.action.indexOf("SL_") === 0) {
-    console.log("FROM =>", callback_query.from);
+    console.log("CALLBACK QUERY =>", callback_query);
 
     //SLOTS GAME
     //data.num = bet
