@@ -384,8 +384,14 @@ module.exports = {
   },
   slots: function (gameId, type) {
     let keyboard = {
-      inline_keyboard: [[{ text: 10, callback_data: JSON.stringify({ action: `${type}_${gameId}`, num: 10 }) }]],
+      inline_keyboard: [],
     };
+    for (let i = 20; i <= 100; i += 20) {
+      keyboard.inline_keyboard[i].push({
+        text: i,
+        callback_data: JSON.stringify({ action: `${type}_${gameId}`, num: i }),
+      });
+    }
     return keyboard;
   },
 
