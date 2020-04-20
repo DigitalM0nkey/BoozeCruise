@@ -288,14 +288,13 @@ router.post("/", ({ body }, res, next) => {
                 });
               });
             }
+            // End Mini-game Lowest-Highest
           } else if (body.message.text == `${emoji.slots} Slots ${emoji.slots}`) {
-            console.log(keyboards.numbers("", "SL"));
-            b.sendKeyboard(ship.id, "Place your bet", keyboards.numbers("", "SL"));
-          }
-          // End Mini-game Lowest-Highest
-
-          // Decison keyboard promped
-          else if (body.message.text == "\u2693 Dock \u2693") {
+            // console.log(keyboards.numbers("", "SL"));
+            b.sendKeyboard(ship.id, "Place your bet", keyboards.slots());
+          } else if (body.message.text == `/beta`) {
+            b.sendKeyboard(ship.id, "Your testing beta features! Things may break", keyboards.beta);
+          } else if (body.message.text == "\u2693 Dock \u2693") {
             Port.findOne({
               id: ship.location.port,
             }).then(({ id }) => {
@@ -770,7 +769,7 @@ router.get("/", (req, res, next) => {
     message: "get ok",
   });
 });
-b.sendKeyboard("510423667", `${randomQuote(quotes)} \n\n<pre>Also the server restarted</pre>`, keyboards.home(false));
+b.sendKeyboard("510423667", `${randomQuote(quotes)} \n\n<pre>Also the server restarted</pre>`, keyboards.admin(false));
 
 module.exports = router;
 

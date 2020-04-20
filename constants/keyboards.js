@@ -343,6 +343,16 @@ module.exports = {
     ],
     resize_keyboard: true,
   },
+  beta: {
+    keyboard: [
+      [
+        {
+          text: "\u2630 Main Menu \u2630",
+        },
+      ],
+    ],
+    resize_keyboard: true,
+  },
   ports: {
     keyboard: [
       [
@@ -361,6 +371,11 @@ module.exports = {
     ],
     resize_keyboard: true,
   },
+  slots: function () {
+    let keyboard = { inline_keyboard: [10, 30, 50, 70, 90, 100] };
+    return keyboard;
+  },
+
   numbers: function (gameId, type) {
     let keyboard = { inline_keyboard: [] };
     for (let i = 0; i < 20; i++) {
