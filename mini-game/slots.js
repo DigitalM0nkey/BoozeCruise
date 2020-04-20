@@ -76,13 +76,13 @@ module.exports = (ship, bet, messageId) => {
         setTimeout(function () {
           b.sendMessage(
             ship.id,
+            messageId,
             house.reduce(
               (msg, symbol, j) =>
                 msg +
                 (i >= j ? (j === house.length - 1 ? symbol : symbol + "|") : j === house.length - 1 ? "❓" : "❓|"),
               ""
-            ),
-            messageId
+            )
           );
         }, 1000 * i);
       }
