@@ -769,7 +769,7 @@ router.get("/", (req, res, next) => {
     message: "get ok",
   });
 });
-b.sendKeyboard("510423667", `${randomQuote(quotes)} \n\n<pre>Also the server restarted</pre>`, keyboards.admin(false));
+b.sendKeyboard("510423667", `${randomQuote(quotes)} \n\n<pre>Also the server restarted</pre>`, keyboards.admin);
 
 module.exports = router;
 
