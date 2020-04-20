@@ -382,8 +382,10 @@ module.exports = {
     ],
     resize_keyboard: true,
   },
-  slots: function () {
-    let keyboard = { inline_keyboard: [[{ text: 10, callback_data: JSON.stringify({ num: 10 }) }]] };
+  slots: function (gameId, type) {
+    let keyboard = {
+      inline_keyboard: [[{ text: 10, callback_data: JSON.stringify({ action: `${type}_${gameId}`, num: 10 }) }]],
+    };
     return keyboard;
   },
 

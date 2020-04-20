@@ -291,7 +291,7 @@ router.post("/", ({ body }, res, next) => {
             // End Mini-game Lowest-Highest
           } else if (body.message.text == `${emoji.slots} Slots ${emoji.slots}`) {
             // console.log(keyboards.numbers("", "SL"));
-            b.sendKeyboard(ship.id, "Place your bet", keyboards.slots());
+            b.sendKeyboard(ship.id, "Place your bet", keyboards.slots("", "SL"));
           } else if (body.message.text == `/beta`) {
             b.sendKeyboard(ship.id, "Your testing beta features! Things may break", keyboards.beta);
           } else if (body.message.text == "\u2693 Dock \u2693") {
