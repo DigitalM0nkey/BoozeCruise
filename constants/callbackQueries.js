@@ -140,7 +140,7 @@ module.exports = (callback_query, ship, data) => {
     //SLOTS GAME
     //data.num = bet
     Ship.findOne({ id: callback_query.from.id }).then(function (ship) {
-      slots(ship, data.num, callback_query.from.id).then((prize) => {
+      slots(ship, data.num, callback_query.message_id).then((prize) => {
         ship.purse.balance += prize;
         ship.save();
         b.sendMessage(ship.id, `You won ${KORONA}${prize}\nNew Balance: ${KORONA}${ship.purse.balance}`);
