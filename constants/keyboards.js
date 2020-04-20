@@ -383,7 +383,7 @@ module.exports = {
     resize_keyboard: true,
   },
   slots: function () {
-    let keyboard = { inline_keyboard: [[{ text: 10, num: 10 }]] };
+    let keyboard = { inline_keyboard: [[{ text: 10, callback_data: JSON.stringify({ num: 10 }) }]] };
     return keyboard;
   },
 
