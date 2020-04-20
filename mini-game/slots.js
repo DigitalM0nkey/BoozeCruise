@@ -1,4 +1,3 @@
-
 const b = require("../bots/telegram").boozecruiseBot;
 
 const symbols = ["🍒", "🛳", "🏝", "🌊", "☀️"];
@@ -12,14 +11,14 @@ let rolls = [
 let plays = 0;
 
 module.exports = (ship, bet) => {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     bet = parseInt(bet, 10);
     halfBet = Math.round(bet / 2);
     let odds = 0;
-    if (bet <= 30) {
+    if (bet <= 91) {
       odds = 3;
-    } else if (bet <= 100) {
-      odds = Math.ceil((bet + 1) / 10);
+    } else if (bet <= 10) {
+      odds = Math.ceil((bet - 1) / 10);
     } else {
       odds = 10;
     }
@@ -42,11 +41,15 @@ module.exports = (ship, bet) => {
     const print = () => {
       for (let i = 0; i < odds; i++) {
         setTimeout(function () {
-          b.sendMessage(ship.id, house.reduce(
-            (msg, symbol, j) =>
-              msg + (i >= j ? (j === house.length - 1 ? symbol : symbol + "|") : j === house.length - 1 ? "❓" : "❓|"),
-            ""
-          ));
+          b.sendMessage(
+            ship.id,
+            house.reduce(
+              (msg, symbol, j) =>
+                msg +
+                (i >= j ? (j === house.length - 1 ? symbol : symbol + "|") : j === house.length - 1 ? "❓" : "❓|"),
+              ""
+            )
+          );
         }, 1000 * i);
       }
       setTimeout(() => {
