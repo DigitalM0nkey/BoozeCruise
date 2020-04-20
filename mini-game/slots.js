@@ -91,9 +91,13 @@ module.exports = (ship, bet, messageId) => {
     };
 
     const prizes = () => {
-      i = 0;
-      prize = house.reduce((prize, symbol) => prize + (symbol === "🍒" ? halfBet : 0), 0);
+      let i = 0;
+      let prize = house.reduce((prize, symbol) => prize + (symbol === "🍒" ? halfBet : 0), 0);
       let power = 1;
+      ///jackpot
+      if (house.every(house[0])) {
+        power = 2;
+      }
       while (house[i] === "🍒") {
         power += 0.1;
         i++;
@@ -102,6 +106,7 @@ module.exports = (ship, bet, messageId) => {
       console.log(`Prize: ${prize}`);
       console.log(`Bet: ${bet}`);
       console.log(`Half Bet: ${halfBet}`);
+
       resolve(prize);
       // if (house[i] === "🍒") {
       //   document.getElementById("balance").innerHTML = balance + parseInt(bet, 10);
@@ -112,6 +117,10 @@ module.exports = (ship, bet, messageId) => {
       if (house) {
         console.log("Hello");
       }
+    };
+
+    const jackpot = () => {
+      house.every(house[0]);
     };
 
     print();
