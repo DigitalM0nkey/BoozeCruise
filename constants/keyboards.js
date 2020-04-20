@@ -61,7 +61,7 @@ module.exports = {
     keyboard: [
       [
         {
-          text: "ADMIN",
+          text: `${emoji.slots} Slots ${emoji.slots}`,
         },
         {
           text: "\u2630 Main Menu \u2630",
