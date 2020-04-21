@@ -24,6 +24,7 @@ const guest = require("../../types/guest");
 const LowestHighest = require("../../models/mini-games/lowestHighest/lowestHighest");
 
 const b = TelegramBot.boozecruiseBot;
+const log = globalFunctions.log;
 
 //TODO -- Add 'Get back to ship' command in port.
 //TODO -- comment out keyboard keys that are not currently in use.
@@ -291,6 +292,7 @@ router.post("/", ({ body }, res, next) => {
             }
             // End Mini-game Lowest-Highest
           } else if (body.message.text == `${emoji.slots} Slots ${emoji.slots}`) {
+            log(ship.id, "Playing the slots");
             // console.log(keyboards.numbers("", "SL"));
             b.sendKeyboard(ship.id, "Place your bet", keyboards.slots("", "SL"));
           } else if (body.message.text == `/beta`) {
@@ -770,11 +772,10 @@ router.get("/", (req, res, next) => {
     message: "get ok",
   });
 });
-const log = globalFunctions.log;
+
 b.sendKeyboard("510423667", `${randomQuote(quotes)} \n\n<pre>Also the server restarted</pre>`, keyboards.admin);
-b.sendMessage("-1001473681735", "Server Restarted");
-globalFunctions.log("test", "This is a test");
-log("Admin", "Second Test");
+// b.sendMessage("-1001473681735", "Server Restarted"); not in use right now
+log("Server", "Restart");
 module.exports = router;
 
 function broadcast(message) {
