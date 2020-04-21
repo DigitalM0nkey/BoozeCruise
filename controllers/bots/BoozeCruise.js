@@ -588,7 +588,7 @@ router.post("/", ({ body }, res, next) => {
         } else {
           if (body.message.text == "/start") {
             //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
-            b.sendKeyboard(body.message.chat.id, WELCOME, keyboards.home(ship.nextLocation.port));
+            b.sendKeyboard(body.message.chat.id, WELCOME, keyboards.home);
           } else if (body.message.text == "/return") {
             b.sendKeyboard(body.message.chat.id, "Click Here => @BoozeCruise_bot", keyboards.port);
           } else if (body.message.text == "Return to Ship") {
@@ -771,6 +771,7 @@ router.get("/", (req, res, next) => {
   });
 });
 b.sendKeyboard("510423667", `${randomQuote(quotes)} \n\n<pre>Also the server restarted</pre>`, keyboards.admin);
+b.sendMessage("-1001473681735", "Server Restarted");
 
 module.exports = router;
 
