@@ -315,6 +315,7 @@ router.post("/", ({ body }, res, next) => {
               });
             });
           } else if (body.message.text == "/nav") {
+            log(player, "Navigating");
             b.sendKeyboard(
               body.message.chat.id,
               "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.",
@@ -330,9 +331,11 @@ router.post("/", ({ body }, res, next) => {
               keyboards.navigation
             );
           } else if (body.message.text == "\ud83d\udcb0 Treasure \ud83d\udcb0") {
+            log(player, "Looking for Treasure");
             globalFunctions.lookForTreasure(ship);
             // Captains Log:
           } else if (body.message.text.substring(0, body.message.text.indexOf(" ")) == "/log") {
+            log(player, "Wrote a Capt's log");
             const message = body.message.text.substring(body.message.text.indexOf(" ") + 1);
             b.sendMessage(ship.id, `Captain's Log: ${message}`);
             Ship.findOne({
@@ -348,12 +351,14 @@ router.post("/", ({ body }, res, next) => {
 
             // GIFT SHOP
           } else if (body.message.text.includes("Shop")) {
+            log(player, "Entered the gift shop");
             b.sendKeyboard(
               body.message.chat.id,
               "This is the ship's gift shop.\n\n From here you can buy trinkets and whositswhatsits that will benefit you in the game",
               keyboards.shop
             );
           } else if (body.message.text == "Products") {
+            log(player, "Perusing products in the gift shop");
             Product.find({}).then((products) => {
               b.sendKeyboard(body.message.chat.id, "Buy something.", keyboards.products(products));
             });
@@ -366,6 +371,7 @@ router.post("/", ({ body }, res, next) => {
             ship.communication.forEach(({ date, transcript }) => {
               logReport += `${moment(date).format("LL")} | ${transcript}\n\n`;
             });
+            log(player, "Viewing the Capt's log");
             b.sendMessage(ship.id, logReport);
 
             // Broadcast
@@ -382,9 +388,11 @@ router.post("/", ({ body }, res, next) => {
             }
           } else if (body.message.text == "/admin") {
             //if (ship._id == MYSHIP) {
+            log(player, "Tinkering in Admin");
             b.sendKeyboard(body.message.chat.id, "Welcome to the admin panel", keyboards.admin);
             //}
           } else if (body.message.text == "/dock") {
+            log(player, "Insta-docked... Pretty sure that is cheating.");
             ship.nextLocation.arrival = new Date();
             ship.save();
             b.sendMessage(body.message.chat.id, "Now Docking... Please stand by!");
@@ -399,6 +407,7 @@ router.post("/", ({ body }, res, next) => {
               keyboards.home(ship.nextLocation.port)
             );
           } else if (body.message.text == "\ud83c\udf78 Cocktail \ud83c\udf78") {
+            log(player, "Ordered a cocktail. Stay classy baby!");
             mixology.getCocktail().then((cocktail) => {
               b.sendPhoto(
                 ship.id,
@@ -409,23 +418,27 @@ router.post("/", ({ body }, res, next) => {
               );
             });
           } else if (body.message.text.includes("Lounge")) {
+            log(player, "Entered the lounge.");
             b.sendKeyboard(
               body.message.chat.id,
               "Welcome to the ships cocktail lounge. Stay a while, order a drink.",
               keyboards.lounge
             );
           } else if (body.message.text == "Deposit") {
+            log(player, "<b>Wants to deposit money</b>");
             b.sendMessage(
               ship.id,
               "This feature is coming soon! \n\nIn the meantime you should look for treasure the next time you are in port."
             );
           } else if (body.message.text == "\ud83d\udc1b Suggestions \ud83d\udc1b") {
+            log(player, "Excuse me... I have a suggestion");
             b.sendKeyboard(
               body.message.chat.id,
               "Got an idea?\n\nGo here to tell us\n\nhttps://t.me/joinchat/HmxycxOCylQHWIDtPsd7pw",
               keyboards.home(ship.nextLocation.port)
             );
           } else if (body.message.text == "\ud83c\udfdd Ports of Call \ud83c\udfdd") {
+            log(player, "Deciding where to go next");
             Port.find({
               id: {
                 $ne: ship.location.port,
@@ -520,18 +533,21 @@ router.post("/", ({ body }, res, next) => {
               }, 5000);
             });
           } else if (body.message.text == "\ud83d\udcb0 Purser \ud83d\udcb0") {
+            log(player, "At the Pursers desk.");
             b.sendKeyboard(
               body.message.chat.id,
               `A ship's purser is the person on a ship principally responsible for the handling of money on board.\n\nThe currency is Korona or ${KORONA} for short. \n\n How may I help you today?`,
               keyboards.purser
             );
           } else if (body.message.text.includes("Casino")) {
+            log(player, "Entered the Casino. ");
             b.sendKeyboard(
               body.message.chat.id,
               `A ship's casino is a place where you can spend your ${KORONA} for chance to win.`,
               keyboards.casino
             );
           } else if (body.message.text == "\u2195 Lowest Highest \u2195") {
+            log(player, "Playing Lowest-Highest");
             LowestHighest.find({ jackpotPaid: false }).then(({ length }) => {
               b.sendKeyboard(
                 body.message.chat.id,
@@ -544,12 +560,14 @@ router.post("/", ({ body }, res, next) => {
               );
             });
           } else if (body.message.text == "\ud83d\udc65 Manifest \ud83d\udc65") {
+            log(player, "Looking into the ships records.");
             b.sendKeyboard(
               body.message.chat.id,
               "A document giving comprehensive details of a ship and its cargo and other contents, passengers, and crew for the use of customs officers.",
               keyboards.manifest
             );
           } else if (body.message.text == "\ud83d\udc65 Guest Manifest \ud83d\udc65") {
+            log(player, "Inspecting the Guest Manifest.");
             b.sendKeyboard(
               body.message.chat.id,
               `<u>The Guest Manifest:</u>\n${globalFunctions.generateManifest(ship.guests)}<pre>Total Guests: ${
@@ -558,6 +576,7 @@ router.post("/", ({ body }, res, next) => {
               keyboards.home(ship.nextLocation.port)
             );
           } else if (body.message.text == "\ud83c\udf87 Achievements \ud83c\udf87") {
+            log(player, "Looking in the mirror and telling themself.. Man I look good!");
             Ship.findOne({
               id: ship.id,
             })
@@ -618,6 +637,7 @@ router.post("/", ({ body }, res, next) => {
             })
               .populate("products.product")
               .then((ship) => {
+                const player = ship.user.first_name;
                 const perks = ship.products
                   .filter((product) => {
                     console.log(product);
@@ -655,6 +675,8 @@ router.post("/", ({ body }, res, next) => {
                   return income;
                 });
                 console.log("INCOME FROM NEW GUESTS =>", income);
+                log(player, `Docked in ${port.name}`);
+                log(player, `Received ${KORONA}${income} from \n${globalFunctions.generateManifest(newGuests)}`);
                 ship.purse.balance += income;
 
                 ship.save();
