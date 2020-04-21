@@ -68,8 +68,6 @@ const minutelyEvent = schedule.scheduleJob("0 */1 * * * *", () => {
         const nextPort = _.find(ports, ({ id }) => {
           return id == ship.nextLocation.port;
         });
-        console.log("NEXT PORT: ", nextPort);
-        console.log("NEXT PORT ID: ", nextPort.id);
         if (nextPort) {
           b.exportChatInviteLink(nextPort.id).then((link) => {
             b.sendKeyboard(
