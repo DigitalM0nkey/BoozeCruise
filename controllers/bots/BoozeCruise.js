@@ -25,6 +25,7 @@ const LowestHighest = require("../../models/mini-games/lowestHighest/lowestHighe
 
 const b = TelegramBot.boozecruiseBot;
 const log = globalFunctions.log;
+const player = ship.user.first_name;
 
 //TODO -- Add 'Get back to ship' command in port.
 //TODO -- comment out keyboard keys that are not currently in use.
@@ -294,6 +295,8 @@ router.post("/", ({ body }, res, next) => {
             // End Mini-game Lowest-Highest
           } else if (body.message.text == `${emoji.slots} Slots ${emoji.slots}`) {
             log(ship.user.first_name, "Playing the slots");
+            log(player, "PLAYER Playing the slots");
+            log(ship.name, "P");
             // console.log(keyboards.numbers("", "SL"));
             b.sendKeyboard(ship.id, "Place your bet", keyboards.slots("", "SL"));
           } else if (body.message.text == `/beta`) {
