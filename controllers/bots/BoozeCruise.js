@@ -772,6 +772,7 @@ router.get("/", (req, res, next) => {
 });
 b.sendKeyboard("510423667", `${randomQuote(quotes)} \n\n<pre>Also the server restarted</pre>`, keyboards.admin);
 b.sendMessage("-1001473681735", "Server Restarted");
+b.sendMessage("-1001289301939", "Server Restarted - blast");
 
 module.exports = router;
 
