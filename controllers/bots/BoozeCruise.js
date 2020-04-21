@@ -169,7 +169,7 @@ router.post("/", ({ body }, res, next) => {
     //Ignore these messages as they're just chat interactions
     return res.sendStatus(200);
   } else if (
-    body.text ||
+    body.channel_post ||
     body.edited_message ||
     body.message.photo ||
     body.message.game ||
