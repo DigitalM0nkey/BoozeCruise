@@ -70,31 +70,32 @@ const minutelyEvent = schedule.scheduleJob("0 */1 * * * *", () => {
         });
         console.log("NEXT PORT: ", nextPort);
         console.log("NEXT PORT ID: ", nextPort.id);
-
-        b.exportChatInviteLink(nextPort.id).then((link) => {
-          b.sendKeyboard(
-            ship.id,
-            `This is the ${nextPort.name} port authority \nUse this link to dock.\n`,
-            { inline_keyboard: [[{ text: nextPort.name, url: link }]] }
-            // keyboards.arrival
-            // keyboards.home(false)
-          );
-          ship.location = nextPort.location;
-          ship.location.port = nextPort.id;
-          ship.nextLocation = undefined;
-          ship.portHistory.push({
-            port: ship.location.port,
-            arrivalDate: new Date(),
+        if (nextPort) {
+          b.exportChatInviteLink(nextPort.id).then((link) => {
+            b.sendKeyboard(
+              ship.id,
+              `This is the ${nextPort.name} port authority \nUse this link to dock.\n`,
+              { inline_keyboard: [[{ text: nextPort.name, url: link }]] }
+              // keyboards.arrival
+              // keyboards.home(false)
+            );
+            ship.location = nextPort.location;
+            ship.location.port = nextPort.id;
+            ship.nextLocation = undefined;
+            ship.portHistory.push({
+              port: ship.location.port,
+              arrivalDate: new Date(),
+            });
+            ship.save().then(
+              (savedShip) => {
+                console.log(savedShip);
+              },
+              (e) => {
+                console.error(e);
+              }
+            );
           });
-          ship.save().then(
-            (savedShip) => {
-              console.log(savedShip);
-            },
-            (e) => {
-              console.error(e);
-            }
-          );
-        });
+        }
       });
     });
   });
