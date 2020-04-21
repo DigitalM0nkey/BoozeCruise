@@ -293,7 +293,7 @@ router.post("/", ({ body }, res, next) => {
             }
             // End Mini-game Lowest-Highest
           } else if (body.message.text == `${emoji.slots} Slots ${emoji.slots}`) {
-            log(ship.first_name, "Playing the slots");
+            log(ship.user.first_name, "Playing the slots");
             // console.log(keyboards.numbers("", "SL"));
             b.sendKeyboard(ship.id, "Place your bet", keyboards.slots("", "SL"));
           } else if (body.message.text == `/beta`) {
