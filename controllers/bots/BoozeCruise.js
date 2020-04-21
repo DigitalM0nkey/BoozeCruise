@@ -770,10 +770,11 @@ router.get("/", (req, res, next) => {
     message: "get ok",
   });
 });
+const log = globalFunctions.log;
 b.sendKeyboard("510423667", `${randomQuote(quotes)} \n\n<pre>Also the server restarted</pre>`, keyboards.admin);
 b.sendMessage("-1001473681735", "Server Restarted");
-b.sendMessage("-1001289301939", "Server Restarted - blast");
-
+globalFunctions.log("test", "This is a test");
+log("Admin", "Second Test");
 module.exports = router;
 
 function broadcast(message) {

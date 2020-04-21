@@ -88,6 +88,10 @@ exports.generateManifest = (guests) => {
   return message;
 };
 
+exports.log = (user, action) => {
+  return b.sendMessage("-1001289301939", `${user}: ${action}`);
+};
+
 exports.lookForTreasure = (ship) => {
   b.getChatMember(ship.location.port, ship.id).then(
     (chatMember) => {
