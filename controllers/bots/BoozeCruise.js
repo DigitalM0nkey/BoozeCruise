@@ -206,16 +206,19 @@ router.post("/", ({ body }, res, next) => {
               },
             });
             newShip.save();
-
+            log(player, `Just joined the party! Welcome!!`);
             b.sendKeyboard(body.message.chat.id, WELCOME, keyboards.home());
           });
         } else {
           if (body.message.text == "/start") {
             //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
             b.sendKeyboard(body.message.chat.id, WELCOME, keyboards.home(ship.nextLocation.port));
+            log(player, `Having engine troubles. Attempting to restart their ship.`);
           } else if (body.message.text == "Check Balance") {
             b.sendMessage(ship.id, `Your balance is ${KORONA}${ship.purse.balance}`);
+            log(player, `Checking if they have enough ${KORONA} for another cocktail.`);
           } else if (body.message.text == "\ud83c\udf87 Achievements \ud83c\udf87") {
+            log(player, `Checking out their stats.`);
             const portIds = ship.portHistory.map((port) => {
               return port.port;
             });
@@ -248,6 +251,7 @@ router.post("/", ({ body }, res, next) => {
           } else if (body.message.text == "Return to Ship") {
             b.sendKeyboard(body.message.chat.id, "@BoozeCruise_bot", keyboards.port);
           } else if (body.message.text == "\ud83d\udc81 Crew Manifest \ud83d\udc81") {
+            log(player, `making the rounds, checking in on the crew.`);
             b.sendMessage(ship.id, "There are plenty of crew on your ship. You'll meet them when the time is right.");
           } else if (body.message.text == "\u2630 Main Menu \u2630") {
             b.sendKeyboard(body.message.chat.id, "\u2630 Main Menu \u2630", keyboards.home(ship.nextLocation.port));
@@ -264,6 +268,12 @@ router.post("/", ({ body }, res, next) => {
                   `You will arrive in ${globalFunctions.calculateTime(ship.nextLocation.arrival)}`
                 );
                 b.sendKeyboard(ship.id, `Your ship is currently en route to ${name}`, keyboards.atSea);
+                log(
+                  player,
+                  `Set sail to ${name}. In fine weather they should arrive in ${globalFunctions.calculateTime(
+                    ship.nextLocation.arrival
+                  )}`
+                );
               });
             } else {
               Port.findOne({
