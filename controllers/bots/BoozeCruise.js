@@ -298,13 +298,12 @@ router.post("/", ({ body }, res, next) => {
             }
             // End Mini-game Lowest-Highest
           } else if (body.message.text == `${emoji.slots} Slots ${emoji.slots}`) {
-            log(ship.user.first_name, "Playing the slots");
-            log(player, "PLAYER Playing the slots");
-            log(ship.name, "P");
+            log(player, "Playing the slots");
             // console.log(keyboards.numbers("", "SL"));
             b.sendKeyboard(ship.id, "Place your bet", keyboards.slots("", "SL"));
           } else if (body.message.text == `/beta`) {
             b.sendKeyboard(ship.id, "Your testing beta features! Things may break", keyboards.beta);
+            log(player, "Testing beta features");
           } else if (body.message.text == "\u2693 Dock \u2693") {
             Port.findOne({
               id: ship.location.port,
