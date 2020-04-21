@@ -154,6 +154,7 @@ const moves = {
 // This post is everytime someone says something to the bot.
 
 router.post("/", ({ body }, res, next) => {
+  console.log(body);
   if (body.callback_query) {
     Ship.findOne({
       id: body.callback_query.from.id,
@@ -292,7 +293,7 @@ router.post("/", ({ body }, res, next) => {
             }
             // End Mini-game Lowest-Highest
           } else if (body.message.text == `${emoji.slots} Slots ${emoji.slots}`) {
-            log(ship.id, "Playing the slots");
+            log(ship.first_name, "Playing the slots");
             // console.log(keyboards.numbers("", "SL"));
             b.sendKeyboard(ship.id, "Place your bet", keyboards.slots("", "SL"));
           } else if (body.message.text == `/beta`) {
