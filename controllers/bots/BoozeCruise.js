@@ -165,7 +165,11 @@ router.post("/", ({ body }, res, next) => {
       // End Mini-game Lowest-Highest
     });
     return res.sendStatus(200);
+  } else if (body.edited_message) {
+    //Ignore these messages as they're just chat interactions
+    return res.sendStatus(200);
   } else if (
+    body.text ||
     body.edited_message ||
     body.message.photo ||
     body.message.game ||
