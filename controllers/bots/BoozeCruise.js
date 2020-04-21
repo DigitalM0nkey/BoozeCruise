@@ -25,7 +25,6 @@ const LowestHighest = require("../../models/mini-games/lowestHighest/lowestHighe
 
 const b = TelegramBot.boozecruiseBot;
 const log = globalFunctions.log;
-const player = ship.user.first_name;
 
 //TODO -- Add 'Get back to ship' command in port.
 //TODO -- comment out keyboard keys that are not currently in use.
@@ -46,15 +45,15 @@ const dailyEvent = schedule.scheduleJob("0 0 8 * * *", () => {
   });
 
   /*  Send a random event every day
-
-  var randomEvent = events[Math.floor(Math.random() * events.length)]
-  Ship.find({})
+    
+    var randomEvent = events[Math.floor(Math.random() * events.length)]
+    Ship.find({})
     .then(function(ships) {
       ships.forEach(function(ship) {
         b.sendKeyboard(ship.id, '<b>' + randomEvent.name + '</b> - ' + randomEvent.description, randomEvent.keyboard)
       });
     });
-
+    
     */
 });
 
@@ -102,17 +101,17 @@ const minutelyEvent = schedule.scheduleJob("0 */1 * * * *", () => {
 });
 // Global Variables
 /* Daily events list
-var events = [{
-    name: "Embarcation / Debarcation Day",
-    description: "<b>Your Cruise is over.</b> Your current Guests will disembark your ship this morning, bringing with them stories from their cruise, the happier they are, the more more likley they will cruise again and the more likley they will tell their friends to cruise. Guests that have had a negitive experence are not likley to cruise again and are more than likley to discourage future guests from cruising. Use the time that your ship has no guests, to clean it and prepare it for the next cruise, which departs tonight.",
-    keyboard: keyboards.home(ship.nextLocation.port)
-  },
-  {
-    name: "Deck Party",
-    description: "It's party time.",
-    keyboard: keyboards.home(ship.nextLocation.port)
-  },
-  {
+      var events = [{
+        name: "Embarcation / Debarcation Day",
+        description: "<b>Your Cruise is over.</b> Your current Guests will disembark your ship this morning, bringing with them stories from their cruise, the happier they are, the more more likley they will cruise again and the more likley they will tell their friends to cruise. Guests that have had a negitive experence are not likley to cruise again and are more than likley to discourage future guests from cruising. Use the time that your ship has no guests, to clean it and prepare it for the next cruise, which departs tonight.",
+        keyboard: keyboards.home(ship.nextLocation.port)
+      },
+      {
+        name: "Deck Party",
+        description: "It's party time.",
+        keyboard: keyboards.home(ship.nextLocation.port)
+      },
+      {
     name: "Formal Night",
     description: "Put on your glad rags and do your hair because tonight is formal night. That means it steak and lobster in the main dining room and a las Vegas style show in the Show Lounge.",
     keyboard: keyboards.home(ship.nextLocation.port)
@@ -182,6 +181,7 @@ router.post("/", ({ body }, res, next) => {
       Ship.findOne({
         id: body.message.chat.id,
       }).then((ship) => {
+        const player = ship.user.first_name;
         if (!ship) {
           Port.find({}).then((ports) => {
             const randomPort = ports[Math.floor(Math.random() * ports.length)];
@@ -268,9 +268,9 @@ router.post("/", ({ body }, res, next) => {
                 b.exportChatInviteLink(id).then((link) => {
                   b.sendKeyboard(ship.id, `You are currently in the ${name} harbour.`, keyboards.navigation);
                   /* setTimeout(function () {
-
-                     }, 5000);
-                   */
+                    
+                  }, 5000);
+                  */
                 });
               });
             }
