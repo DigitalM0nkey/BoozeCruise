@@ -64,11 +64,11 @@
   <script>
     const symbols = ["🍒", "🛳", "🏝", "🌊", "☀️"];
     let rolls = [
-      {symbol: "🍒", count: 0},
-      {symbol: "🛳", count: 0},
-      {symbol: "🏝", count: 0},
-      {symbol: "🌊", count: 0},
-      {symbol: "☀️", count: 0},
+      { symbol: "🍒", count: 0 },
+      { symbol: "🛳", count: 0 },
+      { symbol: "🏝", count: 0 },
+      { symbol: "🌊", count: 0 },
+      { symbol: "☀️", count: 0 },
     ];
     let plays = 0;
     // const symbols = ["🍒", "🛳", "🏝", "🌊", "☀️", "⚓️"];
@@ -128,7 +128,9 @@
           i++;
         }
         prize = Math.ceil(Math.pow(prize, power));
-        document.getElementById("balance").innerHTML = (balance + prize).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        document.getElementById("balance").innerHTML = (balance + prize)
+          .toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         console.log(`Prize: ${prize}`);
         console.log(`Bet: ${bet}`);
         console.log(`Half Bet: ${halfBet}`);
@@ -145,5 +147,15 @@
 
       print();
     };
+    const jackpot = (currentValue) => {
+      for (let i = 0; i < symbols.length; i++) {
+        if (currentValue === symbols[0]) {
+          console.log("Hello");
+        } else {
+          console.log("Not today");
+        }
+      }
+    };
+    jackpot("🛳");
   </script>
 </html>
