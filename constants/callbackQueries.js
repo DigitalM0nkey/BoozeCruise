@@ -166,6 +166,7 @@ module.exports = (callback_query, ship, data) => {
   } else if (data.action === "treasure") {
     globalFunctions.lookForTreasure(ship);
   } else if (data.action === "mixology") {
+    console.log(ship);
     mixology.getCocktail().then(cocktail => b.sendMessage(ship.id, cocktail));
     console.log('Do some mixology stuff');
   }
