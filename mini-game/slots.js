@@ -1,5 +1,5 @@
 const b = require("../bots/telegram").boozecruiseBot;
-const globalFunctions = require("../../constants/globalFunctions");
+const globalFunctions = require("../constants/globalFunctions");
 const log = globalFunctions.log;
 
 const symbols = ["🍒", "🛳", "🏝", "🌊", "☀️"];
