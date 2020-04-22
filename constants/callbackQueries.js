@@ -159,13 +159,6 @@ module.exports = (callback_query, ship, data) => {
             ],
           ],
         });
-
-        log(
-          `Casino`,
-          `<pre>Slot Stats</pre>\n${rolls.map(
-            (roll) => `${roll.symbol}-${roll.count}`
-          )}\nfrom ${plays} games\nSince server restart.`
-        );
       });
     });
   } else if (data.action === "buy") {
