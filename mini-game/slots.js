@@ -71,7 +71,12 @@ module.exports = (ship, bet, messageId) => {
     plays++;
     console.log(`${plays} times played`);
     console.log(rolls);
-    log(`Casino`, `<pre>Slot Stats</pre>\n${rolls.map(roll => `${roll.symbol}-${roll.count}`)} from ${plays} games\nSince server restart.`);
+    log(
+      `Casino`,
+      `<pre>Slot Stats</pre>\n${rolls.map(
+        (roll) => `${roll.symbol}-${roll.count}`
+      )}\nfrom ${plays} games\nSince server restart.`
+    );
 
     const print = () => {
       for (let i = 0; i < odds; i++) {
@@ -102,7 +107,11 @@ module.exports = (ship, bet, messageId) => {
       console.log("JACKPOT ??? => ", checkJackpot(house));
 
       if (checkJackpot(house)) {
+<<<<<<< HEAD
         jackpot = Math.pow(bet, 1 + (odds / 5));
+=======
+        jackpot = Math.power(bet, 1 + odds / 5);
+>>>>>>> e84aaded5ecf2eadb5ed20fe7a79f5951585bd2b
       }
       while (house[i] === "🍒") {
         power += 0.1;
@@ -126,7 +135,6 @@ module.exports = (ship, bet, messageId) => {
       }
     };
 
-
     //const checkJackpot = slots => slots.every(symbol => symbol === slots[0]);
 
     const checkJackpot = (currentValue) => {
@@ -135,7 +143,7 @@ module.exports = (ship, bet, messageId) => {
         console.log(value === currentValue[0]);
         return value === currentValue[0];
       };
-        if (currentValue.every(equal)) {
+      if (currentValue.every(equal)) {
         console.log("Jackpot");
         return true;
       } else {
