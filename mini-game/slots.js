@@ -90,27 +90,28 @@ module.exports = (ship, bet, messageId) => {
       }
       setTimeout(() => {
         prizes();
-      }, (odds - 1) * 1000);
+      }, odds * 1000);
     };
 
     const prizes = () => {
       let i = 0;
       let prize = house.reduce((prize, symbol) => prize + (symbol === "🍒" ? halfBet : 0), 0);
       let power = 1;
+      let jackpot = 0;
 
-      console.log("JACKPOT ??? => ", jackpot(house));
+      console.log("JACKPOT ??? => ", checkJackpot(house));
 
-      if (jackpot(house)) {
-        power = 2;
+      if (checkJackpot(house)) {
+        jackpot = Math.power(bet, 2);
       }
       while (house[i] === "🍒") {
         power += 0.1;
         i++;
       }
-      prize = Math.ceil(Math.pow(prize, power));
+      prize = Math.ceil(Math.pow(prize, power)) + jackpot;
       console.log(`Prize: ${prize}`);
+      console.log(`Jackpot: ${jackpot}`);
       console.log(`Bet: ${bet}`);
-      console.log(`Half Bet: ${halfBet}`);
       console.log(`Power ${power}`);
 
       resolve(prize);
@@ -126,9 +127,9 @@ module.exports = (ship, bet, messageId) => {
     };
 
 
-    //const jackpot = slots => slots.every(symbol => slot === slots[0]);
+    //const checkJackpot = slots => slots.every(symbol => symbol === slots[0]);
 
-    const jackpot = (currentValue) => {
+    const checkJackpot = (currentValue) => {
       console.log(currentValue);
       const equal = (value) => {
         console.log(value === currentValue[0]);
