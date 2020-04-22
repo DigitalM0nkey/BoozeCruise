@@ -167,8 +167,8 @@ router.post("/", ({ body }, res, next) => {
       Port.findOne({
         id: body.callback_query.message.chat.id,
       }).then((ports) => {
-        console.log(body.callback_query.message.chat.id);
-        console.log(ports);
+        // console.log(body.callback_query.message.chat.id);
+        console.log("ports => ", ports);
         const data = JSON.parse(body.callback_query.data);
         callbackQueries(body.callback_query, ports, data);
       });
