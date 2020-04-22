@@ -107,7 +107,7 @@ module.exports = (ship, bet, messageId) => {
       console.log("JACKPOT ??? => ", checkJackpot(house));
 
       if (checkJackpot(house)) {
-        jackpot = Math.pow(bet, 1 + (odds / 5));
+        jackpot = Math.pow(bet, 1 + odds / 5);
       }
       while (house[i] === "🍒") {
         power += 0.1;
@@ -145,6 +145,12 @@ module.exports = (ship, bet, messageId) => {
       } else {
         return false;
       }
+    };
+
+    const stats = () => {
+      return `<pre>Slot Stats</pre>\n${rolls.map(
+        (roll) => `${roll.symbol}-${roll.count}`
+      )}\nfrom ${plays} games\nSince server restart.`;
     };
 
     print();

@@ -149,6 +149,26 @@ module.exports = (callback_query, ship, data) => {
         log(player, `Just won ${KORONA}${prize} on the pokies`);
         b.sendMessage(ship.id, `You won ${KORONA}${prize}\nNew Balance: ${KORONA}${ship.purse.balance}`);
         b.sendKeyboard(ship.id, "Play again?", keyboards.slots("", "SL"));
+        {
+          inline_keyboard: [[{ text: nextPort.name, url: link }]];
+        }
+        b.sendKeyboard(ship.id, `Stats`, {
+          inline_keyboard: [
+            [
+              {
+                text: "Stats",
+                callback_data: JSON.stringify({ action: `slotStats` }),
+              },
+            ],
+          ],
+        });
+
+        log(
+          `Casino`,
+          `<pre>Slot Stats</pre>\n${rolls.map(
+            (roll) => `${roll.symbol}-${roll.count}`
+          )}\nfrom ${plays} games\nSince server restart.`
+        );
       });
     });
   } else if (data.action === "buy") {
@@ -165,6 +185,9 @@ module.exports = (callback_query, ship, data) => {
     // } else if (something) {
   } else if (data.action === "treasure") {
     globalFunctions.lookForTreasure(ship);
+  } else if (data.action === "slotStats") {
+    console.log("In the SlotStats");
+    b.sendMessage(ship.id, slots.stats);
   } else if (data.action === "mixology") {
     Port.findOne({
       id: data.port,
