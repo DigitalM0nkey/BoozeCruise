@@ -113,7 +113,7 @@ module.exports = (ship, bet, messageId) => {
         power += 0.1;
         i++;
       }
-      prize = Math.ceil(Math.pow(prize, power)) + jackpot;
+      prize = Math.ceil(Math.pow(prize, power) + jackpot);
       console.log(`Prize: ${prize}`);
       console.log(`Jackpot: ${jackpot}`);
       console.log(`Bet: ${bet}`);
