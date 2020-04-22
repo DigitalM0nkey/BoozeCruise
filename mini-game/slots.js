@@ -71,7 +71,7 @@ module.exports = (ship, bet, messageId) => {
     plays++;
     console.log(`${plays} times played`);
     console.log(rolls);
-    log(`Casino`, `<pre>Slot Stats</pre>\n${rolls} from ${plays} games\nSince server restart.`);
+    log(`Casino`, `<pre>Slot Stats</pre>\n${rolls.map(roll => `${roll.symbol}-${roll.count}`)} from ${plays} games\nSince server restart.`);
 
     const print = () => {
       for (let i = 0; i < odds; i++) {
