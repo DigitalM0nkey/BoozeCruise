@@ -17,6 +17,7 @@ exports.calculateTime = (arrival) => {
     " minutes"
   );
 };
+
 function calculateDistance(portLocation, shipLocation) {
   if (portLocation.sector === shipLocation.sector) {
     var distance = Math.abs(portLocation.x - shipLocation.x) + Math.abs(portLocation.y - shipLocation.y);

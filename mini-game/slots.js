@@ -147,12 +147,11 @@ module.exports = (ship, bet, messageId) => {
       }
     };
 
-    const stats = () => {
-      return `<pre>Slot Stats</pre>\n${rolls.map(
-        (roll) => `${roll.symbol}-${roll.count}`
-      )}\nfrom ${plays} games\nSince server restart.`;
-    };
-
     print();
   });
+};
+exports.stats = () => {
+  return `<pre>Slot Stats</pre>\n${rolls.map(
+    (roll) => `${roll.symbol}-${roll.count}`
+  )}\nfrom ${plays} games\nSince server restart.`;
 };
