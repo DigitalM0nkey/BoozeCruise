@@ -155,7 +155,6 @@ const moves = {
 // This post is everytime someone says something to the bot.
 
 router.post("/", ({ body }, res, next) => {
-  console.log(body);
   if (body.callback_query) {
     if (parseInt(body.callback_query.from.id) > 0) {
       Ship.findOne({
@@ -168,6 +167,8 @@ router.post("/", ({ body }, res, next) => {
       Port.findOne({
         id: body.callback_query.message.chat.id,
       }).then((port) => {
+        console.log(body.callback_query.message.chat.id);
+        console.log(port);
         const data = JSON.parse(body.callback_query.data);
         callbackQueries(body.callback_query, port, data);
       });
