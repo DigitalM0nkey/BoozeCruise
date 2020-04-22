@@ -628,9 +628,6 @@ router.post("/", ({ body }, res, next) => {
             //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
             b.sendKeyboard(body.message.chat.id, WELCOME, keyboards.home);
           } else if (body.message.text == "/return") {
-            console.log(body.message.chat.id);
-            console.log(MIXOLOGYPORT);
-            console.log(body.message.chat.id === MIXOLOGYPORT);
             if (body.message.chat.id === MIXOLOGYPORT) {
               b.sendKeyboard(body.message.chat.id, "Click Here => @BoozeCruise_bot", keyboards.mixology);
             }

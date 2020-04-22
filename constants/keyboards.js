@@ -385,7 +385,7 @@ module.exports = {
     ],
     resize_keyboard: true,
   },
-  mixology: { inline_keyboard: [[{ text: "", callback_data: "" }]] },
+  mixology: { inline_keyboard: [[{ text: "Mixology", callback_data: "something" }]] },
   slots: function (gameId, type) {
     let keyboard = {
       inline_keyboard: [],
