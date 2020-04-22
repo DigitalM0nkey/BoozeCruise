@@ -629,14 +629,14 @@ router.post("/", ({ body }, res, next) => {
             //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
             b.sendKeyboard(body.message.chat.id, WELCOME, keyboards.home);
           } else if (body.message.text == "/return") {
-            let keyboard = keyboards.port;
             console.log(body.message.chat.id);
             console.log(MIXOLOGYPORT);
+            console.log(body.message.chat.id === MIXOLOGYPORT);
             if (body.message.chat.id === MIXOLOGYPORT) {
-              keyboard.push([{ text:'Mixology'}]);
+              b.sendKeyboard(body.message.chat.id, "Click Here => @BoozeCruise_bot", keyboards.mixology);
             }
             console.log(keyboard);
-            b.sendKeyboard(body.message.chat.id, "Click Here => @BoozeCruise_bot", keyboard);
+            b.sendKeyboard(body.message.chat.id, "Click Here => @BoozeCruise_bot", keyboards.port);
           } else if (body.message.text == "Return to Ship") {
             b.sendMessage(body.message.chat.id, "Click Here => @BoozeCruise_bot");
             // b.sendKeyboard(req.body.message.chat.id, "@BoozeCruise_bot", keyboards.port);
