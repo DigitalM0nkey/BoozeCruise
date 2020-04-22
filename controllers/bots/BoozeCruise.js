@@ -166,11 +166,11 @@ router.post("/", ({ body }, res, next) => {
     } else {
       Port.findOne({
         id: body.callback_query.message.chat.id,
-      }).then((port) => {
+      }).then((ports) => {
         console.log(body.callback_query.message.chat.id);
-        console.log(port);
+        console.log(ports);
         const data = JSON.parse(body.callback_query.data);
-        callbackQueries(body.callback_query, port, data);
+        callbackQueries(body.callback_query, ports, data);
       });
     }
     return res.sendStatus(200);
