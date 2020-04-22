@@ -97,10 +97,10 @@ module.exports = (ship, bet, messageId) => {
       let i = 0;
       let prize = house.reduce((prize, symbol) => prize + (symbol === "🍒" ? halfBet : 0), 0);
       let power = 1;
-      ///jackpot
+
       console.log("EVERY HOUSE ", house.every(jackpot));
 
-      if (house.every(jackpot)) {
+      if (jackpot(house)) {
         power = 2;
       }
       while (house[i] === "🍒") {
@@ -126,7 +126,11 @@ module.exports = (ship, bet, messageId) => {
     };
 
     const jackpot = (currentValue) => {
-      currentValue === house[0];
+      const equal = (value) => value === currentValue[0];
+      if (currentValue.every(equal)) {
+        console.log("Jackpot");
+        return true;
+      }
     };
 
     print();
