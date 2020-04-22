@@ -186,7 +186,6 @@ router.post("/", ({ body }, res, next) => {
       Ship.findOne({
         id: body.message.chat.id,
       }).then((ship) => {
-        const player = ship.user.first_name;
         if (!ship) {
           Port.find({}).then((ports) => {
             const randomPort = ports[Math.floor(Math.random() * ports.length)];
@@ -207,10 +206,10 @@ router.post("/", ({ body }, res, next) => {
               },
             });
             newShip.save();
-            log(player, `Just joined the party! Welcome!!`);
             b.sendKeyboard(body.message.chat.id, WELCOME, keyboards.home());
           });
         } else {
+          const player = ship.user.first_name;
           if (body.message.text == "/start") {
             //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
             b.sendKeyboard(body.message.chat.id, WELCOME, keyboards.home(ship.nextLocation.port));
