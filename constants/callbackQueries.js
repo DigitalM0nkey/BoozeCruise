@@ -164,6 +164,8 @@ module.exports = (callback_query, ship, data) => {
     // } else if (something) {
   } else if (data.action === "treasure") {
     globalFunctions.lookForTreasure(ship);
+  } else if (data.action === "mixology") {
+    console.log('Do some mixology stuff');
   }
   function broadcast(message) {
     Ship.find({}).then((ships) => {
