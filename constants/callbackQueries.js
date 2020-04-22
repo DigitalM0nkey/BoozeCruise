@@ -149,11 +149,11 @@ module.exports = (callback_query, ship, data) => {
         log(player, `Just won ${KORONA}${prize} on the pokies`);
         b.sendMessage(ship.id, `You won ${KORONA}${prize}\nNew Balance: ${KORONA}${ship.purse.balance}`);
         b.sendKeyboard(ship.id, "Play again?", keyboards.slots("", "SL"));
-        b.sendKeyboard(ship.id, `Stats`, {
+        b.sendKeyboard(ship.id, `<pre>Stats?</pre>`, {
           inline_keyboard: [
             [
               {
-                text: "Stats",
+                text: "Stats for nerds",
                 callback_data: JSON.stringify({ action: `slotStats` }),
               },
             ],
@@ -177,7 +177,7 @@ module.exports = (callback_query, ship, data) => {
     globalFunctions.lookForTreasure(ship);
   } else if (data.action === "slotStats") {
     console.log("In the SlotStats");
-    b.sendMessage(ship.id, slots.stats);
+    b.sendMessage(ship.id, slots.stats());
   } else if (data.action === "mixology") {
     Port.findOne({
       id: data.port,
