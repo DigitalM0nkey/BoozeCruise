@@ -102,7 +102,7 @@ module.exports = (ship, bet, messageId) => {
       console.log("JACKPOT ??? => ", checkJackpot(house));
 
       if (checkJackpot(house)) {
-        jackpot = Math.power(bet, 1 + (odds / 5));
+        jackpot = Math.pow(bet, 1 + (odds / 5));
       }
       while (house[i] === "🍒") {
         power += 0.1;
