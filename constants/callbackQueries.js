@@ -149,9 +149,6 @@ module.exports = (callback_query, ship, data) => {
         log(player, `Just won ${KORONA}${prize} on the pokies`);
         b.sendMessage(ship.id, `You won ${KORONA}${prize}\nNew Balance: ${KORONA}${ship.purse.balance}`);
         b.sendKeyboard(ship.id, "Play again?", keyboards.slots("", "SL"));
-        {
-          inline_keyboard: [[{ text: nextPort.name, url: link }]];
-        }
         b.sendKeyboard(ship.id, `Stats`, {
           inline_keyboard: [
             [
