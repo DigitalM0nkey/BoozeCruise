@@ -148,14 +148,32 @@
       print();
     };
     const jackpot = (currentValue) => {
-      for (let i = 0; i < symbols.length; i++) {
-        if (currentValue === symbols[0]) {
-          console.log("Hello");
-        } else {
-          console.log("Not today");
-        }
-      }
+      let result = 0;
+
+      const reducer = (accumulator, value) => accumulator === value;
+
+      console.log(currentValue.reduce(reducer));
+
+      // for (let i = 0; i < currentValue.length; i++) {
+      //   symbols.forEach((symbol) => {
+      //     if (symbol === currentValue[0]) {
+      //       // console.log("Match", i);
+      //       result++;
+      //       return;
+      //     } else {
+      //       // console.log("No Match", i);
+      //     }
+      //     console.log("RESULT", result);
+      //   });
+      // }
+      // console.log("RESULT", result === currentValue.length);
     };
-    jackpot("🛳");
+    // jackpot("🍒");
+    jackpot(["🛳", "🍒"]);
+    jackpot(["🍒", "🍒"]);
+    jackpot(["🛳", "🛳", "🛳", "🛳", "🛳", "🛳"]);
+    jackpot(["🍒", "🍒", "🛳", "🛳", "🛳", "🛳"]);
+    jackpot(["🍒", "🛳", "🛳", "🛳", "🍒"]);
+    jackpot(["🏝", "🏝", "🏝", "🏝"]);
   </script>
 </html>
