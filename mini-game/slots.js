@@ -125,9 +125,16 @@ module.exports = (ship, bet, messageId) => {
       }
     };
 
+
+    //const jackpot = slots => slots.every(symbol => slot === slots[0]);
+
     const jackpot = (currentValue) => {
-      const equal = (value) => value === currentValue[0];
-      if (currentValue.every(equal)) {
+      console.log(currentValue);
+      const equal = (value) => {
+        console.log(value === currentValue[0]);
+        return value === currentValue[0];
+      };
+        if (currentValue.every(equal)) {
         console.log("Jackpot");
         return true;
       } else {
