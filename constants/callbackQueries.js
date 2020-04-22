@@ -2,6 +2,7 @@ const Product = require("../models/product");
 const Port = require("../models/port");
 const Ship = require("../models/ship");
 const LowestHighest = require("../models/mini-games/lowestHighest/lowestHighest");
+const mixology = require("../mini-game/mixology");
 const keyboards = require("./keyboards");
 const globalFunctions = require("./globalFunctions");
 const log = globalFunctions.log;
@@ -165,6 +166,7 @@ module.exports = (callback_query, ship, data) => {
   } else if (data.action === "treasure") {
     globalFunctions.lookForTreasure(ship);
   } else if (data.action === "mixology") {
+    mixology.getCocktail().then(cocktail => b.sendMessage(ship.id, cocktail));
     console.log('Do some mixology stuff');
   }
   function broadcast(message) {

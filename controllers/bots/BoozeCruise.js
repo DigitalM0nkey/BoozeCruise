@@ -157,14 +157,21 @@ const moves = {
 router.post("/", ({ body }, res, next) => {
   console.log(body);
   if (body.callback_query) {
-    Ship.findOne({
-      id: body.callback_query.from.id,
-    }).then((ship) => {
-      //if (parseInt(req.body.callback_query.from.id) > 0) { } else { }
-      const data = JSON.parse(body.callback_query.data);
-      callbackQueries(body.callback_query, ship, data);
-      // End Mini-game Lowest-Highest
-    });
+    if (parseInt(body.callback_query.from.id) > 0) {
+      Ship.findOne({
+        id: body.callback_query.from.id,
+      }).then((ship) => {
+        const data = JSON.parse(body.callback_query.data);
+        callbackQueries(body.callback_query, ship, data);
+      });
+    } else {
+      Port.findOne({
+        id: body.callback_query.from.id,
+      }).then((port) => {
+        const data = JSON.parse(body.callback_query.data);
+        callbackQueries(body.callback_query, port, data);
+      });
+    }
     return res.sendStatus(200);
   } else if (body.edited_message) {
     //Ignore these messages as they're just chat interactions
