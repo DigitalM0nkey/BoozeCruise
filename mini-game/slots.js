@@ -130,6 +130,8 @@ module.exports = (ship, bet, messageId) => {
       if (currentValue.every(equal)) {
         console.log("Jackpot");
         return true;
+      } else {
+        return false;
       }
     };
 
