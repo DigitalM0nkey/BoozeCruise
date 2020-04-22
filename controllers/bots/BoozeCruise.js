@@ -631,7 +631,7 @@ router.post("/", ({ body }, res, next) => {
           } else if (body.message.text == "/return") {
             let keyboard = keyboards.port;
             if (body.message.chat.id === MIXOLOGYPORT) {
-              keyboard.push(['Mixology']);
+              keyboard.push([{ text:'Mixology'}]);
             }
             b.sendKeyboard(body.message.chat.id, "Click Here => @BoozeCruise_bot", keyboard);
           } else if (body.message.text == "Return to Ship") {
