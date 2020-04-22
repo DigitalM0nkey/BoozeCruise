@@ -4,6 +4,7 @@ const Ship = require("../models/ship");
 const LowestHighest = require("../models/mini-games/lowestHighest/lowestHighest");
 const keyboards = require("./keyboards");
 const globalFunctions = require("./globalFunctions");
+const log = globalFunctions.log;
 const b = require("../bots/telegram").boozecruiseBot;
 const KORONA = "\u24C0";
 const MYSHIP = "5be3d50298ae6843394411ee";
@@ -15,6 +16,7 @@ const moment = require("moment");
 const _ = require("underscore");
 
 module.exports = (callback_query, ship, data) => {
+  const player = ship.user.first_name;
   if (data.action === "navigate") {
     if (ship.id != MYSHIP) {
       Port.findOne({
@@ -143,6 +145,7 @@ module.exports = (callback_query, ship, data) => {
       slots(ship, data.num, callback_query.message.message_id).then((prize) => {
         ship.purse.balance += prize;
         ship.save();
+        log(player, `Just won ${KORONA}${prize} on the pokies`);
         b.sendMessage(ship.id, `You won ${KORONA}${prize}\nNew Balance: ${KORONA}${ship.purse.balance}`);
         b.sendKeyboard(ship.id, "Play again?", keyboards.slots("", "SL"));
       });
@@ -153,6 +156,7 @@ module.exports = (callback_query, ship, data) => {
         product: product._id,
         expiry: moment().add(product.expiry, "days"),
       });
+      log(player, `Just spent some ${KORONA} in the shop.`);
       ship.save();
       product.quantity--;
       product.save();

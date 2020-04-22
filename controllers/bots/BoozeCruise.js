@@ -9,6 +9,7 @@ const keyboards = require("../../constants/keyboards");
 const emoji = require("../../constants/emoji");
 const callbackQueries = require("../../constants/callbackQueries");
 const globalFunctions = require("../../constants/globalFunctions");
+const log = globalFunctions.log;
 
 const MYSHIP = "5be3d50298ae6843394411ee";
 const KORONA = "\u24C0";
@@ -24,7 +25,6 @@ const guest = require("../../types/guest");
 const LowestHighest = require("../../models/mini-games/lowestHighest/lowestHighest");
 
 const b = TelegramBot.boozecruiseBot;
-const log = globalFunctions.log;
 
 //TODO -- Add 'Get back to ship' command in port.
 //TODO -- comment out keyboard keys that are not currently in use.

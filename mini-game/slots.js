@@ -1,4 +1,6 @@
 const b = require("../bots/telegram").boozecruiseBot;
+const globalFunctions = require("../../constants/globalFunctions");
+const log = globalFunctions.log;
 
 const symbols = ["🍒", "🛳", "🏝", "🌊", "☀️"];
 let rolls = [
@@ -69,6 +71,7 @@ module.exports = (ship, bet, messageId) => {
     plays++;
     console.log(`${plays} times played`);
     console.log(rolls);
+    log(`Casino`, `<pre>Slot Stats</pre>\n${rolls} from ${plays} games\nSince server restart.`);
 
     const print = () => {
       for (let i = 0; i < odds; i++) {
