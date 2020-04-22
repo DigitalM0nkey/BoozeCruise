@@ -148,11 +148,17 @@
       print();
     };
     const jackpot = (currentValue) => {
-      let result = 0;
+      // let result = 0;
 
-      const reducer = (accumulator, value) => accumulator === value;
+      // const reducer = (accumulator, value) => accumulator === value;
 
-      console.log(currentValue.reduce(reducer));
+      // console.log(currentValue.reduce(reducer));
+
+      // Every slot the same === Jackpot
+      const equal = (value) => value === currentValue[0];
+      if (currentValue.every(equal)) {
+        console.log("Jackpot");
+      }
 
       // for (let i = 0; i < currentValue.length; i++) {
       //   symbols.forEach((symbol) => {
