@@ -178,7 +178,6 @@ module.exports = (callback_query, ship, data) => {
     globalFunctions.lookForTreasure(ship);
   } else if (data.action === "slotStats") {
     console.log("In the SlotStats");
-    console.log(slots.stats());
     b.sendMessage(ship.id, stats());
   } else if (data.action === "mixology") {
     Port.findOne({
