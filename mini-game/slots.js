@@ -152,9 +152,10 @@ module.exports = (ship, bet, messageId) => {
 };
 
 const stats = () => {
-  return `<pre>Slot Stats</pre>\n${rolls.map(
+  let message = `<pre>Slot Stats</pre>\n${rolls.map(
     (roll) => `${roll.symbol}-${roll.count}`
   )}\nfrom ${plays} games\nSince server restart.`;
+  return message;
 };
 
 exports.stats = stats;
