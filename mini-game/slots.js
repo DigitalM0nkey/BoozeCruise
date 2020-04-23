@@ -12,7 +12,7 @@ let rolls = [
 ];
 let plays = 0;
 
-module.exports = (ship, bet, messageId) => {
+const slots = (ship, bet, messageId) => {
   return new Promise(function (resolve, reject) {
     bet = parseInt(bet, 10);
     halfBet = Math.round(bet / 2);
@@ -158,4 +158,5 @@ const stats = () => {
   return message;
 };
 
-module.exports = stats;
+exports.stats = stats;
+exports.get = slots;

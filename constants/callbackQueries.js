@@ -143,7 +143,7 @@ module.exports = (callback_query, ship, data) => {
     //SLOTS GAME
     //data.num = bet
     Ship.findOne({ id: callback_query.from.id }).then(function (ship) {
-      slots(ship, data.num, callback_query.message.message_id).then((prize) => {
+      slots.get(ship, data.num, callback_query.message.message_id).then((prize) => {
         ship.purse.balance += prize;
         ship.save();
         log(player, `Just won ${KORONA}${prize} on the pokies`);
