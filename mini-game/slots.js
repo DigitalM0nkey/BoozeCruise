@@ -158,4 +158,4 @@ const stats = () => {
   return message;
 };
 
-exports.stats = stats;
+module.exports = stats;
