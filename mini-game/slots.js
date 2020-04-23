@@ -150,8 +150,11 @@ module.exports = (ship, bet, messageId) => {
     print();
   });
 };
-exports.stats = () => {
+
+const stats = () => {
   return `<pre>Slot Stats</pre>\n${rolls.map(
     (roll) => `${roll.symbol}-${roll.count}`
   )}\nfrom ${plays} games\nSince server restart.`;
 };
+
+exports.stats = stats;
