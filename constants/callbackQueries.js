@@ -12,6 +12,7 @@ const MYSHIP = "5be3d50298ae6843394411ee";
 
 const lowestHighest = require("../mini-game/lowestHighest");
 const slots = require("../mini-game/slots");
+const { stats } = require("../mini-game/slots");
 
 const moment = require("moment");
 const _ = require("underscore");
@@ -178,7 +179,7 @@ module.exports = (callback_query, ship, data) => {
   } else if (data.action === "slotStats") {
     console.log("In the SlotStats");
     console.log(slots.stats());
-    b.sendMessage(ship.id, slots.stats());
+    b.sendMessage(ship.id, stats());
   } else if (data.action === "mixology") {
     Port.findOne({
       id: data.port,
