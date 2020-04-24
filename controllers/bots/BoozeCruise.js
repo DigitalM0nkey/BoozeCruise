@@ -318,7 +318,11 @@ router.post("/", ({ body }, res, next) => {
           } else if (body.message.text == `${emoji.slots} Slots ${emoji.slots}`) {
             log(player, "Playing the slots");
             // console.log(keyboards.numbers("", "SL"));
-            b.sendKeyboard(ship.id, `Place your bet\n🍒=✅`, keyboards.slots("", "SL"));
+            b.sendKeyboard(
+              ship.id,
+              `Place your bet\n\n A 🍒 = 50% of your bet\n A 🍒 at the start increses the power of prize by .1\n☀️|☀️|☀️ - Three in a row of any symbol trigers a trifector bonus = bet * 3\n\n The jackpot is won when all slots are the same regardless of how many slots you are playing\nie. 🛳|🛳|🛳\nor 🏝|🏝|🏝|🏝|🏝\nor 🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊\nWinning the jackpot results in your bet to the power of the odds devided by 5`,
+              keyboards.slots("", "SL")
+            );
           } else if (body.message.text == `/beta`) {
             b.sendKeyboard(ship.id, "Your testing beta features! Things may break", keyboards.beta);
             log(player, "Testing beta features");
