@@ -115,6 +115,7 @@
           }, 1000 * i);
         }
         setTimeout(() => {
+          trifector(house);
           prizes();
         }, (odds - 1) * 1000);
       };
@@ -147,6 +148,51 @@
 
       print();
     };
+    const trifector = (log, slots, expect) => {
+      let telly = 0;
+      for (let i = 0; i < slots.length - 2; i++) {
+        if (slots[i] === slots[i + 1] && slots[i] === slots[i + 2]) {
+          telly++;
+          i += 2;
+        }
+      }
+
+      // telly = 0;
+      // yes = 0;
+      // if (slots.length <= 2) {
+      // } else {
+      //   slots.forEach((slot, index) => {
+      //     if (slot === slots[index++] && slot === slots[index++] && telly === 0) {
+      //       // console.log(index);
+      //       telly++;
+      //       for (let i = 0; i < slots.length; i++) {}
+      //       yes++;
+      //     } else if (
+      //       slots[index] === slots[(index += 1)] &&
+      //       slots[(index += 1)] === slots[(index += 2)] &&
+      //       telly === 1
+      //     ) {
+      //       telly++;
+      //     } else if (
+      //       slots[index] === slots[(index += 1)] &&
+      //       slots[(index += 1)] === slots[(index += 2)] &&
+      //       telly === 2
+      //     ) {
+      //       telly = 0;
+      //     } else {
+      //       // console.log(false);
+      //     }
+      //   });
+      // }
+      console.log("TELLY", log, "EXPECT =>", expect, "GOT =>", telly);
+    };
+    trifector(1, ["🛳", "🍒"], 0); //0
+    trifector(2, ["🍒", "🍒"], 0); //0
+    trifector(3, ["🛳", "🛳", "🛳", "🛳", "🛳", "🛳"], 2); //  2:
+    trifector(4, ["🍒", "🍒", "🍒", "🛳", "🛳", "🛳"], 2); // 2
+    trifector(5, ["🍒", "🛳", "🛳", "🛳", "🍒"], 1); //1
+    trifector(6, ["🏝", "🏝", "🏝", "🏝"], 1); //1
+
     const jackpot = (currentValue) => {
       // let result = 0;
 
@@ -175,11 +221,11 @@
       // console.log("RESULT", result === currentValue.length);
     };
     // jackpot("🍒");
-    jackpot(["🛳", "🍒"]);
-    jackpot(["🍒", "🍒"]);
-    jackpot(["🛳", "🛳", "🛳", "🛳", "🛳", "🛳"]);
-    jackpot(["🍒", "🍒", "🛳", "🛳", "🛳", "🛳"]);
-    jackpot(["🍒", "🛳", "🛳", "🛳", "🍒"]);
-    jackpot(["🏝", "🏝", "🏝", "🏝"]);
+    // jackpot(["🛳", "🍒"]);
+    // jackpot(["🍒", "🍒"]);
+    // jackpot(["🛳", "🛳", "🛳", "🛳", "🛳", "🛳"]);
+    // jackpot(["🍒", "🍒", "🛳", "🛳", "🛳", "🛳"]);
+    // jackpot(["🍒", "🛳", "🛳", "🛳", "🍒"]);
+    // jackpot(["🏝", "🏝", "🏝", "🏝"]);
   </script>
 </html>
