@@ -103,19 +103,27 @@ const slots = (ship, bet, messageId) => {
       let prize = house.reduce((prize, symbol) => prize + (symbol === "🍒" ? halfBet : 0), 0);
       let power = 1;
       let jackpot = 0;
+      let bonus = 0;
+      let trifector = trifector(house);
 
       console.log("JACKPOT ??? => ", checkJackpot(house));
 
       if (checkJackpot(house)) {
         jackpot = Math.pow(bet, 1 + odds / 5);
       }
+      if (trifector) {
+        bonus = trifector * 100;
+      }
       while (house[i] === "🍒") {
         power += 0.1;
         i++;
       }
-      prize = Math.ceil(Math.pow(prize, power) + jackpot);
+
+      prize = Math.ceil(Math.pow(prize, power) + jackpot + bonus);
       console.log(`Prize: ${prize}`);
       console.log(`Jackpot: ${jackpot}`);
+      console.log(`Amount of trifectors: ${trifector}`);
+      console.log(`Bonus: ${bonus}`);
       console.log(`Bet: ${bet}`);
       console.log(`Power ${power}`);
 
@@ -125,12 +133,16 @@ const slots = (ship, bet, messageId) => {
       // }
     };
 
-    const bonus = () => {
-      if (house) {
-        console.log("Hello");
+    const trifector = (slots) => {
+      let telly = 0;
+      for (let i = 0; i < slots.length - 2; i++) {
+        if (slots[i] === slots[i + 1] && slots[i] === slots[i + 2]) {
+          telly++;
+          i += 2;
+        }
       }
+      return telly;
     };
-
     //const checkJackpot = slots => slots.every(symbol => symbol === slots[0]);
 
     const checkJackpot = (currentValue) => {
