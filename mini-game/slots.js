@@ -104,15 +104,14 @@ const slots = (ship, bet, messageId) => {
       let power = 1;
       let jackpot = 0;
       let bonus = 0;
-      let trifector = trifector(house);
 
       console.log("JACKPOT ??? => ", checkJackpot(house));
 
       if (checkJackpot(house)) {
         jackpot = Math.pow(bet, 1 + odds / 5);
       }
-      if (trifector) {
-        bonus = trifector * 100;
+      if (trifector(house)) {
+        bonus = trifector(house) * 100;
       }
       while (house[i] === "🍒") {
         power += 0.1;
@@ -122,7 +121,7 @@ const slots = (ship, bet, messageId) => {
       prize = Math.ceil(Math.pow(prize, power) + jackpot + bonus);
       console.log(`Prize: ${prize}`);
       console.log(`Jackpot: ${jackpot}`);
-      console.log(`Amount of trifectors: ${trifector}`);
+      console.log(`Amount of trifectors: ${trifector(house)}`);
       console.log(`Bonus: ${bonus}`);
       console.log(`Bet: ${bet}`);
       console.log(`Power ${power}`);
