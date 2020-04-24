@@ -111,7 +111,7 @@ const slots = (ship, bet, messageId) => {
         jackpot = Math.pow(bet, 1 + odds / 5);
       }
       if (trifector(house)) {
-        bonus = bet * 3 * trifector(house);
+        bonus = bet * 1.5 * trifector(house);
       }
       while (house[i] === "🍒") {
         power += 0.1;

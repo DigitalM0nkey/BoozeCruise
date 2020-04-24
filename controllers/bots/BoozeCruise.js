@@ -320,7 +320,7 @@ router.post("/", ({ body }, res, next) => {
             // console.log(keyboards.numbers("", "SL"));
             b.sendKeyboard(
               ship.id,
-              `Place your bet\n\n A 🍒 = 50% of your bet\n A 🍒 at the start increses the power of prize by .1\n☀️|☀️|☀️ - Three in a row of any symbol trigers a trifector bonus = bet * 3\n\n The jackpot is won when all slots are the same regardless of how many slots you are playing\nie. 🛳|🛳|🛳\nor 🏝|🏝|🏝|🏝|🏝\nor 🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊\nWinning the jackpot results in your bet to the power of the odds devided by 5`,
+              `Place your bet\n\nA 🍒 = 50% of your bet\nA 🍒 at the start increses the power of prize by .1\n\n☀️|☀️|☀️ - Three in a row of any symbol trigers a trifector bonus = bet * 1.5\n\nThe jackpot is won when all slots are the same regardless of how many slots you are playing\nie. 🛳|🛳|🛳\nor 🏝|🏝|🏝|🏝|🏝\nor 🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊\nWinning the jackpot results in your bet to the power of the odds devided by 5`,
               keyboards.slots("", "SL")
             );
           } else if (body.message.text == `/beta`) {
@@ -340,7 +340,7 @@ router.post("/", ({ body }, res, next) => {
             log(player, "Navigating");
             b.sendKeyboard(
               body.message.chat.id,
-              "This is the ship's bridge.\n\n From here you can control which port of call you will visit next.",
+              "This is the ship's bridge.\n\nFrom here you can control which port of call you will visit next.",
               keyboards.navigation
             );
           } else if (body.message.text == "\ud83d\udea2 Home Port \ud83d\udea2" || body.message.text == "/addGuest") {
@@ -376,7 +376,7 @@ router.post("/", ({ body }, res, next) => {
             log(player, "Entered the gift shop");
             b.sendKeyboard(
               body.message.chat.id,
-              "This is the ship's gift shop.\n\n From here you can buy trinkets and whositswhatsits that will benefit you in the game",
+              "This is the ship's gift shop.\n\nFrom here you can buy trinkets and whositswhatsits that will benefit you in the game",
               keyboards.shop
             );
           } else if (body.message.text == "Products") {
@@ -435,7 +435,7 @@ router.post("/", ({ body }, res, next) => {
                 ship.id,
                 cocktail.image,
                 `<pre>${cocktail.name}</pre>\n${cocktail.instructions}<code>${cocktail.ingredients.map(
-                  (ingredient) => `\n - ${ingredient}`
+                  (ingredient) => `\n- ${ingredient}`
                 )}</code>`
               );
             });
@@ -558,7 +558,7 @@ router.post("/", ({ body }, res, next) => {
             log(player, "At the Pursers desk.");
             b.sendKeyboard(
               body.message.chat.id,
-              `A ship's purser is the person on a ship principally responsible for the handling of money on board.\n\nThe currency is Korona or ${KORONA} for short. \n\n How may I help you today?`,
+              `A ship's purser is the person on a ship principally responsible for the handling of money on board.\n\nThe currency is Korona or ${KORONA} for short. \n\nHow may I help you today?`,
               keyboards.purser
             );
           } else if (body.message.text.includes("Casino")) {
