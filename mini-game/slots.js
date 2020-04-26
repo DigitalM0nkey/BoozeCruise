@@ -1,6 +1,7 @@
 const b = require("../bots/telegram").boozecruiseBot;
 const globalFunctions = require("../constants/globalFunctions");
 const log = globalFunctions.log;
+const emoji = require("../constants/emoji");
 
 const symbols = ["🍒", "🛳", "🏝", "🌊", "☀️"];
 let rolls = [
@@ -180,11 +181,11 @@ const slots = (ship, bet, messageId) => {
 const stats = () => {
   let message = `<pre>Slot Stats</pre>\n${rolls.map(
     (roll) => `${roll.symbol}: ${roll.count}`
-  )}\n${amountOftrifectors} Trifectors\n${Math.ceil(largestJackpot.amount)} Largest jackpot\n${
+  )}\n${amountOftrifectors} Trifectors.\n${(emoji.korona, Math.ceil(largestJackpot.amount))} Largest jackpot(${
     largestJackpot.winningSymbols
-  }Jackpot symbols\n${amountBet} Amount bet\n${amountWon} Amount Won\n${
-    amountWon - amountBet
-  } Balance\n${plays} games played\n<i>Since server restart.</i>`;
+  }).\n${(emoji.korona, amountBet)} Amount bet.\n${(emoji.korona, amountWon)} Amount Won.\n${
+    (emoji.korona, amountWon - amountBet)
+  } House balance.\n${plays} games played\n<i>Since server restart.</i>`;
   return message;
 };
 
