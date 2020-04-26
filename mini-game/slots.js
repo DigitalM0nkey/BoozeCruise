@@ -175,9 +175,9 @@ const slots = (ship, bet, messageId) => {
 const stats = () => {
   let message = `<pre>Slot Stats</pre>\n${rolls.map(
     (roll) => `${roll.symbol}: ${roll.count}`
-  )}\n${amountOftrifectors} Trifectors\n${
-    largestJackpot.amount
-  } Largest jackpot\n${plays} games played\nSince server restart.`;
+  )}\n${amountOftrifectors} Trifectors\n${Math.ceil(largestJackpot.amount)} Largest jackpot\n${
+    largestJackpot.winningSymbols
+  }Jackpot symbols\n${plays} games played\nSince server restart.`;
   return message;
 };
 
