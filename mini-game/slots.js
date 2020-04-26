@@ -177,7 +177,7 @@ const stats = () => {
     (roll) => `${roll.symbol}: ${roll.count}`
   )}\n${amountOftrifectors} Trifectors\n${Math.ceil(largestJackpot.amount)} Largest jackpot\n${
     largestJackpot.winningSymbols
-  }Jackpot symbols\n${plays} games played\nSince server restart.`;
+  }Jackpot symbols\n${plays} games played\n<i>Since server restart.</i>`;
   return message;
 };
 
