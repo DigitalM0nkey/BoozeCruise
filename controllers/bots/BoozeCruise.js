@@ -322,11 +322,11 @@ router.post("/", ({ body }, res, next) => {
               ship.id,
               `Any 🍒 is equal to 50% of your bet. However, if a 🍒 is in the first position, your payout is increased by a power of 0.1, any 🍒's immediately following add an additional 0.1 to the power.
               
-              \n\n☀️|☀️|☀️ - Three in a row of any symbol trigers a trifector bonus = bet * 1.5
+              \n☀️|☀️|☀️ - Three in a row of any symbol trigers a trifector bonus = bet * 1.5
               
               \n\nThe jackpot is won when all slots are the same regardless of how many slots you are playing\nie. 🛳|🛳|🛳\nor 🏝|🏝|🏝|🏝|🏝\nor 🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊\nWinning the jackpot results in your bet to the power of the odds devided by 5
 
-              \n\nExamples:
+              \nExamples:
               Bet 100:
               🍒|🏝|🍒 = Ⓚ159
               Bet 80:
