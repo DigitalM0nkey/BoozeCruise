@@ -145,32 +145,37 @@ module.exports = (callback_query, ship, data) => {
     //data.num = bet
     Ship.findOne({ id: callback_query.from.id }).then(function (ship) {
       slots.get(ship, data.num, callback_query.message.message_id).then((prize) => {
-        ship.purse.balance += prize;
-        ship.save();
-        log(player, `Just won ${KORONA}${prize} on the pokies`);
-        b.sendKeyboard(
-          ship.id,
-          `You won ${KORONA}${prize}\nNew Balance: ${KORONA}${ship.purse.balance}`,
-          keyboards.slots("", "SL")
-        );
-        // b.sendKeyboard(ship.id, `<pre>Stats?</pre>`, {
-        //   inline_keyboard: [
-        //     [
-        //       {
-        //         text: "Stats for nerds",
-        //         callback_data: JSON.stringify({ action: `slotStats` }),
-        //       },
-        //       {
-        //         text: "bet 2",
-        //         callback_data: JSON.stringify({ action: `slotStats` }),
-        //       },
-        //       {
-        //         text: "bet 3",
-        //         callback_data: JSON.stringify({ action: `slotStats` }),
-        //       },
-        //     ],
-        //   ],
-        // });
+        if (prize) {
+          ship.purse.balance += prize;
+          ship.save();
+          log(player, `Just won ${KORONA}${prize} on the pokies`);
+          b.sendKeyboard(
+            ship.id,
+            `You won ${KORONA}${prize}\nNew Balance: ${KORONA}${ship.purse.balance}`,
+            keyboards.slots("", "SL")
+          );
+          // b.sendKeyboard(ship.id, `<pre>Stats?</pre>`, {
+          //   inline_keyboard: [
+          //     [
+          //       {
+          //         text: "Stats for nerds",
+          //         callback_data: JSON.stringify({ action: `slotStats` }),
+          //       },
+          //       {
+          //         text: "bet 2",
+          //         callback_data: JSON.stringify({ action: `slotStats` }),
+          //       },
+          //       {
+          //         text: "bet 3",
+          //         callback_data: JSON.stringify({ action: `slotStats` }),
+          //       },
+          //     ],
+          //   ],
+          // });
+        } else {
+          log(player, `Lost on the pokies`);
+          b.sendKeyboard(ship.id, `You Lost\nNew Balance: ${KORONA}${ship.purse.balance}`, keyboards.slots("", "SL"));
+        }
       });
     });
   } else if (data.action === "buy") {
