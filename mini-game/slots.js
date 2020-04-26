@@ -16,6 +16,8 @@ let largestJackpot = {
   amount: 0,
   winningSymbols: [],
 };
+let amountBet = 0;
+let amountWon = 0;
 
 const slots = (ship, bet, messageId) => {
   return new Promise(function (resolve, reject) {
@@ -135,6 +137,9 @@ const slots = (ship, bet, messageId) => {
       console.log(`Bet: ${bet}`);
       console.log(`Power ${power}`);
 
+      amountBet += bet;
+      amountWon += prize;
+
       resolve(prize);
       // if (house[i] === "🍒") {
       //   document.getElementById("balance").innerHTML = balance + parseInt(bet, 10);
@@ -177,7 +182,9 @@ const stats = () => {
     (roll) => `${roll.symbol}: ${roll.count}`
   )}\n${amountOftrifectors} Trifectors\n${Math.ceil(largestJackpot.amount)} Largest jackpot\n${
     largestJackpot.winningSymbols
-  }Jackpot symbols\n${plays} games played\n<i>Since server restart.</i>`;
+  }Jackpot symbols\n${amountBet} Amount bet\n${amountWon} Amount Won\n${
+    amountWon - amountBet
+  } Balance\n${plays} games played\n<i>Since server restart.</i>`;
   return message;
 };
 
