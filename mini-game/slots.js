@@ -3,13 +3,14 @@ const globalFunctions = require("../constants/globalFunctions");
 const log = globalFunctions.log;
 const emoji = require("../constants/emoji");
 
-const symbols = ["🍒", "🛳", "🏝", "🌊", "☀️"];
+const symbols = ["🍒", "🛳", "🏝", "🌊", "☀️", "⚓️"];
 let rolls = [
   { symbol: "🍒", count: 0 },
   { symbol: "🛳", count: 0 },
   { symbol: "🏝", count: 0 },
   { symbol: "🌊", count: 0 },
   { symbol: "☀️", count: 0 },
+  { symbol: "⚓️", count: 0 },
 ];
 let plays = 0;
 let amountOftrifectors = 0;
