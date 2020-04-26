@@ -14,7 +14,7 @@ let plays = 0;
 let amountOftrifectors = 0;
 let largestJackpot = {
   amount: 0,
-  winningSymbols: "",
+  winningSymbols: [],
 };
 
 const slots = (ship, bet, messageId) => {
@@ -116,6 +116,7 @@ const slots = (ship, bet, messageId) => {
         jackpot = Math.pow(bet, 1 + odds / 5);
         if (largestJackpot.amount < jackpot) {
           largestJackpot.amount = jackpot;
+          largestJackpot.winningSymbols = house;
         }
       }
       if (trifector(house)) {
