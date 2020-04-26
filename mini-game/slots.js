@@ -11,6 +11,11 @@ let rolls = [
   { symbol: "☀️", count: 0 },
 ];
 let plays = 0;
+let amountOftrifectors = 0;
+let largestJacpot = {
+  amount: 0,
+  winningSymbols: "",
+};
 
 const slots = (ship, bet, messageId) => {
   return new Promise(function (resolve, reject) {
@@ -140,6 +145,7 @@ const slots = (ship, bet, messageId) => {
           i += 2;
         }
       }
+      amountOftrifectors += telly;
       return telly;
     };
     //const checkJackpot = slots => slots.every(symbol => symbol === slots[0]);
@@ -164,8 +170,8 @@ const slots = (ship, bet, messageId) => {
 
 const stats = () => {
   let message = `<pre>Slot Stats</pre>\n${rolls.map(
-    (roll) => `${roll.symbol}-${roll.count}`
-  )}\nfrom ${plays} games\nSince server restart.`;
+    (roll) => `${roll.symbol}: ${roll.count}`
+  )}\n${amountOftrifectors} Trifectors\n${plays} games played\nSince server restart.`;
   return message;
 };
 

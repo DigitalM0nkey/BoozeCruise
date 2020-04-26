@@ -327,6 +327,7 @@ router.post("/", ({ body }, res, next) => {
               \n\nThe jackpot is won when all slots are the same regardless of how many slots you are playing\nie. 🛳|🛳|🛳\nor 🏝|🏝|🏝|🏝|🏝\nor 🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊\nWinning the jackpot results in your bet to the power of the odds devided by 5
 
               \nExamples:
+              
               Bet 100:
               🍒|🏝|🍒 = Ⓚ159
               Bet 80:
