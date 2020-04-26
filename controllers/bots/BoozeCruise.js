@@ -320,22 +320,12 @@ router.post("/", ({ body }, res, next) => {
             // console.log(keyboards.numbers("", "SL"));
             b.sendKeyboard(
               ship.id,
-              `Any 🍒 is equal to 50% of your bet. However, if a 🍒 is in the first position, your payout is increased by a power of 0.1, any 🍒's immediately following add an additional 0.1 to the power.
-              
-              \n☀️|☀️|☀️ - Three in a row of any symbol trigers a trifector bonus = bet * 1.5
-              
-              \n\nThe jackpot is won when all slots are the same regardless of how many slots you are playing\nie. 🛳|🛳|🛳\nor 🏝|🏝|🏝|🏝|🏝\nor 🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊\nWinning the jackpot results in your bet to the power of the odds devided by 5.
-              \nExamples:
-              \nBet 100:
-              🍒|🏝|🍒 = Ⓚ159
-              Bet 80:
-              🍒|🏝|🛳|☀️|🛳 = Ⓚ58
-              Bet 60:
-              🌊|🏝|🏝|🍒|🌊|🏝|🍒 = Ⓚ60
-              Bet 40:
-              🍒|🌊|🍒|🏝|☀️|🏝|🍒|🍒|🍒 = Ⓚ219
-              Bet 20:
-              ☀️|🛳|🛳|🛳|🌊|🏝|🏝|🍒|🌊|☀️ = Ⓚ40`,
+              `Any 🍒 is equal to 50% of your bet. However, if a 🍒 is in the first position, your payout is increased by a power of 0.1, any 🍒's immediately following add an additional 0.1 to the power.\n\n☀️|☀️|☀️ - Three in a row of any symbol trigers a trifector bonus = bet * 1.5\n\nThe jackpot is won when all slots are the same regardless of how many slots you are playing\nie. 🛳|🛳|🛳\nor 🏝|🏝|🏝|🏝|🏝\nor 🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊\nWinning the jackpot results in your bet to the power of the odds devided by 5.\nExamples:
+              \nBet 100:\n🍒|🏝|🍒 = Ⓚ159
+              \nBet 80:\n🍒|🏝|🛳|☀️|🛳 = Ⓚ58
+              \nBet 60:\n🌊|🏝|🏝|🍒|🌊|🏝|🍒 = Ⓚ60
+              \nBet 40:\n🍒|🌊|🍒|🏝|☀️|🏝|🍒|🍒|🍒 = Ⓚ219
+              \nBet 20:\n☀️|🛳|🛳|🛳|🌊|🏝|🏝|🍒|🌊|☀️ = Ⓚ40`,
               keyboards.slots("", "SL")
             );
           } else if (body.message.text == `/beta`) {
