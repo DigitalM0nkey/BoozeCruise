@@ -150,24 +150,24 @@ module.exports = (callback_query, ship, data) => {
         log(player, `Just won ${KORONA}${prize} on the pokies`);
         b.sendMessage(ship.id, `You won ${KORONA}${prize}\nNew Balance: ${KORONA}${ship.purse.balance}`);
         b.sendKeyboard(ship.id, "Play again?", keyboards.slots("", "SL"));
-        b.sendKeyboard(ship.id, `<pre>Stats?</pre>`, {
-          inline_keyboard: [
-            [
-              {
-                text: "Stats for nerds",
-                callback_data: JSON.stringify({ action: `slotStats` }),
-              },
-              {
-                text: "bet 2",
-                callback_data: JSON.stringify({ action: `slotStats` }),
-              },
-              {
-                text: "bet 3",
-                callback_data: JSON.stringify({ action: `slotStats` }),
-              },
-            ],
-          ],
-        });
+        // b.sendKeyboard(ship.id, `<pre>Stats?</pre>`, {
+        //   inline_keyboard: [
+        //     [
+        //       {
+        //         text: "Stats for nerds",
+        //         callback_data: JSON.stringify({ action: `slotStats` }),
+        //       },
+        //       {
+        //         text: "bet 2",
+        //         callback_data: JSON.stringify({ action: `slotStats` }),
+        //       },
+        //       {
+        //         text: "bet 3",
+        //         callback_data: JSON.stringify({ action: `slotStats` }),
+        //       },
+        //     ],
+        //   ],
+        // });
       });
     });
   } else if (data.action === "buy") {
