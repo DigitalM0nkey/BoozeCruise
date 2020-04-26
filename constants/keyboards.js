@@ -397,12 +397,7 @@ module.exports = {
   },
   slots: function (gameId, type) {
     let keyboard = {
-      inline_keyboard: [
-        {
-          text: "Stats for nerds",
-          callback_data: JSON.stringify({ action: `slotStats` }),
-        },
-      ],
+      inline_keyboard: [],
     };
     for (let i = 20; i <= 100; i += 20) {
       keyboard.inline_keyboard.push([
