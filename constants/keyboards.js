@@ -404,10 +404,11 @@ module.exports = {
             callback_data: JSON.stringify({ action: `slotStats` }),
           },
         ],
+        [],
       ],
     };
     for (let i = 20; i <= 100; i += 20) {
-      keyboard.inline_keyboard[0].push({
+      keyboard.inline_keyboard[1].push({
         text: i,
         callback_data: JSON.stringify({ action: `${type}_${gameId}`, num: i }),
       });
