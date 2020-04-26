@@ -140,6 +140,7 @@ const slots = (ship, bet, messageId) => {
 
       amountBet += bet;
       amountWon += prize;
+      amountOftrifectors += trifector(house);
 
       resolve(prize);
       // if (house[i] === "🍒") {
@@ -155,7 +156,6 @@ const slots = (ship, bet, messageId) => {
           i += 2;
         }
       }
-      amountOftrifectors += telly;
       return telly;
     };
     //const checkJackpot = slots => slots.every(symbol => symbol === slots[0]);
@@ -184,7 +184,7 @@ const stats = () => {
   )}\n${amountOftrifectors} Trifectors.\n${(emoji.korona, Math.ceil(largestJackpot.amount))} Largest jackpot(${
     largestJackpot.winningSymbols
   }).\n${(emoji.korona, amountBet)} Amount bet.\n${(emoji.korona, amountWon)} Amount Won.\n${
-    (emoji.korona, amountWon - amountBet)
+    (emoji.korona, amountBet - amountWon)
   } House balance.\n${plays} games played\n<i>Since server restart.</i>`;
   return message;
 };
