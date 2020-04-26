@@ -185,13 +185,13 @@ const slots = (ship, bet, messageId) => {
 };
 
 const stats = () => {
-  let message = `<pre>Slot Stats</pre>\n${rolls.map((roll) => `${roll.symbol}: ${roll.count}`)}\n${
+  let message = `<pre>Slot Stats</pre>\n${rolls.map((roll) => `${roll.symbol}: ${roll.count}`)}\n\n${
     emoji.korona
   }${Math.ceil(largestJackpot.amount)} Largest jackpot(${largestJackpot.winningSymbols}).\n${
     emoji.korona
   }${amountBet} Amount bet.\n${emoji.korona}${amountWon} Amount Won.\n${emoji.korona}${
     amountBet - amountWon
-  } House balance.${amountOftrifectors} Trifectors.\n\n${highestPower} Highest Power.\n${plays} games played.\n<i>Since server restart.</i>`;
+  } House balance.\n\n${amountOftrifectors} Trifectors.\n${highestPower} Highest Power.\n${plays} games played.\n\n<i>Since server restart.</i>`;
   return message;
 };
 
