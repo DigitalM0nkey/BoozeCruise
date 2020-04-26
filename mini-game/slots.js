@@ -20,6 +20,7 @@ let largestJackpot = {
 };
 let amountBet = 0;
 let amountWon = 0;
+let highestPower = 0;
 
 const slots = (ship, bet, messageId) => {
   return new Promise(function (resolve, reject) {
@@ -139,6 +140,10 @@ const slots = (ship, bet, messageId) => {
       console.log(`Bet: ${bet}`);
       console.log(`Power ${power}`);
 
+      if (power > highestPower) {
+        highestPower = power;
+      }
+
       amountBet += bet;
       amountWon += prize;
       amountOftrifectors += trifector(house);
@@ -182,11 +187,11 @@ const slots = (ship, bet, messageId) => {
 const stats = () => {
   let message = `<pre>Slot Stats</pre>\n${rolls.map(
     (roll) => `${roll.symbol}: ${roll.count}`
-  )}\n${amountOftrifectors} Trifectors.\n${(emoji.korona, Math.ceil(largestJackpot.amount))} Largest jackpot(${
+  )}\n${amountOftrifectors} Trifectors.\n${emoji.korona}${Math.ceil(largestJackpot.amount)} Largest jackpot(${
     largestJackpot.winningSymbols
-  }).\n${(emoji.korona, amountBet)} Amount bet.\n${(emoji.korona, amountWon)} Amount Won.\n${
-    (emoji.korona, amountBet - amountWon)
-  } House balance.\n${plays} games played\n<i>Since server restart.</i>`;
+  }).\n${emoji.korona}${amountBet} Amount bet.\n${emoji.korona}${amountWon} Amount Won.\n${emoji.korona}${
+    amountBet - amountWon
+  } House balance.\n${highestPower} Highest Power.\n${plays} games played.\n<i>Since server restart.</i>`;
   return message;
 };
 
