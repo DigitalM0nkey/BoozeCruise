@@ -12,7 +12,7 @@ let rolls = [
 ];
 let plays = 0;
 let amountOftrifectors = 0;
-let largestJacpot = {
+let largestJackpot = {
   amount: 0,
   winningSymbols: "",
 };
@@ -114,6 +114,9 @@ const slots = (ship, bet, messageId) => {
 
       if (checkJackpot(house)) {
         jackpot = Math.pow(bet, 1 + odds / 5);
+        if (largestJackpot.amount < jackpot) {
+          largestJackpot.amount = jackpot;
+        }
       }
       if (trifector(house)) {
         bonus = bet * 1.5 * trifector(house);
@@ -171,7 +174,9 @@ const slots = (ship, bet, messageId) => {
 const stats = () => {
   let message = `<pre>Slot Stats</pre>\n${rolls.map(
     (roll) => `${roll.symbol}: ${roll.count}`
-  )}\n${amountOftrifectors} Trifectors\n${plays} games played\nSince server restart.`;
+  )}\n${amountOftrifectors} Trifectors\n${
+    largestJackpot.amount
+  } Largest jackpot\n${plays} games played\nSince server restart.`;
   return message;
 };
 

@@ -400,7 +400,7 @@ module.exports = {
       inline_keyboard: [
         [
           {
-            text: "<pre>Stats for nerds</pre>",
+            text: `<b>Stats for nerds</b>`,
             callback_data: JSON.stringify({ action: `slotStats` }),
           },
         ],

@@ -324,11 +324,9 @@ router.post("/", ({ body }, res, next) => {
               
               \n☀️|☀️|☀️ - Three in a row of any symbol trigers a trifector bonus = bet * 1.5
               
-              \n\nThe jackpot is won when all slots are the same regardless of how many slots you are playing\nie. 🛳|🛳|🛳\nor 🏝|🏝|🏝|🏝|🏝\nor 🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊\nWinning the jackpot results in your bet to the power of the odds devided by 5
-
+              \n\nThe jackpot is won when all slots are the same regardless of how many slots you are playing\nie. 🛳|🛳|🛳\nor 🏝|🏝|🏝|🏝|🏝\nor 🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊\nWinning the jackpot results in your bet to the power of the odds devided by 5.
               \nExamples:
-              
-              Bet 100:
+              \nBet 100:
               🍒|🏝|🍒 = Ⓚ159
               Bet 80:
               🍒|🏝|🛳|☀️|🛳 = Ⓚ58
