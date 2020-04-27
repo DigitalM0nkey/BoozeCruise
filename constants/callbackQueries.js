@@ -9,6 +9,7 @@ const log = globalFunctions.log;
 const b = require("../bots/telegram").boozecruiseBot;
 const KORONA = "\u24C0";
 const MYSHIP = "5be3d50298ae6843394411ee";
+const emoji = require("../constants/emoji");
 
 const lowestHighest = require("../mini-game/lowestHighest");
 const slots = require("../mini-game/slots");
@@ -148,7 +149,7 @@ module.exports = (callback_query, ship, data) => {
         if (prize) {
           ship.purse.balance += prize;
           ship.save();
-          log(player, `Just won ${KORONA}${prize} on the pokies`);
+          log(player, `Just won ${KORONA}${prize} on the ${emoji.slots}`);
           b.sendKeyboard(
             ship.id,
             `You won ${KORONA}${prize}\nNew Balance: ${KORONA}${ship.purse.balance}`,
@@ -173,7 +174,7 @@ module.exports = (callback_query, ship, data) => {
           //   ],
           // });
         } else {
-          log(player, `Lost on the pokies`);
+          log(player, `Lost on the ${emoji.slots}`);
           b.sendKeyboard(ship.id, `You Lost\nNew Balance: ${KORONA}${ship.purse.balance}`, keyboards.slots("", "SL"));
         }
       });
