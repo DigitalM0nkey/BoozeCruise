@@ -162,14 +162,6 @@ module.exports = (callback_query, ship, data) => {
           //         text: "Stats for nerds",
           //         callback_data: JSON.stringify({ action: `slotStats` }),
           //       },
-          //       {
-          //         text: "bet 2",
-          //         callback_data: JSON.stringify({ action: `slotStats` }),
-          //       },
-          //       {
-          //         text: "bet 3",
-          //         callback_data: JSON.stringify({ action: `slotStats` }),
-          //       },
           //     ],
           //   ],
           // });
