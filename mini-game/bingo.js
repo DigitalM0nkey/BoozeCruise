@@ -7,7 +7,7 @@
     O: [61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75]
   };
   exports.createBoard = () => {
-    let playerBoard = {
+    let board = {
       B: [],
       I: [],
       N: [],
@@ -17,15 +17,15 @@
     for (let letter in bingo) {
       for (let j = 0; j < 5; j++) {
         if (letter === 'N' && j === 2) {
-          playerBoard[letter].push({
+          board[letter].push({
             name: 'FREE',
             number: 0,
             stamped: true
           });
         } else {
-          const availableNumbers = bingo[letter].filter(number => playerBoard[letter].indexOf(number) < 0);
+          const availableNumbers = bingo[letter].filter(number => board[letter].indexOf(number) < 0);
           const randomNumber = availableNumbers[Math.floor(Math.random() * availableNumbers.length)];
-          playerBoard[letter].push({
+          board[letter].push({
             name: `${letter}${randomNumber}`,
             number: randomNumber,
             stamped: false
@@ -33,5 +33,5 @@
         }
       }
     }
-    return playerBoard;
+    return board;
   };

@@ -1,4 +1,5 @@
 const mixology = require("../../mini-game/mixology");
+const bingo = require("../../mini-game/bingo");
 const router = require("express").Router();
 const schedule = require("node-schedule");
 const moment = require("moment");
@@ -317,7 +318,7 @@ router.post("/", ({ body }, res, next) => {
             // End Mini-game Lowest-Highest
           } else if (body.message.text == `${emoji.radio} BINGO ${emoji.radio}`) {
             log(player, "Playing bingo");
-            b.sendKeyboard(ship.id, ``, keyboards.bingo("", "SL"));
+            b.sendKeyboard(ship.id, ``, keyboards.bingo("BINGO", bingo.createBoard()));
           } else if (body.message.text == `${emoji.slots} Slots ${emoji.slots}`) {
             log(player, "Playing the slots");
             // console.log(keyboards.numbers("", "SL"));
