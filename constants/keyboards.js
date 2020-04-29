@@ -420,21 +420,17 @@ module.exports = {
   },
   bingo: function (gameId, board) {
     let keyboard = { inline_keyboard: [[], [], [], [], []] };
-    let i = 0;
     for (const letter in board) {
-      for (let j = 0; j < board[letter].length; j++) {
-        console.log(board[letter][j]);
-        keyboard.inline_keyboard[j].push({
-          text: board[letter][j].stamped ? board[letter][j].name : board[letter][j].name,
+      for (let i = 0; i < board[letter].length; i++) {
+        keyboard.inline_keyboard[i].push({
+          text: board[letter][i].stamped ? board[letter][i].name : board[letter][i].name,
           callback_data: JSON.stringify({
             action: `bingo_${gameId}`,
-            loc: `${letter}_${j}`,
+            loc: `${letter}_${i}`,
           }),
         });
       }
-      i++;
     }
-    console.log(keyboard);
     return keyboard;
   },
   numbers: function (gameId, type) {
