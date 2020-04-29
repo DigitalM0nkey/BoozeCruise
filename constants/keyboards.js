@@ -421,11 +421,11 @@ module.exports = {
   bingo: function (gameId, board) {
     let keyboard = { inline_keyboard: [[], [], [], [], []] };
     let i = 0;
-    console.log(board);
     for (const letter in board) {
-      for (let j = 0; j < board[letter]; j++) {
+      for (let j = 0; j < board[letter].length; j++) {
+        console.log(board[letter][j]);
         keyboard.inline_keyboard[i].push({
-          text: board[letter][j].stamped ? `<pre>${board[letter][j].name}</pre>` : board[letter][j].name,
+          text: board[letter][j].stamped ? board[letter][j].name : board[letter][j].name,
           callback_data: JSON.stringify({
             action: `bingo_${gameId}`,
             loc: `${letter}_${j}`,
