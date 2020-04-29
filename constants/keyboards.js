@@ -425,10 +425,10 @@ module.exports = {
       for (let j = 0; j < board[letter].length; j++) {
         console.log(board[letter][j]);
         keyboard.inline_keyboard[j].push({
-          text: board[letter][i].stamped ? board[letter][i].name : board[letter][i].name,
+          text: board[letter][j].stamped ? board[letter][j].name : board[letter][j].name,
           callback_data: JSON.stringify({
             action: `bingo_${gameId}`,
-            loc: `${letter}_${i}`,
+            loc: `${letter}_${j}`,
           }),
         });
       }
