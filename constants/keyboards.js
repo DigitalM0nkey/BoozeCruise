@@ -415,7 +415,23 @@ module.exports = {
     }
     return keyboard;
   },
-
+  bingo: function(gameId, board) {
+    let keyboard = { inline_keyboard: [[], [], [], [], []] };
+    let i = 0;
+    for (const letter in board) {
+      for (let j = 0; j < board[letter]; j++) {
+        keyboard.inline_keyboard[i][j].push({
+          text: board[letter][j].stamped ? `<pre>${board[letter][j].name}</pre>` : board[letter][j].name,
+          callback_data: JSON.stringify({
+            action: `bingo_${gameId}`,
+            location: `${letter}_${i}`,
+          }),
+        });
+      }
+      i++;
+    }
+    return keyboard;
+  },
   numbers: function (gameId, type) {
     let keyboard = { inline_keyboard: [] };
     for (let i = 0; i < 20; i++) {
