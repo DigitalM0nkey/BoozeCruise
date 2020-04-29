@@ -24,7 +24,6 @@
           });
         } else {
           const availableNumbers = bingo[letter].filter(number => !board[letter].some(cell => cell.number === number));
-          console.log(availableNumbers);
           const randomNumber = availableNumbers[Math.floor(Math.random() * availableNumbers.length)];
           board[letter].push({
             name: `${letter}${randomNumber}`,

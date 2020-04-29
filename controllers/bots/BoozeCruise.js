@@ -101,6 +101,7 @@ const minutelyEvent = schedule.scheduleJob("0 */1 * * * *", () => {
     });
   });
 });
+
 // Global Variables
 /* Daily events list
       var events = [{
