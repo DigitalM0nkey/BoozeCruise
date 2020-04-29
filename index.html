@@ -229,4 +229,54 @@
     // jackpot(["🍒", "🛳", "🛳", "🛳", "🍒"]);
     // jackpot(["🏝", "🏝", "🏝", "🏝"]);
   </script>
+
+  <script>
+    const B = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+    const I = [16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
+    const N = [31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 4243, 44, 45];
+    const G = [46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60];
+    const O = [61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75];
+
+    const bingo = () => {};
+    const rando = (input, amount) => {
+      const output = [];
+      min = Math.ceil(input[0]);
+      max = Math.floor(input[input.length - 1]);
+      for (let i = 0; i < amount; i++) {
+        let pickedNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+        if (output.includes(pickedNumber)) {
+          pickedNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        output.push(pickedNumber);
+      }
+      return output;
+    };
+
+    const board = () => {
+      b = rando(B, 5);
+      i = rando(I, 5);
+      n = rando(N, 4);
+      g = rando(G, 5);
+      o = rando(O, 5);
+      let output = "";
+      for (let ii = 0; ii < 6; ii++) {
+        for (let j = 0; j < 6; j++) {
+          if (j === 0) {
+            output += b[ii];
+          } else if (j === 1) {
+            output += i[ii];
+          } else if (j === 2) {
+            output += n[ii];
+          } else if (j === 3) {
+            output += g[ii];
+          } else if (j === 4) {
+            output += o[ii];
+          }
+        }
+        output += "\n";
+      }
+      console.log(output);
+    };
+    board();
+  </script>
 </html>
