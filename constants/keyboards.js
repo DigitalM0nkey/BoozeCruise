@@ -363,6 +363,9 @@ module.exports = {
         {
           text: `${emoji.slots} Slots ${emoji.slots}`,
         },
+        {
+          text: `${emoji.radio} BINGO ${emoji.radio}`,
+        },
       ],
     ],
     resize_keyboard: true,
@@ -415,7 +418,7 @@ module.exports = {
     }
     return keyboard;
   },
-  bingo: function(gameId, board) {
+  bingo: function (gameId, board) {
     let keyboard = { inline_keyboard: [[], [], [], [], []] };
     let i = 0;
     for (const letter in board) {

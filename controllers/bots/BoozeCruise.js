@@ -315,6 +315,9 @@ router.post("/", ({ body }, res, next) => {
               });
             }
             // End Mini-game Lowest-Highest
+          } else if (body.message.text == `${emoji.radio} BINGO ${emoji.radio}`) {
+            log(player, "Playing bingo");
+            b.sendKeyboard(ship.id, ``, keyboards.bingo("", "SL"));
           } else if (body.message.text == `${emoji.slots} Slots ${emoji.slots}`) {
             log(player, "Playing the slots");
             // console.log(keyboards.numbers("", "SL"));

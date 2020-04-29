@@ -15,4 +15,5 @@ module.exports = {
   joker: " 🃏 ",
   gift: " 🎁 ",
   slots: "🎰",
+  radio: "🔘",
 };
