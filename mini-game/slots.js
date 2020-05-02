@@ -185,7 +185,9 @@ const stats = () => {
       : ``
   }\n${emoji.korona}${amountBet} Amount bet.\n${emoji.korona}${amountWon} Amount Won.\n${emoji.korona}${
     amountBet - amountWon
-  } House balance.\n\n${amountOftrifectors} Trifectors.\n${highestPower} Highest Power.\n${plays} games played.\n\n<i>Since server restart.</i>`;
+  } House balance.\n\n${amountOftrifectors} Trifectors.\n${highestPower.toFixed(
+    2
+  )} Highest Power.\n${plays} games played.\n\n<i>Since server restart.</i>`;
   return message;
 };
 
