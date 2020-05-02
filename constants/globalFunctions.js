@@ -1,5 +1,6 @@
 const moment = require("moment");
 const guest = require("../types/guest");
+const keyboards = require("../../constants/keyboards");
 
 var HSECTORS = 4;
 var VSECTORS = 3;
@@ -103,7 +104,11 @@ exports.lookForTreasure = (ship) => {
         },
       }).then((port) => {
         if (port) {
-          b.sendMessage(ship.id, `You found ${port.treasure} Korona in the buried treasure`);
+          b.sendKeyboard(
+            ship.id,
+            `You found ${port.treasure} Korona in the buried treasure`,
+            keyboards.home(ship.nextLocation.port)
+          );
           b.sendMessage(port.id, `${ship.user.first_name} just found ${port.treasure} Korona here.`);
           ship.purse.balance += port.treasure;
           ship.purse.transactions.push({
@@ -124,7 +129,7 @@ exports.lookForTreasure = (ship) => {
             ports[randomPort].save();
           });
         } else {
-          b.sendMessage(ship.id, "No treasure here, keep searching");
+          b.sendKeyboard(ship.id, "No treasure here, keep searching", keyboards.home(ship.nextLocation.port));
         }
       });
     },
