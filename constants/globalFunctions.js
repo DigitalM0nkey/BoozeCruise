@@ -1,6 +1,6 @@
 const moment = require("moment");
 const guest = require("../types/guest");
-const keyboards = require("../../constants/keyboards");
+const keyboards = require("../keyboards");
 
 var HSECTORS = 4;
 var VSECTORS = 3;
