@@ -26,7 +26,7 @@ let highestPower = 0;
 const slots = (ship, bet, messageId) => {
   if (bet > ship.purse.balance) {
     b.sendMessage(
-      ship.location.port,
+      ship.id,
       `You do not have enough Korona to play! Your current balance is: ${emoji.korona}${ship.purse.balance}`
     );
     console.log("NOT ENOUGH KORONA");
