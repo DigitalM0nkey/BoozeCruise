@@ -98,14 +98,14 @@ const slots = (ship, bet, messageId) => {
             b.editMessageText(
               ship.id,
               messageId,
+              `Balance: ${emoji.korona}${ship.purse.balance}`,
               house.reduce(
                 (msg, symbol, j) =>
                   msg +
-                  (i >= j ? (j === house.length - 1 ? symbol : symbol + "|") : j === house.length - 1 ? "❓" : "❓|"),
-                "What is the text for?"
+                  (i >= j ? (j === house.length - 1 ? symbol : symbol + "|") : j === house.length - 1 ? "❓" : "❓|")
               )
             );
-            b.editMessageText(ship.id, messageId, `Balance: ${emoji.korona}${ship.purse.balance}`, "");
+            // b.editMessageText(ship.id, messageId, `Balance: ${emoji.korona}${ship.purse.balance}`, "");
           }, 1000 * i);
         }
         setTimeout(() => {
