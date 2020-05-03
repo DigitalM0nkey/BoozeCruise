@@ -102,7 +102,7 @@ const slots = (ship, bet, messageId) => {
                 (msg, symbol, j) =>
                   msg +
                   (i >= j ? (j === house.length - 1 ? symbol : symbol + "|") : j === house.length - 1 ? "❓" : "❓|"),
-                ""
+                "What is the text for?"
               )
             );
             b.editMessageText(ship.id, messageId, `Balance: ${emoji.korona}${ship.purse.balance}`, "");
