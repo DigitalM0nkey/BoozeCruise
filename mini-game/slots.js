@@ -105,6 +105,7 @@ const slots = (ship, bet, messageId) => {
                 ""
               )
             );
+            b.editMessageText(ship.id, messageId, `Balance: ${emoji.korona}${ship.purse.balance}`, "");
           }, 1000 * i);
         }
         setTimeout(() => {
