@@ -24,8 +24,8 @@ let amountWon = 0;
 let highestPower = 0;
 
 const slots = (ship, bet, messageId) => {
+  console.log(`ship => ${ship}`);
   Ship.findOne({ id: ship.from.id }).then(function (ship) {
-    console.log(`ship => ${ship}`);
     ship.purse.balance -= bet;
     ship.save();
     return new Promise(function (resolve, reject) {
