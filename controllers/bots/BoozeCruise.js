@@ -432,6 +432,18 @@ router.post("/", ({ body }, res, next) => {
             const removedGuest = ship.guests.pop();
             ship.save();
             b.sendKeyboard(body.message.chat.id, removedGuest, keyboards.home(ship.nextLocation.port));
+          } else if (body.message.text == `${emoji.helm} Bridge ${emoji.helm}`) {
+            b.sendKeyboard(
+              body.message.chat.id,
+              `Welcome to the ship's Bridge, From here you can view all the logs`,
+              keyboards.bridge
+            );
+          } else if (body.message.text == `${emoji.world} Global Logs ${emoji.world}`) {
+            b.sendKeyboard(
+              body.message.chat.id,
+              "Not to be confused with the Captins Log, the Global Logs allow you to view what other ships a currently doing.\n\nhttps://t.me/joinchat/AAAAAEzZL7OHC6BHdyzbLw",
+              keyboards.bridge
+            );
           } else if (body.message.text == "\ud83d\udc1b BUG \ud83d\udc1b") {
             b.sendKeyboard(
               body.message.chat.id,

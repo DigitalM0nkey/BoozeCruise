@@ -16,4 +16,5 @@ module.exports = {
   gift: " 🎁 ",
   slots: "🎰",
   radio: "🔘",
+  world: "🌎",
 };

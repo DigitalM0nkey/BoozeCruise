@@ -27,10 +27,20 @@ module.exports = {
               // { text: emoji.gift + "Shop" + emoji.gift },
             ]
           : [{ text: emoji.moneyBag + "Purser" + emoji.moneyBag }, { text: `/beta` }],
-        [{ text: emoji.bug + "Maintenance" + emoji.bug }, { text: emoji.helm + "Capt's Log" + emoji.helm }],
+        [{ text: emoji.bug + "Maintenance" + emoji.bug }, { text: `${emoji.helm} Bridge ${emoji.helm}` }],
       ],
       resize_keyboard: true,
     };
+  },
+  bridge: {
+    keyboard: [
+      [{ text: `${emoji.world} Global Logs ${emoji.world}` }, { text: emoji.helm + "Capt's Log" + emoji.helm }],
+      [
+        {
+          text: "\u2630 Main Menu \u2630",
+        },
+      ],
+    ],
   },
   docked: {
     keyboard: [
