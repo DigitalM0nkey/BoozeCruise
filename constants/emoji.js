@@ -10,7 +10,7 @@ module.exports = {
   navigation: " \ud83d\uddfa Navigation \ud83d\uddfa ",
   upDown: " \u2195 ",
   anchor: " \u2693 ",
-  helm: " \u2388 ",
+  helm: "⎈",
   cocktail: " \ud83c\udf78 ",
   joker: " 🃏 ",
   gift: " 🎁 ",

@@ -34,7 +34,7 @@ module.exports = {
   },
   bridge: {
     keyboard: [
-      [{ text: `${emoji.world} Global Logs ${emoji.world}` }, { text: emoji.helm + "Capt's Log" + emoji.helm }],
+      [{ text: `${emoji.world} Global Logs ${emoji.world}` }, { text: `${emoji.helm} Capt's Log ${emoji.helm}` }],
       [
         {
           text: "\u2630 Main Menu \u2630",
