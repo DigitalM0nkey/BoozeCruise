@@ -109,7 +109,7 @@ const slots = (ship, bet, messageId) => {
           }, 1000 * i);
         }
         setTimeout(() => {
-          prizes(house);
+          resolve(prizes(house));
         }, odds * 1000);
       };
 
@@ -187,7 +187,6 @@ const slots = (ship, bet, messageId) => {
       };
 
       print();
-      console.log(reject);
     });
   }
 };
