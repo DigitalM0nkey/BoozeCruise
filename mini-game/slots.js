@@ -114,7 +114,6 @@ const slots = (ship, bet, messageId) => {
       };
 
       const prizes = slots => {
-        console.log(slots);
         let i = 0;
         let prize = slots.reduce((prize, symbol) => prize + (symbol === "🍒" ? halfBet : 0), 0);
         let power = 1;
@@ -155,7 +154,7 @@ const slots = (ship, bet, messageId) => {
         amountWon += prize;
         amountOftrifectors += trifectorPrize;
 
-        resolve(prize);
+        return prize;
         // if (slots[i] === "🍒") {
         //   document.getElementById("balance").innerHTML = balance + parseInt(bet, 10);
         // }
