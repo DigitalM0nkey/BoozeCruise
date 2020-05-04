@@ -102,7 +102,7 @@ const slots = (ship, bet, messageId) => {
                 (msg, symbol, j) =>
                   msg +
                   (i >= j ? (j === house.length - 1 ? symbol : symbol + "|") : j === house.length - 1 ? "❓" : "❓|"),
-                `Won:${emoji.korona}${prizes(house.slice(0, i))}\n`
+                `Won: ${emoji.korona}${prizes(house.slice(0, i))}\n`
               )
             );
             // b.editMessageText(ship.id, messageId, `Balance: ${emoji.korona}${ship.purse.balance}`, "");
@@ -114,6 +114,7 @@ const slots = (ship, bet, messageId) => {
       };
 
       const prizes = slots => {
+        if (slots.length === 0) return 0;
         let i = 0;
         let prize = slots.reduce((prize, symbol) => prize + (symbol === "🍒" ? halfBet : 0), 0);
         let power = 1;
