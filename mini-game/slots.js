@@ -102,37 +102,38 @@ const slots = (ship, bet, messageId) => {
                 (msg, symbol, j) =>
                   msg +
                   (i >= j ? (j === house.length - 1 ? symbol : symbol + "|") : j === house.length - 1 ? "❓" : "❓|"),
-                `Balance: ${emoji.korona}${ship.purse.balance}\n`
+                `Won:${emoji.korona}${prizes(house.slice(0, i))}\n`
               )
             );
             // b.editMessageText(ship.id, messageId, `Balance: ${emoji.korona}${ship.purse.balance}`, "");
           }, 1000 * i);
         }
         setTimeout(() => {
-          prizes();
+          prizes(house);
         }, odds * 1000);
       };
 
-      const prizes = () => {
+      const prizes = slots => {
         let i = 0;
-        let prize = house.reduce((prize, symbol) => prize + (symbol === "🍒" ? halfBet : 0), 0);
+        let prize = slots.reduce((prize, symbol) => prize + (symbol === "🍒" ? halfBet : 0), 0);
         let power = 1;
         let jackpot = 0;
         let bonus = 0;
 
-        console.log("JACKPOT ??? => ", checkJackpot(house));
+        console.log("JACKPOT ??? => ", checkJackpot(slots));
 
-        if (checkJackpot(house)) {
+        if (checkJackpot(slots)) {
           jackpot = Math.pow(bet, 1 + odds / 5);
           if (largestJackpot.amount < jackpot) {
             largestJackpot.amount = jackpot;
-            largestJackpot.winningSymbols = house;
+            largestJackpot.winningSymbols = slots;
           }
         }
-        if (trifector(house)) {
-          bonus = bet * 1.5 * trifector(house);
+        const trifectorPrize = trifector(slots);
+        if (trifectorPrize) {
+          bonus = bet * 1.5 * trifectorPrize;
         }
-        while (house[i] === "🍒") {
+        while (slots[i] === "🍒") {
           power += 0.1;
           i++;
         }
@@ -140,7 +141,7 @@ const slots = (ship, bet, messageId) => {
         prize = Math.ceil(Math.pow(prize, power) + jackpot + bonus);
         console.log(`Prize: ${prize}`);
         console.log(`Jackpot: ${jackpot}`);
-        console.log(`Amount of trifectors: ${trifector(house)}`);
+        console.log(`Amount of trifectors: ${trifectorPrize}`);
         console.log(`Bonus: ${bonus}`);
         console.log(`Bet: ${bet}`);
         console.log(`Power ${power}`);
@@ -151,10 +152,10 @@ const slots = (ship, bet, messageId) => {
 
         amountBet += bet;
         amountWon += prize;
-        amountOftrifectors += trifector(house);
+        amountOftrifectors += trifectorPrize;
 
         resolve(prize);
-        // if (house[i] === "🍒") {
+        // if (slots[i] === "🍒") {
         //   document.getElementById("balance").innerHTML = balance + parseInt(bet, 10);
         // }
       };
