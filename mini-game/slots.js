@@ -114,6 +114,7 @@ const slots = (ship, bet, messageId) => {
       };
 
       const prizes = slots => {
+        console.log(slots);
         let i = 0;
         let prize = slots.reduce((prize, symbol) => prize + (symbol === "🍒" ? halfBet : 0), 0);
         let power = 1;
