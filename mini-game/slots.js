@@ -215,7 +215,7 @@ const instructions = `Any 🍒 is equal to 50% of your bet. However, if a 🍒 i
 \nBet 60:\n🌊|🏝|🏝|🍒|🌊|🏝|🍒\n= Ⓚ60
 \nBet 40:\n🍒|🌊|🍒|🏝|☀️|🏝|🍒|🍒|🍒\n= Ⓚ219
 \nBet 20:\n☀️|🛳|🛳|🛳|🌊|🏝|🏝|🍒|🌊|☀️\n= Ⓚ40
-\n\n In short: Less is more, more or less... The less you bet the more likley you will win, However, betting more increases your odds of hitting a jackpot`;
+\n In short: Less is more, more or less... The less you bet the more likley you will win, However, betting more increases your odds of hitting a jackpot. How much will you bet?`;
 
 exports.instructions = instructions;
 exports.stats = stats;
