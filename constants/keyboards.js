@@ -167,11 +167,11 @@ module.exports = {
       //     text: emoji.cocktail + "Mixology" + emoji.cocktail
       //   }
       // ],
-      // [
-      //   {
-      //     text: `${emoji.slots} Slots ${emoji.slots}`,
-      //   },
-      // ],
+      [
+        {
+          text: `${emoji.slots} Slots ${emoji.slots}`,
+        },
+      ],
       [
         {
           text: "\u2630 Main Menu \u2630",
@@ -370,9 +370,9 @@ module.exports = {
       ],
       [
         { text: emoji.gift + "Shop" + emoji.gift },
-        {
-          text: `${emoji.slots} Slots ${emoji.slots}`,
-        },
+        // {
+        //   text: `${emoji.slots} Slots ${emoji.slots}`,
+        // },
         {
           text: `${emoji.radio} BINGO ${emoji.radio}`,
         },
