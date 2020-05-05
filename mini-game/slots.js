@@ -124,11 +124,8 @@ const slots = (ship, bet, messageId) => {
         console.log("JACKPOT ??? => ", checkJackpot(slots));
 
         if (checkJackpot(slots)) {
-          if (!slots.includes("❓")) {
-            console.log("I do not include ????");
+          jackpot = Math.pow(bet, 1 + odds / 5);
 
-            jackpot = Math.pow(bet, 1 + odds / 5);
-          }
           if (largestJackpot.amount < jackpot) {
             largestJackpot.amount = jackpot;
             largestJackpot.winningSymbols = slots;
@@ -184,11 +181,13 @@ const slots = (ship, bet, messageId) => {
           console.log(value === currentValue[0]);
           return value === currentValue[0];
         };
-        if (currentValue.every(equal)) {
-          console.log("Jackpot");
-          return true;
-        } else {
-          return false;
+        if (currentValue.length > 2) {
+          if (currentValue.every(equal)) {
+            console.log("Jackpot");
+            return true;
+          } else {
+            return false;
+          }
         }
       };
 
