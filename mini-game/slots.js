@@ -113,7 +113,7 @@ const slots = (ship, bet, messageId) => {
         }, odds * 1000);
       };
 
-      const prizes = slots => {
+      const prizes = (slots) => {
         if (slots.length === 0) return 0;
         let i = 0;
         let prize = slots.reduce((prize, symbol) => prize + (symbol === "🍒" ? halfBet : 0), 0);
@@ -124,7 +124,7 @@ const slots = (ship, bet, messageId) => {
         console.log("JACKPOT ??? => ", checkJackpot(slots));
 
         if (checkJackpot(slots)) {
-          jackpot = Math.pow(bet, 1 + odds / 5);
+          // jackpot = Math.pow(bet, 1 + odds / 5);
           if (largestJackpot.amount < jackpot) {
             largestJackpot.amount = jackpot;
             largestJackpot.winningSymbols = slots;
