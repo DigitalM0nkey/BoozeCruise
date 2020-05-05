@@ -124,7 +124,9 @@ const slots = (ship, bet, messageId) => {
         console.log("JACKPOT ??? => ", checkJackpot(slots));
 
         if (checkJackpot(slots)) {
-          // jackpot = Math.pow(bet, 1 + odds / 5);
+          if (!slots.includes("❓")) {
+            jackpot = Math.pow(bet, 1 + odds / 5);
+          }
           if (largestJackpot.amount < jackpot) {
             largestJackpot.amount = jackpot;
             largestJackpot.winningSymbols = slots;
