@@ -188,6 +188,8 @@ module.exports = (callback_query, ship, data) => {
   } else if (data.action === "slotStats") {
     console.log("In the SlotStats");
     b.sendMessage(ship.id, slots.stats());
+  } else if (data.action === "slotsInstructions") {
+    b.sendMessage(ship.id, slots.instructions);
   } else if (data.action === "mixology") {
     Port.findOne({
       id: data.port,
