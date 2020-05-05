@@ -17,4 +17,5 @@ module.exports = {
   slots: "🎰",
   radio: "🔘",
   world: "🌎",
+  books: "📚",
 };

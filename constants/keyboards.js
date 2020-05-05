@@ -370,9 +370,9 @@ module.exports = {
       ],
       [
         { text: emoji.gift + "Shop" + emoji.gift },
-        // {
-        //   text: `${emoji.slots} Slots ${emoji.slots}`,
-        // },
+        {
+          text: `${emoji.books} Library ${emoji.books}`,
+        },
         {
           text: `${emoji.radio} BINGO ${emoji.radio}`,
         },
