@@ -416,8 +416,8 @@ module.exports = {
             text: `Stats for nerds`,
             callback_data: JSON.stringify({ action: `slotStats` }),
           },
+          { text: `Instructions`, callback_data: JSON.stringify({ action: `slotsInstructions` }) },
         ],
-        [{ text: `Instructions`, callback_data: JSON.stringify({ action: `slotsInstructions` }) }],
         [],
       ],
     };
