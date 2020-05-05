@@ -323,7 +323,7 @@ router.post("/", ({ body }, res, next) => {
           } else if (body.message.text == `${emoji.slots} Slots ${emoji.slots}`) {
             log(player, "Playing the slots");
             // console.log(keyboards.numbers("", "SL"));
-            b.sendKeyboard(ship.id, `Less is more, more or less...`, keyboards.slots("", "SL"));
+            b.sendKeyboard(ship.id, `Less is more, more or less... How much will you bet?`, keyboards.slots("", "SL"));
           } else if (body.message.text == `/beta`) {
             b.sendKeyboard(ship.id, "Your testing beta features! Things may break", keyboards.beta);
             log(player, "Testing beta features");
