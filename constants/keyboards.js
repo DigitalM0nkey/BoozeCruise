@@ -409,7 +409,10 @@ module.exports = {
     ],
   },
   mixologyIngredients: ingredients => (
-    { inline_keyboard: ingredients.map(ingredient => [ingredient]) }
+    { inline_keyboard: ingredients.map(ingredient => [{
+      text: ingredient,
+      callback_data: JSON.stringify({ action: `mixology`, data: ingredient }),
+    }]) }
   ),
   slots: function (gameId, type) {
     let keyboard = {
