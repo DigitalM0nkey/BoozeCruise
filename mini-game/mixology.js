@@ -1,6 +1,7 @@
 const request = require("request");
 const portID = "-1001294305401";
 const Cocktail = require("../models/mini-games/mixology/cocktail");
+const Mixology = require("../models/mini-games/mixology/mixology");
 /* Get cocktail list from online DB
 
 exports.getCocktail = () => {
@@ -40,24 +41,27 @@ exports.getCocktail = () => {
 
 const getCocktail = () => {
   return new Promise((resolve, reject) => {
-    Cocktail.find({ alcoholic: "Alcoholic" })
-    .lean()
-    .exec((err, cocktails) => {
-      console.log(cocktails[Math.floor(Math.random() * cocktails.length)]);
+    Cocktail.find({
+        alcoholic: "Alcoholic"
+      })
+      .lean()
+      .exec((err, cocktails) => {
+        console.log(cocktails[Math.floor(Math.random() * cocktails.length)]);
 
-      resolve(cocktails[Math.floor(Math.random() * cocktails.length)]);
-    });
+        resolve(cocktails[Math.floor(Math.random() * cocktails.length)]);
+      });
   });
 };
 const getIngredients = (cocktailIngredients) => {
   return new Promise((resolve, reject) => {
-    Cocktail.aggregate([
-      { $unwind: '$ingredients' },
-    ]).exec((err, cocktails) => {
+    Cocktail.aggregate([{
+      $unwind: '$ingredients'
+    }, ]).exec((err, cocktails) => {
       resolve(cocktails.reduce((ingredients, cocktail) => {
         if (ingredients.indexOf(cocktail.ingredients) < 0 && cocktailIngredients.indexOf(cocktail.ingredients) < 0) {
           ingredients.push(cocktail.ingredients);
-        } return ingredients;
+        }
+        return ingredients;
       }, []));
     });
   });
@@ -74,6 +78,25 @@ const getFakeCocktail = async () => {
   }
   cocktail.fakeIngredients = fakeIngredients;
   return cocktail;
+};
+
+const getGame = async () => {
+  const game = await Mixology.findOne({
+    finished: false
+  });
+  if (!game) {
+    const cocktail = await getFakeCocktail();
+    let newGame = await Mixology.create({
+      players: [],
+      fakeIngredients: cocktail.fakeIngredients,
+      cocktail: cocktail._id
+    });
+    return await Mixology.findOne({
+      finished: false
+    });
+  } else {
+    return game;
+  }
 };
 getFakeCocktail();
 exports.getCocktail = getCocktail;

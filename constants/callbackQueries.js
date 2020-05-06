@@ -24,7 +24,7 @@ module.exports = (callback_query, ship, data) => {
     if (ship.id != MYSHIP) {
       Port.findOne({
         id: data.port,
-      }).then(function (port) {
+      }).then(function(port) {
         var arrival = new Date();
         arrival = arrival.setTime(
           arrival.getTime() + globalFunctions.calculateDistance(port.location, ship.location) * 60 * 60 * 1000
@@ -53,27 +53,29 @@ module.exports = (callback_query, ship, data) => {
   } else if (data.action === "navigate_sector") {
     Port.find({
       "location.sector": data.sector,
-    }).then(function (ports) {
+    }).then(function(ports) {
       globalFunctions.sendAvailablePorts(callback_query.from.id, ports, ship);
     });
     // Start Product list
   } else if (data.action === "product") {
-    Product.findOne({ _id: data.product }).then((product) => {
+    Product.findOne({
+      _id: data.product
+    }).then((product) => {
       b.sendPhoto(
         callback_query.from.id,
         product.image,
         product.name + "\n" + product.type + "\n" + product.description
       );
-      setTimeout(function () {
+      setTimeout(function() {
         b.sendKeyboard(
           callback_query.from.id,
           "Price: " +
-            KORONA +
-            product.price +
-            "\nQuantity Available: " +
-            product.quantity +
-            "\nExpiry: " +
-            product.expiry,
+          KORONA +
+          product.price +
+          "\nQuantity Available: " +
+          product.quantity +
+          "\nExpiry: " +
+          product.expiry,
           keyboards.product(product)
         );
       }, 1500);
@@ -82,7 +84,10 @@ module.exports = (callback_query, ship, data) => {
 
     // Start Mini-game Lowest-Highest
   } else if (data.action.indexOf("LH_") === 0) {
-    LowestHighest.findOne({ inProgress: true, _id: data.action.split("_")[1] }).then(function (game) {
+    LowestHighest.findOne({
+      inProgress: true,
+      _id: data.action.split("_")[1]
+    }).then(function(game) {
       if (game) {
         console.log(game);
         console.log(_.find(game.players, (player) => player.id == callback_query.from.id));
@@ -103,11 +108,15 @@ module.exports = (callback_query, ship, data) => {
             console.log(result);
 
             if (result.winner) {
-              Ship.findOne({ id: result.winner }).then(function (winner) {
+              Ship.findOne({
+                id: result.winner
+              }).then(function(winner) {
                 winner.purse.balance += 10;
 
                 if (result.jackpot) {
-                  LowestHighest.find({ jackpotPaid: false }).then((games) => {
+                  LowestHighest.find({
+                    jackpotPaid: false
+                  }).then((games) => {
                     winner.purse.balance += 4 * games.length;
                     winner.save();
                     b.sendMessage(game.players[0].id, result.message);
@@ -145,7 +154,9 @@ module.exports = (callback_query, ship, data) => {
 
     //SLOTS GAME
     //data.num = bet
-    Ship.findOne({ id: callback_query.from.id }).then(function (ship) {
+    Ship.findOne({
+      id: callback_query.from.id
+    }).then(function(ship) {
       slots.get(ship, data.num, callback_query.message.message_id).then((prize) => {
         if (prize) {
           ship.purse.balance += prize;
@@ -173,7 +184,9 @@ module.exports = (callback_query, ship, data) => {
       });
     });
   } else if (data.action === "buy") {
-    Product.findOne({ _id: data.id }).then((product) => {
+    Product.findOne({
+      _id: data.id
+    }).then((product) => {
       ship.products.push({
         product: product._id,
         expiry: moment().add(product.expiry, "days"),
@@ -192,28 +205,40 @@ module.exports = (callback_query, ship, data) => {
   } else if (data.action === "slotsInstructions") {
     b.sendMessage(ship.id, slots.instructions);
   } else if (data.action === "mixology") {
-      mixology.getFakeCocktail().then(cocktail => {
-        console.log(cocktail);
-        b.sendPhoto(
+    mixology.getFakeCocktail().then(cocktail => {
+      console.log(cocktail);
+      b.sendPhoto(
+        MIXOLOGYPORT,
+        cocktail.image,
+        `<pre>${cocktail.name}</pre>`
+      );
+      setTimeout(() => {
+        console.log(keyboards.mixologyIngredients(cocktail.ingredients.concat(cocktail.fakeIngredients)));
+        b.sendKeyboard(
           MIXOLOGYPORT,
-          cocktail.image,
-          `<pre>${cocktail.name}</pre>`
+          `Which ingredients are part of ${cocktail.name}`,
+          keyboards.mixologyIngredients(cocktail.ingredients.concat(cocktail.fakeIngredients))
         );
-        setTimeout(() => {
-          console.log(keyboards.mixologyIngredients(cocktail.ingredients.concat(cocktail.fakeIngredients)));
-          b.sendKeyboard(
-            MIXOLOGYPORT,
-            `Which ingredients are part of ${cocktail.name}`,
-            keyboards.mixologyIngredients(cocktail.ingredients.concat(cocktail.fakeIngredients))
-          );
-        }, 500);
-      });
-      console.log("Do some mixology stuff");
+      }, 500);
+    });
+    console.log("Do some mixology stuff");
+  } else if (data.action === "mix_guess") {
+    mixology.getGame().then(game => {
+      if (game.fakeIngredients.indexOf(data.data) >= 0) {
+        b.sendMessage(MIXOLOGYPORT, `You're out ${callback_query.from.first_name}`);
+      } else {
+        b.sendMessage(MIXOLOGYPORT, `Good job ${callback_query.from.first_name}`);
+      }
+      //let player = _.find(game.players, player => player.id == ship.id);
+    });
   }
+
   function broadcast(message) {
     Ship.find({}).then((ships) => {
       b.broadcast(
-        ships.map(({ id }) => {
+        ships.map(({
+          id
+        }) => {
           return id;
         }),
         message
