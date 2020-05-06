@@ -9,6 +9,7 @@ const log = globalFunctions.log;
 const b = require("../bots/telegram").boozecruiseBot;
 const KORONA = "\u24C0";
 const MYSHIP = "5be3d50298ae6843394411ee";
+const MIXOLOGYPORT = -1001216326021; //Caspian
 const emoji = require("../constants/emoji");
 
 const lowestHighest = require("../mini-game/lowestHighest");
@@ -191,30 +192,23 @@ module.exports = (callback_query, ship, data) => {
   } else if (data.action === "slotsInstructions") {
     b.sendMessage(ship.id, slots.instructions);
   } else if (data.action === "mixology") {
-
-    mixology.getFakeCocktail().then(cocktail => {
-      console.log(cocktail);
-      b.sendPhoto(
-        body.message.chat.id,
-        cocktail.image,
-        `<pre>${cocktail.name}</pre>`
-      );
-      setTimeout(() => {
-        console.log(keyboards.mixologyIngredients(cocktail.ingredients.concat(cocktail.fakeIngredients)));
-        b.sendKeyboard(
-          body.message.chat.id,
-          `Which ingredients are part of ${cocktail.name}`,
-          keyboards.mixologyIngredients(cocktail.ingredients.concat(cocktail.fakeIngredients))
+      mixology.getFakeCocktail().then(cocktail => {
+        console.log(cocktail);
+        b.sendPhoto(
+          MIXOLOGYPORT,
+          cocktail.image,
+          `<pre>${cocktail.name}</pre>`
         );
-      }, 500);
-    });/*
-    Port.findOne({
-      id: data.port,
-    }).then(function (port) {
-      console.log("port => ", port);
-      mixology.getCocktail().then((cocktail) => b.sendMessage(ship.id, cocktail));
+        setTimeout(() => {
+          console.log(keyboards.mixologyIngredients(cocktail.ingredients.concat(cocktail.fakeIngredients)));
+          b.sendKeyboard(
+            MIXOLOGYPORT,
+            `Which ingredients are part of ${cocktail.name}`,
+            keyboards.mixologyIngredients(cocktail.ingredients.concat(cocktail.fakeIngredients))
+          );
+        }, 500);
+      });
       console.log("Do some mixology stuff");
-    });*/
   }
   function broadcast(message) {
     Ship.find({}).then((ships) => {
