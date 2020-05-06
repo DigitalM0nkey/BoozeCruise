@@ -101,4 +101,5 @@ const getGame = async () => {
 getFakeCocktail();
 exports.getCocktail = getCocktail;
 exports.getFakeCocktail = getFakeCocktail;
+exports.getGame = getGame;
 exports.getID = () => portID;
