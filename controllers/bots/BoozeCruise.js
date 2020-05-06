@@ -597,7 +597,7 @@ router.post("/", ({ body }, res, next) => {
                 keyboards.decision(LOWESTHIGHEST)
               );
             });
-          } else if (body.message.text == emoji.cocktail + "Mixology" + emoji.cocktail) {
+          } else if (body.message.text == "\ud83c\udf78 Mixology \ud83c\udf78") {
             mixology.getFakeCocktail().then(cocktail => {
               console.log(cocktail);
               b.sendPhoto(
