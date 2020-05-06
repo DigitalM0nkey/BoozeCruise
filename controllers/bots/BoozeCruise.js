@@ -599,13 +599,14 @@ router.post("/", ({ body }, res, next) => {
             });
           } else if (body.message.text == emoji.cocktail + "Mixology" + emoji.cocktail) {
             mixology.getFakeCocktail().then(cocktail => {
-
+              console.log(cocktail);
               b.sendPhoto(
                 body.message.chat.id,
                 cocktail.image,
                 `<pre>${cocktail.name}</pre>`
               );
               setTimeout(() => {
+                console.log(keyboards.mixologyIngredients(cocktail.ingredients.concat(cocktail.fakeIngredients)));
                 b.sendKeyboard(
                   body.message.chat.id,
                   `Which ingredients are part of ${cocktail.name}`,
