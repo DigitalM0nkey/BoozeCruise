@@ -131,12 +131,10 @@ function TelegramBot() {
     new Promise((resolve, reject) => {
       const url = `https://api.telegram.org/bot${bot.token}/exportChatInviteLink?chat_id=${channel}`;
       request(encodeURI(url), (error, r, body) => {
-        console.log(body);
-        const response = JSON.parse(body).result;
-        //console.log(response);
-        if (error) return;
-        if (!response) return;
-        resolve(response);
+        if (error) reject(error);
+        const response = JSON.parse(body);
+        if (!response || !response.ok || !response.result) reject(response);
+        resolve(response.result);
       });
     });
   bot.getChat = (channel) =>

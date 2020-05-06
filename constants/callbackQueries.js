@@ -191,13 +191,30 @@ module.exports = (callback_query, ship, data) => {
   } else if (data.action === "slotsInstructions") {
     b.sendMessage(ship.id, slots.instructions);
   } else if (data.action === "mixology") {
+
+    mixology.getFakeCocktail().then(cocktail => {
+      console.log(cocktail);
+      b.sendPhoto(
+        body.message.chat.id,
+        cocktail.image,
+        `<pre>${cocktail.name}</pre>`
+      );
+      setTimeout(() => {
+        console.log(keyboards.mixologyIngredients(cocktail.ingredients.concat(cocktail.fakeIngredients)));
+        b.sendKeyboard(
+          body.message.chat.id,
+          `Which ingredients are part of ${cocktail.name}`,
+          keyboards.mixologyIngredients(cocktail.ingredients.concat(cocktail.fakeIngredients))
+        );
+      }, 500);
+    });/*
     Port.findOne({
       id: data.port,
     }).then(function (port) {
       console.log("port => ", port);
       mixology.getCocktail().then((cocktail) => b.sendMessage(ship.id, cocktail));
       console.log("Do some mixology stuff");
-    });
+    });*/
   }
   function broadcast(message) {
     Ship.find({}).then((ships) => {
