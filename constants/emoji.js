@@ -11,7 +11,7 @@ module.exports = {
   upDown: " \u2195 ",
   anchor: " \u2693 ",
   helm: "⎈",
-  cocktail: " \ud83c\udf78 ",
+  cocktail: "🍸",
   joker: " 🃏 ",
   gift: " 🎁 ",
   slots: "🎰",

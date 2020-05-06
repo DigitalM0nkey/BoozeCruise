@@ -444,7 +444,7 @@ router.post("/", ({ body }, res, next) => {
               "Oh No!!! A BUG! Quick! Kill it!\n\nGo here to report the bug\n\nhttps://t.me/joinchat/HmxycxY2tSHp_aZX4mQ9QA",
               keyboards.home(ship.nextLocation.port)
             );
-          } else if (body.message.text == "\ud83c\udf78 Cocktail \ud83c\udf78") {
+          } else if (body.message.text == `${emoji.cocktail} Cocktail ${emoji.cocktail}`) {
             log(player, "Ordered a cocktail. Stay classy baby!");
             mixology.getCocktail().then((cocktail) => {
               b.sendPhoto(
@@ -597,7 +597,7 @@ router.post("/", ({ body }, res, next) => {
                 keyboards.decision(LOWESTHIGHEST)
               );
             });
-          } else if (body.message.text == "\ud83c\udf78 Mixology \ud83c\udf78") {
+          } else if (body.message.text == `${emoji.cocktail} Mixology ${emoji.cocktail}`) {
             mixology.getFakeCocktail().then(cocktail => {
               console.log(cocktail);
               b.sendPhoto(
