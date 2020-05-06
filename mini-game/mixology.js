@@ -40,13 +40,15 @@ exports.getCocktail = () => {
 
 const getCocktail = () => {
   return new Promise((resolve, reject) => {
-    Cocktail.find({ alcoholic: "Alcoholic" }).exec((err, cocktails) => {
+    Cocktail.find({ alcoholic: "Alcoholic" })
+    .lean()
+    .exec((err, cocktails) => {
       console.log(cocktails[Math.floor(Math.random() * cocktails.length)]);
 
       resolve(cocktails[Math.floor(Math.random() * cocktails.length)]);
-    })
-  })
-}
+    });
+  });
+};
 const getIngredients = (cocktailIngredients) => {
   return new Promise((resolve, reject) => {
     Cocktail.aggregate([
@@ -56,26 +58,24 @@ const getIngredients = (cocktailIngredients) => {
         if (ingredients.indexOf(cocktail.ingredients) < 0 && cocktailIngredients.indexOf(cocktail.ingredients) < 0) {
           ingredients.push(cocktail.ingredients);
         } return ingredients;
-      }, []))
-
-
-    })
-  })
-
-}
+      }, []));
+    });
+  });
+};
 // Adds fake ingredients to cocktail
-function getFakeCocktail(cocktail) {
-  let theCocktail;
-  getIngredients(cocktail.ingredients).then(ingredients => {
-    let fakeIngredients = [];
-    for (let i = 0; i < 10 - cocktail.ingredients.length; i++) {
-      let random = Math.floor(Math.random() * ingredients.length);
-      fakeIngredients.push(ingredients[random]);
-      ingredients.splice(random, 1);
-    } theCocktail = cocktail;
-    theCocktail.fakeIngredients = fakeIngredients;
-
-  })
-}
+const getFakeCocktail = async () => {
+  const cocktail = await getCocktail();
+  const ingredients = await getIngredients(cocktail.ingredients);
+  let fakeIngredients = [];
+  for (let i = 0; i < 10 - cocktail.ingredients.length; i++) {
+    let random = Math.floor(Math.random() * ingredients.length);
+    fakeIngredients.push(ingredients[random]);
+    ingredients.splice(random, 1);
+  }
+  cocktail.fakeIngredients = fakeIngredients;
+  return cocktail;
+};
+getFakeCocktail();
 exports.getCocktail = getCocktail;
+exports.getFakeCocktail = getFakeCocktail;
 exports.getID = () => portID;

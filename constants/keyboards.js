@@ -408,6 +408,9 @@ module.exports = {
       ],
     ],
   },
+  mixologyIngredients: ingredients => (
+    { inline_keyboard: ingredients.map(ingredient => [ingredient]) }
+  ),
   slots: function (gameId, type) {
     let keyboard = {
       inline_keyboard: [

@@ -13,7 +13,7 @@ const globalFunctions = require("../../constants/globalFunctions");
 const log = globalFunctions.log;
 
 const MYSHIP = "5be3d50298ae6843394411ee";
-const MIXOLOGYPORT = -1001216326021;
+const MIXOLOGYPORT = -1001216326021; //Caspian
 const KORONA = "\u24C0";
 const WELCOME =
   "Welcome To Booze Cruise!\n\nThis is your ship, go ahead and look around. Press all the buttons, it's the only way you'll know what they do.\nThis is not a fast-paced game, it occurs in real time.\nBoozeCruise is an in-development game, meaning that the game is constantly evolving.\n\nWant to send the developers a message, or suggest a feature? There's a button for that and we would love for you to use it.\n\nIn BoozeCruise you will travel from port to port, in each port you will meet other sailors like yourself, go ahead introduce yourself to whoever else is in port. \n\nThere is treasure hidden in one of the ports, make sure you look for teasure while you are docked. You could dig up some Korona.\n\nWhere would you like to go ?";
@@ -596,6 +596,22 @@ router.post("/", ({ body }, res, next) => {
                 }</code>`,
                 keyboards.decision(LOWESTHIGHEST)
               );
+            });
+          } else if (body.message.text == emoji.cocktail + "Mixology" + emoji.cocktail) {
+            mixology.getFakeCocktail().then(cocktail => {
+
+              b.sendPhoto(
+                body.message.chat.id,
+                cocktail.image,
+                `<pre>${cocktail.name}</pre>`
+              );
+              setTimeout(() => {
+                b.sendKeyboard(
+                  body.message.chat.id,
+                  `Which ingredients are part of ${cocktail.name}`,
+                  keyboards.mixologyIngredients(cocktail.ingredients.concat(cocktail.fakeIngredients))
+                );
+              }, 500);
             });
           } else if (body.message.text == "\ud83d\udc65 Manifest \ud83d\udc65") {
             log(player, "Looking into the ships records.");
