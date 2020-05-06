@@ -162,11 +162,6 @@ module.exports = {
           text: emoji.upDown + "Lowest Highest" + emoji.upDown,
         },
       ],
-      // [
-      //   {
-      //     text: emoji.cocktail + "Mixology" + emoji.cocktail
-      //   }
-      // ],
       [
         {
           text: `${emoji.slots} Slots ${emoji.slots}`,
@@ -366,6 +361,11 @@ module.exports = {
       [
         {
           text: "\u2630 Main Menu \u2630",
+        },
+      ],
+      [
+        {
+          text: emoji.cocktail + "Mixology" + emoji.cocktail,
         },
       ],
       [
