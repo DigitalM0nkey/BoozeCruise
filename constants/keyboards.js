@@ -410,11 +410,21 @@ module.exports = {
     ],
   },
   mixologyIngredients: ingredients => (
-    { inline_keyboard: _.shuffle(ingredients.map(ingredient => [{
-      text: ingredient,
-      callback_data: JSON.stringify({ action: `mixology`, data: ingredient }),
-    }])) }
-  ),
+    { inline_keyboard: _.shuffle(ingredients).reduce((keyboard, ingredient, i) => {
+      if (i % 2 === 0) {
+        keyboard.push([{
+          text: ingredient,
+          callback_data: JSON.stringify({ action: `mix_guess`, data: ingredient }),
+        }]);
+      } else {
+        keyboard[keyboard.length - 1].push({
+          text: ingredient,
+          callback_data: JSON.stringify({ action: `mix_guess`, data: ingredient }),
+        });
+      }
+      return keyboard;
+    }, [])
+  }),
   slots: function (gameId, type) {
     let keyboard = {
       inline_keyboard: [
