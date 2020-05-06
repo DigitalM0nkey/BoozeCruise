@@ -1,4 +1,5 @@
 const emoji = require("./emoji");
+const _ = require("underscore");
 
 module.exports = {
   home: function (seaDay) {
@@ -409,10 +410,10 @@ module.exports = {
     ],
   },
   mixologyIngredients: ingredients => (
-    { inline_keyboard: ingredients.map(ingredient => [{
+    { inline_keyboard: _.shuffle(ingredients.map(ingredient => [{
       text: ingredient,
       callback_data: JSON.stringify({ action: `mixology`, data: ingredient }),
-    }]) }
+    }])) }
   ),
   slots: function (gameId, type) {
     let keyboard = {
