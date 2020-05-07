@@ -252,7 +252,7 @@ module.exports = (callback_query, ship, data) => {
 
   function broadcastKeyboard(message, keyboard) {
     Ship.find({}).then((ships) => {
-      b.broadcast(
+      b.broadcastKeyboard(
         ships.map(({ id }) => {
           return id;
         }),
