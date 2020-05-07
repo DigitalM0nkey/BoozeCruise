@@ -17,7 +17,7 @@ const MIXOLOGYPORT = -1001216326021; //Caspian
 const KORONA = "\u24C0";
 const WELCOME =
   "Welcome To Booze Cruise!\n\nThis is your ship, go ahead and look around. Press all the buttons, it's the only way you'll know what they do.\nThis is not a fast-paced game, it occurs in real time.\nBoozeCruise is an in-development game, meaning that the game is constantly evolving.\n\nWant to send the developers a message, or suggest a feature? There's a button for that and we would love for you to use it.\n\nIn BoozeCruise you will travel from port to port, in each port you will meet other sailors like yourself, go ahead introduce yourself to whoever else is in port. \n\nThere is treasure hidden in one of the ports, make sure you look for teasure while you are docked. You could dig up some Korona.\n\nWhere would you like to go ?";
-const LOWESTHIGHEST = `Play Lowest Highest for ${KORONA}5`;
+const LOWESTHIGHEST = `Play Lowest-Highest - ${KORONA}5`;
 const BITCOINADDRESS = "15t1A5qEwSKNtEWNpANdivZeeXp7SGDvqB";
 
 const Port = require("../../models/port");
@@ -300,22 +300,22 @@ router.post("/", ({ body }, res, next) => {
             }
 
             // Start Mini-game Lowest-Highest
-          } else if (body.message.text == `Yes,\n${LOWESTHIGHEST}`) {
-            if (ship.purse.balance >= 5) {
-              ship.purse.balance -= 5;
-              ship.save((err, saved, rows) => {
-                if (err) console.error(err);
-                LowestHighest.findOne({ inProgress: true }).then((game) => {
-                  if (game) {
-                    b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id, "LH"));
-                  } else {
-                    LowestHighest.create({}, (err, game) => {
-                      b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id, "LH"));
-                    });
-                  }
-                });
-              });
-            }
+            // } else if (body.message.text == `${LOWESTHIGHEST}`) {
+            // if (ship.purse.balance >= 5) {
+            //   ship.purse.balance -= 5;
+            //   ship.save((err, saved, rows) => {
+            //     if (err) console.error(err);
+            //     LowestHighest.findOne({ inProgress: true }).then((game) => {
+            //       if (game) {
+            //         b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id, "LH"));
+            //       } else {
+            //         LowestHighest.create({}, (err, game) => {
+            //           b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id, "LH"));
+            //         });
+            //       }
+            //     });
+            //   });
+            // }
             // End Mini-game Lowest-Highest
           } else if (body.message.text == `${emoji.books} Library ${emoji.books}`) {
             log(player, "Tried to sneak into the library");
@@ -594,17 +594,19 @@ router.post("/", ({ body }, res, next) => {
                 }.\n${KORONA}10 is awarded to the winner.\n\n<pre>INSTRUCTIONS</pre>\nSelect a number higher than your opponent but lower than the House to win.\n\nThe jackpot is awarded to the player which picks the same number as the House.\n\n<code>Current jackpot is ${KORONA}${
                   4 * length
                 }</code>`,
-                keyboards.decision(LOWESTHIGHEST)
+                {
+                  inline_keyboard: [
+                    [{ text: `${LOWESTHIGHEST}`, callback_data: JSON.stringify({ action: "lowest-highest" }) }],
+                  ],
+                }
+
+                //keyboards.decision(LOWESTHIGHEST)
               );
             });
           } else if (body.message.text == `${emoji.cocktail} Mixology ${emoji.cocktail}`) {
-            mixology.getFakeCocktail().then(cocktail => {
+            mixology.getFakeCocktail().then((cocktail) => {
               console.log(cocktail);
-              b.sendPhoto(
-                body.message.chat.id,
-                cocktail.image,
-                `<pre>${cocktail.name}</pre>`
-              );
+              b.sendPhoto(body.message.chat.id, cocktail.image, `<pre>${cocktail.name}</pre>`);
               setTimeout(() => {
                 console.log(keyboards.mixologyIngredients(cocktail.ingredients.concat(cocktail.fakeIngredients)));
                 b.sendKeyboard(
