@@ -223,8 +223,10 @@ module.exports = (callback_query, ship, data) => {
     }
   } else if (data.action === "slotStats") {
     console.log("In the SlotStats");
+    log(player, `Getting nerdy! Cheking out the Slot stats.\n${slots.stats()}`);
     b.sendMessage(ship.id, slots.stats());
   } else if (data.action === "slotsInstructions") {
+    log(player, "Reading instructions for the Slots");
     b.sendMessage(ship.id, slots.instructions);
   } else if (data.action === "mixology") {
     mixology.getFakeCocktail().then((cocktail) => {
