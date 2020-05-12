@@ -169,13 +169,14 @@ const slots = (ship, bet, messageId) => {
       const trifector = (slots) => {
         if (slots.length < 3) return 0;
         let telly = 0;
-        amountOftrifectors++;
+
         for (let i = 0; i < slots.length - 2; i++) {
           if (slots[i] === slots[i + 1] && slots[i] === slots[i + 2]) {
             telly++;
             i += 2;
           }
         }
+        amountOftrifectors += telly;
         return telly;
       };
       //const checkJackpot = slots => slots.every(symbol => symbol === slots[0]);
