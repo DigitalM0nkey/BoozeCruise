@@ -24,6 +24,7 @@ let amountWon = 0;
 let highestPower = 0;
 
 const slots = (ship, bet, messageId) => {
+  // amountBet = bet;
   if (bet > ship.purse.balance) {
     b.sendMessage(
       ship.id,
@@ -153,7 +154,7 @@ const slots = (ship, bet, messageId) => {
           highestPower = power;
         }
 
-        amountBet += bet;
+        amountBet = bet;
         amountWon += prize;
         amountOftrifectors += trifectorPrize;
 
@@ -202,8 +203,8 @@ const stats = () => {
     Math.ceil(largestJackpot.amount)
       ? `\n${emoji.korona}${Math.ceil(largestJackpot.amount)} Largest jackpot(${largestJackpot.winningSymbols}).`
       : ``
-  }\n${emoji.korona}${slots.bet} Amount bet.\n${emoji.korona}${amountWon} Amount Won.\n${emoji.korona}${
-    slots.bet - amountWon
+  }\n${emoji.korona}${amountBet} Amount bet.\n${emoji.korona}${amountWon} Amount Won.\n${emoji.korona}${
+    amountBet - amountWon
   } House balance.\n\n${amountOftrifectors} Trifectors.\n${highestPower.toFixed(
     2
   )} Highest Power.\n${plays} games played.\n\n<i>Since server restart.</i>`;
