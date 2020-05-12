@@ -93,6 +93,7 @@ const slots = (ship, bet, messageId) => {
       console.log(rolls);
 
       const print = () => {
+        let prizeResult = prizes(house);
         for (let i = 0; i < odds; i++) {
           setTimeout(function () {
             b.editMessageText(
@@ -201,8 +202,8 @@ const stats = () => {
     Math.ceil(largestJackpot.amount)
       ? `\n${emoji.korona}${Math.ceil(largestJackpot.amount)} Largest jackpot(${largestJackpot.winningSymbols}).`
       : ``
-  }\n${emoji.korona}${amountBet} Amount bet.\n${emoji.korona}${amountWon} Amount Won.\n${emoji.korona}${
-    amountBet - amountWon
+  }\n${emoji.korona}${slots.bet} Amount bet.\n${emoji.korona}${amountWon} Amount Won.\n${emoji.korona}${
+    slots.bet - amountWon
   } House balance.\n\n${amountOftrifectors} Trifectors.\n${highestPower.toFixed(
     2
   )} Highest Power.\n${plays} games played.\n\n<i>Since server restart.</i>`;
