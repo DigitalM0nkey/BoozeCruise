@@ -155,8 +155,8 @@ const slots = (ship, bet, messageId) => {
         }
 
         amountBet = bet;
-        amountWon += prize;
-        amountOftrifectors += trifectorPrize;
+        amountWon = prize;
+        amountOftrifectors = trifectorPrize;
 
         return prize;
         // if (slots[i] === "🍒") {
