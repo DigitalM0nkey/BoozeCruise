@@ -14,6 +14,7 @@ let rolls = [
   { symbol: "⚓️", count: 0 },
 ];
 let plays = 0;
+let tempTrifector = 0;
 let amountOftrifectors = 0;
 let largestJackpot = {
   amount: 0,
@@ -137,6 +138,7 @@ const slots = (ship, bet, messageId) => {
         }
         const trifectorPrize = trifector(slots);
         if (trifectorPrize) {
+          tempTrifector = trifectorPrize;
           bonus = bet * 1.5 * trifectorPrize;
         }
         while (slots[i] === "🍒") {
@@ -159,7 +161,7 @@ const slots = (ship, bet, messageId) => {
         // amountBet = bet;
         // amountWon = prize;
         // amountOftrifectors = trifectorPrize;
-
+        amountOftrifectors += tempTrifector;
         return prize;
         // if (slots[i] === "🍒") {
         //   document.getElementById("balance").innerHTML = balance + parseInt(bet, 10);
@@ -173,7 +175,6 @@ const slots = (ship, bet, messageId) => {
         for (let i = 0; i < slots.length - 2; i++) {
           if (slots[i] === slots[i + 1] && slots[i] === slots[i + 2]) {
             telly++;
-            amountOftrifectors++;
             i += 2;
           }
         }
