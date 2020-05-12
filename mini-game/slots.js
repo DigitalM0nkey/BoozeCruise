@@ -24,7 +24,7 @@ let amountWon = 0;
 let highestPower = 0;
 
 const slots = (ship, bet, messageId) => {
-  // amountBet = bet;
+  amountBet += bet;
   if (bet > ship.purse.balance) {
     b.sendMessage(
       ship.id,
@@ -94,7 +94,6 @@ const slots = (ship, bet, messageId) => {
       console.log(rolls);
 
       const print = () => {
-        let prizeResult = prizes(house);
         for (let i = 0; i < odds; i++) {
           setTimeout(function () {
             b.editMessageText(
@@ -111,7 +110,10 @@ const slots = (ship, bet, messageId) => {
           }, 1000 * i);
         }
         setTimeout(() => {
-          resolve(prizes(house));
+          let prizeResult = prizes(house);
+          amountWon += prizeResult;
+
+          resolve(prizeResult);
         }, odds * 1000);
       };
 
@@ -154,9 +156,9 @@ const slots = (ship, bet, messageId) => {
           highestPower = power;
         }
 
-        amountBet = bet;
-        amountWon = prize;
-        amountOftrifectors = trifectorPrize;
+        // amountBet = bet;
+        // amountWon = prize;
+        // amountOftrifectors = trifectorPrize;
 
         return prize;
         // if (slots[i] === "🍒") {
@@ -167,6 +169,7 @@ const slots = (ship, bet, messageId) => {
       const trifector = (slots) => {
         if (slots.length < 3) return 0;
         let telly = 0;
+        amountOftrifectors++;
         for (let i = 0; i < slots.length - 2; i++) {
           if (slots[i] === slots[i + 1] && slots[i] === slots[i + 2]) {
             telly++;
