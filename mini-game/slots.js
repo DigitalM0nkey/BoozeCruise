@@ -138,7 +138,6 @@ const slots = (ship, bet, messageId) => {
         }
         const trifectorPrize = trifector(slots);
         if (trifectorPrize) {
-          tempTrifector = trifectorPrize;
           bonus = bet * 1.5 * trifectorPrize;
         }
         while (slots[i] === "🍒") {
@@ -160,7 +159,6 @@ const slots = (ship, bet, messageId) => {
 
         // amountBet = bet;
         // amountWon = prize;
-        // amountOftrifectors = trifectorPrize;
         amountOftrifectors += tempTrifector;
         return prize;
         // if (slots[i] === "🍒") {
@@ -178,6 +176,8 @@ const slots = (ship, bet, messageId) => {
             i += 2;
           }
         }
+        tempTrifector = telly;
+
         return telly;
       };
       //const checkJackpot = slots => slots.every(symbol => symbol === slots[0]);
