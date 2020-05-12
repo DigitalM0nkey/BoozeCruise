@@ -169,14 +169,15 @@ const slots = (ship, bet, messageId) => {
       const trifector = (slots) => {
         if (slots.length < 3) return 0;
         let telly = 0;
+        tempTrifector = 0;
 
         for (let i = 0; i < slots.length - 2; i++) {
           if (slots[i] === slots[i + 1] && slots[i] === slots[i + 2]) {
             telly++;
+            tempTrifector++;
             i += 2;
           }
         }
-        tempTrifector = telly;
 
         return telly;
       };
