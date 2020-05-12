@@ -173,10 +173,10 @@ const slots = (ship, bet, messageId) => {
         for (let i = 0; i < slots.length - 2; i++) {
           if (slots[i] === slots[i + 1] && slots[i] === slots[i + 2]) {
             telly++;
+            amountOftrifectors++;
             i += 2;
           }
         }
-        amountOftrifectors += telly;
         return telly;
       };
       //const checkJackpot = slots => slots.every(symbol => symbol === slots[0]);
