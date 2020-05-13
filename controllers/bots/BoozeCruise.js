@@ -333,8 +333,12 @@ router.post("/", ({ body }, res, next) => {
             cruiseLawNewsArticles().then((articles) => {
               const article = articles[Math.floor(Math.random() * articles.length)];
               console.log(article);
-              b.sendPhoto(ship.id, article.image, `<pre>${article.title}</pre>`);
-              b.sendMessage(ship.id, article.body);
+              if (!article.image) {
+                b.sendMessage(ship.id, `<pre>${article.title}</pre> ${article.body}`);
+              } else {
+                b.sendPhoto(ship.id, article.image, `<pre>${article.title}</pre>`);
+                b.sendMessage(ship.id, article.body);
+              }
             });
           } else if (body.message.text == `${emoji.radio} BINGO ${emoji.radio}`) {
             log(player, "Playing bingo");
