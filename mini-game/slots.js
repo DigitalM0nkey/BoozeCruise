@@ -154,14 +154,6 @@ const slots = (ship, bet, messageId) => {
           i++;
         }
 
-        prize = Math.ceil(Math.pow(prize, power) + jackpot + bonus);
-        console.log(`Prize: ${prize}`);
-        console.log(`Jackpot: ${jackpot}`);
-        console.log(`Amount of trifectors: ${trifectorPrize}`);
-        console.log(`Bonus: ${bonus}`);
-        console.log(`Bet: ${bet}`);
-        console.log(`Power ${power}`);
-
         if (power > highestPower) {
           highestPower = power;
         }
@@ -178,6 +170,14 @@ const slots = (ship, bet, messageId) => {
           // amountWon = prize;
           amountOfTrifectors += trifectorPrize;
         }
+
+        prize = Math.ceil(Math.pow(prize, power) + jackpot + bonus);
+        console.log(`Prize: ${prize}`);
+        console.log(`Jackpot: ${jackpot}`);
+        console.log(`Amount of trifectors: ${trifectorPrize}`);
+        console.log(`Bonus: ${bonus}`);
+        console.log(`Bet: ${bet}`);
+        console.log(`Power ${power}`);
 
         // amountBet = bet;
         return prize;
