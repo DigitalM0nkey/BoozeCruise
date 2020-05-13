@@ -27,6 +27,7 @@ const guest = require("../../types/guest");
 const LowestHighest = require("../../models/mini-games/lowestHighest/lowestHighest");
 let articles = [];
 const cruiseLawNewsArticles = require("../../scrapers/cruiseLawNews_scraper");
+const iLikeCruiseShipsArticles = require("../../scrapers/iLikeCruiseShips_scraper");
 
 const b = TelegramBot.boozecruiseBot;
 
@@ -330,7 +331,7 @@ router.post("/", ({ body }, res, next) => {
             // End Mini-game Lowest-Highest
           } else if (body.message.text == `${emoji.books} Library ${emoji.books}`) {
             log(player, "Reading the news");
-            cruiseLawNewsArticles().then((articles) => {
+            iLikeCruiseShipsArticles().then((articles) => {
               let article = articles[Math.floor(Math.random() * articles.length)];
               console.log(article);
               console.log(`Article length =>`, article.body.length);
