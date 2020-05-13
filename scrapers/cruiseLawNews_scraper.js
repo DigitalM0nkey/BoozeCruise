@@ -1,8 +1,8 @@
 const cheerio = require("cheerio");
 const axios = require("axios");
-const articles = [];
+let articles = [];
 
-const cruiseLawNewsArticle = url => new Promise(function(resolve, reject) {
+const getCruiseLawNewsArticles = url => new Promise(function(resolve, reject) {
   axios
     .get(url)
     .then(response => {
@@ -35,8 +35,13 @@ const cruiseLawNewsArticle = url => new Promise(function(resolve, reject) {
     });
 });
 
-cruiseLawNewsArticle("https://www.cruiselawnews.com/").then(articles => console.log(articles), console.error);
 
+module.exports = async () => {
+  if (articles.length === 0) {
+    articles = await getCruiseLawNewsArticles("https://www.cruiselawnews.com/");
+  }
+  return articles;
+};
 /*
 const clnArticles = (urls) =>
   axios
