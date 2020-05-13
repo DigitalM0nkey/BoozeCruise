@@ -329,11 +329,11 @@ router.post("/", ({ body }, res, next) => {
             // }
             // End Mini-game Lowest-Highest
           } else if (body.message.text == `${emoji.books} Library ${emoji.books}`) {
-            log(player, "Tried to sneak into the library");
+            log(player, "Reading the news");
             cruiseLawNewsArticles().then((articles) => {
               const article = articles[Math.floor(Math.random() * articles.length)];
               console.log(article);
-              const message = `<pre>${article.title}</pre>\n${article.body}`;
+              const message = `<pre>${article.title}</pre>\n${article.body}\n${article.image}`;
               b.sendMessage(ship.id, message);
             });
           } else if (body.message.text == `${emoji.radio} BINGO ${emoji.radio}`) {
