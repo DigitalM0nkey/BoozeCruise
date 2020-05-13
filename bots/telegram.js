@@ -122,7 +122,8 @@ function TelegramBot() {
       )}`;
       request(encodeURI(url), (error, r, body) => {
         const response = JSON.parse(body).result;
-        //console.log(response);
+        console.log(keyboard);
+        console.log(JSON.parse(body));
         if (error) reject(error);
         if (!response) reject('No response');
         resolve(`Keyboard sent to ${channel}`);
