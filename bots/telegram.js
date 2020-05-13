@@ -113,10 +113,6 @@ function TelegramBot() {
     });
   bot.broadcast = (channels, message) => Promise.all(channels.map((channel) => bot.sendMessage(channel, message)));
 
-  bot.broadcastKeyboard = (channels, message, keyboard) =>
-    Promise.all(channels.map((channel) => bot.sendKeyboard(channel, message, keyboard)));
-
-
   bot.sendKeyboard = (channel, message, keyboard) =>
     new Promise((resolve, reject) => {
       const url = `https://api.telegram.org/bot${
@@ -132,6 +128,10 @@ function TelegramBot() {
         resolve();
       });
     });
+
+  bot.broadcastKeyboard = (channels, message, keyboard) =>
+    Promise.all(channels.map((channel) => bot.sendKeyboard(channel, message, keyboard)));
+
   bot.exportChatInviteLink = (channel) =>
     new Promise((resolve, reject) => {
       const url = `https://api.telegram.org/bot${bot.token}/exportChatInviteLink?chat_id=${channel}`;
