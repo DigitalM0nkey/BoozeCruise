@@ -127,7 +127,7 @@ const slots = (ship, bet, messageId) => {
           }, 1000 * i);
         }
         setTimeout(() => {
-          let prizeResult = prizes(house);
+          let prizeResult = prizes(house, true);
           amountWon += prizeResult;
 
 
