@@ -341,7 +341,9 @@ router.post("/", ({ body }, res, next) => {
                 b.sendMessage(ship.id, `<pre>${article.title}</pre>\n${article.body}`);
               } else {
                 b.sendPhoto(ship.id, article.image, `<pre>${article.title}</pre>`);
-                b.sendMessage(ship.id, article.body);
+                setTimeout(function () {
+                  b.sendMessage(ship.id, article.body);
+                }, 500);
               }
             });
           } else if (body.message.text == `${emoji.radio} BINGO ${emoji.radio}`) {
