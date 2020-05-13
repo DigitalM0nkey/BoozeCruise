@@ -344,7 +344,7 @@ router.post("/", ({ body }, res, next) => {
                 b.sendPhoto(ship.id, article.image, `<pre>${article.title}</pre>`);
                 setTimeout(function () {
                   b.sendMessage(ship.id, article.body);
-                }, 500);
+                }, 2000);
               }
             });
           } else if (body.message.text == `${emoji.radio} BINGO ${emoji.radio}`) {
