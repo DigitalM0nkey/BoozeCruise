@@ -141,17 +141,16 @@ module.exports = (callback_query, ship, data) => {
             b.sendMessage(callback_query.from.id, "You have selected " + data.num);
             log(player, `Just played Lowest-Highest`);
             broadcastInlineKeyboard(
-              `<pre>Lowest-Highest</pre>\n\n${callback_query.from.first_name} just played Lowest-Highest and is waiting for an opponent.\n<b>Think you can beat ${callback_query.from.first_name}?</b>\nGo to the casino <i>(only avalible while sailing)</i> and pick a number that is higher ⬆️ then ${callback_query.from.first_name}'s, but lower ⬇️ than the house. Good Luck`
-            ), {
-              inline_keyboard: [
-                [{
-                  text: `Play Now! ${KORONA}5`,
-                  callback_data: JSON.stringify({
-                    action: "lowest-highest"
-                  })
-                }],
-              ],
-            };
+              `<pre>Lowest-Highest</pre>\n\n${callback_query.from.first_name} just played Lowest-Highest and is waiting for an opponent.\n<b>Think you can beat ${callback_query.from.first_name}?</b>\nGo to the casino <i>(only avalible while sailing)</i> and pick a number that is higher ⬆️ then ${callback_query.from.first_name}'s, but lower ⬇️ than the house. Good Luck`, {
+                inline_keyboard: [
+                  [{
+                    text: `Play Now! ${KORONA}5`,
+                    callback_data: JSON.stringify({
+                      action: "lowest-highest"
+                    })
+                  }],
+                ],
+              });
           }
           game.save();
         }
