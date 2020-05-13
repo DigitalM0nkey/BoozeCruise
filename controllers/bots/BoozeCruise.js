@@ -339,7 +339,9 @@ router.post("/", ({
           } else if (body.message.text == `${emoji.books} Library ${emoji.books}`) {
             log(player, "Tried to sneak into the library");
             cruiseLawNewsArticles().then(articles => {
-              b.sendMessage(ship.id, articles[Math.floor(Math.random() * articles.length)]);
+              const article = articles[Math.floor(Math.random() * articles.length)];
+              console.log(article);
+              b.sendMessage(ship.id, JSON.stringify(article));
             });
           } else if (body.message.text == `${emoji.radio} BINGO ${emoji.radio}`) {
             log(player, "Playing bingo");
