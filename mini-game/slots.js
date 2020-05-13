@@ -5,17 +5,33 @@ const emoji = require("../constants/emoji");
 const Ship = require("../models/ship");
 
 const symbols = ["🍒", "🛳", "🏝", "🌊", "☀️", "⚓️"];
-let rolls = [
-  { symbol: "🍒", count: 0 },
-  { symbol: "🛳", count: 0 },
-  { symbol: "🏝", count: 0 },
-  { symbol: "🌊", count: 0 },
-  { symbol: "☀️", count: 0 },
-  { symbol: "⚓️", count: 0 },
+let rolls = [{
+    symbol: "🍒",
+    count: 0
+  },
+  {
+    symbol: "🛳",
+    count: 0
+  },
+  {
+    symbol: "🏝",
+    count: 0
+  },
+  {
+    symbol: "🌊",
+    count: 0
+  },
+  {
+    symbol: "☀️",
+    count: 0
+  },
+  {
+    symbol: "⚓️",
+    count: 0
+  },
 ];
 let plays = 0;
-let tempTrifector = 0;
-let amountOftrifectors = 0;
+let amountOfTrifectors = 0;
 let largestJackpot = {
   amount: 0,
   winningSymbols: [],
@@ -35,7 +51,7 @@ const slots = (ship, bet, messageId) => {
   } else {
     ship.purse.balance -= bet;
     ship.save();
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
       bet = parseInt(bet, 10);
       halfBet = Math.round(bet / 2);
       let odds = 0;
@@ -96,15 +112,15 @@ const slots = (ship, bet, messageId) => {
 
       const print = () => {
         for (let i = 0; i < odds; i++) {
-          setTimeout(function () {
+          setTimeout(function() {
             b.editMessageText(
               ship.id,
               messageId,
               house.reduce(
                 (msg, symbol, j) =>
-                  msg +
-                  (i >= j ? (j === house.length - 1 ? symbol : symbol + "|") : j === house.length - 1 ? "❓" : "❓|"),
-                `Won: ${emoji.korona}${prizes(house.slice(0, i + 1))}\n`
+                msg +
+                (i >= j ? (j === house.length - 1 ? symbol : symbol + "|") : j === house.length - 1 ? "❓" : "❓|"),
+                `Won: ${emoji.korona}${prizes(house.slice(0, i + 1), i === odds.length - 1)}\n`
               )
             );
             // b.editMessageText(ship.id, messageId, `Balance: ${emoji.korona}${ship.purse.balance}`, "");
@@ -114,11 +130,12 @@ const slots = (ship, bet, messageId) => {
           let prizeResult = prizes(house);
           amountWon += prizeResult;
 
+
           resolve(prizeResult);
         }, odds * 1000);
       };
 
-      const prizes = (slots) => {
+      const prizes = (slots, isLast) => {
         if (slots.length === 0) return 0;
         let i = 0;
         let prize = slots.reduce((prize, symbol) => prize + (symbol === "🍒" ? halfBet : 0), 0);
@@ -128,14 +145,6 @@ const slots = (ship, bet, messageId) => {
 
         console.log("JACKPOT ??? => ", checkJackpot(slots));
 
-        if (checkJackpot(slots)) {
-          jackpot = Math.pow(bet, 1 + odds / 5);
-
-          if (largestJackpot.amount < jackpot) {
-            largestJackpot.amount = jackpot;
-            largestJackpot.winningSymbols = slots;
-          }
-        }
         const trifectorPrize = trifector(slots);
         if (trifectorPrize) {
           bonus = bet * 1.5 * trifectorPrize;
@@ -157,9 +166,20 @@ const slots = (ship, bet, messageId) => {
           highestPower = power;
         }
 
+        if (isLast) {
+          if (checkJackpot(slots)) {
+            jackpot = Math.pow(bet, 1 + odds / 5);
+
+            if (largestJackpot.amount < jackpot) {
+              largestJackpot.amount = jackpot;
+              largestJackpot.winningSymbols = slots;
+            }
+          }
+          // amountWon = prize;
+          amountOfTrifectors += trifectorPrize;
+        }
+
         // amountBet = bet;
-        // amountWon = prize;
-        amountOftrifectors += tempTrifector;
         return prize;
         // if (slots[i] === "🍒") {
         //   document.getElementById("balance").innerHTML = balance + parseInt(bet, 10);
@@ -169,12 +189,10 @@ const slots = (ship, bet, messageId) => {
       const trifector = (slots) => {
         if (slots.length < 3) return 0;
         let telly = 0;
-        tempTrifector = 0;
 
         for (let i = 0; i < slots.length - 2; i++) {
           if (slots[i] === slots[i + 1] && slots[i] === slots[i + 2]) {
             telly++;
-            tempTrifector++;
             i += 2;
           }
         }
@@ -211,7 +229,7 @@ const stats = () => {
       : ``
   }\n${emoji.korona}${amountBet} Amount bet.\n${emoji.korona}${amountWon} Amount Won.\n${emoji.korona}${
     amountBet - amountWon
-  } House balance.\n\n${amountOftrifectors} Trifectors.\n${highestPower.toFixed(
+  } House balance.\n\n${amountOfTrifectors} Trifectors.\n${highestPower.toFixed(
     2
   )} Highest Power.\n${plays} games played.\n\n<i>Since server restart.</i>`;
   return message;
