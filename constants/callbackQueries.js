@@ -268,6 +268,6 @@ module.exports = (callback_query, ship, data) => {
         message,
         keyboard
       ).then(console.log, console.error);
-    });
+    }, console.error);
   }
 };
