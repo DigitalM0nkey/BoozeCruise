@@ -27,7 +27,7 @@ const getILikeCruiseShipsArticles = (url) =>
 
               return {
                 image: $(".entry-thumb").attr("src"),
-                title: $(".entry-title").text(),
+                title: $("header > .entry-title").text(),
                 body: $(".td-post-content p").text(),
               };
             })
@@ -48,33 +48,3 @@ module.exports = async () => {
   }
   return articles;
 };
-/*
-const clnArticles = (urls) =>
-  axios
-  .get(urls)
-  .then((response) => {
-    const $ = cheerio.load(response.data);
-    const article = {
-      image: $(".lxb_af-featured_image-get-img").attr("src"),
-      title: $(".lxb_af-template_tags-get_post_title").text(),
-      body: $(".lxb_af-post_content").text(),
-    };
-    articles.push(article);
-    //console.log("ARTICLES => ", articles);
-    return articles;
-  })
-  .catch(function(err) {
-    console.log("SCRAPER ERROR =>", err);
-  });
-
-axios.all([cruiseLawNewsArticle("https://www.cruiselawnews.com/"), clnArticles("https://www.cruiselawnews.com/")]).then(
-  axios.spread(function(acct, perms) {
-    console.log(acct, perms);
-
-    // Both requests are now complete
-  })
-);
-*/
-// console.log(cruiseLawNewsArticle(url));
-
-// console.log(clnArticles(cruiseLawNewsArticle("https://www.cruiselawnews.com/")));
