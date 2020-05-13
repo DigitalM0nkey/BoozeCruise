@@ -331,10 +331,12 @@ router.post("/", ({ body }, res, next) => {
           } else if (body.message.text == `${emoji.books} Library ${emoji.books}`) {
             log(player, "Reading the news");
             cruiseLawNewsArticles().then((articles) => {
-              const article = articles[Math.floor(Math.random() * articles.length)];
+              let article = articles[Math.floor(Math.random() * articles.length)];
               console.log(article);
               console.log(`Article length =>`, article.body.length);
-
+              if (article.body.length > 4050) {
+                article = articles[Math.floor(Math.random() * articles.length)];
+              }
               if (!article.image) {
                 b.sendMessage(ship.id, `<pre>${article.title}</pre>\n${article.body}`);
               } else {
