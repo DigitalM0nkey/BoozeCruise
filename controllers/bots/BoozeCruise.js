@@ -333,6 +333,8 @@ router.post("/", ({ body }, res, next) => {
           } else if (body.message.text == `${emoji.books} Library ${emoji.books}`) {
             log(player, "Reading the news");
             scrapers.runAllScrapers().then((articles) => {
+              console.log(articles);
+
               let article = articles.iLikeCruiseShips[Math.floor(Math.random() * articles.length)];
               console.log(article);
               console.log(`Article length =>`, article.body.length);
