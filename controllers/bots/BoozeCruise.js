@@ -335,7 +335,7 @@ router.post("/", ({ body }, res, next) => {
             scrapers.runAllScrapers().then((articles) => {
               console.log(articles);
 
-              let article = articles.iLikeCruiseShips[Math.floor(Math.random() * articles.length)];
+              let article = articles.iLikeCruiseShips[Math.floor(Math.random() * articles.iLikeCruiseShips.length)];
               console.log(article);
               console.log(`Article length =>`, article.body.length);
               if (article.body.length > 4050) {
