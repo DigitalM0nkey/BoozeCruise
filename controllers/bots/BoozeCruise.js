@@ -333,27 +333,13 @@ router.post("/", ({ body }, res, next) => {
           } else if (body.message.text == `${emoji.books} Library ${emoji.books}`) {
             log(player, "Reading the news");
             scrapers.cleanData().then((article) => {
+              console.log("------", article);
+
               b.sendPhoto(ship.id, article.image, `<pre>${article.title}</pre>`);
               setTimeout(function () {
                 b.sendMessage(ship.id, article.body);
               }, 2000);
             });
-            // iLikeCruiseShipsArticles().then((articles) => {
-            //   let article = articles[Math.floor(Math.random() * articles.length)];
-            //   console.log(article);
-            //   console.log(`Article length =>`, article.body.length);
-            //   if (article.body.length > 4050) {
-            //     article = articles[Math.floor(Math.random() * articles.length)];
-            //   }
-            //   if (!article.image) {
-            //     b.sendMessage(ship.id, `<pre>${article.title}</pre>\n${article.body}`);
-            //   } else {
-            //     b.sendPhoto(ship.id, article.image, `<pre>${article.title}</pre>`);
-            //     setTimeout(function () {
-            //       b.sendMessage(ship.id, article.body);
-            //     }, 2000);
-            //   }
-            // });
           } else if (body.message.text == `${emoji.radio} BINGO ${emoji.radio}`) {
             log(player, "Playing bingo");
             b.sendKeyboard(ship.id, `BINGO`, keyboards.bingo("BINGO", bingo.createBoard()));

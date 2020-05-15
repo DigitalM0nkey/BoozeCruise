@@ -29,6 +29,7 @@ const getILikeCruiseShipsArticles = (url) =>
                 image: $(".entry-thumb").attr("src"),
                 title: $("header > .entry-title").text(),
                 body: $(".td-post-content p").text(),
+                source: `ilikecruiseships.com`,
               };
             })
           );

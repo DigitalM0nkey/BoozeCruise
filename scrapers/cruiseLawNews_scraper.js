@@ -2,39 +2,38 @@ const cheerio = require("cheerio");
 const axios = require("axios");
 let articles = [];
 
-const getCruiseLawNewsArticles = url => new Promise(function(resolve, reject) {
-  axios
-    .get(url)
-    .then(response => {
-      const $ = cheerio.load(response.data);
-      let urls = [];
-      for (let i = 1; i < 11; i++) {
-        urls.push($("h1 > a")[i].attribs.href);
-      }
-      return urls;
-    })
-    .then(urls => {
-      Promise.all(urls.map(url =>
-          axios.get(url)
-        ))
-        .then(responses => {
-          resolve(responses.map(response => {
-            const $ = cheerio.load(response.data);
-            return {
-              image: $(".lxb_af-featured_image-get-img").attr("src"),
-              title: $(".lxb_af-template_tags-get_post_title").text(),
-              body: $(".lxb_af-post_content").text(),
-            };
-          }));
+const getCruiseLawNewsArticles = (url) =>
+  new Promise(function (resolve, reject) {
+    axios
+      .get(url)
+      .then((response) => {
+        const $ = cheerio.load(response.data);
+        let urls = [];
+        for (let i = 1; i < 11; i++) {
+          urls.push($("h1 > a")[i].attribs.href);
+        }
+        return urls;
+      })
+      .then((urls) => {
+        Promise.all(urls.map((url) => axios.get(url))).then((responses) => {
+          resolve(
+            responses.map((response) => {
+              const $ = cheerio.load(response.data);
+              return {
+                image: $(".lxb_af-featured_image-get-img").attr("src"),
+                title: $(".lxb_af-template_tags-get_post_title").text(),
+                body: $(".lxb_af-post_content").text(),
+                source: `cruiselawnews.com`,
+              };
+            })
+          );
         });
-
-    })
-    .catch(err => {
-      console.log("SCRAPER ERROR =>", err);
-      reject(err);
-    });
-});
-
+      })
+      .catch((err) => {
+        console.log("SCRAPER ERROR =>", err);
+        reject(err);
+      });
+  });
 
 module.exports = async () => {
   if (articles.length === 0) {
