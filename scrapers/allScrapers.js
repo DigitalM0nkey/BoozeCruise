@@ -15,26 +15,10 @@ const cleanData = () => {
     const onlyShort = result[source].filter((article) => article.body.length < 4050);
     const withPhotos = onlyShort.filter((article) => article.image);
     const randomArticle = withPhotos[_.random(0, withPhotos.length)];
-    console.log("source => ", source, "title => ", randomArticle.title);
-
-    // let randomArticle = () => {
-    //   let rando = result[source][_.random(0, result[source].length)];
-    //   while (rando.body.length > 4050) {
-    //     rando = result[source][_.random(0, result[source].length)];
-    //   }
-    // };
-
-    // const words = ["spray", "limit", "elite", "exuberant", "destruction", "present"];
-
-    // const result = words.filter((word) => word.length > 6);
-
-    // console.log(result);
-    // expected output: Array ["exuberant", "destruction", "present"]
-
-    // console.log(randomArticle());
+    //console.log(`source => ${source}.com `, "title => ", randomArticle.title);
+    return randomArticle;
   });
 };
 
-cleanData();
 exports.runAllScrapers = runAllScrapers;
 exports.cleanData = cleanData;

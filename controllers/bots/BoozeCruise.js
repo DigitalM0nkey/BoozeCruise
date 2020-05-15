@@ -25,9 +25,9 @@ const Ship = require("../../models/ship");
 const Product = require("../../models/product");
 const guest = require("../../types/guest");
 const LowestHighest = require("../../models/mini-games/lowestHighest/lowestHighest");
-let articles = [];
-const cruiseLawNewsArticles = require("../../scrapers/cruiseLawNews_scraper");
-const iLikeCruiseShipsArticles = require("../../scrapers/iLikeCruiseShips_scraper");
+//let articles = [];
+//const cruiseLawNewsArticles = require("../../scrapers/cruiseLawNews_scraper");
+//const iLikeCruiseShipsArticles = require("../../scrapers/iLikeCruiseShips_scraper");
 const scrapers = require("../../scrapers/allScrapers");
 
 const b = TelegramBot.boozecruiseBot;
@@ -332,21 +332,11 @@ router.post("/", ({ body }, res, next) => {
             // End Mini-game Lowest-Highest
           } else if (body.message.text == `${emoji.books} Library ${emoji.books}`) {
             log(player, "Reading the news");
-            scrapers.runAllScrapers().then((articles) => {
-              let article = articles.iLikeCruiseShips[Math.floor(Math.random() * articles.iLikeCruiseShips.length)];
-
-              console.log(`Article length =>`, article.body.length);
-              if (article.body.length > 4050) {
-                article = articles[Math.floor(Math.random() * articles.length)];
-              }
-              if (!article.image) {
-                b.sendMessage(ship.id, `<pre>${article.title}</pre>\n${article.body}`);
-              } else {
-                b.sendPhoto(ship.id, article.image, `<pre>${article.title}</pre>`);
-                setTimeout(function () {
-                  b.sendMessage(ship.id, article.body);
-                }, 2000);
-              }
+            scrapers.cleanData().then((article) => {
+              b.sendPhoto(ship.id, article.image, `<pre>${article.title}</pre>`);
+              setTimeout(function () {
+                b.sendMessage(ship.id, article.body);
+              }, 2000);
             });
             // iLikeCruiseShipsArticles().then((articles) => {
             //   let article = articles[Math.floor(Math.random() * articles.length)];
