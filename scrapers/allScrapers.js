@@ -10,7 +10,7 @@ async function runAllScrapers() {
 }
 
 const cleanData = async () => {
-  const result = runAllScrapers();
+  const result = await runAllScrapers();
   const source = _.sample(Object.keys(result));
   const onlyShort = result[source].filter((article) => article.body.length < 4050);
   const withPhotos = onlyShort.filter((article) => article.image);
@@ -24,3 +24,5 @@ exports.cleanData = async () => {
   articles = await cleanData();
   return articles;
 };
+
+console.log(cleanData());
