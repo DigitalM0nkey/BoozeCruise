@@ -338,7 +338,7 @@ router.post("/", ({ body }, res, next) => {
               b.sendPhoto(
                 ship.id,
                 article.image,
-                `<pre>${article.title}</pre>\n<i>source:<b>${article.source}</b></i>`
+                `<pre>${article.title}</pre>\n<i>Source: <b>${article.source}</b></i>`
               );
               setTimeout(function () {
                 b.sendMessage(ship.id, article.body);
