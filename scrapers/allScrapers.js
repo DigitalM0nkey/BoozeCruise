@@ -14,7 +14,7 @@ const cleanData = async () => {
   const source = _.sample(Object.keys(result));
   const onlyShort = result[source].filter((article) => article.body.length < 4050);
   const withPhotos = onlyShort.filter((article) => article.image);
-  const randomArticle = withPhotos[_.random(0, withPhotos.length)];
+  const randomArticle = withPhotos[_.random(0, withPhotos.length - 1)];
   console.log(`source => ${source}.com `, "title => ", randomArticle.title);
   return randomArticle;
 };
