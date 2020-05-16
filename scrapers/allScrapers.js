@@ -15,10 +15,13 @@ const cleanData = () => {
     const onlyShort = result[source].filter((article) => article.body.length < 4050);
     const withPhotos = onlyShort.filter((article) => article.image);
     const randomArticle = withPhotos[_.random(0, withPhotos.length)];
-    //console.log(`source => ${source}.com `, "title => ", randomArticle.title);
+    console.log(`source => ${source}.com `, "title => ", randomArticle.title);
     return randomArticle;
   });
 };
 
 exports.runAllScrapers = runAllScrapers;
-exports.cleanData = cleanData;
+exports.cleanData = async () => {
+  articles = await cleanData();
+  return articles;
+};
