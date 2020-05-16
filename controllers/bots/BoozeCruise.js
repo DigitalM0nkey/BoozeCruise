@@ -16,7 +16,7 @@ const MYSHIP = "5be3d50298ae6843394411ee";
 const MIXOLOGYPORT = -1001216326021; //Caspian
 const KORONA = "\u24C0";
 const WELCOME =
-  "Welcome To Booze Cruise!\n\nThis is your ship, go ahead and look around. Press all the buttons, it's the only way you'll know what they do.\nThis is not a fast-paced game, it occurs in real time.\nBoozeCruise is an in-development game, meaning that the game is constantly evolving.\n\nWant to send the developers a message, or suggest a feature? There's a button for that and we would love for you to use it.\n\nIn BoozeCruise you will travel from port to port, in each port you will meet other sailors like yourself, go ahead introduce yourself to whoever else is in port. \n\nThere is treasure hidden in one of the ports, make sure you look for teasure while you are docked. You could dig up some Korona.\n\nWhere would you like to go ?";
+  "Welcome To Booze Cruise!\n\nThis is your ship, go ahead and look around.\nWhen you are ready, go to 'Navigation', pick a port to trave to and set sail. In each port you will meet other sailors like yourself, go ahead introduce yourself.\n\nThere is treasure hidden in one of the ports, make sure you look for teasure while you are docked. You could dig up some Korona.\n\nWhere would you like to go ?";
 const LOWESTHIGHEST = `Play Lowest-Highest - ${KORONA}5`;
 const BITCOINADDRESS = "15t1A5qEwSKNtEWNpANdivZeeXp7SGDvqB";
 
