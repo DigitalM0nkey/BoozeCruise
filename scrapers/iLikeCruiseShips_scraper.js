@@ -44,8 +44,13 @@ const getILikeCruiseShipsArticles = (url) =>
 //getILikeCruiseShipsArticles("http://ilikecruiseships.com/category/news/");
 
 module.exports = async () => {
-  if (articles.length === 0) {
-    articles = await getILikeCruiseShipsArticles("http://ilikecruiseships.com/category/news/");
+  try {
+    if (articles.length === 0) {
+      articles = await getILikeCruiseShipsArticles("http://ilikecruiseships.com/category/news/");
+    }
+    return articles;
+  } catch (err) {
+    // catches errors both in fetch and response.json
+    console.error(err);
   }
-  return articles;
 };

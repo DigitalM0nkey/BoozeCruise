@@ -36,10 +36,15 @@ const getCruiseLawNewsArticles = (url) =>
   });
 
 module.exports = async () => {
-  if (articles.length === 0) {
-    articles = await getCruiseLawNewsArticles("https://www.cruiselawnews.com/");
+  try {
+    if (articles.length === 0) {
+      articles = await getCruiseLawNewsArticles("https://www.cruiselawnews.com/");
+    }
+    return articles;
+  } catch (err) {
+    // catches errors both in fetch and response.json
+    console.error(err);
   }
-  return articles;
 };
 /*
 const clnArticles = (urls) =>
