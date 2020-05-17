@@ -110,7 +110,7 @@ module.exports = {
     keyboard: [
       [
         {
-          text: emoji.cocktail + "Cocktail" + emoji.cocktail,
+          text: `${emoji.cocktail} Cocktail ${emoji.cocktail}`,
         },
       ],
       [
@@ -409,13 +409,15 @@ module.exports = {
       ],
     ],
   },
-  mixologyIngredients: ingredients => (
-    { inline_keyboard: _.shuffle(ingredients).reduce((keyboard, ingredient, i) => {
+  mixologyIngredients: (ingredients) => ({
+    inline_keyboard: _.shuffle(ingredients).reduce((keyboard, ingredient, i) => {
       if (i % 2 === 0) {
-        keyboard.push([{
-          text: ingredient,
-          callback_data: JSON.stringify({ action: `mix_guess`, data: ingredient }),
-        }]);
+        keyboard.push([
+          {
+            text: ingredient,
+            callback_data: JSON.stringify({ action: `mix_guess`, data: ingredient }),
+          },
+        ]);
       } else {
         keyboard[keyboard.length - 1].push({
           text: ingredient,
@@ -423,7 +425,7 @@ module.exports = {
         });
       }
       return keyboard;
-    }, [])
+    }, []),
   }),
   slots: function (gameId, type) {
     let keyboard = {

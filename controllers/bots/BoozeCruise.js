@@ -902,6 +902,9 @@ router.get("/", (req, res, next) => {
   });
 });
 
+// cash articles on restart.
+scrapers.cleanData();
+
 b.sendKeyboard("510423667", `${randomQuote(quotes)} \n\n<pre>Also the server restarted</pre>`, keyboards.admin);
 // b.sendMessage("-1001473681735", "Server Restarted"); not in use right now
 log("Server", "Restart");
