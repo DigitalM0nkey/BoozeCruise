@@ -17,6 +17,7 @@ async function runAllScrapers() {
 const cleanData = async () => {
   try {
     const result = await runAllScrapers();
+    console.log("result --------->", result);
     const source = _.sample(Object.keys(result));
     console.log("SOURCE --------->", source);
 
