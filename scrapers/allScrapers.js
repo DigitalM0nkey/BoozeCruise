@@ -6,9 +6,9 @@ const _ = require("underscore");
 
 async function runAllScrapers() {
   try {
+    articles.cruiseIndustryNews = await cruiseIndustryNewsArticles();
     articles.iLikeCruiseShips = await iLikeCruiseShipsArticles();
     articles.cruiseLawNews = await cruiseLawNewsArticles();
-    articles.cruiseIndustryNews = await cruiseIndustryNewsArticles();
     return articles;
   } catch (err) {
     // catches errors both in fetch and response.json

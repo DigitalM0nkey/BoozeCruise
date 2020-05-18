@@ -27,7 +27,7 @@ const getILikeCruiseShipsArticles = (url) =>
               const image = $(".entry-thumb").attr("src")
                 ? $(".entry-thumb").attr("src")
                 : "https://github.com/DigitalM0nkey/BoozeCruise/blob/master/images/BoozeCruiseNews.jpg?raw=true";
-              // console.log($(`meta[property="og:updated_time"]`).attr("content"));
+              console.log("ILCS IMGAR => ", image);
 
               return {
                 image: image,
