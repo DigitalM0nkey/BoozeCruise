@@ -24,9 +24,11 @@ const getILikeCruiseShipsArticles = (url) =>
             responses.map((response) => {
               const $ = cheerio.load(response.data);
               //console.log("body: ", $(".td-post-content p").text());
-
+              const image = $(".entry-thumb").attr("src")
+                ? $(".entry-thumb").attr("src")
+                : "../images/BoozeCruiseNews.jpg";
               return {
-                image: $(".entry-thumb").attr("src"),
+                image: image,
                 title: $("header > .entry-title").text(),
                 body: $(".td-post-content p").text(),
                 source: `ilikecruiseships.com`,
