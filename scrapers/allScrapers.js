@@ -8,7 +8,7 @@ async function runAllScrapers() {
   try {
     articles.iLikeCruiseShips = await iLikeCruiseShipsArticles();
     articles.cruiseLawNews = await cruiseLawNewsArticles();
-    articles.cruiseLawNews = await cruiseIndustryNewsArticles();
+    articles.cruiseIndustryNews = await cruiseIndustryNewsArticles();
     return articles;
   } catch (err) {
     // catches errors both in fetch and response.json

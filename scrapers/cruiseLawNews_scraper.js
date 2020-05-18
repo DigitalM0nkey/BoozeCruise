@@ -19,8 +19,11 @@ const getCruiseLawNewsArticles = (url) =>
           resolve(
             responses.map((response) => {
               const $ = cheerio.load(response.data);
+              const image = $(".lxb_af-featured_image-get-img").attr("src")
+                ? $(".lxb_af-featured_image-get-img").attr("src")
+                : "../images/BoozeCruiseNews.jpg";
               return {
-                image: $(".lxb_af-featured_image-get-img").attr("src"),
+                image: image,
                 title: $(".lxb_af-template_tags-get_post_title").text(),
                 body: $(".lxb_af-post_content").text(),
                 source: `cruiselawnews.com`,
