@@ -1,12 +1,14 @@
 let articles = {};
 const cruiseLawNewsArticles = require("../scrapers/cruiseLawNews_scraper");
 const iLikeCruiseShipsArticles = require("../scrapers/iLikeCruiseShips_scraper");
+const cruiseIndustryNewsArticles = require("../scrapers/cruiseIndustryNews_scraper");
 const _ = require("underscore");
 
 async function runAllScrapers() {
   try {
     articles.iLikeCruiseShips = await iLikeCruiseShipsArticles();
     articles.cruiseLawNews = await cruiseLawNewsArticles();
+    articles.cruiseLawNews = await cruiseIndustryNewsArticles();
     return articles;
   } catch (err) {
     // catches errors both in fetch and response.json
