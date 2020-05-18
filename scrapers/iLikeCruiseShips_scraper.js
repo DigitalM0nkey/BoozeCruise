@@ -30,11 +30,11 @@ const getILikeCruiseShipsArticles = (url) =>
               console.log("ILCS IMGAR => ", image);
 
               return {
-                image: image,
-                title: $("header > .entry-title").text(),
-                body: $(".td-post-content p").text(),
-                source: `ilikecruiseships.com`,
                 date: $(`meta[property="og:updated_time"]`).attr("content"),
+                source: `ilikecruiseships.com`,
+                title: $("header > .entry-title").text(),
+                image: image,
+                body: $(".td-post-content p").text(),
               };
             })
           );

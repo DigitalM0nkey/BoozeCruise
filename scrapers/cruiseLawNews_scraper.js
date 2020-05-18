@@ -23,10 +23,10 @@ const getCruiseLawNewsArticles = (url) =>
                 ? $(".lxb_af-featured_image-get-img").attr("src")
                 : "https://github.com/DigitalM0nkey/BoozeCruise/blob/master/images/BoozeCruiseNews.jpg?raw=true";
               return {
-                image: image,
-                title: $(".lxb_af-template_tags-get_post_title").text(),
-                body: $(".lxb_af-post_content").text(),
                 source: `cruiselawnews.com`,
+                title: $(".lxb_af-template_tags-get_post_title").text(),
+                image: image,
+                body: $(".lxb_af-post_content").text(),
               };
             })
           );

@@ -31,11 +31,11 @@ const getCruiseIndustryNews = (url) =>
               //console.log(image);
 
               return {
-                image: image,
-                title: $("h1").text().trim(),
-                body: $("[itemprop=articleBody]").text().trim(),
-                source: `ilikecruiseships.com`,
                 date: $("time").text().trim(),
+                source: `cruiseindustrynews.com`,
+                title: $("h1").text().trim(),
+                image: image,
+                body: $("[itemprop=articleBody]").text().trim(),
               };
             })
           );
