@@ -7,10 +7,8 @@ const _ = require("underscore");
 async function runAllScrapers() {
   try {
     articles.cruiseIndustryNews = await cruiseIndustryNewsArticles();
-    //console.log(articles.cruiseIndustryNews);
-
-    //articles.iLikeCruiseShips = await iLikeCruiseShipsArticles();
-    // articles.cruiseLawNews = await cruiseLawNewsArticles();
+    articles.iLikeCruiseShips = await iLikeCruiseShipsArticles();
+    articles.cruiseLawNews = await cruiseLawNewsArticles();
     return articles;
   } catch (err) {
     // catches errors both in fetch and response.json
@@ -23,9 +21,10 @@ const cleanData = async () => {
     const result = await runAllScrapers();
     //console.log("result --------->", result);
     // const source = _.sample(Object.keys(result));
-    //console.log(result.length);
+    const sources = Object.keys(result);
+    // console.log(sources[_.random(0, sources.length - 1)]);
 
-    const source = "cruiseIndustryNews";
+    const source = sources[_.random(0, sources.length - 1)];
     // console.log("SOURCE --------->", source);
 
     const onlyShort = result[source].filter((article) => article.body.length < 4050);
