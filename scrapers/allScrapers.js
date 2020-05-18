@@ -23,6 +23,8 @@ const cleanData = async () => {
     const result = await runAllScrapers();
     //console.log("result --------->", result);
     // const source = _.sample(Object.keys(result));
+    //console.log(result.length);
+
     const source = "cruiseIndustryNews";
     // console.log("SOURCE --------->", source);
 
