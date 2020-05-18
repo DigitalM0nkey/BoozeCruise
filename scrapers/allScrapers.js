@@ -22,7 +22,8 @@ const cleanData = async () => {
   try {
     const result = await runAllScrapers();
     //console.log("result --------->", result);
-    const source = _.sample(Object.keys(result));
+    // const source = _.sample(Object.keys(result));
+    const source = "cruiseIndustryNews";
     // console.log("SOURCE --------->", source);
 
     const onlyShort = result[source].filter((article) => article.body.length < 4050);
