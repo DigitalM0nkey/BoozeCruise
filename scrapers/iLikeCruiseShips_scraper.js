@@ -46,7 +46,7 @@ const getILikeCruiseShipsArticles = (url) =>
       });
   });
 
-getILikeCruiseShipsArticles("http://ilikecruiseships.com/category/news/");
+//getILikeCruiseShipsArticles("http://ilikecruiseships.com/category/news/");
 
 module.exports = async () => {
   try {
