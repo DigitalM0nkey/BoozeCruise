@@ -21,10 +21,10 @@ const cleanData = async () => {
     const result = await runAllScrapers();
     //console.log("result --------->", result);
     // const source = _.sample(Object.keys(result));
-    const sources = Object.keys(result);
-    // console.log(sources[_.random(0, sources.length - 1)]);
+    let sources = Object.keys(result);
+    console.log(sources[_.random(0, sources.length - 1)]);
 
-    const source = sources[_.random(0, sources.length - 1)];
+    const source = "cruiseIndustryNews";
     // console.log("SOURCE --------->", source);
 
     const onlyShort = result[source].filter((article) => article.body.length < 4050);
