@@ -21,7 +21,7 @@ const getCruiseLawNewsArticles = (url) =>
               const $ = cheerio.load(response.data);
               const image = $(".lxb_af-featured_image-get-img").attr("src")
                 ? $(".lxb_af-featured_image-get-img").attr("src")
-                : "../images/BoozeCruiseNews.jpg";
+                : "https://github.com/DigitalM0nkey/BoozeCruise/blob/master/images/BoozeCruiseNews.jpg?raw=true";
               return {
                 image: image,
                 title: $(".lxb_af-template_tags-get_post_title").text(),

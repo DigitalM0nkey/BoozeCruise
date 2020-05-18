@@ -26,7 +26,7 @@ const getCruiseIndustryNews = (url) =>
               const $ = cheerio.load(response.data);
               const image = $("[itemprop=articleBody] > p > a").attr("href")
                 ? site + $("[itemprop=articleBody] > p > a").attr("href")
-                : "../images/BoozeCruiseNews.jpg";
+                : "https://github.com/DigitalM0nkey/BoozeCruise/blob/master/images/BoozeCruiseNews.jpg?raw=true";
               // console.log($);
               //console.log(image);
 

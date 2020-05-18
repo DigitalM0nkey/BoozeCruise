@@ -26,12 +26,15 @@ const getILikeCruiseShipsArticles = (url) =>
               //console.log("body: ", $(".td-post-content p").text());
               const image = $(".entry-thumb").attr("src")
                 ? $(".entry-thumb").attr("src")
-                : "../images/BoozeCruiseNews.jpg";
+                : "https://github.com/DigitalM0nkey/BoozeCruise/blob/master/images/BoozeCruiseNews.jpg?raw=true";
+              // console.log($(`meta[property="og:updated_time"]`).attr("content"));
+
               return {
                 image: image,
                 title: $("header > .entry-title").text(),
                 body: $(".td-post-content p").text(),
                 source: `ilikecruiseships.com`,
+                date: $(`meta[property="og:updated_time"]`).attr("content"),
               };
             })
           );
@@ -43,7 +46,7 @@ const getILikeCruiseShipsArticles = (url) =>
       });
   });
 
-//getILikeCruiseShipsArticles("http://ilikecruiseships.com/category/news/");
+getILikeCruiseShipsArticles("http://ilikecruiseships.com/category/news/");
 
 module.exports = async () => {
   try {
