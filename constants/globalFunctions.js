@@ -68,7 +68,7 @@ exports.sendAvailablePorts = (chat_id, ports, ship) => {
         }),
       };
     });
-    console.log(keyboard);
+    //console.log(keyboard);
     b.sendKeyboard(chat_id, "Navigate to:", {
       inline_keyboard: [keyboard],
     });

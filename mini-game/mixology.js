@@ -42,11 +42,11 @@ exports.getCocktail = () => {
 const getCocktail = () => {
   return new Promise((resolve, reject) => {
     Cocktail.find({
-        alcoholic: "Alcoholic"
-      })
+      alcoholic: "Alcoholic",
+    })
       .lean()
       .exec((err, cocktails) => {
-        console.log(cocktails[Math.floor(Math.random() * cocktails.length)]);
+        //console.log(cocktails[Math.floor(Math.random() * cocktails.length)]);
 
         resolve(cocktails[Math.floor(Math.random() * cocktails.length)]);
       });
@@ -54,15 +54,19 @@ const getCocktail = () => {
 };
 const getIngredients = (cocktailIngredients) => {
   return new Promise((resolve, reject) => {
-    Cocktail.aggregate([{
-      $unwind: '$ingredients'
-    }, ]).exec((err, cocktails) => {
-      resolve(cocktails.reduce((ingredients, cocktail) => {
-        if (ingredients.indexOf(cocktail.ingredients) < 0 && cocktailIngredients.indexOf(cocktail.ingredients) < 0) {
-          ingredients.push(cocktail.ingredients);
-        }
-        return ingredients;
-      }, []));
+    Cocktail.aggregate([
+      {
+        $unwind: "$ingredients",
+      },
+    ]).exec((err, cocktails) => {
+      resolve(
+        cocktails.reduce((ingredients, cocktail) => {
+          if (ingredients.indexOf(cocktail.ingredients) < 0 && cocktailIngredients.indexOf(cocktail.ingredients) < 0) {
+            ingredients.push(cocktail.ingredients);
+          }
+          return ingredients;
+        }, [])
+      );
     });
   });
 };
@@ -82,17 +86,17 @@ const getFakeCocktail = async () => {
 
 const getGame = async () => {
   const game = await Mixology.findOne({
-    finished: false
+    finished: false,
   });
   if (!game) {
     const cocktail = await getFakeCocktail();
     let newGame = await Mixology.create({
       players: [],
       fakeIngredients: cocktail.fakeIngredients,
-      cocktail: cocktail._id
+      cocktail: cocktail._id,
     });
     return await Mixology.findOne({
-      finished: false
+      finished: false,
     });
   } else {
     return game;

@@ -183,7 +183,7 @@ router.post("/", ({ body }, res, next) => {
         id: body.callback_query.message.chat.id,
       }).then((ports) => {
         // console.log(body.callback_query.message.chat.id);
-        console.log("ports => ", ports);
+        //console.log("ports => ", ports);
         const data = JSON.parse(body.callback_query.data);
         callbackQueries(body.callback_query, ports, data);
       });
@@ -644,10 +644,10 @@ router.post("/", ({ body }, res, next) => {
             });
           } else if (body.message.text == `${emoji.cocktail} Mixology ${emoji.cocktail}`) {
             mixology.getFakeCocktail().then((cocktail) => {
-              console.log(cocktail);
+              //console.log(cocktail);
               b.sendPhoto(body.message.chat.id, cocktail.image, `<pre>${cocktail.name}</pre>`);
               setTimeout(() => {
-                console.log(keyboards.mixologyIngredients(cocktail.ingredients.concat(cocktail.fakeIngredients)));
+                //console.log(keyboards.mixologyIngredients(cocktail.ingredients.concat(cocktail.fakeIngredients)));
                 b.sendKeyboard(
                   body.message.chat.id,
                   `Which ingredients are part of ${cocktail.name}`,
@@ -739,7 +739,7 @@ router.post("/", ({ body }, res, next) => {
                 const player = ship.user.first_name;
                 const perks = ship.products
                   .filter((product) => {
-                    console.log(product);
+                    //console.log(product);
                     return product.product.perk.code.indexOf("PORTENTRY") === 0 && product.expiry > moment();
                   })
                   .map((product) => product.product.perk);

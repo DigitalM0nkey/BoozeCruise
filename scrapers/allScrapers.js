@@ -22,19 +22,23 @@ const cleanData = async () => {
     //console.log("result --------->", result);
     // const source = _.sample(Object.keys(result));
     let sources = Object.keys(result);
-    // console.log(sources[_.random(0, sources.length - 1)]); //string is returned
+    console.log(sources[_.random(0, sources.length - 1)]); //string is returned
 
-    const source = sources; // refactor this line
+    const source = sources[_.random(0, sources.length - 1)]; // refactor this line
     // const source = "cruiseIndustryNews";
-    console.log("SOURCEs --------->", source);
-    const randNum = _.random(0, sources.length - 1);
+    console.log("SOURCE --------->", source);
+    //const randNum = _.random(0, sources.length - 1);
     // console.log(randNum);
 
-    // console.log("SOURCE2 --------->", result[`${source[randNum]}`].length);
+    console.log("result[SOURCE] --------->", result[`${source}`][1].source);
 
-    const onlyShort = result[`${source[randNum]}`].filter((article) => article.body.length < 4050);
+    const onlyShort = result[`${source}`].filter((article) => article.body.length < 4050);
+    console.log("ONLY SHORT", onlyShort.length);
+
     const withPhotos = onlyShort.filter((article) => article.image);
+    console.log("WITH PHOTO", withPhotos.length);
     const randomArticle = withPhotos[_.random(0, withPhotos.length - 1)];
+
     //console.log(`source => ${source}.com | title => ${randomArticle.title} | length => ${randomArticle.body.length}`);
     return randomArticle;
   } catch (err) {
