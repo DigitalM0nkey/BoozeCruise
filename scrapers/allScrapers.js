@@ -22,7 +22,9 @@ const cleanData = async () => {
     //console.log("result --------->", result);
     // const source = _.sample(Object.keys(result));
     let sources = Object.keys(result);
-    console.log(sources[_.random(0, sources.length - 1)]); //string is returned
+    console.log("SOURCES =>", sources);
+
+    //console.log(sources[_.random(0, sources.length - 1)]); //string is returned
 
     const source = sources[_.random(0, sources.length - 1)]; // refactor this line
     // const source = "cruiseIndustryNews";
