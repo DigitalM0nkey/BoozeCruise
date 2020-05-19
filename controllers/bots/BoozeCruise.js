@@ -332,8 +332,11 @@ router.post("/", ({ body }, res, next) => {
             // End Mini-game Lowest-Highest
           } else if (body.message.text == `${emoji.books} Library ${emoji.books}`) {
             log(player, "Reading the news");
+            console.log("Reading the news");
+
             scrapers.cleanData().then((article) => {
-              console.log("------", article);
+              //article = await scrapers.cleanData();
+              console.log("------", article.length);
 
               b.sendPhoto(
                 ship.id,
@@ -343,7 +346,10 @@ router.post("/", ({ body }, res, next) => {
               setTimeout(function () {
                 b.sendMessage(ship.id, article.body);
               }, 2000);
+              //return article;
             });
+
+            //getArticle();
           } else if (body.message.text == `${emoji.radio} BINGO ${emoji.radio}`) {
             log(player, "Playing bingo");
             b.sendKeyboard(ship.id, `BINGO`, keyboards.bingo("BINGO", bingo.createBoard()));
@@ -903,6 +909,8 @@ router.get("/", (req, res, next) => {
 });
 
 // cash articles on restart.
+//console.log(scrapers.cleanData());
+
 scrapers.cleanData();
 
 b.sendKeyboard("510423667", `${randomQuote(quotes)} \n\n<pre>Also the server restarted</pre>`, keyboards.admin);
