@@ -336,7 +336,7 @@ router.post("/", ({ body }, res, next) => {
 
             scrapers.cleanData().then((article) => {
               //article = await scrapers.cleanData();
-              console.log("------", article.length);
+              console.log("------", article);
 
               b.sendPhoto(
                 ship.id,
