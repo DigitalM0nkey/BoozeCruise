@@ -1,4 +1,4 @@
-let articles = {};
+let articles = [];
 const cruiseLawNewsArticles = require("../scrapers/cruiseLawNews_scraper");
 //const iLikeCruiseShipsArticles = require("../scrapers/iLikeCruiseShips_scraper");
 const cruiseIndustryNewsArticles = require("../scrapers/cruiseIndustryNews_scraper");
@@ -6,9 +6,9 @@ const _ = require("underscore");
 
 async function runAllScrapers() {
   try {
-    articles.cruiseIndustryNews = await cruiseIndustryNewsArticles();
+    articles.push(await cruiseIndustryNewsArticles());
     //articles.iLikeCruiseShips = await iLikeCruiseShipsArticles();
-    articles.cruiseLawNews = await cruiseLawNewsArticles();
+    articles.push(await cruiseLawNewsArticles());
     return articles;
   } catch (err) {
     // catches errors both in fetch and response.json
@@ -19,7 +19,7 @@ async function runAllScrapers() {
 const cleanData = async () => {
   try {
     const result = await runAllScrapers();
-    //console.log("result --------->", result);
+    console.log("result --------->", result);
     // const source = _.sample(Object.keys(result));
     let sources = Object.keys(result);
     console.log("SOURCES =>", sources);
