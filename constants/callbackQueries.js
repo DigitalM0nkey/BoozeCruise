@@ -257,6 +257,9 @@ module.exports = (callback_query, ship, data) => {
     mixology.checkGuess(ship, data, callback_query.from.first_name)
       .then(result => {
         switch (result) {
+          case -3:
+            b.sendMessage(MIXOLOGYPORT, `You won, ${callback_query.from.first_name}`);
+            break;
           case -2:
             b.sendMessage(MIXOLOGYPORT, `You already guessed that, ${callback_query.from.first_name}`);
             break;
