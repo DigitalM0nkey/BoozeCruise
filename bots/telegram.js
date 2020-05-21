@@ -98,6 +98,7 @@ function TelegramBot() {
         resolve();
       });
     });
+
   bot.editMessageText = (channel, messageID, message) =>
     new Promise((resolve, reject) => {
       const url = `https://api.telegram.org/bot${
@@ -111,6 +112,21 @@ function TelegramBot() {
         resolve();
       });
     });
+
+  bot.editMessageMedia = (channel, messageID, media, reply_markup) =>
+    new Promise((resolve, reject) => {
+      const url = `https://api.telegram.org/bot${
+        bot.token
+      }/editMessageMedia?chat_id=${channel}&message_id=${messageID}&parse_mode=html&text=${encodeURIComponent(media)}`;
+      request(url, (error, r, body) => {
+        const response = JSON.parse(body).result;
+        //console.log(response);
+        if (error) return;
+        if (!response) return;
+        resolve();
+      });
+    });
+
   bot.broadcast = (channels, message) => Promise.all(channels.map((channel) => bot.sendMessage(channel, message)));
 
   bot.sendKeyboard = (channel, message, keyboard) =>
@@ -125,7 +141,7 @@ function TelegramBot() {
         console.log(keyboard);
         console.log(JSON.parse(body));
         if (error) reject(error);
-        if (!response) reject('No response');
+        if (!response) reject("No response");
         resolve(`Keyboard sent to ${channel}`);
       });
     });

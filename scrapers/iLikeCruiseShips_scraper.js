@@ -33,7 +33,7 @@ const getILikeCruiseShipsArticles = (url) =>
               return {
                 date: $(`meta[property="og:updated_time"]`).attr("content")
                   ? moment($(`meta[property="og:updated_time"]`).attr("content")).fromNow()
-                  : moment().startOf("hour").fromNow(),
+                  : moment().startOf("day").fromNow(),
                 source: `ilikecruiseships.com`,
                 title: $("header > .entry-title").text(),
                 image: image,

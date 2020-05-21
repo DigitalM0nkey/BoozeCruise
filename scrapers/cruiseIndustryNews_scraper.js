@@ -1,5 +1,6 @@
 const cheerio = require("cheerio");
 const axios = require("axios");
+const moment = require("moment");
 let articles = [];
 const site = "https://www.cruiseindustrynews.com";
 
@@ -31,7 +32,9 @@ const getCruiseIndustryNews = (url) =>
               //console.log(image);
 
               return {
-                date: $("time").text().trim(),
+                date: $("time").text().trim()
+                  ? moment($("time").text().trim()).fromNow()
+                  : moment().startOf("day").fromNow(),
                 source: `cruiseindustrynews.com`,
                 title: $("h1").text().trim(),
                 image: image,
