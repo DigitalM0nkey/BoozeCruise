@@ -105,9 +105,12 @@ const getGame = async () => {
 exports.checkGuess = async (ship, guess, name) => {
   let game = await getGame();
   let player = _.find(game.players, player => player.id == ship.id);
-  const incorrectGuesses = _.difference(player.guesses, game.cocktail.ingredients).length;
   if (player) {
-    if (player.guesses.indexOf(guess.data) === -1) {
+    const incorrectGuesses = _.difference(player.guesses, game.cocktail.ingredients).length;
+    const min = _.min(game.players.filter(otherPlayer => otherPlayer.id != ship.id), otherPlayer => _.difference(otherPlayer.guesses, game.cocktail.ingredients).length);
+    if (incorrectGuesses > min) {
+      return -3;
+    } else if (player.guesses.indexOf(guess.data) === -1) {
       player.guesses.push(guess.data);
     } else {
       return -2;
@@ -122,7 +125,7 @@ exports.checkGuess = async (ship, guess, name) => {
   if (_.intersection(player.guesses, game.cocktail.ingredients).length === game.cocktail.ingredients.length) {
     game.finished = true;
     await game.save();
-    return -3;
+    return 10;
   } else {
     await game.save();
     return game.cocktail.ingredients.indexOf(guess.data);
