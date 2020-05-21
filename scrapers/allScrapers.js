@@ -1,6 +1,6 @@
 let articles = [];
 const cruiseLawNewsArticles = require("../scrapers/cruiseLawNews_scraper");
-//const iLikeCruiseShipsArticles = require("../scrapers/iLikeCruiseShips_scraper");
+const iLikeCruiseShipsArticles = require("../scrapers/iLikeCruiseShips_scraper");
 const cruiseIndustryNewsArticles = require("../scrapers/cruiseIndustryNews_scraper");
 const _ = require("underscore");
 
@@ -11,7 +11,9 @@ async function runAllScrapers() {
     // const newArticle = (await cruiseIndustryNewsArticles()).concat(await cruiseLawNewsArticles());
     //console.log(newArticle);
 
-    return (await cruiseIndustryNewsArticles()).concat(await cruiseLawNewsArticles());
+    return (await cruiseIndustryNewsArticles())
+      .concat(await cruiseLawNewsArticles())
+      .concat(await iLikeCruiseShipsArticles());
   } catch (err) {
     // catches errors both in fetch and response.json
     console.error(err);
