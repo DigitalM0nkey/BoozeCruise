@@ -100,6 +100,28 @@ const getGame = async () => {
     return game;
   }
 };
+
+exports.checkGuess = async (ship, guess) => {
+  let game = await getGame();
+  console.log(guess);
+  console.log(game.fakeIngredients);
+  let player = _.find(game.players, player => player.id == ship.id);
+  if (player) {
+    if (player.guesses.indexOf(data.guess) === -1) {
+      player.guesses.push(data.guess);
+    } else {
+      return -2;
+    }
+  } else {
+    game.players.push({
+      id: ship.id,
+      guesses: [data.guess]
+    });
+  }
+  await game.save();
+  return game.cocktail.ingredients.indexOf(guess.data);
+};
+
 getFakeCocktail();
 exports.getCocktail = getCocktail;
 exports.getFakeCocktail = getFakeCocktail;

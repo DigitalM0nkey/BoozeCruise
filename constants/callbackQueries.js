@@ -254,16 +254,19 @@ module.exports = (callback_query, ship, data) => {
       });
     console.log("Do some mixology stuff");
   } else if (data.action === "mix_guess") {
-    mixology.getGame().then((game) => {
-      console.log(data);
-      console.log(game.fakeIngredients);
-      if (game.fakeIngredients.indexOf(data.data) >= 0) {
-        b.sendMessage(MIXOLOGYPORT, `You're out ${callback_query.from.first_name}`);
-      } else {
-        b.sendMessage(MIXOLOGYPORT, `Good job ${callback_query.from.first_name}`);
-      }
-      //let player = _.find(game.players, player => player.id == ship.id);
-    });
+    mixology.checkGuess(ship, data)
+      .then(result => {
+        switch (result) {
+          case -2:
+            b.sendMessage(MIXOLOGYPORT, `You already guessed that, ${callback_query.from.first_name}`);
+            break;
+          case -1:
+            b.sendMessage(MIXOLOGYPORT, `You're out, ${callback_query.from.first_name}`);
+            break;
+          default:
+            b.sendMessage(MIXOLOGYPORT, `Good job ${callback_query.from.first_name}`);
+        }
+      });
   }
 
   function broadcastInlineKeyboard(message, keyboard) {
