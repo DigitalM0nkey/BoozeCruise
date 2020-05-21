@@ -283,32 +283,10 @@ module.exports = (callback_query, ship, data) => {
     });
     console.log("Do some mixology stuff");
   } else if (data.action === "mix_guess") {
-<<<<<<< HEAD
-    mixology.checkGuess(ship, data, callback_query.from.first_name)
-      .then(result => {
-        switch (result) {
-          case -3:
-            b.sendMessage(MIXOLOGYPORT, `You guessed more than other players, ${callback_query.from.first_name}`);
-            break;
-          case -2:
-            b.sendMessage(MIXOLOGYPORT, `You already guessed that, ${callback_query.from.first_name}`);
-            break;
-          case -1:
-            b.sendMessage(MIXOLOGYPORT, `You're out, ${callback_query.from.first_name}`);
-            break;
-          case 10:
-            b.sendMessage(MIXOLOGYPORT, `You won, ${callback_query.from.first_name}`);
-            mixology.getGame().then(game => sendCocktail(game.cocktail, game.fakeIngredients));
-            break;
-          default:
-            b.sendMessage(MIXOLOGYPORT, `Good job ${callback_query.from.first_name}`);
-        }
-      });
-=======
     mixology.checkGuess(ship, data, callback_query.from.first_name).then((result) => {
       switch (result) {
         case -3:
-          b.sendMessage(MIXOLOGYPORT, `You won, ${callback_query.from.first_name}`);
+          b.sendMessage(MIXOLOGYPORT, `You guessed more than other players, ${callback_query.from.first_name}`);
           break;
         case -2:
           b.sendMessage(MIXOLOGYPORT, `You already guessed that, ${callback_query.from.first_name}`);
@@ -316,11 +294,14 @@ module.exports = (callback_query, ship, data) => {
         case -1:
           b.sendMessage(MIXOLOGYPORT, `You're out, ${callback_query.from.first_name}`);
           break;
+        case 10:
+          b.sendMessage(MIXOLOGYPORT, `You won, ${callback_query.from.first_name}`);
+          mixology.getGame().then((game) => sendCocktail(game.cocktail, game.fakeIngredients));
+          break;
         default:
           b.sendMessage(MIXOLOGYPORT, `Good job ${callback_query.from.first_name}`);
       }
     });
->>>>>>> 741ffbefb42cd441112f4d43a9fa3e3a92c7304b
   }
 
   function broadcastInlineKeyboard(message, keyboard) {
