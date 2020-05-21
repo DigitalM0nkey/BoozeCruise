@@ -104,9 +104,8 @@ const getGame = async () => {
 
 exports.checkGuess = async (ship, guess, name) => {
   let game = await getGame();
-  console.log(guess);
-  console.log(game.fakeIngredients);
   let player = _.find(game.players, player => player.id == ship.id);
+  const incorrectGuesses = _.difference(player.guesses, game.cocktail.ingredients).length;
   if (player) {
     if (player.guesses.indexOf(guess.data) === -1) {
       player.guesses.push(guess.data);
@@ -120,8 +119,14 @@ exports.checkGuess = async (ship, guess, name) => {
       guesses: [guess.data]
     });
   }
-  await game.save();
-  return game.cocktail.ingredients.indexOf(guess.data);
+  if (_.intersection(player.guesses, game.cocktail.ingredients).length === game.cocktail.ingredients.length) {
+    game.finished = true;
+    await game.save();
+    return -3;
+  } else {
+    await game.save();
+    return game.cocktail.ingredients.indexOf(guess.data);
+  }
 };
 
 getFakeCocktail();
