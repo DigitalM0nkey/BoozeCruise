@@ -102,7 +102,7 @@ const getGame = async () => {
   }
 };
 
-exports.checkGuess = async (ship, guess) => {
+exports.checkGuess = async (ship, guess, name) => {
   let game = await getGame();
   console.log(guess);
   console.log(game.fakeIngredients);
@@ -116,6 +116,7 @@ exports.checkGuess = async (ship, guess) => {
   } else {
     game.players.push({
       id: ship.id,
+      name,
       guesses: [guess.data]
     });
   }

@@ -254,7 +254,7 @@ module.exports = (callback_query, ship, data) => {
       });
     console.log("Do some mixology stuff");
   } else if (data.action === "mix_guess") {
-    mixology.checkGuess(ship, data)
+    mixology.checkGuess(ship, data, callback_query.from.first_name)
       .then(result => {
         switch (result) {
           case -2:
