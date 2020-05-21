@@ -241,7 +241,18 @@ module.exports = (callback_query, ship, data) => {
         `${article.date}\n<pre>${article.title}</pre>\n<i>Source: <b>${article.source}</b></i>`
       );
       setTimeout(function () {
-        b.sendMessage(ship.id, article.body);
+        b.sendkeyboard(ship.id, article.body, {
+          inline_keyboard: [
+            [
+              {
+                text: `Keep Reading?`,
+                callback_data: JSON.stringify({
+                  action: "news",
+                }),
+              },
+            ],
+          ],
+        });
       }, 2000);
     });
   } else if (data.action === "slotStats") {
