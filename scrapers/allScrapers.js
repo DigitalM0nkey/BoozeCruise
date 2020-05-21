@@ -19,40 +19,36 @@ async function runAllScrapers() {
 }
 
 const cleanData = async () => {
-  try {
-    const result = await runAllScrapers();
-    // console.log("result --------->", result);
-    // const source = _.sample(Object.keys(result));
-    let sources = Object.keys(result);
-    console.log("SOURCES =>", sources);
+  if (articles.length === 0) {
+    try {
+      const result = await runAllScrapers();
+      // console.log("result --------->", result);
+      // const source = _.sample(Object.keys(result));
+      let sources = Object.keys(result);
+      console.log("SOURCES =>", sources);
 
-    //console.log(sources[_.random(0, sources.length - 1)]); //string is returned
+      //console.log(sources[_.random(0, sources.length - 1)]); //string is returned
 
-    const source = sources[_.random(0, sources.length - 1)]; // refactor this line
-    // const source = "cruiseIndustryNews";
-    console.log("SOURCE --------->", source);
-    //const randNum = _.random(0, sources.length - 1);
-    // console.log(randNum);
+      const source = sources[_.random(0, sources.length - 1)]; // refactor this line
+      // const source = "cruiseIndustryNews";
+      console.log("SOURCE --------->", source);
+      //const randNum = _.random(0, sources.length - 1);
+      // console.log(randNum);
 
-    // console.log("result[SOURCE] --------->", result[`${source}`][1].source);
+      // console.log("result[SOURCE] --------->", result[`${source}`][1].source);
+      articles = result.filter((article) => article.image && article.body.length < 4050);
 
-    const onlyShort = result.filter((article) => article.body.length < 4050);
-    console.log("ONLY SHORT", onlyShort.length);
-
-    const withPhotos = onlyShort.filter((article) => article.image);
-    console.log("WITH PHOTO", withPhotos.length);
-    const randomArticle = withPhotos[_.random(0, withPhotos.length - 1)];
-    console.log("RANDOM ARTICLE", randomArticle);
-
-    //console.log(`source => ${source}.com | title => ${randomArticle.title} | length => ${randomArticle.body.length}`);
-    return randomArticle;
-  } catch (err) {
-    // catches errors both in fetch and response.json
-    console.error(err);
+      //console.log(`source => ${source}.com | title => ${randomArticle.title} | length => ${randomArticle.body.length}`);
+    } catch (err) {
+      // catches errors both in fetch and response.json
+      console.error(err);
+    }
   }
+  const randomArticle = articles[_.random(0, articles.length - 1)];
+  console.log("RANDOM ARTICLE", randomArticle);
+  return randomArticle;
 };
 
-exports.runAllScrapers = runAllScrapers;
 exports.cleanData = cleanData;
 
 //console.log(cleanData());
