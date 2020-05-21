@@ -31,7 +31,9 @@ const getILikeCruiseShipsArticles = (url) =>
               //console.log("ILCS IMGAR => ", image);
 
               return {
-                date: $(`meta[property="og:updated_time"]`).attr("content"),
+                date: $(`meta[property="og:updated_time"]`).attr("content")
+                  ? moment($(`meta[property="og:updated_time"]`).attr("content")).fromNow()
+                  : moment().startOf("hour").fromNow(),
                 source: `ilikecruiseships.com`,
                 title: $("header > .entry-title").text(),
                 image: image,

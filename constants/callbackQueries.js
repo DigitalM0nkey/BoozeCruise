@@ -14,6 +14,7 @@ const emoji = require("../constants/emoji");
 
 const lowestHighest = require("../mini-game/lowestHighest");
 const slots = require("../mini-game/slots");
+const scrapers = require("../../scrapers/allScrapers");
 
 const moment = require("moment");
 const _ = require("underscore");
@@ -24,7 +25,7 @@ module.exports = (callback_query, ship, data) => {
     if (ship.id != MYSHIP) {
       Port.findOne({
         id: data.port,
-      }).then(function(port) {
+      }).then(function (port) {
         var arrival = new Date();
         arrival = arrival.setTime(
           arrival.getTime() + globalFunctions.calculateDistance(port.location, ship.location) * 60 * 60 * 1000
@@ -53,7 +54,7 @@ module.exports = (callback_query, ship, data) => {
   } else if (data.action === "navigate_sector") {
     Port.find({
       "location.sector": data.sector,
-    }).then(function(ports) {
+    }).then(function (ports) {
       globalFunctions.sendAvailablePorts(callback_query.from.id, ports, ship);
     });
     // Start Product list
@@ -66,16 +67,16 @@ module.exports = (callback_query, ship, data) => {
         product.image,
         product.name + "\n" + product.type + "\n" + product.description
       );
-      setTimeout(function() {
+      setTimeout(function () {
         b.sendKeyboard(
           callback_query.from.id,
           "Price: " +
-          KORONA +
-          product.price +
-          "\nQuantity Available: " +
-          product.quantity +
-          "\nExpiry: " +
-          product.expiry,
+            KORONA +
+            product.price +
+            "\nQuantity Available: " +
+            product.quantity +
+            "\nExpiry: " +
+            product.expiry,
           keyboards.product(product)
         );
       }, 1500);
@@ -87,7 +88,7 @@ module.exports = (callback_query, ship, data) => {
     LowestHighest.findOne({
       inProgress: true,
       _id: data.action.split("_")[1],
-    }).then(function(game) {
+    }).then(function (game) {
       if (game) {
         //console.log(game);
         //console.log(_.find(game.players, (player) => player.id == callback_query.from.id));
@@ -110,7 +111,7 @@ module.exports = (callback_query, ship, data) => {
             if (result.winner) {
               Ship.findOne({
                 id: result.winner,
-              }).then(function(winner) {
+              }).then(function (winner) {
                 winner.purse.balance += 10;
 
                 if (result.jackpot) {
@@ -141,14 +142,17 @@ module.exports = (callback_query, ship, data) => {
             b.sendMessage(callback_query.from.id, "You have selected " + data.num);
             log(player, `Just played Lowest-Highest`);
             broadcastInlineKeyboard(
-              `<pre>Lowest-Highest</pre>\n\n${callback_query.from.first_name} just played Lowest-Highest and is waiting for an opponent.\n<b>Think you can beat ${callback_query.from.first_name}?</b>\nGo to the casino <i>(only avalible while sailing)</i> and pick a number that is higher ⬆️ then ${callback_query.from.first_name}'s, but lower ⬇️ than the house. Good Luck`, {
+              `<pre>Lowest-Highest</pre>\n\n${callback_query.from.first_name} just played Lowest-Highest and is waiting for an opponent.\n<b>Think you can beat ${callback_query.from.first_name}?</b>\nGo to the casino <i>(only avalible while sailing)</i> and pick a number that is higher ⬆️ then ${callback_query.from.first_name}'s, but lower ⬇️ than the house. Good Luck`,
+              {
                 inline_keyboard: [
-                  [{
-                    text: `Play Now! ${KORONA}5`,
-                    callback_data: JSON.stringify({
-                      action: "lowest-highest",
-                    }),
-                  }, ],
+                  [
+                    {
+                      text: `Play Now! ${KORONA}5`,
+                      callback_data: JSON.stringify({
+                        action: "lowest-highest",
+                      }),
+                    },
+                  ],
                 ],
               }
             );
@@ -166,7 +170,7 @@ module.exports = (callback_query, ship, data) => {
     //data.num = bet
     Ship.findOne({
       id: callback_query.from.id,
-    }).then(function(ship) {
+    }).then(function (ship) {
       slots.get(ship, data.num, callback_query.message.message_id).then((prize) => {
         if (prize) {
           ship.purse.balance += prize;
@@ -227,6 +231,19 @@ module.exports = (callback_query, ship, data) => {
         });
       });
     }
+  } else if (data.action === "news") {
+    log(player, "Reading the news");
+    console.log("Reading the news");
+    scrapers.cleanData().then((article) => {
+      b.sendPhoto(
+        ship.id,
+        article.image,
+        `${article.date}\n<pre>${article.title}</pre>\n<i>Source: <b>${article.source}</b></i>`
+      );
+      setTimeout(function () {
+        b.sendMessage(ship.id, article.body);
+      }, 2000);
+    });
   } else if (data.action === "slotStats") {
     console.log("In the SlotStats");
     log(player, `Getting nerdy! Cheking out the Slot stats.\n${slots.stats()}`);
@@ -235,25 +252,27 @@ module.exports = (callback_query, ship, data) => {
     log(player, "Reading instructions for the Slots");
     b.sendMessage(ship.id, slots.instructions);
   } else if (data.action === "mixology") {
-    mixology.getGame()
-      .then(game => {
-        if (game) {
-          sendCocktail(game.cocktail, game.fakeIngredients);
-        } else {
-          mixology.getFakeCocktail()
-            .then(cocktail => {
-              Mixology.create({
-                fakeIngredients: cocktail.fakeIngredients,
-                cocktail: cocktail._id
-              }, (err, newGame) => {
-                console.log(game);
-                sendCocktail(cocktail, cocktail.fakeIngredients);
-              });
-            });
-        }
-      });
+    mixology.getGame().then((game) => {
+      if (game) {
+        sendCocktail(game.cocktail, game.fakeIngredients);
+      } else {
+        mixology.getFakeCocktail().then((cocktail) => {
+          Mixology.create(
+            {
+              fakeIngredients: cocktail.fakeIngredients,
+              cocktail: cocktail._id,
+            },
+            (err, newGame) => {
+              console.log(game);
+              sendCocktail(cocktail, cocktail.fakeIngredients);
+            }
+          );
+        });
+      }
+    });
     console.log("Do some mixology stuff");
   } else if (data.action === "mix_guess") {
+<<<<<<< HEAD
     mixology.checkGuess(ship, data, callback_query.from.first_name)
       .then(result => {
         switch (result) {
@@ -270,14 +289,26 @@ module.exports = (callback_query, ship, data) => {
             b.sendMessage(MIXOLOGYPORT, `Good job ${callback_query.from.first_name}`);
         }
       });
+=======
+    mixology.checkGuess(ship, data, callback_query.from.first_name).then((result) => {
+      switch (result) {
+        case -2:
+          b.sendMessage(MIXOLOGYPORT, `You already guessed that, ${callback_query.from.first_name}`);
+          break;
+        case -1:
+          b.sendMessage(MIXOLOGYPORT, `You're out, ${callback_query.from.first_name}`);
+          break;
+        default:
+          b.sendMessage(MIXOLOGYPORT, `Good job ${callback_query.from.first_name}`);
+      }
+    });
+>>>>>>> 14893e24a94235d0e39dd895f5005f12bd4cc931
   }
 
   function broadcastInlineKeyboard(message, keyboard) {
     Ship.find({}).then((ships) => {
       b.broadcastKeyboard(
-        ships.map(({
-          id
-        }) => id),
+        ships.map(({ id }) => id),
         message,
         keyboard
       ).then(console.log, console.error);

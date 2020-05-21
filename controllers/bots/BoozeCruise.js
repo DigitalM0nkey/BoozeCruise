@@ -330,13 +330,38 @@ router.post("/", ({ body }, res, next) => {
             //   });
             // }
             // End Mini-game Lowest-Highest
+            // b.sendKeyboard(
+            //   ship.id,
+            //   `This is the ${nextPort.name} port authority \nUse this link to dock.\n`,
+            //   {
+            //     inline_keyboard: [
+            //       [
+            //         {
+            //           text: nextPort.name,
+            //           url: link,
+            //         },
+            //       ],
+            //     ],
+            //   }
           } else if (body.message.text == `${emoji.books} Library ${emoji.books}`) {
-            log(player, "Reading the news");
-            console.log("Reading the news");
+            log(player, "In the library...with Colonel Mustard!");
+
+            b.sendKeyboard(ship.id, `Welcome to the Library`, {
+              inline_keyboard: [
+                [
+                  {
+                    text: `NEWS`,
+                    callback_data: JSON.stringify({
+                      action: "news",
+                    }),
+                  },
+                ],
+              ],
+            });
 
             scrapers.cleanData().then((article) => {
               //article = await scrapers.cleanData();
-              console.log("------", article);
+              //console.log("------", article);
 
               b.sendPhoto(
                 ship.id,
@@ -366,7 +391,6 @@ router.post("/", ({ body }, res, next) => {
             }).then(({ id }) => {
               b.exportChatInviteLink(id).then((link) => {
                 // b.sendKeyboard(ship.id, link, { inline_keyboard: ["Dock", link] });
-                // inline_keyboard: tes;
                 b.sendKeyboard(ship.id, link, keyboards.navigation);
               });
             });
