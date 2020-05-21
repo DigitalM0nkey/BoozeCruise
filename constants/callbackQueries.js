@@ -252,29 +252,37 @@ module.exports = (callback_query, ship, data) => {
     log(player, "Reading instructions for the Slots");
     b.sendMessage(ship.id, slots.instructions);
   } else if (data.action === "mixology") {
-    mixology.getFakeCocktail().then((cocktail) => {
-      //(cocktail);
-      b.sendPhoto(MIXOLOGYPORT, cocktail.image, `<pre>${cocktail.name}</pre>`);
-      setTimeout(() => {
-        //console.log(keyboards.mixologyIngredients(cocktail.ingredients.concat(cocktail.fakeIngredients)));
-        b.sendKeyboard(
-          MIXOLOGYPORT,
-          `Which ingredients are part of ${cocktail.name}`,
-          keyboards.mixologyIngredients(cocktail.ingredients.concat(cocktail.fakeIngredients))
-        );
-      }, 500);
+    mixology.getGame().then((game) => {
+      if (game) {
+        sendCocktail(game.cocktail, game.fakeIngredients);
+      } else {
+        mixology.getFakeCocktail().then((cocktail) => {
+          Mixology.create(
+            {
+              fakeIngredients: cocktail.fakeIngredients,
+              cocktail: cocktail._id,
+            },
+            (err, newGame) => {
+              console.log(game);
+              sendCocktail(cocktail, cocktail.fakeIngredients);
+            }
+          );
+        });
+      }
     });
     console.log("Do some mixology stuff");
   } else if (data.action === "mix_guess") {
-    mixology.getGame().then((game) => {
-      console.log(data);
-      console.log(game.fakeIngredients);
-      if (game.fakeIngredients.indexOf(data.data) >= 0) {
-        b.sendMessage(MIXOLOGYPORT, `You're out ${callback_query.from.first_name}`);
-      } else {
-        b.sendMessage(MIXOLOGYPORT, `Good job ${callback_query.from.first_name}`);
+    mixology.checkGuess(ship, data, callback_query.from.first_name).then((result) => {
+      switch (result) {
+        case -2:
+          b.sendMessage(MIXOLOGYPORT, `You already guessed that, ${callback_query.from.first_name}`);
+          break;
+        case -1:
+          b.sendMessage(MIXOLOGYPORT, `You're out, ${callback_query.from.first_name}`);
+          break;
+        default:
+          b.sendMessage(MIXOLOGYPORT, `Good job ${callback_query.from.first_name}`);
       }
-      //let player = _.find(game.players, player => player.id == ship.id);
     });
   }
 
@@ -287,4 +295,17 @@ module.exports = (callback_query, ship, data) => {
       ).then(console.log, console.error);
     }, console.error);
   }
+};
+
+const sendCocktail = (cocktail, fakeIngredients) => {
+  //(cocktail);
+  b.sendPhoto(MIXOLOGYPORT, cocktail.image, `<pre>${cocktail.name}</pre>`);
+  setTimeout(() => {
+    //console.log(keyboards.mixologyIngredients(cocktail.ingredients.concat(cocktail.fakeIngredients)));
+    b.sendKeyboard(
+      MIXOLOGYPORT,
+      `Which ingredients are part of ${cocktail.name}`,
+      keyboards.mixologyIngredients(cocktail.ingredients.concat(fakeIngredients))
+    );
+  }, 500);
 };

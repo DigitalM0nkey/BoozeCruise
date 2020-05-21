@@ -2,6 +2,7 @@ const request = require("request");
 const portID = "-1001294305401";
 const Cocktail = require("../models/mini-games/mixology/cocktail");
 const Mixology = require("../models/mini-games/mixology/mixology");
+const _ = require("underscore");
 /* Get cocktail list from online DB
 
 exports.getCocktail = () => {
@@ -42,8 +43,8 @@ exports.getCocktail = () => {
 const getCocktail = () => {
   return new Promise((resolve, reject) => {
     Cocktail.find({
-      alcoholic: "Alcoholic",
-    })
+        alcoholic: "Alcoholic",
+      })
       .lean()
       .exec((err, cocktails) => {
         //console.log(cocktails[Math.floor(Math.random() * cocktails.length)]);
@@ -54,11 +55,9 @@ const getCocktail = () => {
 };
 const getIngredients = (cocktailIngredients) => {
   return new Promise((resolve, reject) => {
-    Cocktail.aggregate([
-      {
-        $unwind: "$ingredients",
-      },
-    ]).exec((err, cocktails) => {
+    Cocktail.aggregate([{
+      $unwind: "$ingredients",
+    }, ]).exec((err, cocktails) => {
       resolve(
         cocktails.reduce((ingredients, cocktail) => {
           if (ingredients.indexOf(cocktail.ingredients) < 0 && cocktailIngredients.indexOf(cocktail.ingredients) < 0) {
@@ -87,7 +86,7 @@ const getFakeCocktail = async () => {
 const getGame = async () => {
   const game = await Mixology.findOne({
     finished: false,
-  });
+  }).populate('cocktail');
   if (!game) {
     const cocktail = await getFakeCocktail();
     let newGame = await Mixology.create({
@@ -102,6 +101,29 @@ const getGame = async () => {
     return game;
   }
 };
+
+exports.checkGuess = async (ship, guess, name) => {
+  let game = await getGame();
+  console.log(guess);
+  console.log(game.fakeIngredients);
+  let player = _.find(game.players, player => player.id == ship.id);
+  if (player) {
+    if (player.guesses.indexOf(guess.data) === -1) {
+      player.guesses.push(guess.data);
+    } else {
+      return -2;
+    }
+  } else {
+    game.players.push({
+      id: ship.id,
+      name,
+      guesses: [guess.data]
+    });
+  }
+  await game.save();
+  return game.cocktail.ingredients.indexOf(guess.data);
+};
+
 getFakeCocktail();
 exports.getCocktail = getCocktail;
 exports.getFakeCocktail = getFakeCocktail;
