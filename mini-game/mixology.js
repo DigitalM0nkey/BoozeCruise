@@ -108,15 +108,15 @@ exports.checkGuess = async (ship, guess) => {
   console.log(game.fakeIngredients);
   let player = _.find(game.players, player => player.id == ship.id);
   if (player) {
-    if (player.guesses.indexOf(data.guess) === -1) {
-      player.guesses.push(data.guess);
+    if (player.guesses.indexOf(guess.data) === -1) {
+      player.guesses.push(guess.data);
     } else {
       return -2;
     }
   } else {
     game.players.push({
       id: ship.id,
-      guesses: [data.guess]
+      guesses: [guess.data]
     });
   }
   await game.save();
