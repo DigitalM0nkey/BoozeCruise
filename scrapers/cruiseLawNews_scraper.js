@@ -1,5 +1,6 @@
 const cheerio = require("cheerio");
 const axios = require("axios");
+const moment = require("moment");
 let articles = [];
 
 const getCruiseLawNewsArticles = (url) =>
@@ -23,6 +24,7 @@ const getCruiseLawNewsArticles = (url) =>
                 ? $(".lxb_af-featured_image-get-img").attr("src")
                 : "https://github.com/DigitalM0nkey/BoozeCruise/blob/master/images/BoozeCruiseNews.jpg?raw=true";
               return {
+                date: moment(),
                 source: `cruiselawnews.com`,
                 title: $(".lxb_af-template_tags-get_post_title").text(),
                 image: image,
