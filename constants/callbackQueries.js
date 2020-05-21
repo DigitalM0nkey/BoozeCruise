@@ -235,18 +235,23 @@ module.exports = (callback_query, ship, data) => {
     log(player, "Reading instructions for the Slots");
     b.sendMessage(ship.id, slots.instructions);
   } else if (data.action === "mixology") {
-    mixology.getFakeCocktail().then((cocktail) => {
-      //(cocktail);
-      b.sendPhoto(MIXOLOGYPORT, cocktail.image, `<pre>${cocktail.name}</pre>`);
-      setTimeout(() => {
-        //console.log(keyboards.mixologyIngredients(cocktail.ingredients.concat(cocktail.fakeIngredients)));
-        b.sendKeyboard(
-          MIXOLOGYPORT,
-          `Which ingredients are part of ${cocktail.name}`,
-          keyboards.mixologyIngredients(cocktail.ingredients.concat(cocktail.fakeIngredients))
-        );
-      }, 500);
-    });
+    mixology.getGame()
+      .then(game => {
+        if (game) {
+          sendCocktail(game.cocktail, game.fakeIngredients);
+        } else {
+          mixology.getFakeCocktail()
+            .then(cocktail => {
+              Mixology.create({
+                fakeIngredients: cocktail.fakeIngredients,
+                cocktail: cocktail._id
+              }, (err, newGame) => {
+                console.log(game);
+                sendCocktail(cocktail, cocktail.fakeIngredients);
+              });
+            });
+        }
+      });
     console.log("Do some mixology stuff");
   } else if (data.action === "mix_guess") {
     mixology.getGame().then((game) => {
@@ -272,4 +277,17 @@ module.exports = (callback_query, ship, data) => {
       ).then(console.log, console.error);
     }, console.error);
   }
+};
+
+const sendCocktail = (cocktail, fakeIngredients) => {
+  //(cocktail);
+  b.sendPhoto(MIXOLOGYPORT, cocktail.image, `<pre>${cocktail.name}</pre>`);
+  setTimeout(() => {
+    //console.log(keyboards.mixologyIngredients(cocktail.ingredients.concat(cocktail.fakeIngredients)));
+    b.sendKeyboard(
+      MIXOLOGYPORT,
+      `Which ingredients are part of ${cocktail.name}`,
+      keyboards.mixologyIngredients(cocktail.ingredients.concat(fakeIngredients))
+    );
+  }, 500);
 };
