@@ -53,14 +53,6 @@ const cleanData = async () => {
 };
 
 exports.runAllScrapers = runAllScrapers;
-exports.cleanData = async () => {
-  try {
-    articles = await cleanData();
-    //return articles;
-  } catch (err) {
-    // catches errors both in fetch and response.json
-    console.error(err);
-  }
-};
+exports.cleanData = cleanData;
 
 //console.log(cleanData());
