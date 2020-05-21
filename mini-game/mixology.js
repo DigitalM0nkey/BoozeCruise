@@ -121,6 +121,7 @@ exports.checkGuess = async (ship, guess, name) => {
       name,
       guesses: [guess.data]
     });
+    player = _.find(game.players, player => player.id == ship.id);
   }
   if (_.intersection(player.guesses, game.cocktail.ingredients).length === game.cocktail.ingredients.length) {
     game.finished = true;
