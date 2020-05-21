@@ -344,7 +344,7 @@ router.post("/", ({ body }, res, next) => {
             //     ],
             //   }
           } else if (body.message.text == `${emoji.books} Library ${emoji.books}`) {
-            log(player, "In the library...with Colonel Mustard!");
+            log(player, "In the library...with Colonel Mustard?");
 
             b.sendKeyboard(ship.id, `Welcome to the Library`, {
               inline_keyboard: [

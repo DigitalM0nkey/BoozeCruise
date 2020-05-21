@@ -240,6 +240,18 @@ module.exports = (callback_query, ship, data) => {
         article.image,
         `${article.date}\n<pre>${article.title}</pre>\n<i>Source: <b>${article.source}</b></i>`
       );
+      // b.sendKeyboard(ship.id, `Interested?`, {
+      //   inline_keyboard: [
+      //     [
+      //       {
+      //         text: `Read`,
+      //         callback_data: JSON.stringify({
+      //           action: "news",
+      //         }),
+      //       },
+      //     ],
+      //   ],
+      // });
       setTimeout(function () {
         b.sendKeyboard(ship.id, article.body, {
           inline_keyboard: [

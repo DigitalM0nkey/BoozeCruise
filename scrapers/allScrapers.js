@@ -27,13 +27,13 @@ const cleanData = async () => {
       // console.log("result --------->", result);
       // const source = _.sample(Object.keys(result));
       let sources = Object.keys(result);
-      console.log("SOURCES =>", sources);
+      //console.log("SOURCES =>", sources);
 
       //console.log(sources[_.random(0, sources.length - 1)]); //string is returned
 
       const source = sources[_.random(0, sources.length - 1)]; // refactor this line
       // const source = "cruiseIndustryNews";
-      console.log("SOURCE --------->", source);
+      // console.log("SOURCE --------->", source);
       //const randNum = _.random(0, sources.length - 1);
       // console.log(randNum);
 
@@ -47,7 +47,7 @@ const cleanData = async () => {
     }
   }
   const randomArticle = articles[_.random(0, articles.length - 1)];
-  console.log("RANDOM ARTICLE", randomArticle);
+  // console.log("RANDOM ARTICLE", randomArticle);
   return randomArticle;
 };
 
