@@ -14,7 +14,7 @@ const emoji = require("../constants/emoji");
 
 const lowestHighest = require("../mini-game/lowestHighest");
 const slots = require("../mini-game/slots");
-const scrapers = require("../../scrapers/allScrapers");
+const scrapers = require("../scrapers/allScrapers ");
 
 const moment = require("moment");
 const _ = require("underscore");
