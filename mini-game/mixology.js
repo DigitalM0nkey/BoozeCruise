@@ -2,6 +2,7 @@ const request = require("request");
 const portID = "-1001294305401";
 const Cocktail = require("../models/mini-games/mixology/cocktail");
 const Mixology = require("../models/mini-games/mixology/mixology");
+const _ = require("underscore");
 /* Get cocktail list from online DB
 
 exports.getCocktail = () => {
