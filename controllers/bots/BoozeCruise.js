@@ -38,6 +38,7 @@ const b = TelegramBot.boozecruiseBot;
 
 //var dailyEvent = schedule.scheduleJob('30 * * * * *', function(){
 const dailyEvent = schedule.scheduleJob("0 0 8 * * *", () => {
+  scrapers.cleanData();
   console.log("The answer to life, the universe, and everything!");
   Port.find({}).then((ports) => {
     ports.forEach((port) => {
@@ -933,9 +934,7 @@ router.get("/", (req, res, next) => {
 });
 
 // cash articles on restart.
-//console.log(scrapers.cleanData());
-
-scrapers.cleanData();
+console.log(scrapers.cleanData());
 
 b.sendKeyboard("510423667", `${randomQuote(quotes)} \n\n<pre>Also the server restarted</pre>`, keyboards.admin);
 // b.sendMessage("-1001473681735", "Server Restarted"); not in use right now

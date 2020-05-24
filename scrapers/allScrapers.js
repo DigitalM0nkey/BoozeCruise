@@ -2,18 +2,21 @@ let articles = [];
 const cruiseLawNewsArticles = require("../scrapers/cruiseLawNews_scraper");
 const iLikeCruiseShipsArticles = require("../scrapers/iLikeCruiseShips_scraper");
 const cruiseIndustryNewsArticles = require("../scrapers/cruiseIndustryNews_scraper");
+const cruiseHiveArticles = require("../scrapers/cruiseHive_scraper");
 const _ = require("underscore");
 
 async function runAllScrapers() {
   try {
-    //articles = await cruiseIndustryNewsArticles();
-    //articles.iLikeCruiseShips = await iLikeCruiseShipsArticles();
+    // articles.cruiseInsdustryNews = await cruiseIndustryNewsArticles();
+    // articles.iLikeCruiseShips = await iLikeCruiseShipsArticles();
+    // articles.cruiseLawNews = await cruiseLawNewsArticles();
     // const newArticle = (await cruiseIndustryNewsArticles()).concat(await cruiseLawNewsArticles());
     //console.log(newArticle);
-
+    // return articles;
     return (await cruiseIndustryNewsArticles())
       .concat(await cruiseLawNewsArticles())
-      .concat(await iLikeCruiseShipsArticles());
+      .concat(await iLikeCruiseShipsArticles())
+      .concat(await cruiseHiveArticles());
   } catch (err) {
     // catches errors both in fetch and response.json
     console.error(err);

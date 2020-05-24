@@ -3,6 +3,8 @@ const axios = require("axios");
 const moment = require("moment");
 let articles = [];
 
+console.log("Start I Like Cruise Ships Scraper");
+
 const getILikeCruiseShipsArticles = (url) =>
   new Promise(function (resolve, reject) {
     axios
@@ -12,10 +14,10 @@ const getILikeCruiseShipsArticles = (url) =>
         // console.log($(".td-module-thumb > a").attr("href"));
 
         let urls = [];
-        for (let i = 1; i < $(".td-module-thumb > a").length; i++) {
+        for (let i = 0; i < $(".td-module-thumb > a").length; i++) {
           urls.push($(".td-module-thumb > a")[i].attribs.href);
         }
-        //console.log(urls);
+        console.log(urls);
 
         return urls;
       })
@@ -41,6 +43,7 @@ const getILikeCruiseShipsArticles = (url) =>
               };
             })
           );
+          console.log("End I Like Cruise Ships Scraper");
         });
       })
       .catch((err) => {
