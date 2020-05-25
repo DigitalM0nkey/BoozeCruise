@@ -214,22 +214,29 @@ module.exports = (callback_query, ship, data) => {
   } else if (data.action === "treasure") {
     globalFunctions.lookForTreasure(ship);
   } else if (data.action === "lowest-highest") {
-    if (ship.purse.balance >= 5) {
-      ship.purse.balance -= 5;
-      ship.save((err, saved, rows) => {
-        if (err) console.error(err);
-        LowestHighest.findOne({
-          inProgress: true,
-        }).then((game) => {
-          if (game) {
-            b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id, "LH"));
-          } else {
-            LowestHighest.create({}, (err, game) => {
+    if (ship.nextLocation) {
+      if (ship.purse.balance >= 5) {
+        ship.purse.balance -= 5;
+        ship.save((err, saved, rows) => {
+          if (err) console.error(err);
+          LowestHighest.findOne({
+            inProgress: true,
+          }).then((game) => {
+            if (game) {
               b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id, "LH"));
-            });
-          }
+            } else {
+              LowestHighest.create({}, (err, game) => {
+                b.sendKeyboard(ship.id, "Pick a number", keyboards.numbers(game._id, "LH"));
+              });
+            }
+          });
         });
-      });
+      }
+    } else {
+      b.sendMessage(
+        ship.id,
+        `Lowest-Highest is a casino game and the casino is only open in international waters. Select a port to visit then go to the casino to play.`
+      );
     }
   } else if (data.action === "news") {
     log(player, "Reading the news");
