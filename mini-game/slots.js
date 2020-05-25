@@ -5,29 +5,30 @@ const emoji = require("../constants/emoji");
 const Ship = require("../models/ship");
 
 const symbols = ["🍒", "🛳", "🏝", "🌊", "☀️", "⚓️"];
-let rolls = [{
+let rolls = [
+  {
     symbol: "🍒",
-    count: 0
+    count: 0,
   },
   {
     symbol: "🛳",
-    count: 0
+    count: 0,
   },
   {
     symbol: "🏝",
-    count: 0
+    count: 0,
   },
   {
     symbol: "🌊",
-    count: 0
+    count: 0,
   },
   {
     symbol: "☀️",
-    count: 0
+    count: 0,
   },
   {
     symbol: "⚓️",
-    count: 0
+    count: 0,
   },
 ];
 let plays = 0;
@@ -51,7 +52,7 @@ const slots = (ship, bet, messageId) => {
   } else {
     ship.purse.balance -= bet;
     ship.save();
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       bet = parseInt(bet, 10);
       halfBet = Math.round(bet / 2);
       let odds = 0;
@@ -112,15 +113,15 @@ const slots = (ship, bet, messageId) => {
 
       const print = () => {
         for (let i = 0; i < odds; i++) {
-          setTimeout(function() {
+          setTimeout(function () {
             b.editMessageText(
               ship.id,
               messageId,
               house.reduce(
                 (msg, symbol, j) =>
-                msg +
-                (i >= j ? (j === house.length - 1 ? symbol : symbol + "|") : j === house.length - 1 ? "❓" : "❓|"),
-                `Won: ${emoji.korona}${prizes(house.slice(0, i + 1), i === odds - 1)}\n`
+                  msg +
+                  (i >= j ? (j === house.length - 1 ? symbol : symbol + "|") : j === house.length - 1 ? "❓" : "❓|"),
+                `Bet: ${emoji.korona}${bet} Won: ${emoji.korona}${prizes(house.slice(0, i + 1), i === odds - 1)}\n`
               )
             );
             // b.editMessageText(ship.id, messageId, `Balance: ${emoji.korona}${ship.purse.balance}`, "");
@@ -129,7 +130,6 @@ const slots = (ship, bet, messageId) => {
         setTimeout(() => {
           let prizeResult = prizes(house, true);
           amountWon += prizeResult;
-
 
           resolve(prizeResult);
         }, odds * 1000);
