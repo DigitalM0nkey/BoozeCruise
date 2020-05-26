@@ -458,7 +458,7 @@ router.post("/", ({ body }, res, next) => {
                 setTimeout(() => {
                   b.sendMessage(ship.id, element);
                 }, 2000);
-              }, 100);
+              }, 1000);
             });
 
             // Broadcast
