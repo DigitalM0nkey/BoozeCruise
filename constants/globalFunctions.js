@@ -96,9 +96,10 @@ exports.log = (user, action) => {
 
 exports.partitionMessage = (input) => {
   const output = [];
-  let amount = Math.ceil(input.length / 4050);
-  for (let index = 0; index < amount; index++) {
-    let partial = input.slice(index * 4050, 4050 * (index + 1));
+  const maxChars = 4096;
+  let amountOfPartitions = Math.ceil(input.length / maxChars);
+  for (let index = 0; index < amountOfPartitions; index++) {
+    let partial = input.slice(index * maxChars, maxChars * (index + 1));
     output.push(partial);
   }
   return output;
