@@ -94,6 +94,16 @@ exports.log = (user, action) => {
   return b.sendMessage("-1001289301939", `${user}: ${action}`);
 };
 
+exports.partitionMessage = (input) => {
+  const output = [];
+  let amount = Math.ceil(input.length / 4050);
+  for (let index = 0; index < amount; index++) {
+    let partial = input.slice(index * 4050, 4050 * (index + 1));
+    output.push(partial);
+  }
+  return output;
+};
+
 exports.lookForTreasure = (ship) => {
   b.getChatMember(ship.location.port, ship.id).then(
     (chatMember) => {
