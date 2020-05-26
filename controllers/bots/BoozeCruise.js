@@ -453,8 +453,12 @@ router.post("/", ({ body }, res, next) => {
               logReport += `${moment(date).format("LL")} | ${transcript}\n\n`;
             });
             log(player, "Viewing the Capt's log");
-            globalFunctions.partitionMessage(logReport).forEach((element) => {
-              b.sendMessage(ship.id, element);
+            setTimeout(() => {
+              globalFunctions.partitionMessage(logReport).forEach((element) => {
+                setTimeout(() => {
+                  b.sendMessage(ship.id, element);
+                }, 500);
+              }, 500);
             });
 
             // Broadcast
