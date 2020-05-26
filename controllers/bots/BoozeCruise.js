@@ -455,9 +455,7 @@ router.post("/", ({ body }, res, next) => {
             log(player, "Viewing the Capt's log");
             setTimeout(() => {
               globalFunctions.partitionMessage(logReport).forEach((element) => {
-                setTimeout(() => {
-                  b.sendMessage(ship.id, element);
-                }, 500);
+                b.sendMessage(ship.id, element);
               }, 500);
             });
 
