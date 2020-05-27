@@ -327,7 +327,7 @@ module.exports = (callback_query, ship, data) => {
     Ship.find({}).then((ships) => {
       b.broadcastKeyboard(
         ships.map(({ id }) => id),
-        message,cocktail.ingredients
+        message,
         keyboard
       ).then(console.log, console.error);
     }, console.error);
