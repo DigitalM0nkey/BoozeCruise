@@ -308,7 +308,7 @@ module.exports = (callback_query, ship, data) => {
     } else if (timeOut[ship.id] && timeOut[ship.id].date >= moment()) {
       return b.sendMessage(
         MIXOLOGYPORT,
-        `Your still in time out for another ${timeOut[ship.id].date - moment()} seconds, ${
+        `Your still in timeout for another ${timeOut[ship.id].date - moment()} seconds, ${
           callback_query.from.first_name
         }`
       );
@@ -327,8 +327,9 @@ module.exports = (callback_query, ship, data) => {
             delete timeOut[ship.id];
           }
           timeOut[ship.id] = { date: moment().add(10, "seconds") };
-          b.editMessage(
+          b.editMessageText(
             MIXOLOGYPORT,
+            messageId,
             `You're wrong... also your're in time out for 10 seconds, ${callback_query.from.first_name}`
           );
           break;
