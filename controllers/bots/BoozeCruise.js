@@ -230,6 +230,7 @@ router.post("/", ({ body }, res, next) => {
               },
             });
             newShip.save();
+            log(body.message.chat.from.first_name, `Just christened a new ship!`);
             b.sendKeyboard(body.message.chat.id, WELCOME, keyboards.home());
           });
         } else {
