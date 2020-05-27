@@ -43,8 +43,8 @@ exports.getCocktail = () => {
 const getCocktail = () => {
   return new Promise((resolve, reject) => {
     Cocktail.find({
-        alcoholic: "Alcoholic",
-      })
+      alcoholic: "Alcoholic",
+    })
       .lean()
       .exec((err, cocktails) => {
         //console.log(cocktails[Math.floor(Math.random() * cocktails.length)]);
@@ -55,9 +55,11 @@ const getCocktail = () => {
 };
 const getIngredients = (cocktailIngredients) => {
   return new Promise((resolve, reject) => {
-    Cocktail.aggregate([{
-      $unwind: "$ingredients",
-    }, ]).exec((err, cocktails) => {
+    Cocktail.aggregate([
+      {
+        $unwind: "$ingredients",
+      },
+    ]).exec((err, cocktails) => {
       resolve(
         cocktails.reduce((ingredients, cocktail) => {
           if (ingredients.indexOf(cocktail.ingredients) < 0 && cocktailIngredients.indexOf(cocktail.ingredients) < 0) {
@@ -86,7 +88,9 @@ const getFakeCocktail = async () => {
 const getGame = async () => {
   const game = await Mixology.findOne({
     finished: false,
-  }).populate('cocktail');
+  }).populate("cocktail");
+  console.log("GAME => ", game);
+
   if (!game) {
     const cocktail = await getFakeCocktail();
     let newGame = await Mixology.create({
@@ -104,10 +108,13 @@ const getGame = async () => {
 
 exports.checkGuess = async (ship, guess, name) => {
   let game = await getGame();
-  let player = _.find(game.players, player => player.id == ship.id);
+  let player = _.find(game.players, (player) => player.id == ship.id);
   if (player) {
     const incorrectGuesses = _.difference(player.guesses, game.cocktail.ingredients).length;
-    const min = _.min(game.players.filter(otherPlayer => otherPlayer.id != ship.id), otherPlayer => _.difference(otherPlayer.guesses, game.cocktail.ingredients).length);
+    const min = _.min(
+      game.players.filter((otherPlayer) => otherPlayer.id != ship.id),
+      (otherPlayer) => _.difference(otherPlayer.guesses, game.cocktail.ingredients).length
+    );
     if (incorrectGuesses > min) {
       return -3;
     } else if (player.guesses.indexOf(guess.data) === -1) {
@@ -119,9 +126,9 @@ exports.checkGuess = async (ship, guess, name) => {
     game.players.push({
       id: ship.id,
       name,
-      guesses: [guess.data]
+      guesses: [guess.data],
     });
-    player = _.find(game.players, player => player.id == ship.id);
+    player = _.find(game.players, (player) => player.id == ship.id);
   }
   if (_.intersection(player.guesses, game.cocktail.ingredients).length === game.cocktail.ingredients.length) {
     game.finished = true;
