@@ -18,6 +18,7 @@ const scrapers = require("../scrapers/allScrapers");
 
 const moment = require("moment");
 const _ = require("underscore");
+let timeOut = {};
 
 module.exports = (callback_query, ship, data) => {
   const player = ship.user.first_name;
@@ -302,6 +303,12 @@ module.exports = (callback_query, ship, data) => {
     });
     console.log("Do some mixology stuff");
   } else if (data.action === "mix_guess") {
+    if (timeOut[ship.id] && timeOut[ship.id].date < moment()) {
+      delete timeOut[ship.id];
+    } else if (timeOut[ship.id] && timeOut[ship.id].date >= moment()) {
+      return b.sendMessage(ship.id, "Your still in time out");
+    }
+
     mixology.checkGuess(ship, data, callback_query.from.first_name).then((result) => {
       switch (result) {
         case -3:
@@ -311,7 +318,14 @@ module.exports = (callback_query, ship, data) => {
           b.sendMessage(MIXOLOGYPORT, `You already guessed that, ${callback_query.from.first_name}`);
           break;
         case -1:
-          b.sendMessage(MIXOLOGYPORT, `You're out, ${callback_query.from.first_name}`);
+          if (timeOut[ship.id] && timeOut[ship.id].date < moment()) {
+            delete timeOut[ship.id];
+          }
+          timeOut[ship.id] = { date: moment().add(10, "seconds") };
+          b.sendMessage(
+            MIXOLOGYPORT,
+            `You're wrong... also your're in time out for 10 seconds, ${callback_query.from.first_name}`
+          );
           break;
         case 10:
           b.sendMessage(MIXOLOGYPORT, `You won, ${callback_query.from.first_name}`);
