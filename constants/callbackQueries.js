@@ -283,7 +283,7 @@ module.exports = (callback_query, ship, data) => {
     b.sendMessage(ship.id, slots.instructions);
   } else if (data.action === "mixology") {
     mixology.getGame().then((game) => {
-      if (game) {
+      if (game && game.cocktail) {
         sendCocktail(game.cocktail, game.fakeIngredients);
       } else {
         mixology.getFakeCocktail().then((cocktail) => {
