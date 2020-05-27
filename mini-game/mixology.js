@@ -102,7 +102,7 @@ const getGame = async () => {
 
     return await Mixology.findOne({
       finished: false,
-    });
+    }).populate("cocktail");
   } else {
     return game;
   }
