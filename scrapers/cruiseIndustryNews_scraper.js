@@ -32,8 +32,8 @@ const getCruiseIndustryNews = (url) =>
               //console.log(image);
 
               return {
-                date: $("time").text().trim()
-                  ? moment($("time").text().trim()).fromNow()
+                date: $("time").attr("datetime")
+                  ? moment($("time").attr("datetime")).fromNow()
                   : moment().startOf("day").fromNow(),
                 source: `cruiseindustrynews.com`,
                 title: $("h1").text().trim(),
