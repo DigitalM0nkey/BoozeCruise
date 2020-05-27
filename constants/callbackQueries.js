@@ -327,7 +327,7 @@ module.exports = (callback_query, ship, data) => {
     Ship.find({}).then((ships) => {
       b.broadcastKeyboard(
         ships.map(({ id }) => id),
-        message,
+        message,cocktail.ingredients
         keyboard
       ).then(console.log, console.error);
     }, console.error);
@@ -338,6 +338,7 @@ const sendCocktail = (cocktail, fakeIngredients) => {
   //(cocktail);
   b.sendPhoto(MIXOLOGYPORT, cocktail.image, `<pre>${cocktail.name}</pre>`);
   setTimeout(() => {
+    console.log("cocktail.ingredients", cocktail.ingredients);
     //console.log(keyboards.mixologyIngredients(cocktail.ingredients.concat(cocktail.fakeIngredients)));
     b.sendKeyboard(
       MIXOLOGYPORT,
