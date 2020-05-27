@@ -98,6 +98,8 @@ const getGame = async () => {
       fakeIngredients: cocktail.fakeIngredients,
       cocktail: cocktail._id,
     });
+    console.log("NEW GAME =>", newGame);
+
     return await Mixology.findOne({
       finished: false,
     });
