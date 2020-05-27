@@ -37,7 +37,7 @@ const getCruiseIndustryNews = (url) =>
               // const image = $(".entry-thumb").attr("src")
               //   ? $(".tdb_single_bg_featured_image > style > style").attr(".tdb-featured-image-bg")
               //   : "https://github.com/DigitalM0nkey/BoozeCruise/blob/master/images/BoozeCruiseNews.jpg?raw=true";
-              console.log("IMGAR => ", $(".tdb-block-inner  > time").attr("datetime"));
+              //console.log("IMGAR => ", $(".tdb-block-inner  > time").attr("datetime"));
 
               return {
                 date: $(".tdb-block-inner  > time").attr("datetime")

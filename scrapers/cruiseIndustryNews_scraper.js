@@ -4,6 +4,8 @@ const moment = require("moment");
 let articles = [];
 const site = "https://www.cruiseindustrynews.com";
 
+console.log("Start Cruise Industry News");
+
 const getCruiseIndustryNews = (url) =>
   new Promise(function (resolve, reject) {
     axios
@@ -42,6 +44,7 @@ const getCruiseIndustryNews = (url) =>
               };
             })
           );
+          console.log("End Cruise Industry News");
         });
       })
       .catch((err) => {
