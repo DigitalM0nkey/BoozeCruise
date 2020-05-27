@@ -315,7 +315,10 @@ module.exports = (callback_query, ship, data) => {
           break;
         case 10:
           b.sendMessage(MIXOLOGYPORT, `You won, ${callback_query.from.first_name}`);
-          mixology.getGame().then((game) => sendCocktail(game.cocktail, game.fakeIngredients));
+          mixology.getGame().then((game) => {
+            console.trace(game);
+            sendCocktail(game.cocktail, game.fakeIngredients);
+          });
           break;
         default:
           b.sendMessage(MIXOLOGYPORT, `Good job ${callback_query.from.first_name}`);

@@ -17,7 +17,7 @@ const getILikeCruiseShipsArticles = (url) =>
         for (let i = 0; i < $(".td-module-thumb > a").length; i++) {
           urls.push($(".td-module-thumb > a")[i].attribs.href);
         }
-        console.log(urls);
+        // console.log(urls);
 
         return urls;
       })
