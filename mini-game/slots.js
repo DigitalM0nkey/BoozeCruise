@@ -42,6 +42,8 @@ let amountWon = 0;
 let highestPower = 0;
 
 const slots = (ship, bet, messageId) => {
+  console.log("Slots message ID -> ", messageId);
+
   amountBet += bet;
   if (bet > ship.purse.balance) {
     b.sendMessage(
@@ -124,7 +126,6 @@ const slots = (ship, bet, messageId) => {
                 `Bet: ${emoji.korona}${bet}\nWon: ${emoji.korona}${prizes(house.slice(0, i + 1), i === odds - 1)}\n`
               )
             );
-            // b.editMessageText(ship.id, messageId, `Balance: ${emoji.korona}${ship.purse.balance}`, "");
           }, 1000 * i);
         }
         setTimeout(() => {

@@ -306,7 +306,12 @@ module.exports = (callback_query, ship, data) => {
     if (timeOut[ship.id] && timeOut[ship.id].date < moment()) {
       delete timeOut[ship.id];
     } else if (timeOut[ship.id] && timeOut[ship.id].date >= moment()) {
-      return b.sendMessage(ship.id, "Your still in time out");
+      return b.sendMessage(
+        MIXOLOGYPORT,
+        `Your still in time out for another ${timeOut[ship.id].date - moment()} seconds, ${
+          callback_query.from.first_name
+        }`
+      );
     }
 
     mixology.checkGuess(ship, data, callback_query.from.first_name).then((result) => {
@@ -322,7 +327,7 @@ module.exports = (callback_query, ship, data) => {
             delete timeOut[ship.id];
           }
           timeOut[ship.id] = { date: moment().add(10, "seconds") };
-          b.sendMessage(
+          b.editMessage(
             MIXOLOGYPORT,
             `You're wrong... also your're in time out for 10 seconds, ${callback_query.from.first_name}`
           );
