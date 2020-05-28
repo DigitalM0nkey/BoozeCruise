@@ -327,9 +327,10 @@ module.exports = (callback_query, ship, data) => {
             delete timeOut[ship.id];
           }
           timeOut[ship.id] = { date: moment().add(10, "seconds") };
-          b.editMessageText(
+          //b.editMessageText(
+          b.sendMessage(
             MIXOLOGYPORT,
-            messageId,
+            // messageId,
             `You're wrong... also your're in time out for 10 seconds, ${callback_query.from.first_name}`
           );
           break;
