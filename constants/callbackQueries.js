@@ -308,7 +308,7 @@ module.exports = (callback_query, ship, data) => {
     } else if (timeOut[ship.id] && timeOut[ship.id].date >= moment()) {
       return b.sendMessage(
         MIXOLOGYPORT,
-        `Your still in timeout for another ${timeOut[ship.id].date - moment().format("ss")} seconds, ${
+        `Your still in timeout for another ${timeOut[ship.id].date - moment() * 100} seconds, ${
           callback_query.from.first_name
         }`
       );
