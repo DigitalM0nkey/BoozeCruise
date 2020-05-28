@@ -335,11 +335,16 @@ module.exports = (callback_query, ship, data) => {
           );
           break;
         case 10:
-          b.sendMessage(MIXOLOGYPORT, `You won, ${callback_query.from.first_name}`);
-          mixology.getGame().then((game) => {
-            console.trace(game);
-            sendCocktail(game.cocktail, game.fakeIngredients);
-          });
+          b.sendMessage(
+            MIXOLOGYPORT,
+            `${emoji.cocktail} ${callback_query.from.first_name} WON!!!! ${emoji.cocktail}\n\n<i>Next round starts in 10 seconds</i>`
+          );
+          setTimeout(() => {
+            mixology.getGame().then((game) => {
+              console.trace(game);
+              sendCocktail(game.cocktail, game.fakeIngredients);
+            });
+          }, 10000);
           break;
         default:
           b.sendMessage(MIXOLOGYPORT, `Good job ${callback_query.from.first_name}`);
