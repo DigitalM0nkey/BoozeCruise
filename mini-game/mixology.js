@@ -1,8 +1,15 @@
 const request = require("request");
-const portID = "-1001294305401";
+const _ = require("underscore");
+
+const keyboards = require("./keyboards");
+const emoji = require("../constants/emoji");
+const b = require("../bots/telegram").boozecruiseBot;
+
 const Cocktail = require("../models/mini-games/mixology/cocktail");
 const Mixology = require("../models/mini-games/mixology/mixology");
-const _ = require("underscore");
+
+const portID = -1001294305401;
+const MIXOLOGYPORT = -1001216326021; //Caspian
 /* Get cocktail list from online DB
 
 exports.getCocktail = () => {
@@ -43,8 +50,8 @@ exports.getCocktail = () => {
 const getCocktail = () => {
   return new Promise((resolve, reject) => {
     Cocktail.find({
-      alcoholic: "Alcoholic",
-    })
+        alcoholic: "Alcoholic",
+      })
       .lean()
       .exec((err, cocktails) => {
         //console.log(cocktails[Math.floor(Math.random() * cocktails.length)]);
@@ -55,11 +62,9 @@ const getCocktail = () => {
 };
 const getIngredients = (cocktailIngredients) => {
   return new Promise((resolve, reject) => {
-    Cocktail.aggregate([
-      {
-        $unwind: "$ingredients",
-      },
-    ]).exec((err, cocktails) => {
+    Cocktail.aggregate([{
+      $unwind: "$ingredients",
+    }, ]).exec((err, cocktails) => {
       resolve(
         cocktails.reduce((ingredients, cocktail) => {
           if (ingredients.indexOf(cocktail.ingredients) < 0 && cocktailIngredients.indexOf(cocktail.ingredients) < 0) {
@@ -108,7 +113,7 @@ const getGame = async () => {
   }
 };
 
-exports.checkGuess = async (ship, guess, name) => {
+const checkGuess = async (ship, guess, name) => {
   let game = await getGame();
   let player = _.find(game.players, (player) => player.id == ship.id);
   if (player) {
@@ -140,6 +145,68 @@ exports.checkGuess = async (ship, guess, name) => {
     await game.save();
     return game.cocktail.ingredients.indexOf(guess.data);
   }
+};
+
+exports.sendCocktail = (cocktail, fakeIngredients) => {
+  //(cocktail);
+  b.sendPhoto(MIXOLOGYPORT, cocktail.image, `<pre>${cocktail.name}</pre>`);
+  setTimeout(() => {
+    console.log("cocktail.ingredients", cocktail.ingredients);
+    //console.log(keyboards.mixologyIngredients(cocktail.ingredients.concat(cocktail.fakeIngredients)));
+    b.sendKeyboard(
+      MIXOLOGYPORT,
+      `Which ingredients are part of ${cocktail.name}`,
+      keyboards.mixologyIngredients(cocktail.ingredients.concat(fakeIngredients))
+    );
+  }, 500);
+};
+
+exports.checkGuess = (ship, data, from) => {
+  if (timeOut[ship.id] && timeOut[ship.id].date < moment()) {
+    delete timeOut[ship.id];
+  } else if (timeOut[ship.id] && timeOut[ship.id].date >= moment()) {
+    return b.sendMessage(
+      MIXOLOGYPORT,
+      `You're still in timeout for another ${(timeOut[ship.id].date - moment()) / 1000} seconds, ${from.first_name}`
+    );
+  }
+  checkGuess(ship, data, from.first_name).then((result) => {
+    switch (result) {
+      case -3:
+        b.sendMessage(MIXOLOGYPORT, `You guessed more than other players, ${from.first_name}`);
+        break;
+      case -2:
+        b.sendMessage(MIXOLOGYPORT, `You already guessed that, ${from.first_name}`);
+        break;
+      case -1:
+        if (timeOut[ship.id] && timeOut[ship.id].date < moment()) {
+          delete timeOut[ship.id];
+        }
+        timeOut[ship.id] = {
+          date: moment().add(10, "seconds")
+        };
+        //b.editMessageText(
+        b.sendMessage(
+          MIXOLOGYPORT,
+          // messageId,
+          `You're wrong... also you're in time out for 10 seconds, ${from.first_name}`
+        );
+        break;
+      case 10:
+        b.sendMessage(
+          MIXOLOGYPORT,
+          `${emoji.cocktail} ${from.first_name} WON!!!! ${emoji.cocktail}\n\n<i>Next round starts in 10 seconds</i>`
+        );
+        setTimeout(() => {
+          mixology.getGame().then((game) => {
+            mixology.sendCocktail(game.cocktail, game.fakeIngredients);
+          });
+        }, 10000);
+        break;
+      default:
+        b.sendMessage(MIXOLOGYPORT, `Good job ${from.first_name}`);
+    }
+  });
 };
 
 getFakeCocktail();

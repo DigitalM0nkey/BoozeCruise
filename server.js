@@ -12,4 +12,5 @@ app.use(require("./controllers/static"));
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
   console.log("Server ", process.pid, " listening on", port);
+  const artPirate = require('./pirates/art');
 });
