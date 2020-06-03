@@ -92,7 +92,6 @@ function TelegramBot() {
       }/sendMessage?chat_id=${channel}&disable_notification=true&parse_mode=html&text=${encodeURIComponent(message)}`;
       request(url, (error, r, body) => {
         const response = JSON.parse(body).result;
-        console.log(response);
         if (error) return;
         if (!response) return;
         resolve(response.message_id);
@@ -133,7 +132,7 @@ function TelegramBot() {
     new Promise((resolve, reject) => {
       const url = `https://api.telegram.org/bot${
         bot.token
-      }/sendMessage?chat_id=${channel}&disable_notification=true&parse_mode=html&text=${message}&reply_markup=${JSON.stringify(
+      }/sendMessage?chat_id=${channel}&disable_notification=true&parse_mode=html&text=${encodeURIComponent(message)}&reply_markup=${JSON.stringify(
         keyboard
       )}`;
       request(encodeURI(url), (error, r, body) => {
