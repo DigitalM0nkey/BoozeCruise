@@ -189,7 +189,7 @@ exports.checkGuess = (ship, data, from) => {
   } else if (timeOut[ship.id] && timeOut[ship.id].date >= moment()) {
     return b.sendMessage(
       MIXOLOGYPORT,
-      `You're still in timeout for another ${(timeOut[ship.id].date - moment()) / 1000} seconds, ${from.first_name}`
+      `You're still in timeout for another ${Math.round((timeOut[ship.id].date - moment()) / 100) / 10} seconds, ${from.first_name}`
     );
   }
   checkGuess(ship, data, from.first_name).then((result) => {
@@ -215,9 +215,10 @@ exports.checkGuess = (ship, data, from) => {
         );
         break;
       case 10:
+        const msg = `<pre>${game.cocktail.name}</pre>\n${game.cocktail.instructions}<code>${game.cocktail.ingredients.map((ingredient) => `\n- ${ingredient}`)}</code>`;
         b.sendMessage(
           MIXOLOGYPORT,
-          `${emoji.cocktail} ${from.first_name} WON!!!! ${emoji.cocktail}\n\n<i>Next round starts in 10 seconds</i>`
+          `${emoji.cocktail} ${from.first_name} WON!!!! ${emoji.cocktail}\n${msg}\n\n<i>Next round starts in 10 seconds</i>`
         );
         setTimeout(() => {
           getGame().then((game) => {
