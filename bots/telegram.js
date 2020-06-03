@@ -132,7 +132,7 @@ function TelegramBot() {
     new Promise((resolve, reject) => {
       const url = `https://api.telegram.org/bot${
         bot.token
-      }/sendMessage?chat_id=${channel}&disable_notification=true&parse_mode=html&text=${encodeURIComponent(message)}&reply_markup=${JSON.stringify(
+      }/sendMessage?chat_id=${channel}&disable_notification=true&parse_mode=html&text=${message.replace(/[^\W]/gi, '')}&reply_markup=${JSON.stringify(
         keyboard
       )}`;
       request(encodeURI(url), (error, r, body) => {
