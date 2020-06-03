@@ -10,6 +10,8 @@ const Mixology = require("../models/mini-games/mixology/mixology");
 
 const portID = -1001294305401;
 const MIXOLOGYPORT = -1001216326021; //Caspian
+
+let timeOut = {};
 /* Get cocktail list from online DB
 
 exports.getCocktail = () => {

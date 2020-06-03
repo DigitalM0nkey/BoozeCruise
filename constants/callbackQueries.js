@@ -17,7 +17,6 @@ const scrapers = require("../scrapers/allScrapers");
 
 const moment = require("moment");
 const _ = require("underscore");
-let timeOut = {};
 
 module.exports = (callback_query, ship, data) => {
   const player = ship.user.first_name;
