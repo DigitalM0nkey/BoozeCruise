@@ -220,8 +220,8 @@ exports.checkGuess = (ship, data, from) => {
           `${emoji.cocktail} ${from.first_name} WON!!!! ${emoji.cocktail}\n\n<i>Next round starts in 10 seconds</i>`
         );
         setTimeout(() => {
-          mixology.getGame().then((game) => {
-            mixology.sendCocktail(game.cocktail, game.fakeIngredients);
+          getGame().then((game) => {
+            sendCocktail(game.cocktail, game.fakeIngredients);
           });
         }, 10000);
         break;
