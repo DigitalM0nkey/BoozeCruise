@@ -1,7 +1,7 @@
 const request = require("request");
 const _ = require("underscore");
 
-const keyboards = require("./keyboards");
+const keyboards = require("../constants/keyboards");
 const emoji = require("../constants/emoji");
 const b = require("../bots/telegram").boozecruiseBot;
 
@@ -91,7 +91,7 @@ const getFakeCocktail = async () => {
 };
 
 const getGame = async () => {
-  const game = await Mixology.findOne({
+  let game = await Mixology.findOne({
     finished: false,
   }).populate("cocktail");
   console.log("GAME => ", game);
@@ -105,11 +105,24 @@ const getGame = async () => {
     });
     console.log("NEW GAME =>", newGame);
 
-    return await Mixology.findOne({
+    game = await Mixology.findOne({
       finished: false,
     }).populate("cocktail");
+  }
+  if (game && game.cocktail) {
+    sendCocktail(game.cocktail, game.fakeIngredients);
   } else {
-    return game;
+    getFakeCocktail().then((cocktail) => {
+      Mixology.create({
+          fakeIngredients: cocktail.fakeIngredients,
+          cocktail: cocktail._id,
+        },
+        (err, newGame) => {
+          console.log(game);
+          sendCocktail(cocktail, cocktail.fakeIngredients);
+        }
+      );
+    });
   }
 };
 
@@ -147,7 +160,7 @@ const checkGuess = async (ship, guess, name) => {
   }
 };
 
-exports.sendCocktail = (cocktail, fakeIngredients) => {
+const sendCocktail = (cocktail, fakeIngredients) => {
   //(cocktail);
   b.sendPhoto(MIXOLOGYPORT, cocktail.image, `<pre>${cocktail.name}</pre>`);
   setTimeout(() => {
