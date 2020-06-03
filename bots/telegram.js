@@ -92,7 +92,7 @@ function TelegramBot() {
       }/sendMessage?chat_id=${channel}&disable_notification=true&parse_mode=html&text=${encodeURIComponent(message)}`;
       request(url, (error, r, body) => {
         const response = JSON.parse(body).result;
-        //console.log(response);
+        console.log(response);
         if (error) return;
         if (!response) return;
         resolve();
