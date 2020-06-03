@@ -95,7 +95,7 @@ function TelegramBot() {
         console.log(response);
         if (error) return;
         if (!response) return;
-        resolve();
+        resolve(response.message_id);
       });
     });
 
