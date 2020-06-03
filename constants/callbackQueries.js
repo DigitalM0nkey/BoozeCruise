@@ -276,7 +276,7 @@ module.exports = (callback_query, ship, data) => {
     log(player, "Reading instructions for the Slots");
     b.sendMessage(ship.id, slots.instructions);
   } else if (data.action === "mixology") {
-    mixology.getGame();
+    mixology.sendGame();
     console.log("Do some mixology stuff");
   } else if (data.action === "mix_guess") {
     mixology.checkGuess(ship, data, callback_query.from);

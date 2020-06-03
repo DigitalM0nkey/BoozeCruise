@@ -93,7 +93,7 @@ const getFakeCocktail = async () => {
 };
 
 const getGame = async () => {
-  let game = await Mixology.findOne({
+  const game = await Mixology.findOne({
     finished: false,
   }).populate("cocktail");
   console.log("GAME => ", game);
@@ -107,10 +107,16 @@ const getGame = async () => {
     });
     console.log("NEW GAME =>", newGame);
 
-    game = await Mixology.findOne({
+    return await Mixology.findOne({
       finished: false,
     }).populate("cocktail");
+  } else {
+    return game;
   }
+};
+
+exports.sendGame = async () => {
+  let game = await getGame();
   if (game && game.cocktail) {
     sendCocktail(game.cocktail, game.fakeIngredients);
   } else {
