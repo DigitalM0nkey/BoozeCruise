@@ -478,6 +478,7 @@ router.post("/", ({ body }, res, next) => {
             //if (ship._id == MYSHIP) {
             log(player, "Tinkering in Admin");
             b.sendKeyboard(body.message.chat.id, "Welcome to the admin panel", keyboards.admin);
+            b.answerCallback(body.callback_query.id, "Retina scan in progress");
             //}
           } else if (body.message.text == "/dock") {
             log(player, "Insta-docked... Pretty sure that is cheating.");
