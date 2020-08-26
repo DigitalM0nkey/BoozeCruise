@@ -128,13 +128,22 @@ function TelegramBot() {
 
   bot.broadcast = (channels, message) => Promise.all(channels.map((channel) => bot.sendMessage(channel, message)));
 
+  bot.answerCallback = (callback_query_id, text) =>
+    new Promise((resolve, reject) => {
+      const url = `https://api.telegram.org/bot${bot.token}/answerCallbackQuery?callback_query_id=${callback_query_id}&text=${text}`;
+      request(encodeURI(url), (error, r, body) => {
+        if (error) return;
+        resolve();
+      });
+    });
+
   bot.sendKeyboard = (channel, message, keyboard) =>
     new Promise((resolve, reject) => {
       const url = `https://api.telegram.org/bot${
         bot.token
-      }/sendMessage?chat_id=${channel}&disable_notification=true&parse_mode=html&text=${message.replace(/[^\w\s]/gi, '')}&reply_markup=${JSON.stringify(
+      }/sendMessage?chat_id=${channel}&disable_notification=true&parse_mode=html&text=${message}&reply_markup=${JSON.stringify(
         keyboard
-      )}`;
+      )}`; // this line need to be parsed for mixology to function correctly. ( .replace(/[^\w\s]/gi,"")  )
       request(encodeURI(url), (error, r, body) => {
         const response = JSON.parse(body).result;
         console.log(keyboard);
