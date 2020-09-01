@@ -5,7 +5,8 @@ module.exports = {
     else if (input.checkString("hello") || input.checkString("hi")) return `👋`;
     else if (input.checkString("name") && input.checkString("your")) return `My name is Jared Burns`;
     else if (input.checkString("you") && input.checkString("are") && input.checkString("there"))
-      return `Sure am. What's up`;
+    else if (input.checkString("how") && input.checkString("are") && input.checkString("you"))
+    return `I live and work on a cruise ship... Life is amazing!`;
     else if (input.checkString("fuck") || input.checkString("fucking"))
       return [
         `Language....Please....There are children onboard.`,
