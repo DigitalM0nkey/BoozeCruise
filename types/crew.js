@@ -1,4 +1,4 @@
-import CruiseDirector from "./crewtypes/crew/cruise_director.js";
+const CruiseDirector = require("./crew/cruise_director");
 
 var crew = {};
 
