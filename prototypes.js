@@ -11,8 +11,11 @@ Array.prototype.getRandom = (n) => {
   return result;
 };
 
-String.prototype.checkString = (str) =>
+String.prototype.checkString = (str) => {
+  console.log(this);
+  console.log(typeof this);
   this.toLowerCase()
     .replace(/[^\w\s]/gi, "")
     .split(" ")
     .includes(str);
+};
