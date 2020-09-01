@@ -12,9 +12,9 @@ Array.prototype.getRandom = (n) => {
 };
 
 String.prototype.checkString = (str) => {
-  console.log(this);
-  console.log(typeof this);
-  this.toLowerCase()
+  console.log("this", this);
+  console.log("typeof", typeof this);
+  return this.toLowerCase()
     .replace(/[^\w\s]/gi, "")
     .split(" ")
     .includes(str);
