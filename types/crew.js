@@ -49,7 +49,9 @@ crew.pick = function () {
 };
 
 crew.board = function () {};
-
+crew.conversation = function () {
+  return "Ain't no one else here, try the chatting to the Cruise Director \nType: /cd";
+};
 module.exports = function (crewType) {
   switch (crewType) {
     case "cruiseDirector":

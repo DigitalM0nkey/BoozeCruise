@@ -74,21 +74,22 @@ const minutelyEvent = schedule.scheduleJob("0 */1 * * * *", () => {
       },
     }).then((ships) => {
       ships.forEach((ship) => {
-        const nextPort = _.find(ports, ({
-          id
-        }) => {
+        const nextPort = _.find(ports, ({ id }) => {
           return id == ship.nextLocation.port;
         });
         if (nextPort) {
           b.exportChatInviteLink(nextPort.id).then((link) => {
             b.sendKeyboard(
               ship.id,
-              `This is the ${nextPort.name} port authority \nUse this link to dock.\n`, {
+              `This is the ${nextPort.name} port authority \nUse this link to dock.\n`,
+              {
                 inline_keyboard: [
-                  [{
-                    text: nextPort.name,
-                    url: link,
-                  }, ],
+                  [
+                    {
+                      text: nextPort.name,
+                      url: link,
+                    },
+                  ],
                 ],
               }
               // keyboards.arrival
@@ -170,9 +171,7 @@ const moves = {
 
 // This post is everytime someone says something to the bot.
 
-router.post("/", ({
-  body
-}, res, next) => {
+router.post("/", ({ body }, res, next) => {
   if (body.callback_query) {
     if (parseInt(body.callback_query.from.id) > 0) {
       Ship.findOne({
@@ -256,9 +255,7 @@ router.post("/", ({
               const count = ship.portHistory.reduce((portCount, port) => {
                 if (!portCount[port.port]) {
                   portCount[port.port] = {
-                    name: ports.find(({
-                      id
-                    }) => {
+                    name: ports.find(({ id }) => {
                       return id == port.port;
                     }).name,
                     count: 0,
@@ -292,9 +289,7 @@ router.post("/", ({
             if (ship.nextLocation.port) {
               Port.findOne({
                 id: ship.nextLocation.port,
-              }).then(({
-                name
-              }) => {
+              }).then(({ name }) => {
                 b.sendMessage(
                   ship.id,
                   `You will arrive in ${globalFunctions.calculateTime(ship.nextLocation.arrival)}`
@@ -310,10 +305,7 @@ router.post("/", ({
             } else {
               Port.findOne({
                 id: ship.location.port,
-              }).then(({
-                id,
-                name
-              }) => {
+              }).then(({ id, name }) => {
                 b.exportChatInviteLink(id).then((link) => {
                   b.sendKeyboard(ship.id, `You are currently in the ${name} harbour.`, keyboards.navigation);
                   /* setTimeout(function () {
@@ -360,12 +352,14 @@ router.post("/", ({
 
             b.sendKeyboard(ship.id, `Welcome to the Library`, {
               inline_keyboard: [
-                [{
-                  text: `NEWS`,
-                  callback_data: JSON.stringify({
-                    action: "news",
-                  }),
-                }, ],
+                [
+                  {
+                    text: `NEWS`,
+                    callback_data: JSON.stringify({
+                      action: "news",
+                    }),
+                  },
+                ],
               ],
             });
 
@@ -378,7 +372,7 @@ router.post("/", ({
                 article.image,
                 `${article.date}\n<pre>${article.title}</pre>\n<i>Source: <b>${article.source}</b></i>`
               );
-              setTimeout(function() {
+              setTimeout(function () {
                 b.sendMessage(ship.id, article.body);
               }, 2000);
               //return article;
@@ -398,9 +392,7 @@ router.post("/", ({
           } else if (body.message.text == "\u2693 Dock \u2693") {
             Port.findOne({
               id: ship.location.port,
-            }).then(({
-              id
-            }) => {
+            }).then(({ id }) => {
               b.exportChatInviteLink(id).then((link) => {
                 // b.sendKeyboard(ship.id, link, { inline_keyboard: ["Dock", link] });
                 b.sendKeyboard(ship.id, link, keyboards.navigation);
@@ -416,6 +408,8 @@ router.post("/", ({
           } else if (body.message.text == "/cd") {
             log(player, "Starting a chat with the Cruise Director");
             b.sendMessage(body.message.chat.id, crew("cruiseDirector").conversation());
+            ship.selectedCrew = "cruiseDirector";
+            ship.save();
           } else if (body.message.text == "\ud83d\udea2 Home Port \ud83d\udea2" || body.message.text == "/addGuest") {
             const newGuest = guest.pick();
             ship.guests.push(newGuest);
@@ -463,10 +457,7 @@ router.post("/", ({
               "The Captian's Log is a place for you to keep notes or other information. Each entry will be date stamped and displayed below. \nTo create a new entry, type /log followed by your message. \n\neg. /log This is my first Captians Log."
             );
             let logReport = "<b>Captain's Log:</b>\n";
-            ship.communication.forEach(({
-              date,
-              transcript
-            }) => {
+            ship.communication.forEach(({ date, transcript }) => {
               logReport += `${moment(date).format("LL")} | ${transcript}\n\n`;
             });
             log(player, "Viewing the Capt's log");
@@ -561,17 +552,12 @@ router.post("/", ({
                 $ne: ship.location.port,
               },
             }).then((ports) => {
-              const portsInShipSector = ports.filter(({
-                location
-              }) => {
+              const portsInShipSector = ports.filter(({ location }) => {
                 return location.sector === ship.location.sector;
               }).length;
               if (portsInShipSector === 0) {
                 const sectors = {};
-                ports.forEach(({
-                  location,
-                  name
-                }, i, array) => {
+                ports.forEach(({ location, name }, i, array) => {
                   if (!sectors[location.sector]) sectors[location.sector] = "";
                   sectors[location.sector] += `${name}, `;
                 });
@@ -587,13 +573,15 @@ router.post("/", ({
                 setTimeout(() => {
                   b.sendKeyboard(body.message.chat.id, "Which continent would you like to navigate to:", {
                     inline_keyboard: Object.keys(sectors).map((sector) => {
-                      return [{
-                        text: constants.sectors[sector],
-                        callback_data: JSON.stringify({
-                          action: "navigate_sector",
-                          sector,
-                        }),
-                      }, ];
+                      return [
+                        {
+                          text: constants.sectors[sector],
+                          callback_data: JSON.stringify({
+                            action: "navigate_sector",
+                            sector,
+                          }),
+                        },
+                      ];
                     }),
                   });
                 }, 5000);
@@ -623,10 +611,7 @@ router.post("/", ({
               },
             }).then((ports) => {
               const sectors = {};
-              ports.forEach(({
-                location,
-                name
-              }, i, array) => {
+              ports.forEach(({ location, name }, i, array) => {
                 if (!sectors[location.sector]) sectors[location.sector] = "";
                 sectors[location.sector] += `${name}, `;
               });
@@ -642,13 +627,15 @@ router.post("/", ({
               setTimeout(() => {
                 b.sendKeyboard(body.message.chat.id, "Which continent would you like to navigate to:", {
                   inline_keyboard: Object.keys(sectors).map((sector) => {
-                    return [{
-                      text: constants.sectors[sector],
-                      callback_data: JSON.stringify({
-                        action: "navigate_sector",
-                        sector,
-                      }),
-                    }, ];
+                    return [
+                      {
+                        text: constants.sectors[sector],
+                        callback_data: JSON.stringify({
+                          action: "navigate_sector",
+                          sector,
+                        }),
+                      },
+                    ];
                   }),
                 });
               }, 5000);
@@ -671,23 +658,24 @@ router.post("/", ({
             log(player, "Playing Lowest-Highest");
             LowestHighest.find({
               jackpotPaid: false,
-            }).then(({
-              length
-            }) => {
+            }).then(({ length }) => {
               b.sendKeyboard(
                 body.message.chat.id,
                 `This game cost ${KORONA}5 to play.\nYour current balance is ${KORONA}${
                   ship.purse.balance
                 }.\n${KORONA}10 is awarded to the winner.\n\n<pre>INSTRUCTIONS</pre>\nSelect a number higher than your opponent but lower than the House to win.\n\nThe jackpot is awarded to the player which picks the same number as the House.\n\n<code>Current jackpot is ${KORONA}${
                   4 * length
-                }</code>`, {
+                }</code>`,
+                {
                   inline_keyboard: [
-                    [{
-                      text: `${LOWESTHIGHEST}`,
-                      callback_data: JSON.stringify({
-                        action: "lowest-highest",
-                      }),
-                    }, ],
+                    [
+                      {
+                        text: `${LOWESTHIGHEST}`,
+                        callback_data: JSON.stringify({
+                          action: "lowest-highest",
+                        }),
+                      },
+                    ],
                   ],
                 }
 
@@ -726,12 +714,10 @@ router.post("/", ({
           } else if (body.message.text == "\ud83c\udf87 Achievements \ud83c\udf87") {
             log(player, "Looking in the mirror and telling themself.. Man I look good!");
             Ship.findOne({
-                id: ship.id,
-              })
+              id: ship.id,
+            })
               .populate("portHistory.port")
-              .then(({
-                portHistory
-              }) => {
+              .then(({ portHistory }) => {
                 let message = "<b>Your Port History:</b>";
                 portHistory.forEach((stop) => {
                   const arrivalDate = moment(stop.arrivalDate);
@@ -744,6 +730,8 @@ router.post("/", ({
             b.exportChatInviteLink("-1001399879250").then((link) => {
               b.sendMessage(body.message.chat.id, link);
             });
+          } else {
+            b.sendMessage(body.message.chat.id, crew(ship.selectedCrew).conversation(body.message.text));
           }
         }
         //res.sendStatus(200);
@@ -780,16 +768,14 @@ router.post("/", ({
             b.kick(body.message.chat.id, body.message.from.id, 1);
             Ship.findOne({
               "user.id": body.message.from.id,
-            }).then(({
-              id
-            }) => {
+            }).then(({ id }) => {
               b.sendMessage(id, `You've been kicked from ${port.name}`);
             });
           } else if (body.message.new_chat_participant) {
             //PORTENTRY
             Ship.findOne({
-                "user.id": body.message.new_chat_participant.id,
-              })
+              "user.id": body.message.new_chat_participant.id,
+            })
               .populate("products.product")
               .then((ship) => {
                 const player = ship.user.first_name;
@@ -851,14 +837,17 @@ router.post("/", ({
                     ship.guests
                   )}<pre>Total Guests: ${ship.guests.length}\nCapacity: ${ship.capacity}\nBalance: ${KORONA}${
                     ship.purse.balance
-                  }</pre>\n\n${perkMessage}`, {
+                  }</pre>\n\n${perkMessage}`,
+                  {
                     inline_keyboard: [
-                      [{
-                        text: `💰Look for treasure💰`,
-                        callback_data: JSON.stringify({
-                          action: "treasure",
-                        }),
-                      }, ],
+                      [
+                        {
+                          text: `💰Look for treasure💰`,
+                          callback_data: JSON.stringify({
+                            action: "treasure",
+                          }),
+                        },
+                      ],
                     ],
                   }
                 );
@@ -867,9 +856,7 @@ router.post("/", ({
           } else if (body.message.left_chat_participant) {
             Ship.findOne({
               "user.id": body.message.left_chat_participant.id,
-            }).then(({
-              _id
-            }) => {
+            }).then(({ _id }) => {
               port.ships = port.ships.filter((portShip) => {
                 return portShip != _id;
               });
@@ -974,9 +961,7 @@ module.exports = router;
 function broadcast(message) {
   Ship.find({}).then((ships) => {
     b.broadcast(
-      ships.map(({
-        id
-      }) => {
+      ships.map(({ id }) => {
         return id;
       }),
       message

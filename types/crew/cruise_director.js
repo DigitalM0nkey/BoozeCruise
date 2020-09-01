@@ -1,3 +1,3 @@
 module.exports = {
-  conversation: () => "hello",
+  conversation: (input) => `You said ${input}`,
 };
