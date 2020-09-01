@@ -14,7 +14,7 @@ Array.prototype.getRandom = (n) => {
 String.prototype.checkString = (str) => {
   console.log("this", this);
   console.log("typeof", typeof this);
-  return this.valueOf()
+  return this.toString()
     .toLowerCase()
     .replace(/[^\w\s]/gi, "")
     .split(" ")
