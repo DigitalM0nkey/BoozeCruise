@@ -1,54 +1,64 @@
+import CruiseDirector from "./crewtypes/crew/cruise_director.js";
+
 var crew = {};
 
-crew.pick = function() {
+crew.pick = function () {
   var crewTypes = [
     {
       title: "Social Host",
-      crewStatus: "Staff"
+      crewStatus: "Staff",
     },
     {
       title: "Cruise Director",
-      crewStatus: "Officer"
+      crewStatus: "Officer",
     },
     {
       title: "Art Auctioneer",
-      crewStatus: "Staff"
+      crewStatus: "Staff",
     },
     {
       title: "Gift Shop Manager",
-      crewStatus: "Staff"
+      crewStatus: "Staff",
     },
     {
       title: "Gift Shop Attendent",
-      crewStatus: "Staff"
+      crewStatus: "Staff",
     },
     {
       title: "Cheif Engeneer",
-      crewStatus: "Officer"
+      crewStatus: "Officer",
     },
     {
       title: "Server",
-      crewStatus: "Crew"
+      crewStatus: "Crew",
     },
     {
       title: "Casino Host",
-      crewStatus: "Staff"
+      crewStatus: "Staff",
     },
     {
       title: "DJ",
-      crewStatus: "Staff"
+      crewStatus: "Staff",
     },
     {
       title: "Dancer",
-      crewStatus: "Staff"
-    }
+      crewStatus: "Staff",
+    },
   ];
   return crewTypes[Math.floor(Math.random() * crewTypes.length)];
 };
 
-crew.board = function() {};
+crew.board = function () {};
 
-module.exports = crew;
+module.exports = function (crewType) {
+  switch (crewType) {
+    case "cruiseDirector":
+      return CruiseDirector;
+
+    default:
+      return crew;
+  }
+};
 
 // const events = [{
 //       name: "Embarcation Day",

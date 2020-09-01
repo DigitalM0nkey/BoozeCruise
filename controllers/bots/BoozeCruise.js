@@ -24,6 +24,7 @@ const Port = require("../../models/port");
 const Ship = require("../../models/ship");
 const Product = require("../../models/product");
 const guest = require("../../types/guest");
+const crew = require("../../types/crew");
 const LowestHighest = require("../../models/mini-games/lowestHighest/lowestHighest");
 //let articles = [];
 //const cruiseLawNewsArticles = require("../../scrapers/cruiseLawNews_scraper");
@@ -412,6 +413,9 @@ router.post("/", ({
               "This is the ship's bridge.\n\nFrom here you can control which port of call you will visit next.",
               keyboards.navigation
             );
+          } else if (body.message.text == "/cd") {
+            log(player, "Starting a chat with the Cruise Director");
+            b.sendMessage(body.message.chat.id, crew("cruiseDirector").conversation());
           } else if (body.message.text == "\ud83d\udea2 Home Port \ud83d\udea2" || body.message.text == "/addGuest") {
             const newGuest = guest.pick();
             ship.guests.push(newGuest);
