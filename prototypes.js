@@ -1,4 +1,4 @@
-Array.prototype.getRandom = (n) => {
+Array.prototype.getRandom = function (n) {
   let result = new Array(n),
     len = this.length,
     taken = new Array(len);
