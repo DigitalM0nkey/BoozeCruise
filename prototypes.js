@@ -1,8 +1,7 @@
-
 Array.prototype.getRandom = (n) => {
   let result = new Array(n),
-  len = this.length,
-  taken = new Array(len);
+    len = this.length,
+    taken = new Array(len);
   if (n > len) throw new RangeError("getRandom: more elements taken than available");
   while (n--) {
     let x = Math.floor(Math.random() * len);
@@ -11,3 +10,9 @@ Array.prototype.getRandom = (n) => {
   }
   return result;
 };
+
+String.prototype.checkString = (str) =>
+  this.toLowerCase()
+    .replace(/[^\w\s]/gi, "")
+    .split(" ")
+    .includes(str);
