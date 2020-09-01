@@ -11,7 +11,7 @@ Array.prototype.getRandom = (n) => {
   return result;
 };
 
-String.prototype.checkString = (str) => {
+String.prototype.checkString = function (str) {
   console.log("this", this);
   console.log("typeof", typeof this);
   return this.toString()
