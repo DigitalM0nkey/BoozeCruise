@@ -1,3 +1,7 @@
 module.exports = {
-  conversation: (input) => `You said ${input}`,
+  conversation: (input) => {
+    if (!input) {
+      `Hi, I'm your Cruise Director, What do you need help with today?`;
+    } else if (input) `You said ${input}`;
+  },
 };
