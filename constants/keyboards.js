@@ -33,6 +33,9 @@ module.exports = {
       resize_keyboard: true,
     };
   },
+  welcome: {
+    keyboard: [[{ text: emoji.navigation }]],
+  },
   bridge: {
     keyboard: [
       [{ text: `${emoji.world} Global Logs ${emoji.world}` }, { text: `${emoji.helm} Capt's Log ${emoji.helm}` }],

@@ -233,7 +233,7 @@ router.post("/", ({ body }, res, next) => {
             });
             newShip.save();
             log(ship.user.first_name, `Just christened a new ship!`);
-            b.sendKeyboard(body.message.chat.id, WELCOME, keyboards.home());
+            b.sendKeyboard(body.message.chat.id, WELCOME, keyboards.welcome());
           });
         } else {
           const player = ship.user.first_name;
