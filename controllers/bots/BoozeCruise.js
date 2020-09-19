@@ -239,7 +239,7 @@ router.post("/", ({ body }, res, next) => {
           const player = ship.user.first_name;
           if (body.message.text == "/start") {
             //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
-            b.sendKeyboard(body.message.chat.id, WELCOME, keyboards.home(ship.nextLocation.port));
+            b.sendKeyboard(body.message.chat.id, WELCOME, keyboards.welcome());
             log(player, `Having engine troubles. Attempting to restart their ship.`);
           } else if (body.message.text == "Check Balance") {
             b.sendMessage(ship.id, `Your balance is ${KORONA}${ship.purse.balance}`);
