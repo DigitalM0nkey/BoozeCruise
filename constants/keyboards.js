@@ -35,6 +35,7 @@ module.exports = {
   },
   welcome: {
     keyboard: [[{ text: emoji.navigation }]],
+    resize_keyboard: true,
   },
   bridge: {
     keyboard: [
@@ -46,6 +47,7 @@ module.exports = {
       ],
     ],
   },
+
   docked: {
     keyboard: [
       [
@@ -61,6 +63,7 @@ module.exports = {
     ],
     resize_keyboard: true,
   },
+
   port: {
     keyboard: [
       [
