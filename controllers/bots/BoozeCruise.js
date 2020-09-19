@@ -16,7 +16,7 @@ const MYSHIP = "5be3d50298ae6843394411ee";
 const MIXOLOGYPORT = -1001216326021; //Caspian
 const KORONA = "\u24C0";
 const WELCOME =
-  "Welcome To Booze Cruise!\n\nThis is your ship, go ahead and look around.\nWhen you are ready, go to 'Navigation', pick a port to trave to and set sail. In each port you will meet other sailors like yourself, go ahead introduce yourself.\n\nThere is treasure hidden in one of the ports, make sure you look for teasure while you are docked. You could dig up some Korona.\n\nWhere would you like to go ?";
+  "Welcome To Booze Cruise!\n\nThis is your ship, go ahead and look around.\nWhen you are ready, go to 'Navigation', pick a port to trave to and set sail. In each port you will meet other sailors like yourself, go ahead introduce yourself.\n\nThere is treasure hidden in one of the ports, make sure you look for teasure while you are docked. You could dig up some Korona.\n\nWhere would you like to go?";
 const LOWESTHIGHEST = `Play Lowest-Highest - ${KORONA}5`;
 const BITCOINADDRESS = "15t1A5qEwSKNtEWNpANdivZeeXp7SGDvqB";
 
@@ -232,7 +232,7 @@ router.post("/", ({ body }, res, next) => {
               },
             });
             newShip.save();
-            log(body.message.chat.from.first_name, `Just christened a new ship!`);
+            log(ship.user.first_name, `Just christened a new ship!`);
             b.sendKeyboard(body.message.chat.id, WELCOME, keyboards.home());
           });
         } else {
