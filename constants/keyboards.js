@@ -27,7 +27,7 @@ module.exports = {
               { text: emoji.joker + "Casino" + emoji.joker },
               // { text: emoji.gift + "Shop" + emoji.gift },
             ]
-          : [{ text: emoji.moneyBag + "Purser" + emoji.moneyBag }, { text: `/beta` }],
+          : [{ text: emoji.moneyBag + "Purser" + emoji.moneyBag }, { text: `${emoji.books} Library ${emoji.books}` }],
         [{ text: emoji.bug + "Maintenance" + emoji.bug }, { text: `${emoji.helm} Bridge ${emoji.helm}` }],
       ],
       resize_keyboard: true,
