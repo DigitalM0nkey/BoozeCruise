@@ -272,6 +272,7 @@ router.post("/", ({ body }, res, next) => {
               b.sendMessage(ship.id, `You have been to the following ports: ${message}`);
             });
           } else if (body.message.text == "\ud83d\udc1b Maintenance \ud83d\udc1b") {
+            log(player, `is waving frantically, tring to get the maintenance department to assist`);
             b.sendKeyboard(body.message.chat.id, "\ud83d\udc1b Maintenance \ud83d\udc1b", keyboards.maintenance);
           } else if (body.message.text == "/return") {
             b.sendKeyboard(body.message.chat.id, "@BoozeCruise_bot", keyboards.port);
@@ -281,6 +282,7 @@ router.post("/", ({ body }, res, next) => {
             log(player, `making the rounds, checking in on the crew.`);
             b.sendMessage(ship.id, "There are plenty of crew on your ship. You'll meet them when the time is right.");
           } else if (body.message.text == "\u2630 Main Menu \u2630") {
+            log(player, `Just requested the main menu`);
             b.sendKeyboard(body.message.chat.id, "\u2630 Main Menu \u2630", keyboards.home(ship.nextLocation.port));
           } else if (
             body.message.text == "\ud83d\uddfa Navigation \ud83d\uddfa" ||
@@ -308,6 +310,7 @@ router.post("/", ({ body }, res, next) => {
               }).then(({ id, name }) => {
                 b.exportChatInviteLink(id).then((link) => {
                   b.sendKeyboard(ship.id, `You are currently in the ${name} harbour.`, keyboards.navigation);
+                  log(player, `Currently in the ${name} harbour.`);
                   /* setTimeout(function () {
 
                   }, 5000);
@@ -390,6 +393,7 @@ router.post("/", ({ body }, res, next) => {
             b.sendKeyboard(ship.id, "Your testing beta features! Things may break", keyboards.beta);
             log(player, "Testing beta features");
           } else if (body.message.text == "\u2693 Dock \u2693") {
+            log(player, `Trying to dock`);
             Port.findOne({
               id: ship.location.port,
             }).then(({ id }) => {
