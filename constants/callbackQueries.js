@@ -180,7 +180,7 @@ module.exports = (callback_query, ship, data) => {
             `You won ${KORONA}${prize}\nNew Balance: ${KORONA}${ship.purse.balance}`,
             keyboards.slots("", "SL")
           );
-          b.answerCallback(callback_query.id, "Retina scan in progress");
+          b.answerCallback(callback_query.id, "Good Luck");
           // b.sendKeyboard(ship.id, `<pre>Stats?</pre>`, {
           //   inline_keyboard: [
           //     [
@@ -234,9 +234,21 @@ module.exports = (callback_query, ship, data) => {
         });
       }
     } else {
-      b.sendMessage(
+      b.sendKeyboard(
         ship.id,
-        `Lowest-Highest is a casino game and the casino is only open in international waters. Select a port to visit then go to the casino to play.`
+        `Lowest-Highest is a casino game and the casino is only open in international waters. Select a port to visit then go to the casino to play.`,
+        {
+          inline_keyboard: [
+            [
+              {
+                text: `Navigation`,
+                callback_data: JSON.stringify({
+                  action: "navigate",
+                }),
+              },
+            ],
+          ],
+        }
       );
     }
   } else if (data.action === "news") {
