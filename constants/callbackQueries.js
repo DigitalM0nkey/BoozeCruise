@@ -150,7 +150,9 @@ module.exports = (callback_query, ship, data) => {
                   callback_query.from.first_name
                 }?</b>\nGo to the casino <i>(only avalible while sailing)</i> and pick a number that is higher ⬆️ then ${
                   callback_query.from.first_name
-                }'s, but lower ⬇️ than the house. Good Luck\n\n<code>Current jackpot is ${KORONA}${4 * length}</code>`,
+                }'s, but lower ⬇️ than the house. Pick the same as the house and win the jackpot! Good Luck\n\n<code>Current jackpot is ${KORONA}${
+                  4 * length
+                }</code>`,
                 {
                   inline_keyboard: [
                     [
