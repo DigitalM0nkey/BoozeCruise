@@ -1,7 +1,8 @@
 module.exports = {
   conversation: (input) => {
-    const trigger = `${input}.checkString`;
+    //const trigger = `${input}.checkString`;
     if (!input) return `Hi, I'm your Cruise Director, What do you need help with today?`;
+    else if (trigger("pool")) return `The pool is that-a-way 💪 👉`;
     else if (trigger("pool")) return `The pool is that-a-way 💪 👉`;
     else if (trigger("hello") || trigger("hi")) return `👋`;
     else if (trigger("name") && trigger("your")) return `My name is Jared Burns`;
@@ -17,7 +18,11 @@ module.exports = {
     else return "";
   },
 
-  trigger (input) => {
-    input.checkString(input)
-  }
+  trigger: (input) => {
+    input.checkString(input);
+  },
+};
+
+const trigger = (input) => {
+  input.checkString(input);
 };
