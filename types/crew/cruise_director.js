@@ -24,5 +24,5 @@ module.exports = {
 };
 
 const trigger = (input) => {
-  input.checkString(input);
+  return input.checkString(input);
 };
