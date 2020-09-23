@@ -1,16 +1,15 @@
 module.exports = {
   conversation: (input) => {
-    //const trigger = `${input}.checkString`;
     if (!input) return `Hi, I'm your Cruise Director, What do you need help with today?`;
-    else if (trigger("pool")) return `The pool is that-a-way 💪 👉`;
-    else if (trigger("bingo")) return `Go to the lounge to play BINGO`;
-    else if (trigger("hello") || trigger("hi")) return `👋`;
-    else if (trigger("name") && trigger("your")) return `My name is Jared Burns`;
-    // else if (trigger("you") && trigger("are") && trigger("there"))
+    else if (input.checkString("pool")) return `The pool is that-a-way 💪 👉`;
+    else if (input.checkString("bingo")) return `Go to the lounge to play BINGO`;
+    else if (input.checkString("hello") || input.checkString("hi")) return `👋`;
+    else if (input.checkString("name") && input.checkString("your")) return `My name is Jared Burns`;
+    // else if (input.checkString("you") && input.checkString("are") && input.checkString("there"))
     //   return `I live and work on a cruise ship... Life is amazing!`;
-    else if (trigger("how") && trigger("are") && trigger("you"))
+    else if (input.checkString("how") && input.checkString("are") && input.checkString("you"))
       return `I live and work on a cruise ship... Life is amazing!`;
-    else if (trigger("fuck") || trigger("fucking"))
+    else if (input.checkString("fuck") || input.checkString("fucking"))
       return [
         `Language....Please....There are children onboard.`,
         `Holy shit... No fucking way!`,
@@ -18,12 +17,4 @@ module.exports = {
       ].getRandom();
     else return "";
   },
-
-  // trigger: (input) => {
-  //   input.checkString(input);
-  // },
-};
-
-const trigger = (input) => {
-  return input.checkString(input);
 };
