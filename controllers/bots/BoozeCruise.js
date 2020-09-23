@@ -232,7 +232,7 @@ router.post("/", ({ body }, res, next) => {
               },
             });
             newShip.save();
-            log(ship.user.first_name, `Just christened a new ship!`);
+            log(body.message.from.first_name, `Just christened a new ship!`);
             b.sendKeyboard(body.message.chat.id, WELCOME, keyboards.welcome());
           });
         } else {
