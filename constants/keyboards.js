@@ -5,19 +5,23 @@ module.exports = {
   home: function (seaDay) {
     return {
       keyboard: [
-        [
-          {
-            text: emoji.cocktail + "Lounge" + emoji.cocktail,
-          },
-        ],
+        [{ text: `${emoji.helm} Bridge ${emoji.helm}` }],
         seaDay
           ? [
-              { text: emoji.moneyBag + "Purser" + emoji.moneyBag },
+              {
+                text: emoji.cocktail + "Lounge" + emoji.cocktail,
+              },
+
               { text: emoji.joker + "Casino" + emoji.joker },
               // { text: emoji.gift + "Shop" + emoji.gift },
             ]
-          : [{ text: emoji.moneyBag + "Purser" + emoji.moneyBag }, { text: `${emoji.books} Library ${emoji.books}` }],
-        [{ text: emoji.bug + "Maintenance" + emoji.bug }, { text: `${emoji.helm} Bridge ${emoji.helm}` }],
+          : [
+              {
+                text: emoji.cocktail + "Lounge" + emoji.cocktail,
+              },
+              { text: `${emoji.books} Library ${emoji.books}` },
+            ],
+        [{ text: emoji.bug + "Maintenance" + emoji.bug }, { text: emoji.moneyBag + "Purser" + emoji.moneyBag }],
       ],
       resize_keyboard: true,
     };
@@ -167,6 +171,7 @@ module.exports = {
         {
           text: `${emoji.slots} Slots ${emoji.slots}`,
         },
+        npx,
       ],
       [
         {
