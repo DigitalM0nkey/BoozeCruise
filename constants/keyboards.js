@@ -7,17 +7,6 @@ module.exports = {
       keyboard: [
         [
           {
-            text: emoji.navigation,
-          },
-          {
-            text: emoji.people + "Manifest" + emoji.people,
-          },
-        ],
-        [
-          {
-            text: emoji.fireworks + "Achievements" + emoji.fireworks,
-          },
-          {
             text: emoji.cocktail + "Lounge" + emoji.cocktail,
           },
         ],
@@ -39,6 +28,11 @@ module.exports = {
   },
   bridge: {
     keyboard: [
+      [
+        {
+          text: emoji.navigation,
+        },
+      ],
       [{ text: `${emoji.world} Global Logs ${emoji.world}` }, { text: `${emoji.helm} Capt's Log ${emoji.helm}` }],
       [
         {
@@ -261,6 +255,14 @@ module.exports = {
   },
   purser: {
     keyboard: [
+      [
+        {
+          text: emoji.fireworks + "Achievements" + emoji.fireworks,
+        },
+        {
+          text: emoji.people + "Manifest" + emoji.people,
+        },
+      ],
       [
         {
           text: "Check Balance",
