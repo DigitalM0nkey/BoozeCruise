@@ -129,7 +129,9 @@ const slots = async (ship, bet, messageId) => {
           },
         },
       ]).exec();
-      jackpot = globalJackpot.jackpot;
+      console.log;'Global Jackpot't
+
+      console.log(globalJackpot);;      jackpot = globalJackpot.jackpot;
       slots.largestJackpot = Math.max(slots.largestJackpot, jackpot);
       prize += jackpot;
       await Slots.updateMany({}, { $set: { globalJackpot: 0 } }).exec();
