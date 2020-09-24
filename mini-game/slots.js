@@ -118,7 +118,7 @@ const slots = async (ship, bet, messageId) => {
     console.log(`${plays} times played`);
     console.log(rolls);
     await print(ship, messageId, house, halfBet, bet, odds);
-    let prize = prizes(house, true, halfBet, bet);
+    let prize = prizes(house, halfBet, bet);
     let jackpot = 0;
     if (checkJackpot(house)) {
       const globalJackpot = await Slots.aggregate([
