@@ -15,7 +15,7 @@ const Slots = db.model("Slots", {
       prize: { type: Number },
     },
   ],
-  highestJackpot: { type: Number, default: 0 },
+  largestJackpot: { type: Number, default: 0 },
   globalJackpot: { type: Number, default: 0 },
 });
 module.exports = Slots;

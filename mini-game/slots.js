@@ -129,11 +129,17 @@ const slots = async (ship, bet, messageId) => {
           },
         },
       ]).exec();
-      console.log("Global Jackpot");
-      console.log(globalJackpot);
       jackpot = globalJackpot[0].jackpot;
-      slots.largestJackpot = Math.max(slots.largestJackpot, jackpot);
       prize += jackpot;
+      b.editMessageText(
+        ship.id,
+        messageId,
+        house.reduce(
+          (msg, symbol, j) => msg + (j === house.length - 1 ? symbol : symbol + "|"),
+          `Bet: ${emoji.korona}${bet}\nWon: ${emoji.korona}${prize}\n`
+        )
+      );
+      slots.largestJackpot = Math.max(slots.largestJackpot, jackpot);
       await Slots.updateMany({}, { $set: { globalJackpot: 0 } }).exec();
     } else {
       jackpot = Math.floor(bet * 0.1);
