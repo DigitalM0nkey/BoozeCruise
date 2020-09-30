@@ -277,6 +277,7 @@ const stats = async () => {
     },
   ]);
   let message = `<pre>Slot Stats</pre>\n`;
+  console.log(globalSymbols);
   message += `${globalSymbols.map((roll) => `${roll._id}: ${roll.count}`)}\n\n`;
   message += `<pre>${emoji.korona}${globalJackpot[0].jackpot} Current Jackpot</pre>\n`;
   message += `${emoji.korona}${globalJackpot[0].largestJackpot} Largest jackpot(INSERT EMOJIS HERE).\n\n`;
@@ -284,7 +285,6 @@ const stats = async () => {
   message += `${emoji.korona}${globalBets[0].amountWon} Total Won.\n`;
   message += `${emoji.korona}${globalBets[0].amountBet - globalBets[0].amountWon} House Balance.\n\n`;
   message += `${globalBets[0].plays} games played.\n\n`;
-  message += `<i>Globally</i>`;
   return message;
 };
 
