@@ -290,7 +290,15 @@ const stats = async () => {
   return message;
 };
 
-const instructions = `Any 🍒 is equal to 50% of your bet. However, if a 🍒 is in the first position, your payout is increased by a power of 0.1, any 🍒's immediately following add an additional 0.1 to the power.\n\n☀️|☀️|☀️ - Three in a row of any symbol trigers a trifector bonus = bet * 1.5\n\nThe jackpot is won when all slots are the same regardless of how many slots you are playing\nie. 🛳|🛳|🛳\nor 🏝|🏝|🏝|🏝|🏝\nor 🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊\nWinning the jackpot results in winning the jackpot.\nExamples:
+const instructions = `Any 🍒 is equal to 50% of your bet. However, if a 🍒 is in the first position, your payout is increased by a power of 0.1, any 🍒's immediately following add an additional 0.1 to the power.\n\n☀️|☀️|☀️ - Three in a row of any symbol trigers a trifector bonus = bet * 1.5\n\nThe jackpot is won when all slots are the same regardless of how many slots you are playing\nie. 🛳|🛳|🛳\nor 🏝|🏝|🏝|🏝|🏝\nor 🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊\nHowever, the less you bet the more of the jackpot you stand to win. Betting Ⓚ20 wins 100% of the jackpot as it is the hardest to win. 
+\nOdds:
+\nⓀ20 wins 100% of the jackpot(1/60466176)
+\nⓀ40 wins 80% of the jackpot(1/1679616)
+\nⓀ60 wins 60% of the jackpot(1/466656)
+\nⓀ80 wins 40% of the jackpot(1/1296)
+\nⓀ100 wins 20% of the jackpot(1/36)
+\n
+\nExamples:
 \nBet 100:\n🍒|🏝|🍒\n= Ⓚ159
 \nBet 80:\n🍒|🏝|🛳|☀️|🛳\n= Ⓚ58
 \nBet 60:\n🌊|🏝|🏝|🍒|🌊|🏝|🍒\n= Ⓚ60
