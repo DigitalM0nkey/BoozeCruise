@@ -261,10 +261,7 @@ const stats = async () => {
   ]);
   const globalSymbols = await Slots.aggregate([
     {
-      $project: {
-        "bets.symbols": 1,
-        _id: 0,
-      },
+      $unwind: "$bets",
     },
     {
       $unwind: "$bets.symbols",
@@ -275,7 +272,7 @@ const stats = async () => {
         count: { $sum: 1 },
       },
     },
-  ]).exec();
+  ]);
   let message = `<pre>Slot Stats</pre>\n`;
   console.log("globalSymbols", globalSymbols);
   message += `${globalSymbols.map((roll) => `${roll._id}: ${roll.count}`)}\n\n`;
