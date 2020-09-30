@@ -249,9 +249,11 @@ const stats = async () => {
       },
     },
   ]).exec();
-  let message = `<pre>Slot Stats</pre>\n${rolls.map((roll) => `${roll.symbol}: ${roll.count}`)}\n${emoji.korona}${
-    globalJackpot[0].jackpot
-  } Largest jackpot(${largestJackpot.winningSymbols}).\n\n${amountOfTrifectors} Trifectors.\n${highestPower.toFixed(
+  let message = `<pre>Slot Stats</pre>\n${rolls.map(
+    (roll) => `${roll.symbol}: ${roll.count}`
+  )}\n$Current Jackpot {emoji.korona}${globalJackpot[0].jackpot}\n Largest jackpot(${
+    globalJackpot[0].largestJackpot
+  }).\n\n${amountOfTrifectors} Trifectors.\n${highestPower.toFixed(
     2
   )} Highest Power.\n${plays} games played.\n\n<i>Since server restart.</i>`;
   return message;
