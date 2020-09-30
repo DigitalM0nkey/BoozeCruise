@@ -129,7 +129,7 @@ const slots = async (ship, bet, messageId) => {
           },
         },
       ]).exec();
-      jackpot = globalJackpot[0].jackpot;
+      jackpot = (globalJackpot[0].jackpot * (120 - bet)) / 100;
       prize += jackpot;
       b.editMessageText(
         ship.id,
@@ -140,7 +140,10 @@ const slots = async (ship, bet, messageId) => {
         )
       );
       slots.largestJackpot = Math.max(slots.largestJackpot, jackpot);
-      await Slots.updateMany({}, { $set: { globalJackpot: 0 } }).exec();
+      Slots.find().forEach(function (slot) {
+        var updated = Math.ceil((slot.globalJackpot * (120 - bet)) / 100);
+        Slots.update({ _id: slot._id }, { $set: { globalJackpot: updated } });
+      });
     } else {
       jackpot = Math.floor(bet * 0.1);
       // jackpot = Math.pow(bet, 1 + odds / 5);
@@ -276,12 +279,12 @@ const stats = async () => {
   let message = `<pre>Slot Stats</pre>\n`;
   console.log("globalSymbols", globalSymbols);
   message += `${globalSymbols.map((roll) => `\n${roll._id}: ${roll.count}`)}\n\n`;
-  message += `<pre>${emoji.korona}${globalJackpot[0].jackpot} Current Jackpot</pre>\n`;
-  message += `${emoji.korona}${globalJackpot[0].largestJackpot} Largest jackpot(INSERT EMOJIS HERE).\n\n`;
+  message += `${emoji.korona}${globalJackpot[0].largestJackpot} Largest jackpot.\n\n`;
   message += `${emoji.korona}${globalBets[0].amountBet} Total Bet.\n`;
   message += `${emoji.korona}${globalBets[0].amountWon} Total Won.\n`;
   message += `${emoji.korona}${globalBets[0].amountBet - globalBets[0].amountWon} House Balance.\n\n`;
   message += `${globalBets[0].plays} games played.\n\n`;
+  message += `<pre>${emoji.korona}${globalJackpot[0].jackpot} Current Jackpot</pre>\n`;
   return message;
 };
 
