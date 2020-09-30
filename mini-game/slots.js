@@ -129,7 +129,7 @@ const slots = async (ship, bet, messageId) => {
           },
         },
       ]).exec();
-      jackpot = (globalJackpot[0].jackpot * (120 - bet)) / 100;
+      jackpot = Math.ceil((globalJackpot[0].jackpot * (120 - bet)) / 100);
       prize += jackpot;
       b.editMessageText(
         ship.id,
@@ -144,6 +144,7 @@ const slots = async (ship, bet, messageId) => {
         var updated = Math.ceil((slot.globalJackpot * (120 - bet)) / 100);
         Slots.update({ _id: slot._id }, { $set: { globalJackpot: updated } });
       });
+      console.log("JACKPOT WON", jackpot);
     } else {
       jackpot = Math.floor(bet * 0.1);
       // jackpot = Math.pow(bet, 1 + odds / 5);
