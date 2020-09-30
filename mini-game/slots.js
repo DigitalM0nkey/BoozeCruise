@@ -262,10 +262,10 @@ const stats = async () => {
   const globalSymbols = await Slots.aggregate([
     {
       $project: {
-        "bets.symbols":1,
-        _id: 0
-      }
-    }
+        "bets.symbols": 1,
+        _id: 0,
+      },
+    },
     {
       $unwind: "$bets.symbols",
     },
@@ -288,7 +288,7 @@ const stats = async () => {
   return message;
 };
 
-const instructions = `Any 🍒 is equal to 50% of your bet. However, if a 🍒 is in the first position, your payout is increased by a power of 0.1, any 🍒's immediately following add an additional 0.1 to the power.\n\n☀️|☀️|☀️ - Three in a row of any symbol trigers a trifector bonus = bet * 1.5\n\nThe jackpot is won when all slots are the same regardless of how many slots you are playing\nie. 🛳|🛳|🛳\nor 🏝|🏝|🏝|🏝|🏝\nor 🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊\nWinning the jackpot results in your bet to the power of the odds devided by 5.\nExamples:
+const instructions = `Any 🍒 is equal to 50% of your bet. However, if a 🍒 is in the first position, your payout is increased by a power of 0.1, any 🍒's immediately following add an additional 0.1 to the power.\n\n☀️|☀️|☀️ - Three in a row of any symbol trigers a trifector bonus = bet * 1.5\n\nThe jackpot is won when all slots are the same regardless of how many slots you are playing\nie. 🛳|🛳|🛳\nor 🏝|🏝|🏝|🏝|🏝\nor 🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊|🌊\nWinning the jackpot results in winning the jackpot.\nExamples:
 \nBet 100:\n🍒|🏝|🍒\n= Ⓚ159
 \nBet 80:\n🍒|🏝|🛳|☀️|🛳\n= Ⓚ58
 \nBet 60:\n🌊|🏝|🏝|🍒|🌊|🏝|🍒\n= Ⓚ60
