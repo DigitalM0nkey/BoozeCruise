@@ -238,9 +238,6 @@ const checkJackpot = (currentValue) => {
 
 const stats = async () => {
   const globalJackpot = await Slots.aggregate([
-    // {
-    //   $unwind: "$bets",
-    // },
     {
       $group: {
         _id: "jackpot",
@@ -249,13 +246,28 @@ const stats = async () => {
       },
     },
   ]).exec();
-  let message = `<pre>Slot Stats</pre>\n${rolls.map((roll) => `${roll.symbol}: ${roll.count}`)}\nCurrent Jackpot ${
-    emoji.korona
-  }${globalJackpot[0].jackpot}\n Largest jackpot(${
-    globalJackpot[0].largestJackpot
-  }).\n\n${amountOfTrifectors} Trifectors.\n${highestPower.toFixed(
-    2
-  )} Highest Power.\n${plays} games played.\n\n<i>Since server restart.</i>`;
+  const globalBets = await Slots.aggregate([
+    {
+      $unwind: "$bets",
+    },
+    {
+      $group: {
+        _id: "bets",
+        amountBet: { $sum: "$bets.value" },
+        amountWon: { $sum: "$bets.prize" },
+        plays: { $sum: 1 },
+      },
+    },
+  ]);
+  let message = `<pre>Slot Stats</pre>\n`;
+  message += `${rolls.map((roll) => `${roll.symbol}: ${roll.count}`)}\n`;
+  message += `${emoji.korona}${globalJackpot[0].jackpot} Current Jackpot\n`;
+  message += `${emoji.korona}${globalJackpot[0].largestJackpot} Largest jackpot(INSERT EMOJIS HERE).\n\n`;
+  message += `${emoji.korona}${globalBets[0].amountBet} Total Bet.\n`;
+  message += `${emoji.korona}${globalBets[0].amountWon} Total Won.\n`;
+  message += `${emoji.korona}${globalBets[0].amountBet - globalBets[0].amountWon} House Balance`;
+  message += `${globalBets[0].plays} games played.\n\n`;
+  message += `<i>Globally</i>`;
   return message;
 };
 
