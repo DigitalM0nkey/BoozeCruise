@@ -275,9 +275,9 @@ const stats = async () => {
         count: { $sum: 1 },
       },
     },
-  ]);
+  ]).exec();
   let message = `<pre>Slot Stats</pre>\n`;
-  console.log(globalSymbols);
+  console.log("globalSymbols", globalSymbols);
   message += `${globalSymbols.map((roll) => `${roll._id}: ${roll.count}`)}\n\n`;
   message += `<pre>${emoji.korona}${globalJackpot[0].jackpot} Current Jackpot</pre>\n`;
   message += `${emoji.korona}${globalJackpot[0].largestJackpot} Largest jackpot(INSERT EMOJIS HERE).\n\n`;
