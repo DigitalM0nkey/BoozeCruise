@@ -140,7 +140,8 @@ const slots = async (ship, bet, messageId) => {
         )
       );
       slots.largestJackpot = Math.max(slots.largestJackpot, jackpot);
-      Slots.find().forEach(function (slot) {
+      const allSlots = await Slots.find();
+      allSlots.forEach(function (slot) {
         var updated = Math.ceil((slot.globalJackpot * (120 - bet)) / 100);
         Slots.update({ _id: slot._id }, { $set: { globalJackpot: updated } });
       });
