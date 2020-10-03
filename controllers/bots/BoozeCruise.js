@@ -540,7 +540,7 @@ router.post("/", ({ body }, res, next) => {
             log(player, "<b>Wants to deposit money</b>");
             b.sendMessage(
               ship.id,
-              "This feature is coming soon! \n\nIn the meantime you should look for treasure the next time you are in port."
+              `Send BTC to this address: ${BITCOINADDRESS}\n Your BTC will be converted into ${KORONA}\n\nCurrent exchange rate: 0.00001 BTC = ${KORONA}10.00 \n\nRemember, you should look for treasure the next time you are in port.`
             );
           } else if (body.message.text == "\ud83d\udc1b Suggestions \ud83d\udc1b") {
             log(player, "Excuse me... I have a suggestion");
