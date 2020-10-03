@@ -53,8 +53,8 @@ exports.getCocktail = () => {
 const getCocktail = () => {
   return new Promise((resolve, reject) => {
     Cocktail.find({
-        alcoholic: "Alcoholic",
-      })
+      alcoholic: "Alcoholic",
+    })
       .lean()
       .exec((err, cocktails) => {
         //console.log(cocktails[Math.floor(Math.random() * cocktails.length)]);
@@ -65,9 +65,11 @@ const getCocktail = () => {
 };
 const getIngredients = (cocktailIngredients) => {
   return new Promise((resolve, reject) => {
-    Cocktail.aggregate([{
-      $unwind: "$ingredients",
-    }, ]).exec((err, cocktails) => {
+    Cocktail.aggregate([
+      {
+        $unwind: "$ingredients",
+      },
+    ]).exec((err, cocktails) => {
       resolve(
         cocktails.reduce((ingredients, cocktail) => {
           if (ingredients.indexOf(cocktail.ingredients) < 0 && cocktailIngredients.indexOf(cocktail.ingredients) < 0) {
@@ -122,7 +124,8 @@ exports.sendGame = async () => {
     sendCocktail(game);
   } else {
     getFakeCocktail().then((cocktail) => {
-      Mixology.create({
+      Mixology.create(
+        {
           fakeIngredients: cocktail.fakeIngredients,
           cocktail: cocktail._id,
         },
@@ -180,7 +183,7 @@ const sendCocktail = (game) => {
       keyboards.mixologyIngredients(game.cocktail.ingredients.concat(game.fakeIngredients))
     );
     setTimeout(() => {
-      b.sendMessage(MIXOLOGYPORT, 'Status:').then(messageId => {
+      b.sendMessage(MIXOLOGYPORT, "Status:").then((messageId) => {
         game.statusMessageId = messageId;
         game.save();
       });
@@ -196,13 +199,19 @@ exports.checkGuess = async (ship, data, from) => {
     return b.editMessageText(
       MIXOLOGYPORT,
       game.statusMessageId,
-      `You're still in timeout for another ${Math.round((timeOut[ship.id].date - moment()) / 100) / 10} seconds, ${from.first_name}`
+      `You're still in timeout for another ${Math.round((timeOut[ship.id].date - moment()) / 100) / 10} seconds, ${
+        from.first_name
+      }`
     );
   }
   checkGuess(ship, game, data, from.first_name).then((result) => {
     switch (result) {
       case -3:
-        b.editMessageText(MIXOLOGYPORT, game.statusMessageId, `You guessed more than other players, ${from.first_name}`);
+        b.editMessageText(
+          MIXOLOGYPORT,
+          game.statusMessageId,
+          `You guessed more than other players, ${from.first_name}`
+        );
         break;
       case -2:
         b.editMessageText(MIXOLOGYPORT, game.statusMessageId, `You already guessed that, ${from.first_name}`);
@@ -212,7 +221,7 @@ exports.checkGuess = async (ship, data, from) => {
           delete timeOut[ship.id];
         }
         timeOut[ship.id] = {
-          date: moment().add(10, "seconds")
+          date: moment().add(10, "seconds"),
         };
         //b.editMessageText(
         b.editMessageText(
@@ -222,7 +231,9 @@ exports.checkGuess = async (ship, data, from) => {
         );
         break;
       case 10:
-        const msg = `<pre>${game.cocktail.name}</pre>\n${game.cocktail.instructions}<code>${game.cocktail.ingredients.map((ingredient) => `\n- ${ingredient}`)}</code>`;
+        const msg = `<pre>${game.cocktail.name}</pre>\n${
+          game.cocktail.instructions
+        }<code>${game.cocktail.ingredients.map((ingredient) => `\n- ${ingredient}`)}</code>`;
         b.editMessageText(
           MIXOLOGYPORT,
           game.statusMessageId,
@@ -235,10 +246,12 @@ exports.checkGuess = async (ship, data, from) => {
         }, 10000);
         break;
       default:
-        b.editMessageText(MIXOLOGYPORT, game.statusMessageId, `Good job ${from.first_name}`);
+        b.editMessageText(MIXOLOGYPORT, game.statusMessageId, `${compliments()} ${from.first_name}`);
     }
   });
 };
+
+const compliments = () => ["Good Job", "Awesome", "Nice Guess", "You got it", "Right On", "Beauty"].getRandom();
 
 getFakeCocktail();
 exports.getCocktail = getCocktail;
