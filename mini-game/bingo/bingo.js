@@ -87,7 +87,7 @@ const createBoard = () => {
           name: `${letter}-${randomNumber}`,
           letter: letter,
           number: randomNumber,
-          stamped: false,
+          stamped: Math.random() > 0.5,
         });
       }
     }
