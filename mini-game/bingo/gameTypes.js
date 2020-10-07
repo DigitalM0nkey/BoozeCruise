@@ -1,7 +1,7 @@
 const gameTypes = {
   corners: {
     description: "All four corners",
-    img: '',
+    img: "",
     boards: [
       [
         [1, 0, 0, 0, 1],
@@ -14,7 +14,7 @@ const gameTypes = {
   },
   blackout: {
     description: "AKA: Full House - Every number on your board",
-    img: '',
+    img: "",
     boards: [
       [
         [1, 1, 1, 1, 1],
@@ -27,7 +27,7 @@ const gameTypes = {
   },
   diagonal: {
     description: "Any diagonal line",
-    img: '',
+    img: "",
     boards: [
       [
         [1, 0, 0, 0, 0],
@@ -47,7 +47,7 @@ const gameTypes = {
   },
   horizontal: {
     description: "Any horizontal line",
-    img: '',
+    img: "",
     boards: [
       [
         [1, 1, 1, 1, 1],
@@ -86,9 +86,9 @@ const gameTypes = {
       ],
     ],
   },
-  verticle: {
+  vertical: {
     description: "Any verticle line",
-    img: '',
+    img: "",
     boards: [
       [
         [1, 0, 0, 0, 0],
@@ -128,8 +128,9 @@ const gameTypes = {
     ],
   },
   frame: {
-    description: "AKA: Outer Edge - This pattern is made up of the outer squares that form the border or frame of the card.",
-    img: '',
+    description:
+      "AKA: Outer Edge - This pattern is made up of the outer squares that form the border or frame of the card.",
+    img: "",
     boards: [
       [
         [1, 1, 1, 1, 1],
@@ -141,8 +142,9 @@ const gameTypes = {
     ],
   },
   martini: {
-    description: "To form a martini glass, players fill out the bottom row of the card. Then you have the stem of the glass, which is made up of a few squares in the center column. Then the glass flares out to the sides to form the cup.",
-    img: '',
+    description:
+      "To form a martini glass, players fill out the bottom row of the card. Then you have the stem of the glass, which is made up of a few squares in the center column. Then the glass flares out to the sides to form the cup.",
+    img: "",
     boards: [
       [
         [1, 1, 1, 1, 1],
@@ -155,7 +157,7 @@ const gameTypes = {
   },
   l: {
     description: "Make the letter L by getting every space in the 'B' coloumn and every space on the bottom row",
-    img: '',
+    img: "",
     boards: [
       [
         [1, 0, 0, 0, 0],
@@ -168,16 +170,9 @@ const gameTypes = {
   },
 };
 
-
-gameTypes.line = {
+(gameTypes.line = {
   description: "Any straight line (verticle,horizontal or vertical)",
-  boards: [
-...gameTypes.diagonal.boards,
-...gameTypes.verticle.boards,
-...gameTypes.horizontal.boards
-  ],
-},
-
-
-console.log(gameTypes.line.boards);
+  boards: [...gameTypes.diagonal.boards, ...gameTypes.vertical.boards, ...gameTypes.horizontal.boards],
+}),
+  console.log(gameTypes.line.boards);
 module.exports = gameTypes;
