@@ -84,7 +84,7 @@ const createBoard = () => {
         const availableNumbers = balls[letter].filter((number) => !board[i].some((cell) => cell.number === number));
         const randomNumber = availableNumbers[Math.floor(Math.random() * availableNumbers.length)];
         board[i].push({
-          name: `${letter}${randomNumber}`,
+          name: `${letter}-${randomNumber}`,
           letter: letter,
           number: randomNumber,
           stamped: false,
