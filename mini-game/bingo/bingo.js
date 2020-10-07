@@ -17,7 +17,7 @@ const createGame = () => {
   }
   let bingo = new Bingo({
     code,
-    gameType: gameTypes[Math.floor(Math.random()*gameTypes.length)];
+    gameType: gameTypes[Math.floor(Math.random()*gameTypes.length)]
   });
 }
 

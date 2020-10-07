@@ -140,8 +140,8 @@ const gameTypes = {
       ],
     ],
   },
-  wine: {
-    description: "To form a wine glass, players fill out the bottom row of the card. Then you have the stem of the glass, which is made up of a few squares in the center column. Then the glass flares out to the sides to form the cup.",
+  martini: {
+    description: "To form a martini glass, players fill out the bottom row of the card. Then you have the stem of the glass, which is made up of a few squares in the center column. Then the glass flares out to the sides to form the cup.",
     img: '',
     boards: [
       [
