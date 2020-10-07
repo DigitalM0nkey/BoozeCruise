@@ -461,7 +461,13 @@ module.exports = {
     return keyboard;
   },
   bingo: function (gameId, board) {
-    let keyboard = { inline_keyboard: [[], [], [], [], []] };
+    let keyboard = { inline_keyboard: [[], [], [], [], [], [{
+      text: 'B I N G O',
+      callback_data: JSON.stringify({
+        action: `bingo_${gameId}`,
+        loc: `bingo`,
+      }),
+    }]] };
     for (const i in board) {
       for (const j in board[i]) {
         keyboard.inline_keyboard[i].push({
