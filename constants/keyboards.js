@@ -462,7 +462,7 @@ module.exports = {
   },
   bingo: function (gameId, board) {
     let keyboard = { inline_keyboard: [[], [], [], [], [], [{
-      text: 'B I N G O',
+      text: '\nB I N G O\n',
       callback_data: JSON.stringify({
         action: `bingo_${gameId}`,
         loc: `bingo`,
