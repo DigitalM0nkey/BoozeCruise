@@ -1,9 +1,9 @@
 const mixology = require("../../mini-game/mixology");
-const bingo = require("../../mini-game/bingo");
+const bingo = require("../../mini-game/bingo/bingo");
 const router = require("express").Router();
 const schedule = require("node-schedule");
 const moment = require("moment");
-const constants = require("../../constants");
+const globalSectors = require("../../constants/sectors");
 const _ = require("underscore");
 const TelegramBot = require("../../bots/telegram");
 const keyboards = require("../../constants/keyboards");
@@ -568,7 +568,7 @@ router.post("/", ({ body }, res, next) => {
                 let message = "";
                 for (const i in sectors) {
                   sectors[i] = sectors[i].substring(0, sectors[i].length - 2);
-                  message += `${constants.sectors[i]}: ${sectors[i]}\n`;
+                  message += `${globalSectors[i]}: ${sectors[i]}\n`;
                 }
                 b.sendMessage(
                   body.message.chat.id,
@@ -579,7 +579,7 @@ router.post("/", ({ body }, res, next) => {
                     inline_keyboard: Object.keys(sectors).map((sector) => {
                       return [
                         {
-                          text: constants.sectors[sector],
+                          text: globalSectors[sector],
                           callback_data: JSON.stringify({
                             action: "navigate_sector",
                             sector,
@@ -615,14 +615,14 @@ router.post("/", ({ body }, res, next) => {
               },
             }).then((ports) => {
               const sectors = {};
-              ports.forEach(({ location, name }, i, array) => {
+              ports.forEach(({ location, name }) => {
                 if (!sectors[location.sector]) sectors[location.sector] = "";
                 sectors[location.sector] += `${name}, `;
               });
               let message = "";
               for (const i in sectors) {
                 sectors[i] = sectors[i].substring(0, sectors[i].length - 2);
-                message += `${constants.sectors[i]}: ${sectors[i]}\n`;
+                message += `${globalSectors[i]}: ${sectors[i]}\n`;
               }
               b.sendMessage(
                 body.message.chat.id,
@@ -633,7 +633,7 @@ router.post("/", ({ body }, res, next) => {
                   inline_keyboard: Object.keys(sectors).map((sector) => {
                     return [
                       {
-                        text: constants.sectors[sector],
+                        text: globalSectors[sector],
                         callback_data: JSON.stringify({
                           action: "navigate_sector",
                           sector,
