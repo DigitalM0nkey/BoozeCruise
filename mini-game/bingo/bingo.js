@@ -2,6 +2,17 @@ const gameTypes = require("./gameTypes");
 const symbols = require("../../constants/symbols");
 const Bingo = require("../../models/mini-games/bingo/bingo");
 
+/*
+Every 10 seconds a new number is pulled
+All Ships participating will get the number
+It will evaluate all declared bingos
+All valid bingos win
+If all 75 numbers are called without bingos, new game starts
+Full game without winners = 750 seconds
+Waits 150 seconds for next game
+Warn players the new game will start
+*/
+
 const balls = {
   B: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
   I: [16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
