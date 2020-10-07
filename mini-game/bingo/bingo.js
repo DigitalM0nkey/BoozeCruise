@@ -1,6 +1,6 @@
 const gameTypes = require("./gameTypes");
 const symbols = require("../../constants/symbols");
-const Bingo = require('../../models/mini-games/bingo/bingo');
+const Bingo = require("../../models/mini-games/bingo/bingo");
 
 const balls = {
   B: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
@@ -10,16 +10,34 @@ const balls = {
   O: [61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75],
 };
 
-const createGame = () => {
-  let code = '';
+const createGame = async (ship) => {
+  let code = "";
   for (let i = 0; i < 5; i++) {
-    code += symbols[Math.floor(Math.random()*symbols.length)];
+    code += symbols[Math.floor(Math.random() * symbols.length)];
   }
   let bingo = new Bingo({
     code,
-    gameType: gameTypes[Math.floor(Math.random()*gameTypes.length)]
+    gameType: gameTypes[Math.floor(Math.random() * gameTypes.length)],
+    ships: [
+      {
+        _id: ship._id,
+        board: createBoard(),
+      },
+    ],
   });
-}
+  return await bingo.save();
+};
+
+const addShip = async (code, ship) => {
+  let bingo = await Bingo.findOne({ code });
+  if (!bingo) bingo = await createGame(ship);
+  else
+    bingo.ships.push({
+      _id: ship._id,
+      board: createBoard(),
+    });
+  return await bingo.save();
+};
 
 const checkBoard = (gameType, playerBoard) => {
   let bingo;
@@ -39,7 +57,7 @@ const checkBoard = (gameType, playerBoard) => {
   return bingo;
 };
 
-exports.createBoard = () => {
+const createBoard = () => {
   let board = [[], [], [], [], []];
   let i = 0;
   for (let letter in balls) {
@@ -52,9 +70,7 @@ exports.createBoard = () => {
           stamped: true,
         });
       } else {
-        const availableNumbers = balls[letter].filter(
-          (number) => !board[i].some((cell) => cell.number === number)
-        );
+        const availableNumbers = balls[letter].filter((number) => !board[i].some((cell) => cell.number === number));
         const randomNumber = availableNumbers[Math.floor(Math.random() * availableNumbers.length)];
         board[i].push({
           name: `${letter}${randomNumber}`,
@@ -68,3 +84,5 @@ exports.createBoard = () => {
   }
   return board;
 };
+
+exports.createBoard = createBoard;
