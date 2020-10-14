@@ -34,6 +34,7 @@ const getCruiseLawNewsArticles = (url) =>
               };
             })
           );
+          console.log("End Cruise Law News Scraper");
         });
       })
       .catch((err) => {

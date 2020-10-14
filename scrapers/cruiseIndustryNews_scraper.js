@@ -44,7 +44,7 @@ const getCruiseIndustryNews = (url) =>
               };
             })
           );
-          console.log("End Cruise Industry News");
+          console.log("End Cruise Industry News Scraper");
         });
       })
       .catch((err) => {
