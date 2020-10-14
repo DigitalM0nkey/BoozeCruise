@@ -1,9 +1,15 @@
-const db = require('../../../db');
-const Bingo = db.model('Bingo', {
-  ship: { type: String, ref: "Ship", required: false },
+const db = require("../../../db");
+const Bingo = db.model("Bingo", {
   date: { type: Date, required: true, default: Date.now },
-  inProgress: { type: Boolean, required: true, default: true },
-  board: { type: Object },
-  gameType: { type: String }
+  code: { type: String },
+  status: { type: String, required: true, default: 'next' },
+  gameType: { type: String },
+  ships: [
+    {
+      _id: { type: String, ref: "Ship", required: false },
+      date: { type: Date, required: true, default: Date.now },
+      board: { type: Object },
+    },
+  ],
 });
 module.exports = Bingo;

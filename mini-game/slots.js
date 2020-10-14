@@ -1,38 +1,12 @@
 const b = require("../bots/telegram").boozecruiseBot;
 const globalFunctions = require("../constants/globalFunctions");
 const log = globalFunctions.log;
+const symbols = require("../constants/symbols");
 const emoji = require("../constants/emoji");
 const Ship = require("../models/ship");
 const Slots = require("../models/mini-games/slots/slots");
 const { Promise } = require("mongoose");
 
-const symbols = ["🍒", "🛳", "🏝", "🌊", "☀️", "⚓️"];
-let rolls = [
-  {
-    symbol: "🍒",
-    count: 0,
-  },
-  {
-    symbol: "🛳",
-    count: 0,
-  },
-  {
-    symbol: "🏝",
-    count: 0,
-  },
-  {
-    symbol: "🌊",
-    count: 0,
-  },
-  {
-    symbol: "☀️",
-    count: 0,
-  },
-  {
-    symbol: "⚓️",
-    count: 0,
-  },
-];
 let plays = 0;
 let amountOfTrifectors = 0;
 let largestJackpot = {
@@ -107,16 +81,9 @@ const slots = async (ship, bet, messageId) => {
     for (let i = 0; i < odds; i++) {
       const symbol = symbols[Math.floor(Math.random() * symbols.length)];
       house[i] = symbol;
-      for (let roll of rolls) {
-        if (roll.symbol === symbol) {
-          roll.count++;
-          break;
-        }
-      }
     }
     plays++;
     console.log(`${plays} times played`);
-    console.log(rolls);
     await print(ship, messageId, house, halfBet, bet, odds);
     let prize = prizes(house, halfBet, bet);
     let jackpot = 0;
