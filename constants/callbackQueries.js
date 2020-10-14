@@ -190,10 +190,10 @@ module.exports = (callback_query, ship, data) => {
           log(player, `Just won ${KORONA}${prize} on the ${emoji.slots}`);
           b.sendKeyboard(
             ship.id,
-            `You won ${KORONA}${prize}\nNew Balance: ${KORONA}${ship.purse.balance}`,
+            `You won ${KORONA}${prize}\nNew Balance: ${KORONA}${ship.purse.balance}\Current Jackpot: ${emoji.korona}${stats.globalJackpot[0].jackpot}`,
             keyboards.slots("", "SL")
           );
-          b.answerCallback(callback_query.id, `Current Jackpot: ${emoji.korona}${stats.globalJackpot[0].jackpot}`);
+          b.answerCallback(callback_query.id, `New Jackpot: ${emoji.korona}${stats.globalJackpot[0].jackpot}`);
           // b.sendKeyboard(ship.id, `<pre>Stats?</pre>`, {
           //   inline_keyboard: [
           //     [
