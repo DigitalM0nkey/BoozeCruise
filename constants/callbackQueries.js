@@ -13,6 +13,7 @@ const emoji = require("../constants/emoji");
 
 const lowestHighest = require("../mini-game/lowestHighest");
 const slots = require("../mini-game/slots");
+const stats = require('../mini-game/slots')
 const scrapers = require("../scrapers/allScrapers");
 
 const moment = require("moment");
@@ -192,7 +193,7 @@ module.exports = (callback_query, ship, data) => {
             `You won ${KORONA}${prize}\nNew Balance: ${KORONA}${ship.purse.balance}`,
             keyboards.slots("", "SL")
           );
-          b.answerCallback(callback_query.id, "Good Luck");
+          b.answerCallback(callback_query.id, `Current Jackpot: ${emoji.korona}${stats.globalJackpot[0].jackpot}`);
           // b.sendKeyboard(ship.id, `<pre>Stats?</pre>`, {
           //   inline_keyboard: [
           //     [
@@ -227,7 +228,7 @@ module.exports = (callback_query, ship, data) => {
     globalFunctions.lookForTreasure(ship);
   } else if (data.action === "lowest-highest") {
     console.log("ship.nextLocation", ship.nextLocation);
-    if (ship.nextLocation) {
+    if (ship.nextLocation.length > 0) {
       if (ship.purse.balance >= 5) {
         ship.purse.balance -= 5;
         ship.save((err, saved, rows) => {

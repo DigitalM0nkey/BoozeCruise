@@ -253,7 +253,7 @@ const stats = async () => {
   message += `${emoji.korona}${globalBets[0].amountWon} Total Won.\n`;
   message += `${emoji.korona}${globalBets[0].amountBet - globalBets[0].amountWon} House Balance.\n\n`;
   message += `${globalBets[0].plays} games played.\n\n`;
-  message += `<pre>${emoji.korona}${globalJackpot[0].jackpot} Current Jackpot</pre>\n`;
+  message += `<pre>Current Jackpot: ${emoji.korona}${globalJackpot[0].jackpot}</pre>\n`;
   return message;
 };
 
