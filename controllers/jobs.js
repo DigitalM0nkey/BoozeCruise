@@ -13,7 +13,8 @@ const bingoEvent = schedule.scheduleJob("*/10 * * * * *", () => {
   Bingo.findOne({ status: "playing" }).then(async (game) => {
     const ball = await bingo.draw(game);
     if (ball) {
-      game.ships.forEach((ship) => b.sendMessage(ship.id, `<b>${ball.letter}${ball.number}</b>`));
+      const ships = await Ship.find({ _id: { $in: game.ships.map((ship) => ship._id) } });
+      ships.forEach((ship) => b.sendMessage(ship.id, `<b>${ball.letter}${ball.number}</b>`));
     }
   });
 });
