@@ -13,7 +13,7 @@ const emoji = require("../constants/emoji");
 
 const lowestHighest = require("../mini-game/lowestHighest");
 const slots = require("../mini-game/slots");
-const stats = require('../mini-game/slots')
+const stats = require("../mini-game/slots");
 const scrapers = require("../scrapers/allScrapers");
 
 const moment = require("moment");
@@ -315,6 +315,9 @@ module.exports = (callback_query, ship, data) => {
     // console.log("Do some mixology stuff");
   } else if (data.action === "mix_guess") {
     mixology.checkGuess(ship, data, callback_query.from);
+  } else if (data.action.substring(0, 5) === "bingo") {
+    console.log("Stamp");
+    console.log(data);
   }
 
   function broadcastInlineKeyboard(message, keyboard) {

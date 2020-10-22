@@ -4,7 +4,7 @@ const gameTypes = require("./gameTypes");
 const symbols = require("../../constants/symbols");
 const Bingo = require("../../models/mini-games/bingo/bingo");
 
-const RED = "";
+const RED = "🔴";
 const YELLOW = "🟡";
 const GREEN = "🟢";
 
@@ -61,8 +61,6 @@ exports.getBoard = async (player) => {
       await bingo.save();
     }
   }
-  console.log(player);
-  console.log(bingo.ships);
   return _.find(bingo.ships, (ship) => ship._id == player._id).board;
 };
 

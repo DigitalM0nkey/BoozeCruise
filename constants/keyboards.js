@@ -1,6 +1,12 @@
 const emoji = require("./emoji");
 const _ = require("underscore");
 
+const colors = {
+  red: "🔴",
+  yellow: "🟡",
+  green: "🟢",
+};
+
 module.exports = {
   home: function (seaDay) {
     return {
@@ -461,17 +467,28 @@ module.exports = {
     return keyboard;
   },
   bingo: function (gameId, board) {
-    let keyboard = { inline_keyboard: [[], [], [], [], [], [{
-      text: '\nB I N G O\n',
-      callback_data: JSON.stringify({
-        action: `bingo_${gameId}`,
-        loc: `bingo`,
-      }),
-    }]] };
+    let keyboard = {
+      inline_keyboard: [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [
+          {
+            text: "\nB I N G O\n",
+            callback_data: JSON.stringify({
+              action: `bingo_${gameId}`,
+              loc: `bingo`,
+            }),
+          },
+        ],
+      ],
+    };
     for (const i in board) {
       for (const j in board[i]) {
         keyboard.inline_keyboard[i].push({
-          text: board[i][j].stamped ? '🟢' : board[i][j].name,
+          text: board[i][j].status ? colors[board[i][j].status] : board[i][j].name,
           callback_data: JSON.stringify({
             action: `bingo_${gameId}`,
             loc: `${i}_${j}`,
