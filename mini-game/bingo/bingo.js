@@ -47,7 +47,7 @@ const createGame = async (ship) => {
   return await bingo.save();
 };
 
-const getBoard = async (player) => {
+exports.getBoard = async (player) => {
   let bingo = await Bingo.findOne({ status: "playing", "ships._id": player._id });
   if (!bingo) {
     bingo = await Bingo.findOne({ status: "next" });
