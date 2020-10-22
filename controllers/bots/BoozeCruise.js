@@ -6,7 +6,6 @@ const globalSectors = require("../../constants/sectors");
 const _ = require("underscore");
 const TelegramBot = require("../../bots/telegram");
 const keyboards = require("../../constants/keyboards");
-const jobs = require("../jobs");
 const emoji = require("../../constants/emoji");
 const callbackQueries = require("../../constants/callbackQueries");
 const globalFunctions = require("../../constants/globalFunctions");

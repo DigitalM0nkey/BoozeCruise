@@ -32,9 +32,5 @@ const intro = {
 
   You will notice that while you are sailing, your main-menu will have different options that were not previously available to you. For example, The 'casino' is only available while you are sailing`,
 
-  casino: `The casino is a great place to win some ${KORONA}, play aginst other players in a game of Lowest-Highest or try your luck on the emoji slots.`
-
-
-  
-`;
-}
+  casino: `The casino is a great place to win some ${KORONA}, play aginst other players in a game of Lowest-Highest or try your luck on the emoji slots.`,
+};
