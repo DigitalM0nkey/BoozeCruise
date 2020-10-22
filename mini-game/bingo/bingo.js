@@ -62,8 +62,8 @@ exports.stamp = async (code, player, location) => {
   await bingo.save();
 };
 
-exports.draw = async (code) => {
-  const bingo = await Bingo.findOne({ code });
+exports.draw = async (bingo) => {
+  if (!bingo) return;
   let ball;
   while (!ball) {
     const randomBall = pickBall();
