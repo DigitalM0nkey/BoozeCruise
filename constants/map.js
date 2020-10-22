@@ -6,4 +6,4 @@ const map = {
   Purcer: ["deposit", "withdraw"],
   Shop: ["products"],
 };
-console.log(map.Shop);
+// console.log(map.Shop);

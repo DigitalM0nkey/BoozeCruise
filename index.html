@@ -85,7 +85,7 @@
         odds = 10;
       }
       let balance = Number(document.getElementById("balance").innerHTML.replace(",", "")) - bet;
-      console.log("BALANCE = ", balance);
+      // console.log("BALANCE = ", balance);
 
       document.getElementById("balance").innerHTML = balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       const house = new Array(odds);
@@ -100,8 +100,8 @@
         }
       }
       plays++;
-      console.log(`${plays} times played`);
-      console.log(rolls);
+      // console.log(`${plays} times played`);
+      // console.log(rolls);
 
       const print = () => {
         for (let i = 0; i < odds; i++) {
@@ -132,9 +132,9 @@
         document.getElementById("balance").innerHTML = (balance + prize)
           .toString()
           .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        console.log(`Prize: ${prize}`);
-        console.log(`Bet: ${bet}`);
-        console.log(`Half Bet: ${halfBet}`);
+        // console.log(`Prize: ${prize}`);
+        // console.log(`Bet: ${bet}`);
+        // console.log(`Half Bet: ${halfBet}`);
         // if (house[i] === "🍒") {
         //   document.getElementById("balance").innerHTML = balance + parseInt(bet, 10);
         // }
@@ -185,7 +185,7 @@
       //     }
       //   });
       // }
-      console.log("TELLY", log, "EXPECT =>", expect, "GOT =>", telly);
+      // console.log("TELLY", log, "EXPECT =>", expect, "GOT =>", telly);
     };
     trifector(1, ["🛳", "🍒"], 0); //0
     trifector(2, ["🍒", "🍒"], 0); //0
@@ -272,7 +272,7 @@
       }
     }
 
-    console.log(playerBoard);
+    // console.log(playerBoard);
 /*
     const rando = (input, amount) => {
       const output = [];

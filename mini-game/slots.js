@@ -18,7 +18,7 @@ let amountWon = 0;
 let highestPower = 0;
 
 const slots = async (ship, bet, messageId) => {
-  console.log("Slots message ID -> ", messageId);
+  // console.log("Slots message ID -> ", messageId);
   let slots = await Slots.findOne({ id: ship.id });
   if (!slots) {
     slots = new Slots({ id: ship.id });
@@ -30,7 +30,7 @@ const slots = async (ship, bet, messageId) => {
       ship.id,
       `You do not have enough Korona to play! Your current balance is: ${emoji.korona}${ship.purse.balance}`
     );
-    console.log("NOT ENOUGH KORONA");
+    // console.log("NOT ENOUGH KORONA");
   } else {
     ship.purse.balance -= bet;
     ship.save();
@@ -75,7 +75,7 @@ const slots = async (ship, bet, messageId) => {
     // } else {
     //   odds = 10;
     // }
-    console.log("ODDS =>", odds);
+    // console.log("ODDS =>", odds);
 
     const house = new Array(odds);
     for (let i = 0; i < odds; i++) {
@@ -83,7 +83,7 @@ const slots = async (ship, bet, messageId) => {
       house[i] = symbol;
     }
     plays++;
-    console.log(`${plays} times played`);
+    // console.log(`${plays} times played`);
     await print(ship, messageId, house, halfBet, bet, odds);
     let prize = prizes(house, halfBet, bet);
     let jackpot = 0;
@@ -112,7 +112,7 @@ const slots = async (ship, bet, messageId) => {
         var updated = Math.ceil((slot.globalJackpot * (120 - bet)) / 100);
         Slots.update({ _id: slot._id }, { $set: { globalJackpot: updated } });
       });
-      console.log("JACKPOT WON", jackpot);
+      // console.log("JACKPOT WON", jackpot);
     } else {
       jackpot = Math.floor(bet * 0.1);
       // jackpot = Math.pow(bet, 1 + odds / 5);
@@ -168,11 +168,11 @@ const prizes = (slots, halfBet, bet) => {
   }
 
   prize = Math.ceil(Math.pow(prize, power) + bonus);
-  console.log(`Prize: ${prize}`);
-  console.log(`Amount of trifectors: ${trifectorPrize}`);
-  console.log(`Bonus: ${bonus}`);
-  console.log(`Bet: ${bet}`);
-  console.log(`Power ${power}`);
+  // console.log(`Prize: ${prize}`);
+  // console.log(`Amount of trifectors: ${trifectorPrize}`);
+  // console.log(`Bonus: ${bonus}`);
+  // console.log(`Bet: ${bet}`);
+  // console.log(`Power ${power}`);
 
   return prize;
 };
@@ -193,14 +193,14 @@ const trifector = (slots) => {
 //const checkJackpot = slots => slots.every(symbol => symbol === slots[0]);
 
 const checkJackpot = (currentValue) => {
-  console.log(currentValue);
+  // console.log(currentValue);
   const equal = (value) => {
-    console.log(value === currentValue[0]);
+    // console.log(value === currentValue[0]);
     return value === currentValue[0];
   };
   if (currentValue.length > 2) {
     if (currentValue.every(equal)) {
-      console.log("Jackpot");
+      // console.log("Jackpot");
       return true;
     } else {
       return false;
@@ -246,7 +246,7 @@ const stats = async () => {
     },
   ]);
   let message = `<pre>Slot Stats</pre>\n`;
-  console.log("globalSymbols", globalSymbols);
+  // console.log("globalSymbols", globalSymbols);
   message += `${globalSymbols.map((roll) => `\n${roll._id}: ${roll.count}`)}\n\n`;
   message += `${emoji.korona}${globalJackpot[0].largestJackpot} Largest jackpot.\n\n`;
   message += `${emoji.korona}${globalBets[0].amountBet} Total Bet.\n`;

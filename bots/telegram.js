@@ -42,7 +42,7 @@ function TelegramBot() {
       const url = `https://api.telegram.org/bot${bot.token}/getChatMember?chat_id=${chat_id}&user_id=${user_id}`;
       request(url, (error, r, body) => {
         const response = JSON.parse(body).result;
-        console.log(response);
+        // console.log(response);
         if (error) return;
         if (!response) return reject();
         if (response.status == "restricted" || response.status == "left" || response.status == "kicked")
@@ -146,8 +146,8 @@ function TelegramBot() {
       )}`; // this line need to be parsed for mixology to function correctly. ( .replace(/[^\w\s]/gi,"")  )
       request(encodeURI(url), (error, r, body) => {
         const response = JSON.parse(body).result;
-        console.log(keyboard);
-        console.log(JSON.parse(body));
+        // console.log(keyboard);
+        // console.log(JSON.parse(body));
         if (error) reject(error);
         if (!response) reject("No response");
         resolve(`Keyboard sent to ${channel}`);

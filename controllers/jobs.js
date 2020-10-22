@@ -43,8 +43,7 @@ const dailyEvent = schedule.scheduleJob("0 0 8 * * *", () => {
           b.sendKeyboard(ship.id, '<b>' + randomEvent.name + '</b> - ' + randomEvent.description, randomEvent.keyboard)
         });
       });
-  
-      */
+  */
 });
 
 const minutelyEvent = schedule.scheduleJob("0 */1 * * * *", () => {
@@ -86,7 +85,7 @@ const minutelyEvent = schedule.scheduleJob("0 */1 * * * *", () => {
             });
             ship.save().then(
               (savedShip) => {
-                console.log(savedShip);
+                // console.log(savedShip);
               },
               (e) => {
                 console.error(e);

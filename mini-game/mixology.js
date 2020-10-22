@@ -99,7 +99,7 @@ const getGame = async () => {
   const game = await Mixology.findOne({
     finished: false,
   }).populate("cocktail");
-  console.log("GAME => ", game);
+  // console.log("GAME => ", game);
 
   if (!game) {
     const cocktail = await getFakeCocktail();
@@ -108,7 +108,7 @@ const getGame = async () => {
       fakeIngredients: cocktail.fakeIngredients,
       cocktail: cocktail._id,
     });
-    console.log("NEW GAME =>", newGame);
+    // console.log("NEW GAME =>", newGame);
 
     return await Mixology.findOne({
       finished: false,
@@ -130,7 +130,7 @@ exports.sendGame = async () => {
           cocktail: cocktail._id,
         },
         (err, newGame) => {
-          console.log(newGame);
+          // console.log(newGame);
           sendCocktail(newGame);
         }
       );
@@ -175,7 +175,7 @@ const sendCocktail = (game) => {
   //(cocktail);
   b.sendPhoto(MIXOLOGYPORT, game.cocktail.image, `<pre>${game.cocktail.name}</pre>`);
   setTimeout(() => {
-    console.log("cocktail.ingredients", game.cocktail.ingredients);
+    // console.log("cocktail.ingredients", game.cocktail.ingredients);
     //console.log(keyboards.mixologyIngredients(cocktail.ingredients.concat(cocktail.fakeIngredients)));
     b.sendKeyboard(
       MIXOLOGYPORT,

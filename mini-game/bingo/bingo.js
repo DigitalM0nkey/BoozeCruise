@@ -35,7 +35,7 @@ const createGame = async (ship) => {
   let bingo = new Bingo({
     code,
     gameType: gameTypes[Math.floor(Math.random() * gameTypes.length)],
-    status: "playing",
+    status: "next",
     balls: [],
     ships: [
       {
@@ -47,13 +47,30 @@ const createGame = async (ship) => {
   return await bingo.save();
 };
 
-createGame({ _id: "5be3d50298ae6843394411ee" }).then(console.log, console.error);
+const getBoard = async (player) => {
+  let bingo = await Bingo.findOne({ status: "playing", "ships._id": player._id });
+  if (!bingo) {
+    bingo = await Bingo.findOne({ status: "next" });
+    if (!bingo) {
+      bingo = await createGame(player);
+    } else if (!_.some(bingo.ships, (ship) => ship._id === player._id)) {
+      bingo.ships.push({
+        _id: player._id,
+        board: createBoard(),
+      });
+      await bingo.save();
+    }
+  }
+  return _.find(bingo.ships, (ship) => ship._id === player._id).board;
+};
 
 exports.stamp = async (code, player, location) => {
   const bingo = await Bingo.findOne({ code });
   let playerBoard = _.find(bingo.ships, (ship) => ship._id === player._id);
   let square = playerBoard[location.x][location.y];
-  if (
+  if (location.x === 2 && location.y === 2) {
+    square.status = GREEN;
+  } else if (
     square.status !== RED &&
     _.some(bingo.balls, (ball) => ball.letter === square.letter && ball.number === square.number)
   ) {
@@ -128,7 +145,7 @@ const createBoard = () => {
           name: "FREE",
           letter: "N",
           number: 0,
-          status: GREEN,
+          status: null,
         });
       } else {
         const availableNumbers = balls[letter].filter((number) => !board[i].some((cell) => cell.number === number));

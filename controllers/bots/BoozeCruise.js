@@ -132,7 +132,7 @@ router.post("/", ({ body }, res, next) => {
       }).then((ship) => {
         if (!ship) {
           Port.find({}).then((ports) => {
-            console.log(ports);
+            // console.log(ports);
             const randomPort = ports[Math.floor(Math.random() * ports.length)];
             const newShip = new Ship({
               id: body.message.chat.id,
@@ -303,8 +303,7 @@ router.post("/", ({ body }, res, next) => {
             //getArticle();
           } else if (body.message.text == `${emoji.radio} BINGO ${emoji.radio}`) {
             log(player, "Playing bingo");
-            bingo.createGame(ship);
-            b.sendKeyboard(ship.id, `BINGO`, keyboards.bingo("BINGO", bingo.createBoard()));
+            b.sendKeyboard(ship.id, `BINGO`, keyboards.bingo("BINGO", bingo.getBoard(ship)));
           } else if (body.message.text == `${emoji.slots} Slots ${emoji.slots}`) {
             log(player, "Playing the slots");
             // console.log(keyboards.numbers("", "SL"));
@@ -739,7 +738,7 @@ router.post("/", ({ body }, res, next) => {
                   }
                   return income;
                 });
-                console.log("INCOME FROM NEW GUESTS =>", income);
+                // console.log("INCOME FROM NEW GUESTS =>", income);
                 log(player, `Docked in ${port.name}`);
                 log(player, `Received ${KORONA}${income} from \n${globalFunctions.generateManifest(newGuests)}`);
                 ship.purse.balance += income;
@@ -875,7 +874,7 @@ router.get("/", (req, res, next) => {
 });
 
 // cash articles on restart.
-console.log(scrapers.cleanData());
+scrapers.cleanData();
 
 b.sendKeyboard("510423667", `${randomQuote(quotes)} \n\n<pre>Also the server restarted</pre>`, keyboards.admin);
 // b.sendMessage("-1001473681735", "Server Restarted"); not in use right now

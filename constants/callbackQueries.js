@@ -227,7 +227,7 @@ module.exports = (callback_query, ship, data) => {
   } else if (data.action === "treasure") {
     globalFunctions.lookForTreasure(ship);
   } else if (data.action === "lowest-highest") {
-    console.log("ship.nextLocation", ship.nextLocation);
+    // console.log("ship.nextLocation", ship.nextLocation);
     if (ship.nextLocation.length > 0) {
       if (ship.purse.balance >= 5) {
         ship.purse.balance -= 5;
@@ -266,7 +266,7 @@ module.exports = (callback_query, ship, data) => {
     }
   } else if (data.action === "news") {
     log(player, "Reading the news");
-    console.log("Reading the news");
+    // console.log("Reading the news");
     scrapers.cleanData().then((article) => {
       b.sendPhoto(
         ship.id,
@@ -301,7 +301,7 @@ module.exports = (callback_query, ship, data) => {
       }, 5000);
     });
   } else if (data.action === "slotStats") {
-    console.log("In the SlotStats");
+    // console.log("In the SlotStats");
 
     slots.stats().then((message) => {
       b.sendMessage(ship.id, message);
@@ -312,7 +312,7 @@ module.exports = (callback_query, ship, data) => {
     b.sendMessage(ship.id, slots.instructions);
   } else if (data.action === "mixology") {
     mixology.sendGame();
-    console.log("Do some mixology stuff");
+    // console.log("Do some mixology stuff");
   } else if (data.action === "mix_guess") {
     mixology.checkGuess(ship, data, callback_query.from);
   }
