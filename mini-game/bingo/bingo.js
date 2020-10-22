@@ -53,7 +53,7 @@ exports.getBoard = async (player) => {
     bingo = await Bingo.findOne({ status: "next" });
     if (!bingo) {
       bingo = await createGame(player);
-    } else if (!_.some(bingo.ships, (ship) => ship._id === player._id)) {
+    } else if (!_.some(bingo.ships, (ship) => ship._id == player._id)) {
       bingo.ships.push({
         _id: player._id,
         board: createBoard(),
@@ -61,7 +61,9 @@ exports.getBoard = async (player) => {
       await bingo.save();
     }
   }
-  return _.find(bingo.ships, (ship) => ship._id === player._id).board;
+  console.log(player);
+  console.log(bingo.ships);
+  return _.find(bingo.ships, (ship) => ship._id == player._id).board;
 };
 
 exports.stamp = async (code, player, location) => {
