@@ -36,6 +36,7 @@ const createGame = async (ship) => {
     code,
     gameType: gameTypes[Math.floor(Math.random() * gameTypes.length)],
     status: "playing",
+    balls: [],
     ships: [
       {
         _id: ship._id,
@@ -45,6 +46,8 @@ const createGame = async (ship) => {
   });
   return await bingo.save();
 };
+
+createGame({ _id: "5be3d50298ae6843394411ee" });
 
 exports.stamp = async (code, player, location) => {
   const bingo = await Bingo.findOne({ code });
@@ -64,7 +67,7 @@ exports.stamp = async (code, player, location) => {
 };
 
 exports.draw = async (bingo) => {
-  if (!bingo || bingo.balls.length >= 75) return;
+  if (!bingo || (bingo.balls && bingo.balls.length >= 75)) return;
   let ball;
   while (!ball) {
     const randomBall = pickBall();
