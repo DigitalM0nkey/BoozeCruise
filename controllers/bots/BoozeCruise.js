@@ -303,6 +303,7 @@ router.post("/", ({ body }, res, next) => {
             //getArticle();
           } else if (body.message.text == `${emoji.radio} BINGO ${emoji.radio}`) {
             log(player, "Playing bingo");
+            bingo.createGame();
             b.sendKeyboard(ship.id, `BINGO`, keyboards.bingo("BINGO", bingo.createBoard()));
           } else if (body.message.text == `${emoji.slots} Slots ${emoji.slots}`) {
             log(player, "Playing the slots");

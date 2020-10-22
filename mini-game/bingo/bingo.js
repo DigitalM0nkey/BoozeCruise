@@ -35,6 +35,7 @@ const createGame = async (ship) => {
   let bingo = new Bingo({
     code,
     gameType: gameTypes[Math.floor(Math.random() * gameTypes.length)],
+    status: "playing",
     ships: [
       {
         _id: ship._id,
@@ -143,3 +144,4 @@ const createBoard = () => {
 };
 
 exports.createBoard = createBoard;
+exports.createGame = createGame;
