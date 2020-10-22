@@ -1,6 +1,12 @@
+const _ = require("underscore");
+
 const gameTypes = require("./gameTypes");
 const symbols = require("../../constants/symbols");
 const Bingo = require("../../models/mini-games/bingo/bingo");
+
+const RED = "";
+const YELLOW = "🟡";
+const GREEN = "🟢";
 
 /*
 Every 10 seconds a new number is pulled
@@ -37,6 +43,46 @@ const createGame = async (ship) => {
     ],
   });
   return await bingo.save();
+};
+
+exports.stamp = async (code, player, location) => {
+  const bingo = await Bingo.findOne({ code });
+  let playerBoard = _.find(bingo.ships, (ship) => ship._id === player._id);
+  let square = playerBoard[location.x][location.y];
+  if (
+    square.status !== RED &&
+    _.some(bingo.balls, (ball) => ball.letter === square.letter && ball.number === square.number)
+  ) {
+    square.status = GREEN;
+  } else if (!square.status) {
+    square.status = YELLOW;
+  } else if (square.status === YELLOW) {
+    square.status = RED;
+  }
+  await bingo.save();
+};
+
+exports.draw = async (code) => {
+  const bingo = await Bingo.findOne({ code });
+  let ball;
+  while (!ball) {
+    const randomBall = pickBall();
+    if (!_.some(bingo.balls, (ball) => randomBall.letter === ball.letter && randomBall.number === ball.number)) {
+      ball = randomBall;
+    }
+  }
+  bingo.balls.push(ball);
+  await bingo.save();
+  return ball;
+};
+
+const pickBall = () => {
+  const letter = Object.keys(balls).getRandom(1)[0];
+  const number = balls[letter].getRandom(1)[0];
+  return {
+    letter,
+    number,
+  };
 };
 
 const addShip = async (code, ship) => {
@@ -78,7 +124,7 @@ const createBoard = () => {
           name: "FREE",
           letter: "N",
           number: 0,
-          stamped: true,
+          status: GREEN,
         });
       } else {
         const availableNumbers = balls[letter].filter((number) => !board[i].some((cell) => cell.number === number));
@@ -87,7 +133,7 @@ const createBoard = () => {
           name: `${letter}-${randomNumber}`,
           letter: letter,
           number: randomNumber,
-          stamped: Math.random() > 0.5,
+          status: null,
         });
       }
     }

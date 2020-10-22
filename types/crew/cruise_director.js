@@ -20,3 +20,21 @@ module.exports = {
     else return "";
   },
 };
+
+const intro = {
+  welcome: `Welcome abord! I'm your Cruise Director, Terrence.
+  It may seem a little overwhelimg at first, but together we'll explore your new ship.`,
+
+  traveling: `Let's talk about traveling. Traveling is an essential part of the game. There are 11 ports, across 9 different Continents that you can visit. 
+  Once you arrive in port, some of your guests/passengers will disembark (get off) your ship, but not to worry as new guests will embark (board) your ship. You will also receive some ${KORONA} (in-game currency) for each guest that joins
+
+  Traveling occers in real time, that means when it says it is going to take 48 hours for you to reach your destination, it really will take you 2 days to sail there. Just like on a real cruise ship, once you are sailing, the real fun begins. 
+
+  You will notice that while you are sailing, your main-menu will have different options that were not previously available to you. For example, The 'casino' is only available while you are sailing`,
+
+  casino: `The casino is a great place to win some ${KORONA}, play aginst other players in a game of Lowest-Highest or try your luck on the emoji slots.`
+
+
+  
+`;
+}
