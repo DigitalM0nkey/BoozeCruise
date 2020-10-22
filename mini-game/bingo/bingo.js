@@ -63,7 +63,7 @@ exports.stamp = async (code, player, location) => {
 };
 
 exports.draw = async (bingo) => {
-  if (!bingo) return;
+  if (!bingo || bingo.balls.length >= 75) return;
   let ball;
   while (!ball) {
     const randomBall = pickBall();
