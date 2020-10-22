@@ -10,7 +10,7 @@ const Ship = require("../models/ship");
 const Bingo = require("../models/mini-games/bingo/bingo");
 
 const bingoEvent = schedule.scheduleJob("*/10 * * * * *", () => {
-  Bingo.find({ status: "playing" }).then(async (game) => {
+  Bingo.findOne({ status: "playing" }).then(async (game) => {
     const ball = await bingo.draw(game);
     if (ball) {
       game.ships.forEach((ship) => b.sendMessage(ship.id, `<b>${ball.letter}${ball.number}</b>`));

@@ -47,7 +47,7 @@ const createGame = async (ship) => {
   return await bingo.save();
 };
 
-createGame({ _id: "5be3d50298ae6843394411ee" });
+createGame({ _id: "5be3d50298ae6843394411ee" }).then(console.log, console.error);
 
 exports.stamp = async (code, player, location) => {
   const bingo = await Bingo.findOne({ code });
