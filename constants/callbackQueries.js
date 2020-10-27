@@ -228,7 +228,7 @@ module.exports = (callback_query, ship, data) => {
     globalFunctions.lookForTreasure(ship);
   } else if (data.action === "lowest-highest") {
     // console.log("ship.nextLocation", ship.nextLocation);
-    if (ship.nextLocation.length > 0) {
+    if (ship.nextLocation.arrival) {
       if (ship.purse.balance >= 5) {
         ship.purse.balance -= 5;
         ship.save((err, saved, rows) => {
