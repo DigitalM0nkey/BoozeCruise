@@ -80,7 +80,7 @@ exports.stamp = async (code, player, location) => {
   if (bingo.status !== "playing") {
     return `Bingo game is ${bingo.status}`;
   } else {
-    let ship = _.find(bingo.ships, (ship) => ship._id === player._id);
+    let ship = _.find(bingo.ships, (ship) => ship._id == player._id);
     console.log("exports.stamp -> bingo.ships", bingo.ships);
     console.log("exports.stamp -> player", player);
     if (ship) {
@@ -119,7 +119,7 @@ exports.draw = async () => {
       //Game is in process, not all balls pulled
       const ball = await draw(game);
       if (ball) {
-        console.log(`Pulled ${ball.letter}${ball.number} - ${game.code}`);
+        console.log(`Pulled ${ball.letter}${ball.number} - ${game.code} - ${game.balls.length} drawn`);
         const ships = await Ship.find({ _id: { $in: game.ships.map((ship) => ship._id) } });
         ships.forEach((ship) => b.sendMessage(ship.id, `<b>${ball.letter}-${ball.number}</b>`));
       }
