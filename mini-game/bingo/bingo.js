@@ -77,14 +77,14 @@ exports.getBoard = async (player) => {
 
 exports.stamp = async (code, player, location) => {
   const bingo = await Bingo.findOne({ code });
-  if (bingo.status !== "playing") {
-    return `Bingo game is ${bingo.status}`;
+  if (bingo.status === "finished") {
+    return `This Bingo game is ${bingo.status}`;
+  } else if (bingo.status !== "playing") {
+    return `This Bingo game is ${bingo.status}. Starting in ${moment().diff(bingo.date, "minutes")} minutes`;
   } else {
-    let ship = _.find(bingo.ships, (ship) => ship._id == player._id);
-    console.log("exports.stamp -> bingo.ships", bingo.ships);
-    console.log("exports.stamp -> player", player);
-    if (ship) {
-      let square = ship.board[location.x][location.y];
+    let shipIndex = _.findIndex(bingo.ships, (ship) => ship._id == player._id);
+    if (shipIndex >= 0) {
+      let square = bingo.ships[shipIndex].board[location.x][location.y];
       let message = "";
       if (square.status === GREEN) {
         return `${square.letter}${square.number} was already stamped!`;
