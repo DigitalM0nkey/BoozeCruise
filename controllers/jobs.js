@@ -1,4 +1,5 @@
 const schedule = require("node-schedule");
+const _ = require("underscore");
 
 const TelegramBot = require("../bots/telegram");
 const bingo = require("../mini-game/bingo/bingo");

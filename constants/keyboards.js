@@ -2,9 +2,9 @@ const emoji = require("./emoji");
 const _ = require("underscore");
 
 const colors = {
-  red: "🔴",
-  yellow: "🟡",
-  green: "🟢",
+  RED: "🔴",
+  YELLOW: "🟡",
+  GREEN: "🟢",
 };
 
 module.exports = {
