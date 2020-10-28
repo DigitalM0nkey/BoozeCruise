@@ -489,11 +489,11 @@ module.exports = {
     for (const i in board) {
       for (const j in board[i]) {
         keyboard.inline_keyboard[i].push({
-          text: board[j][i].status ? colors[board[j][i].status] : board[j][i].name,
+          text: board[i][j].status ? colors[board[i][j].status] : board[i][j].name,
           callback_data: JSON.stringify({
             action: `bingo`,
             code,
-            loc: `${j}_${i}`,
+            loc: `${i}_${j}`,
           }),
         });
       }
