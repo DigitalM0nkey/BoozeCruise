@@ -1,6 +1,5 @@
 const schedule = require("node-schedule");
 const _ = require("underscore");
-const moment = require("moment");
 
 const TelegramBot = require("../bots/telegram");
 const bingo = require("../mini-game/bingo/bingo");
@@ -12,56 +11,7 @@ const Ship = require("../models/ship");
 const Bingo = require("../models/mini-games/bingo/bingo");
 
 const bingoEvent = schedule.scheduleJob("*/10 * * * * *", async () => {
-  const game = await Bingo.findOne({ status: "playing" });
-  if (game) {
-    if (game.balls < 75) {
-      //Game is in process, not all balls pulled
-      const ball = await bingo.draw(game);
-      if (ball) {
-        const ships = await Ship.find({ _id: { $in: game.ships.map((ship) => ship._id) } });
-        ships.forEach((ship) => b.sendMessage(ship.id, `<b>${ball.letter}${ball.number}</b>`));
-      }
-    } else {
-      //Game is finished, all balls pulled
-      game.status = "finished";
-      await game.save();
-      let nextGame = await Bingo.findOne({ status: "next" });
-      if (nextGame) {
-        //There is a next game
-        nextGame.status = "queued";
-        nextGame.startTime = moment().add(2, "minutes");
-        await nextGame.save();
-        const ships = await Ship.find({ _id: { $in: nextGame.ships.map((ship) => ship._id) } });
-        ships.forEach((ship) => b.sendMessage(ship.id, `New game is starting in 2 minutes!`));
-      } else {
-        //There is no next game
-        await bingo.createGame();
-      }
-    }
-  } else {
-    //There is no game being played
-    const queuedGame = await Bingo.findOne({ status: "queued" });
-    if (queuedGame) {
-      //There is a queued game
-      if (queuedGame.startTime <= moment()) {
-        //The queued game will start
-        queuedGame.status = "playing";
-        await queuedGame.save();
-      }
-    } else {
-      //There is no queued game
-      const nextGame = await Bingo.findOne({ status: "next" });
-      if (nextGame) {
-        //There is a next game, queue it
-        nextGame.status = "queued";
-        nextGame.startTime = moment().add(2, "minutes");
-        await nextGame.save();
-      } else {
-        //There is no next game, create one
-        await bingo.createGame();
-      }
-    }
-  }
+  bingo.draw();
 });
 
 //var dailyEvent = schedule.scheduleJob('30 * * * * *', function(){
