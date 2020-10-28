@@ -304,8 +304,9 @@ router.post("/", ({ body }, res, next) => {
           } else if (body.message.text == `${emoji.radio} BINGO ${emoji.radio}`) {
             log(player, "Playing bingo");
             bingo.getBoard(ship).then((game) => {
+              console.log(game);
               b.sendKeyboard(ship.id, `BINGO - ${game.code}`, keyboards.bingo(game.code, game.board));
-            });
+            }, console.error);
           } else if (body.message.text == `${emoji.slots} Slots ${emoji.slots}`) {
             log(player, "Playing the slots");
             // console.log(keyboards.numbers("", "SL"));
