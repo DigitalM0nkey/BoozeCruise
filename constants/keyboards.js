@@ -466,7 +466,7 @@ module.exports = {
     }
     return keyboard;
   },
-  bingo: function (gameId, board) {
+  bingo: function (code, board) {
     let keyboard = {
       inline_keyboard: [
         [],
@@ -478,7 +478,8 @@ module.exports = {
           {
             text: "\nB I N G O\n",
             callback_data: JSON.stringify({
-              action: `bingo_${gameId}`,
+              action: `bingo`,
+              code,
               loc: `bingo`,
             }),
           },
@@ -490,7 +491,8 @@ module.exports = {
         keyboard.inline_keyboard[i].push({
           text: board[i][j].status ? colors[board[i][j].status] : board[i][j].name,
           callback_data: JSON.stringify({
-            action: `bingo_${gameId}`,
+            action: `bingo`,
+            code,
             loc: `${i}_${j}`,
           }),
         });

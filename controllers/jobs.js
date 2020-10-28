@@ -1,5 +1,6 @@
 const schedule = require("node-schedule");
 const _ = require("underscore");
+const moment = require("moment");
 
 const TelegramBot = require("../bots/telegram");
 const bingo = require("../mini-game/bingo/bingo");
@@ -10,14 +11,47 @@ const Port = require("../models/port");
 const Ship = require("../models/ship");
 const Bingo = require("../models/mini-games/bingo/bingo");
 
-const bingoEvent = schedule.scheduleJob("*/10 * * * * *", () => {
-  Bingo.findOne({ status: "playing" }).then(async (game) => {
-    const ball = await bingo.draw(game);
-    if (ball) {
-      const ships = await Ship.find({ _id: { $in: game.ships.map((ship) => ship._id) } });
-      ships.forEach((ship) => b.sendMessage(ship.id, `<b>${ball.letter}${ball.number}</b>`));
+const bingoEvent = schedule.scheduleJob("*/10 * * * * *", async () => {
+  const game = await Bingo.findOne({ status: "playing" });
+  if (game) {
+    if (game.balls < 75) {
+      const ball = await bingo.draw(game);
+      if (ball) {
+        const ships = await Ship.find({ _id: { $in: game.ships.map((ship) => ship._id) } });
+        ships.forEach((ship) => b.sendMessage(ship.id, `<b>${ball.letter}${ball.number}</b>`));
+      }
+    } else {
+      game.status = "finished";
+      await game.save();
+      let nextGame = await Bingo.findOne({ status: "next" });
+      if (nextGame) {
+        nextGame.status = "queued";
+        nextGame.startTime = moment().add(2, "minutes");
+        await nextGame.save();
+        const ships = await Ship.find({ _id: { $in: nextGame.ships.map((ship) => ship._id) } });
+        ships.forEach((ship) => b.sendMessage(ship.id, `New game is starting in 2 minutes!`));
+      } else {
+        await bingo.createGame();
+      }
     }
-  });
+  } else {
+    const queuedGame = await Bingo.findOne({ status: "queued" });
+    if (queuedGame) {
+      if (queuedGame.startTime <= moment()) {
+        queuedGame.status = "playing";
+        await queuedGame.save();
+      }
+    } else {
+      const nextGame = await Bingo.findOne({ status: "next" });
+      if (nextGame) {
+        nextGame.status = "queued";
+        nextGame.startTime = moment().add(2, "minutes");
+        await nextGame.save();
+      } else {
+        await bingo.createGame();
+      }
+    }
+  }
 });
 
 //var dailyEvent = schedule.scheduleJob('30 * * * * *', function(){

@@ -37,12 +37,14 @@ const createGame = async (ship) => {
     gameType: gameTypes[Math.floor(Math.random() * gameTypes.length)],
     status: "next",
     balls: [],
-    ships: [
-      {
-        _id: ship._id,
-        board: createBoard(),
-      },
-    ],
+    ships: ship
+      ? [
+          {
+            _id: ship._id,
+            board: createBoard(),
+          },
+        ]
+      : [],
   });
   return await bingo.save();
 };
@@ -61,26 +63,42 @@ exports.getBoard = async (player) => {
       await bingo.save();
     }
   }
-  return _.find(bingo.ships, (ship) => ship._id == player._id).board;
+  return _.find(bingo.ships, (ship) => ship._id == player._id);
 };
 
 exports.stamp = async (code, player, location) => {
   const bingo = await Bingo.findOne({ code });
-  let playerBoard = _.find(bingo.ships, (ship) => ship._id === player._id);
-  let square = playerBoard[location.x][location.y];
-  if (location.x === 2 && location.y === 2) {
-    square.status = GREEN;
-  } else if (
-    square.status !== RED &&
-    _.some(bingo.balls, (ball) => ball.letter === square.letter && ball.number === square.number)
-  ) {
-    square.status = GREEN;
-  } else if (!square.status) {
-    square.status = YELLOW;
-  } else if (square.status === YELLOW) {
-    square.status = RED;
+  if (bingo.status !== "playing") {
+    return `Bingo game is ${bingo.status}`;
+  } else {
+    let ship = _.find(bingo.ships, (ship) => ship._id === player._id);
+    if (ship) {
+      let square = ship.board[location.x][location.y];
+      let message = "";
+      if (square.status === GREEN) {
+        return `${square.letter}${square.number} was already stamped!`;
+      } else if (location.x === 2 && location.y === 2) {
+        square.status = GREEN;
+        message = "Free stamp WOOT";
+      } else if (
+        square.status !== RED &&
+        _.some(bingo.balls, (ball) => ball.letter === square.letter && ball.number === square.number)
+      ) {
+        square.status = GREEN;
+        message = `${square.letter}${square.number} stamped!`;
+      } else if (!square.status) {
+        square.status = YELLOW;
+        message = "Cheater! Now, you'll have to remember the number!";
+      } else if (square.status === YELLOW) {
+        square.status = RED;
+        message = "You've gone and mucked this one up now, it don't count no more";
+      }
+      await bingo.save();
+      return message;
+    } else {
+      return "Ship not found in the current game";
+    }
   }
-  await bingo.save();
 };
 
 exports.draw = async (bingo) => {

@@ -1,6 +1,7 @@
 const db = require("../../../db");
 const Bingo = db.model("Bingo", {
   date: { type: Date, required: true, default: Date.now },
+  startTime: { type: Date, required: false },
   code: { type: String },
   status: { type: String, required: true, default: "next" }, //next -> queued -> playing -> finished
   gameType: { type: String },

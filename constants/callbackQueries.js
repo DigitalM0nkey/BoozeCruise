@@ -3,6 +3,7 @@ const Port = require("../models/port");
 const Ship = require("../models/ship");
 const LowestHighest = require("../models/mini-games/lowestHighest/lowestHighest");
 const mixology = require("../mini-game/mixology");
+const bingo = require("../mini-game/bingo/bingo");
 const keyboards = require("./keyboards");
 const globalFunctions = require("./globalFunctions");
 const log = globalFunctions.log;
@@ -120,22 +121,88 @@ module.exports = (callback_query, ship, data) => {
                   }).then((games) => {
                     winner.purse.balance += 4 * games.length;
                     winner.save();
-                    b.sendMessage(game.players[0].id, result.message);
-                    b.sendMessage(game.players[1].id, result.message);
+                    b.sendKeyboard(game.players[0].id, result.message, {
+                      inline_keyboard: [
+                        [
+                          {
+                            text: `Play Again? ${KORONA}5`,
+                            callback_data: JSON.stringify({
+                              action: "lowest-highest",
+                            }),
+                          },
+                        ],
+                      ],
+                    });
+                    b.sendKeyboard(game.players[1].id, result.message, {
+                      inline_keyboard: [
+                        [
+                          {
+                            text: `Play Again? ${KORONA}5`,
+                            callback_data: JSON.stringify({
+                              action: "lowest-highest",
+                            }),
+                          },
+                        ],
+                      ],
+                    });
                     games.forEach((game) => {
                       game.jackpotPaid = true;
                       game.save();
                     });
                   });
                 } else {
-                  b.sendMessage(game.players[0].id, result.message);
-                  b.sendMessage(game.players[1].id, result.message);
+                  b.sendKeyboard(game.players[0].id, result.message, {
+                    inline_keyboard: [
+                      [
+                        {
+                          text: `Play Again? ${KORONA}5`,
+                          callback_data: JSON.stringify({
+                            action: "lowest-highest",
+                          }),
+                        },
+                      ],
+                    ],
+                  });
+                  b.sendKeyboard(game.players[1].id, result.message, {
+                    inline_keyboard: [
+                      [
+                        {
+                          text: `Play Again? ${KORONA}5`,
+                          callback_data: JSON.stringify({
+                            action: "lowest-highest",
+                          }),
+                        },
+                      ],
+                    ],
+                  });
                   winner.save();
                 }
               });
             } else {
-              b.sendMessage(game.players[0].id, result.message);
-              b.sendMessage(game.players[1].id, result.message);
+              b.sendKeyboard(game.players[0].id, result.message, {
+                inline_keyboard: [
+                  [
+                    {
+                      text: `Play Again? ${KORONA}5`,
+                      callback_data: JSON.stringify({
+                        action: "lowest-highest",
+                      }),
+                    },
+                  ],
+                ],
+              });
+              b.sendKeyboard(game.players[1].id, result.message, {
+                inline_keyboard: [
+                  [
+                    {
+                      text: `Play Again? ${KORONA}5`,
+                      callback_data: JSON.stringify({
+                        action: "lowest-highest",
+                      }),
+                    },
+                  ],
+                ],
+              });
             }
             game.inProgress = false;
           } else {
@@ -315,9 +382,18 @@ module.exports = (callback_query, ship, data) => {
     // console.log("Do some mixology stuff");
   } else if (data.action === "mix_guess") {
     mixology.checkGuess(ship, data, callback_query.from);
-  } else if (data.action.substring(0, 5) === "bingo") {
-    console.log("Stamp");
-    console.log(data);
+  } else if (data.action === "bingo") {
+    if (data.loc === "bingo") {
+      b.sendMessage(ship.id, "Do the bingo");
+    } else {
+      const location = data.loc.split("_");
+      bingo
+        .stamp(data.code, ship, {
+          x: location[0],
+          y: location[1],
+        })
+        .then((message) => b.sendMessage(ship.id, message));
+    }
   }
 
   function broadcastInlineKeyboard(message, keyboard) {

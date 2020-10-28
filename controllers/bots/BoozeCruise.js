@@ -303,8 +303,8 @@ router.post("/", ({ body }, res, next) => {
             //getArticle();
           } else if (body.message.text == `${emoji.radio} BINGO ${emoji.radio}`) {
             log(player, "Playing bingo");
-            bingo.getBoard(ship).then((board) => {
-              b.sendKeyboard(ship.id, `BINGO`, keyboards.bingo("BINGO", board));
+            bingo.getBoard(ship).then((game) => {
+              b.sendKeyboard(ship.id, `BINGO`, keyboards.bingo(game.code, game.board));
             });
           } else if (body.message.text == `${emoji.slots} Slots ${emoji.slots}`) {
             log(player, "Playing the slots");
@@ -633,7 +633,7 @@ router.post("/", ({ body }, res, next) => {
               body.message.chat.id,
               `<u>The Guest Manifest:</u>\n${globalFunctions.generateManifest(ship.guests)}<pre>Total Guests: ${
                 ship.guests.length
-              }</pre>`,
+              }</pre>\n<code>Total Guest Value: ${ship.guests.reduce((total, guest) => total + guest.purse, 0)}</code>`,
               keyboards.home(ship.nextLocation.port)
             );
           } else if (body.message.text == "\ud83c\udf87 Achievements \ud83c\udf87") {
