@@ -80,10 +80,9 @@ exports.stamp = async (code, player, location) => {
   if (bingo.status !== "playing") {
     return `Bingo game is ${bingo.status}`;
   } else {
-    console.log(player);
-    console.log(bingo.ships);
-
     let ship = _.find(bingo.ships, (ship) => ship._id === player._id);
+    console.log("exports.stamp -> bingo.ships", bingo.ships);
+    console.log("exports.stamp -> player", player);
     if (ship) {
       let square = ship.board[location.x][location.y];
       let message = "";
@@ -120,7 +119,7 @@ exports.draw = async () => {
       //Game is in process, not all balls pulled
       const ball = await draw(game);
       if (ball) {
-        console.log(`Pulled ${ball.letter}${ball.number}`);
+        console.log(`Pulled ${ball.letter}${ball.number} - ${game.code}`);
         const ships = await Ship.find({ _id: { $in: game.ships.map((ship) => ship._id) } });
         ships.forEach((ship) => b.sendMessage(ship.id, `<b>${ball.letter}-${ball.number}</b>`));
       }
@@ -235,9 +234,9 @@ const createBoard = () => {
           status: null,
         });
       } else {
-        const availableNumbers = balls[letter].filter((number) => !board[j].some((cell) => cell.number === number));
+        const availableNumbers = balls[letter].filter((number) => !board[i].some((cell) => cell.number === number));
         const randomNumber = availableNumbers[Math.floor(Math.random() * availableNumbers.length)];
-        board[j].push({
+        board[i].push({
           name: `${letter}-${randomNumber}`,
           letter: letter,
           number: randomNumber,
