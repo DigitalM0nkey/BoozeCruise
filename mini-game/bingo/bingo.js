@@ -5,7 +5,7 @@ const gameTypes = require("./gameTypes");
 const symbols = require("../../constants/symbols");
 
 const Bingo = require("../../models/mini-games/bingo/bingo");
-const Ship = require("../models/ship");
+const Ship = require("../../models/ship");
 
 const RED = "🔴";
 const YELLOW = "🟡";
