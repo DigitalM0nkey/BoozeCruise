@@ -3,7 +3,9 @@ const moment = require("moment");
 
 const gameTypes = require("./gameTypes");
 const symbols = require("../../constants/symbols");
+
 const Bingo = require("../../models/mini-games/bingo/bingo");
+const Ship = require("../models/ship");
 
 const RED = "🔴";
 const YELLOW = "🟡";
@@ -110,6 +112,7 @@ exports.draw = async () => {
       //Game is in process, not all balls pulled
       const ball = await draw(game);
       if (ball) {
+        console.log(`Pulled ${ball.letter}${ball.number}`);
         const ships = await Ship.find({ _id: { $in: game.ships.map((ship) => ship._id) } });
         ships.forEach((ship) => b.sendMessage(ship.id, `<b>${ball.letter}${ball.number}</b>`));
       }
@@ -124,7 +127,7 @@ exports.draw = async () => {
         nextGame.startTime = moment().add(2, "minutes");
         await nextGame.save();
         const ships = await Ship.find({ _id: { $in: nextGame.ships.map((ship) => ship._id) } });
-        ships.forEach((ship) => b.sendMessage(ship.id, `New game is starting in 2 minutes!`));
+        ships.forEach((ship) => b.sendMessage(ship.id, `Game ${nextGame.code} is starting in 2 minutes!`));
       } else {
         //There is no next game
         await bingo.createGame();

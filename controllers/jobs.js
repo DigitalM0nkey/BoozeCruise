@@ -8,7 +8,6 @@ const b = TelegramBot.boozecruiseBot;
 
 const Port = require("../models/port");
 const Ship = require("../models/ship");
-const Bingo = require("../models/mini-games/bingo/bingo");
 
 const bingoEvent = schedule.scheduleJob("*/10 * * * * *", async () => {
   bingo.draw();
