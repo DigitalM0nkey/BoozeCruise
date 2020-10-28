@@ -2,9 +2,9 @@ const schedule = require("node-schedule");
 const _ = require("underscore");
 
 const TelegramBot = require("../bots/telegram");
+const b = TelegramBot.boozecruiseBot;
 const bingo = require("../mini-game/bingo/bingo");
 const scrapers = require("../scrapers/allScrapers");
-const b = TelegramBot.boozecruiseBot;
 
 const Port = require("../models/port");
 const Ship = require("../models/ship");

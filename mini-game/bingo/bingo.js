@@ -4,6 +4,9 @@ const moment = require("moment");
 const gameTypes = require("./gameTypes");
 const symbols = require("../../constants/symbols");
 
+const TelegramBot = require("../../bots/telegram");
+const b = TelegramBot.boozecruiseBot;
+
 const Bingo = require("../../models/mini-games/bingo/bingo");
 const Ship = require("../../models/ship");
 
@@ -130,7 +133,7 @@ exports.draw = async () => {
         ships.forEach((ship) => b.sendMessage(ship.id, `Game ${nextGame.code} is starting in 2 minutes!`));
       } else {
         //There is no next game
-        await bingo.createGame();
+        await createGame();
       }
     }
   } else {
@@ -153,7 +156,7 @@ exports.draw = async () => {
         await nextGame.save();
       } else {
         //There is no next game, create one
-        await bingo.createGame();
+        await createGame();
       }
     }
   }
