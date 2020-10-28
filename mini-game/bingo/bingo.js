@@ -63,7 +63,8 @@ exports.getBoard = async (player) => {
       await bingo.save();
     }
   }
-  return _.find(bingo.ships, (ship) => ship._id == player._id);
+  const ship = _.find(bingo.ships, (ship) => ship._id == player._id);
+  return { code: bingo.code, board: ship.board };
 };
 
 exports.stamp = async (code, player, location) => {
@@ -124,15 +125,18 @@ const pickBall = () => {
   };
 };
 
-const addShip = async (code, ship) => {
-  let bingo = await Bingo.findOne({ code });
-  if (!bingo) bingo = await createGame(ship);
-  else
+exports.addShip = async (ship) => {
+  let bingo = await Bingo.findOne({ status: "next" });
+  if (!bingo) {
+    bingo = await createGame(ship);
+  } else {
     bingo.ships.push({
       _id: ship._id,
       board: createBoard(),
     });
-  return await bingo.save();
+    await bingo.save();
+  }
+  return true;
 };
 
 const checkBoard = (gameType, playerBoard) => {

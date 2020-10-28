@@ -14,7 +14,6 @@ const emoji = require("../constants/emoji");
 
 const lowestHighest = require("../mini-game/lowestHighest");
 const slots = require("../mini-game/slots");
-const stats = require("../mini-game/slots");
 const scrapers = require("../scrapers/allScrapers");
 
 const moment = require("moment");
@@ -26,7 +25,8 @@ module.exports = (callback_query, ship, data) => {
     if (ship.id != MYSHIP) {
       Port.findOne({
         id: data.port,
-      }).then(function (port) {
+      }).then(async (port) => {
+        if (!port) port = await Port.findOne();
         var arrival = new Date();
         arrival = arrival.setTime(
           arrival.getTime() + globalFunctions.calculateDistance(port.location, ship.location) * 60 * 60 * 1000
