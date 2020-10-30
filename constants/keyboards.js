@@ -24,8 +24,7 @@ module.exports = {
           : [
               {
                 text: emoji.cocktail + "Lounge" + emoji.cocktail,
-              },
-              { text: `${emoji.books} Library ${emoji.books}` },
+              }
             ],
         [{ text: emoji.bug + "Maintenance" + emoji.bug }, { text: emoji.moneyBag + "Purser" + emoji.moneyBag }],
       ],
@@ -386,6 +385,7 @@ module.exports = {
         {
           text: emoji.cocktail + "Mixology" + emoji.cocktail,
         },
+        { text: `${emoji.books} Library ${emoji.books}` },
       ],
       [
         { text: emoji.gift + "Shop" + emoji.gift },
