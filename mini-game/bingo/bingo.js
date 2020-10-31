@@ -80,7 +80,8 @@ exports.stamp = async (code, player, location) => {
   if (bingo.status === "finished") {
     return `This Bingo game is ${bingo.status}`;
   } else if (bingo.status !== "playing") {
-    return `This Bingo game is ${bingo.status}. Starting in ${moment().diff(bingo.date, "minutes")} minutes`;
+    let todaysdate = moment();
+    return `This Bingo game is ${bingo.status}. Starting in ${bingo.date.diff(todaysdate, 'minutes')} minutes`;
   } else {
     let shipIndex = _.findIndex(bingo.ships, (ship) => ship._id == player._id);
     if (shipIndex >= 0) {
