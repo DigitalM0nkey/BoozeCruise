@@ -15,7 +15,7 @@ const MYSHIP = "5be3d50298ae6843394411ee";
 const MIXOLOGYPORT = -1001216326021; //Caspian
 const KORONA = "\u24C0";
 const WELCOME =
-  "Welcome To Booze Cruise!\n\nThis is your ship, go ahead and look around.\nWhen you are ready, go to 'Navigation', pick a port to trave to and set sail. In each port you will meet other sailors like yourself, go ahead introduce yourself.\n\nThere is treasure hidden in one of the ports, make sure you look for teasure once you dock. You could dig up some Korona.\n\nWhere would you like to go?\n(Click <b>Navigation</b> below to decide)";
+  `Welcome To BoozeCruise!\n\nThis is your ship.\nThe first thing you need to learn is how to sail from port to port. Sailing is important part of the BoozeCruise as it is one of the main ways you will earn ${KORONA} (Korona - The in-game currency). Select 'Navigation' from the menu below, pick a port and set sail. In each port you will meet other sailors like yourself, go ahead introduce yourself. In some of the ports there are mini games that you can play.\nThere is also treasure hidden in one of the ports, so be sure to look for teasure once you dock, you could dig up some ${KORONA}.`;
 const LOWESTHIGHEST = `Play Lowest-Highest - ${KORONA}5`;
 const BITCOINADDRESS = "15t1A5qEwSKNtEWNpANdivZeeXp7SGDvqB";
 
