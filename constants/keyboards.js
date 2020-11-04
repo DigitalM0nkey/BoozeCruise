@@ -244,11 +244,11 @@ module.exports = {
       //     text: "\ud83d\udea2 Home Port \ud83d\udea2",
       //   },
       // ],
-      [
-        {
-          text: emoji.anchor + "Dock" + emoji.anchor,
-        },
-      ],
+      // [
+      //   {
+      //     text: emoji.anchor + "Dock" + emoji.anchor,
+      //   },
+      // ],
       [
         {
           text: "\ud83c\udfdd Ports of Call \ud83c\udfdd",
