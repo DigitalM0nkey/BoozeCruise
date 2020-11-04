@@ -277,11 +277,11 @@ module.exports = {
           text: "Check Balance",
         },
       ],
-      [
-        {
-          text: "Deposit",
-        },
-      ],
+      // [
+      //   {
+      //     text: "Deposit",
+      //   },
+      // ],
       [
         {
           text: "\u2630 Main Menu \u2630",
