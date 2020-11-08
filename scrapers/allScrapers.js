@@ -15,7 +15,7 @@ async function runAllScrapers() {
     // return articles;
     return (await cruiseIndustryNewsArticles())
       .concat(await cruiseLawNewsArticles())
-      .concat(await iLikeCruiseShipsArticles())
+      // .concat(await iLikeCruiseShipsArticles())
       .concat(await cruiseHiveArticles());
   } catch (err) {
     // catches errors both in fetch and response.json
