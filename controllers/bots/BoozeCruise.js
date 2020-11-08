@@ -529,6 +529,7 @@ router.post("/", ({ body }, res, next) => {
                 $ne: ship.location.port,
               },
             }).then((ports) => {
+              console.log('ports =>',ports);
               globalFunctions.sendAvailablePorts(body.message.chat.id, ports, ship);
             }, console.error).
           } else if (body.message.text === "Change Continent") {
