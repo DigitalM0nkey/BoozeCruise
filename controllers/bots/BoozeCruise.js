@@ -512,6 +512,7 @@ router.post("/", ({ body }, res, next) => {
                   });
                 }, 5000), console.error
               } else if (portsInShipSector === ports.length) {
+                console.log('ports.length =>',ports.length);
                 globalFunctions.sendAvailablePorts(body.message.chat.id, ports, ship);
               } else {
                 b.sendKeyboard(
@@ -529,7 +530,7 @@ router.post("/", ({ body }, res, next) => {
               },
             }).then((ports) => {
               globalFunctions.sendAvailablePorts(body.message.chat.id, ports, ship);
-            }).catch((error) => console.log('ERROR in the SAME CONTINENT block => ', error));
+            }, console.error).
           } else if (body.message.text === "Change Continent") {
             Port.find({
               "location.sector": {

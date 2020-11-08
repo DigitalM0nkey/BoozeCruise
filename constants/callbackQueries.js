@@ -55,6 +55,7 @@ module.exports = (callback_query, ship, data) => {
     Port.find({
       "location.sector": data.sector,
     }).then(function (ports) {
+      console.log('data.action =>',data.action);
       globalFunctions.sendAvailablePorts(callback_query.from.id, ports, ship)
     }, console.error);
     // Start Product list
