@@ -21,7 +21,7 @@ const getCruiseIndustryNews = (url) =>
         // console.log(urls);
 
         return urls;
-      })
+      }, console.error)
       .then((urls) => {
         Promise.all(urls.map((url) => axios.get(url))).then((responses) => {
           resolve(
@@ -45,8 +45,8 @@ const getCruiseIndustryNews = (url) =>
             })
           );
           console.log("End Cruise Industry News Scraper");
-        });
-      })
+        }, console.error);
+      }, console.error)
       .catch((err) => {
         console.log("SCRAPER ERROR =>", err);
         reject(err);

@@ -14,7 +14,7 @@ const getCruiseLawNewsArticles = (url) =>
           urls.push($("h1 > a")[i].attribs.href);
         }
         return urls;
-      })
+      }, console.error)
       .then((urls) => {
         Promise.all(urls.map((url) => axios.get(url))).then((responses) => {
           resolve(
@@ -35,8 +35,8 @@ const getCruiseLawNewsArticles = (url) =>
             })
           );
           console.log("End Cruise Law News Scraper");
-        });
-      })
+        }, console.error);
+      }, console.error)
       .catch((err) => {
         console.log("SCRAPER ERROR =>", err);
         reject(err);

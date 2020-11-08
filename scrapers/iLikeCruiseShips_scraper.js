@@ -20,7 +20,7 @@ const getILikeCruiseShipsArticles = (url) =>
         // console.log(urls);
 
         return urls;
-      })
+      }, console.error)
       .then((urls) => {
         Promise.all(urls.map((url) => axios.get(url))).then((responses) => {
           resolve(
@@ -44,8 +44,8 @@ const getILikeCruiseShipsArticles = (url) =>
             })
           );
           console.log("End I Like Cruise Ships Scraper");
-        });
-      })
+        }, console.error);
+      }, console.error)
       .catch((err) => {
         console.log("SCRAPER ERROR =>", err);
         reject(err);
