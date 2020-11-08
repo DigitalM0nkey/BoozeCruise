@@ -49,14 +49,14 @@ module.exports = (callback_query, ship, data) => {
           "Your ship is now en route to " + port.name + "\nyou will arrive in " + globalFunctions.calculateTime(arrival)
         );
         b.sendKeyboard(ship.id, "🌊 Now that you're in international waters, the casino is open! 🌊", keyboards.casino);
-      }).catch((error) => console.log('ERROR in the NAV function => ',error));
+      }, console.error);
     }
   } else if (data.action === "navigate_sector") {
     Port.find({
       "location.sector": data.sector,
     }).then(function (ports) {
-      globalFunctions.sendAvailablePorts(callback_query.from.id, ports, ship);
-    }).catch((error) => console.log('ERROR in the SECTOR function => ',error));
+      globalFunctions.sendAvailablePorts(callback_query.from.id, ports, ship)
+    }, console.error);
     // Start Product list
   } else if (data.action === "product") {
     Product.findOne({
@@ -299,7 +299,7 @@ module.exports = (callback_query, ship, data) => {
           ],
         });
       }, 5000);
-    });
+    }, console.error);
   } else if (data.action === "slotStats") {
     // console.log("In the SlotStats");
 

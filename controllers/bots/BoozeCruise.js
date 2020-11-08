@@ -98,7 +98,7 @@ router.post("/", ({ body }, res, next) => {
       }).then((ship) => {
         const data = JSON.parse(body.callback_query.data);
         callbackQueries(body.callback_query, ship, data);
-      });
+      }, console.error);
     } else {
       Port.findOne({
         id: body.callback_query.message.chat.id,
@@ -107,7 +107,7 @@ router.post("/", ({ body }, res, next) => {
         //console.log("ports => ", ports);
         const data = JSON.parse(body.callback_query.data);
         callbackQueries(body.callback_query, ports, data);
-      });
+      }, console.error);
     }
     return res.sendStatus(200);
   } else if (body.edited_message) {
@@ -298,7 +298,7 @@ router.post("/", ({ body }, res, next) => {
                 b.sendMessage(ship.id, article.body);
               }, 2000);
               //return article;
-            });
+            }, console.error);
 
             //getArticle();
           } else if (body.message.text == `${emoji.radio} BINGO ${emoji.radio}`) {
@@ -510,7 +510,7 @@ router.post("/", ({ body }, res, next) => {
                       ];
                     }),
                   });
-                }, 5000);
+                }, 5000), console.error
               } else if (portsInShipSector === ports.length) {
                 globalFunctions.sendAvailablePorts(body.message.chat.id, ports, ship);
               } else {
