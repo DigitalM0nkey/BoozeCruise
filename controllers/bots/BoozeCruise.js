@@ -529,7 +529,7 @@ router.post("/", ({ body }, res, next) => {
               },
             }).then((ports) => {
               globalFunctions.sendAvailablePorts(body.message.chat.id, ports, ship);
-            });
+            }).catch((error) => console.log('ERROR in the SAME CONTINENT block => ', error));
           } else if (body.message.text === "Change Continent") {
             Port.find({
               "location.sector": {
