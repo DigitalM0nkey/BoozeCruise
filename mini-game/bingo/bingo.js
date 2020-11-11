@@ -75,7 +75,11 @@ exports.getBoard = async (player) => {
   return { code: bingo.code, board: ship.board };
 };
 
-exports.stamp = async (code, player, location) => {
+exports.stamp = async (code, player, loc) => {
+  const location = {
+    x: loc[0],
+    y: loc[1],
+  };
   const bingo = await Bingo.findOne({ code });
   if (!bingo) return `Bingo go boom boom -> ${code}`;
   else console.log(bingo.status);
