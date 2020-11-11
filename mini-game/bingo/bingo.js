@@ -39,12 +39,13 @@ const createGame = async (ship) => {
     code += symbols[Math.floor(Math.random() * symbols.length)];
   }
   const queuedGame = await Bingo.findOne({ status: "queued" });
+  const startTime = queuedGame ? queuedGame.startTime : moment();
   let bingo = new Bingo({
     code,
     gameType: gameTypes[Math.floor(Math.random() * gameTypes.length)],
     status: "next",
     balls: [],
-    startTime: moment(queuedGame.startTime).add(15, "minutes"),
+    startTime: moment(startTime).add(15, "minutes"),
     ships: ship
       ? [
           {
