@@ -151,7 +151,7 @@ router.post("/", ({ body }, res, next) => {
             });
             newShip.save();
             log(body.message.from.first_name, `Just christened a new ship!`);
-            b.sendKeyboard(body.message.chat.id, WELCOME, keyboards.welcome());
+            b.sendKeyboard(body.message.chat.id, WELCOME, keyboards.welcome);
           });
         } else {
           const player = ship.user.first_name;
