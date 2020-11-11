@@ -62,7 +62,7 @@ exports.sendAvailablePorts = (chat_id, ports, ship) => {
       return {
         text: port.name,
         callback_data: JSON.stringify({
-          action: "navigate",
+          action: "nav",
           port: port.id,
           ship: ship.id,
         }),
