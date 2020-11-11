@@ -317,7 +317,7 @@ module.exports = (callback_query, ship, data) => {
   } else if (data.action === "mix_guess") {
     mixology.checkGuess(ship, data, callback_query.from);
   } else if (data.action.substring(0, 5) === "bingo") {
-    bingo.stamp(data.code, ship, data.loc);
+    b.sendMessage(ship.id, bingo.stamp(data.code, ship, data.loc));
   }
 
   function broadcastInlineKeyboard(message, keyboard) {

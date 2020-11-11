@@ -77,10 +77,11 @@ exports.getBoard = async (player) => {
 
 exports.stamp = async (code, player, location) => {
   const bingo = await Bingo.findOne({ code });
+  if (!bingo) return `Bingo go boom boom -> ${code}`;
+  else console.log(bingo.status);
   if (bingo.status === "finished") {
     return `This Bingo game is ${bingo.status}`;
   } else if (bingo.status !== "playing") {
-    let todaysdate = moment();
     return `This Bingo game is ${bingo.status}. Starting in ${moment(bingo.date).toNow()} minutes`;
   } else {
     let shipIndex = _.findIndex(bingo.ships, (ship) => ship._id == player._id);
