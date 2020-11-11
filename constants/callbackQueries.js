@@ -13,7 +13,7 @@ const emoji = require("../constants/emoji");
 
 const lowestHighest = require("../mini-game/lowestHighest");
 const slots = require("../mini-game/slots");
-const stats = require("../mini-game/slots");
+const bingo = require("../mini-game/bingo/bingo");
 const scrapers = require("../scrapers/allScrapers");
 
 const moment = require("moment");
@@ -232,7 +232,7 @@ module.exports = (callback_query, ship, data) => {
     if (ship.nextLocation.arrival) {
       if (ship.purse.balance >= 5) {
         ship.purse.balance -= 5;
-        ship.save((err, saved, rows) => {
+        ship.save((err) => {
           if (err) console.error(err);
           LowestHighest.findOne({
             inProgress: true,
@@ -317,8 +317,7 @@ module.exports = (callback_query, ship, data) => {
   } else if (data.action === "mix_guess") {
     mixology.checkGuess(ship, data, callback_query.from);
   } else if (data.action.substring(0, 5) === "bingo") {
-    console.log("Stamp");
-    console.log(data);
+    bingo.stamp(data.code, ship, data.loc);
   }
 
   function broadcastInlineKeyboard(message, keyboard) {
