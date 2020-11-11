@@ -80,8 +80,8 @@ exports.getBoard = async (player) => {
 
 exports.stamp = async (code, player, loc) => {
   const location = {
-    x: loc[0],
-    y: loc[1],
+    x: parseInt(loc[0]),
+    y: parseInt(loc[1]),
   };
   console.log(loc);
   console.log(location);
