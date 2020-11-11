@@ -38,11 +38,13 @@ const createGame = async (ship) => {
   for (let i = 0; i < 5; i++) {
     code += symbols[Math.floor(Math.random() * symbols.length)];
   }
+  const queuedGame = await Bingo.findOne({ status: "queued" });
   let bingo = new Bingo({
     code,
     gameType: gameTypes[Math.floor(Math.random() * gameTypes.length)],
     status: "next",
     balls: [],
+    startTime: moment(queuedGame.startTime).add(15, "minutes"),
     ships: ship
       ? [
           {
@@ -86,7 +88,7 @@ exports.stamp = async (code, player, loc) => {
   if (bingo.status === "finished") {
     return `This Bingo game is ${bingo.status}`;
   } else if (bingo.status !== "playing") {
-    return `This Bingo game is ${bingo.status}. Starting in ${moment(bingo.date).toNow()} minutes`;
+    return `This Bingo game is ${bingo.status}. Starting ${moment(bingo.startTime).fromNow()}`;
   } else {
     let shipIndex = _.findIndex(bingo.ships, (ship) => ship._id == player._id);
     if (shipIndex >= 0) {
@@ -137,7 +139,6 @@ exports.draw = async () => {
       if (nextGame) {
         //There is a next game
         nextGame.status = "queued";
-        nextGame.startTime = moment().add(2, "minutes");
         await nextGame.save();
         const ships = await Ship.find({ _id: { $in: nextGame.ships.map((ship) => ship._id) } });
         ships.forEach((ship) => b.sendMessage(ship.id, `Game ${nextGame.code} is starting in 2 minutes!`));
@@ -162,7 +163,6 @@ exports.draw = async () => {
       if (nextGame) {
         //There is a next game, queue it
         nextGame.status = "queued";
-        nextGame.startTime = moment().add(2, "minutes");
         await nextGame.save();
       } else {
         //There is no next game, create one
