@@ -319,14 +319,14 @@ module.exports = async (callback_query, ship, data) => {
   } else if (data.action.substring(0, 5) === "bingo") {
     b.sendMessage(ship.id, await bingo.stamp(data.code, ship, data.loc));
   }
-
-  function broadcastInlineKeyboard(message, keyboard) {
-    Ship.find({}).then((ships) => {
-      b.broadcastKeyboard(
-        ships.map(({ id }) => id),
-        message,
-        keyboard
-      ).then(console.log, console.error);
-    }, console.error);
-  }
 };
+
+function broadcastInlineKeyboard(message, keyboard) {
+  Ship.find({}).then((ships) => {
+    b.broadcastKeyboard(
+      ships.map(({ id }) => id),
+      message,
+      keyboard
+    ).then(console.log, console.error);
+  }, console.error);
+}
