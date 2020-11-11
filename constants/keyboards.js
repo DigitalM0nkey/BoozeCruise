@@ -24,7 +24,7 @@ module.exports = {
           : [
               {
                 text: emoji.cocktail + "Lounge" + emoji.cocktail,
-              }
+              },
             ],
         [{ text: emoji.bug + "Maintenance" + emoji.bug }, { text: emoji.moneyBag + "Purser" + emoji.moneyBag }],
       ],
@@ -467,6 +467,7 @@ module.exports = {
     return keyboard;
   },
   bingo: function (code, board) {
+    console.log(JSON.stringify(board));
     let keyboard = {
       inline_keyboard: [
         [],

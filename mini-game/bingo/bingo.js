@@ -252,6 +252,7 @@ const createBoard = () => {
     }
     i++;
   }
+  console.log(JSON.stringify(board));
   return board;
 };
 

@@ -144,7 +144,6 @@ function TelegramBot() {
       }/sendMessage?chat_id=${channel}&disable_notification=true&parse_mode=html&text=${message}&reply_markup=${JSON.stringify(
         keyboard
       )}`; // this line need to be parsed for mixology to function correctly. ( .replace(/[^\w\s]/gi,"")  )
-      console.log(JSON.stringify(keyboard));
       request(encodeURI(url), (error, r, body) => {
         const response = JSON.parse(body).result;
         // console.log(keyboard);
