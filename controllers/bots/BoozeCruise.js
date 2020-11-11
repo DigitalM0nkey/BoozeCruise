@@ -14,8 +14,7 @@ const log = globalFunctions.log;
 const MYSHIP = "5be3d50298ae6843394411ee";
 const MIXOLOGYPORT = -1001216326021; //Caspian
 const KORONA = "\u24C0";
-const WELCOME =
-  `<code>Welcome To BoozeCruise!</code>\n\nThis is your ship.\n\nThe first thing you need to learn is how to sail from port to port. Sailing is important part of the BoozeCruise as it is one of the main ways you will earn ${KORONA} (Korona - The in-game currency). Select 'Navigation' from the menu below, pick a port and set sail. In each port you will meet other sailors like yourself, go ahead and introduce yourself.\n\nEach port is a little different, some ports have mini games that you can play while other are group chats.\n\nThere is treasure hidden in one of the ports, be sure to look for teasure once you dock as you could dig up some ${KORONA}.\n\n\n<pre>Note from the developers</pre>\n\nThis game is in active development and is frequently updated. If you discover a bug, would like to suggest a feature, or just want to have a chat with the developers. please go to the 'Maintenance' menu.`;
+const WELCOME = `<code>Welcome To BoozeCruise!</code>\n\nThis is your ship.\n\nThe first thing you need to learn is how to sail from port to port. Sailing is important part of the BoozeCruise as it is one of the main ways you will earn ${KORONA} (Korona - The in-game currency). Select 'Navigation' from the menu below, pick a port and set sail. In each port you will meet other sailors like yourself, go ahead and introduce yourself.\n\nEach port is a little different, some ports have mini games that you can play while other are group chats.\n\nThere is treasure hidden in one of the ports, be sure to look for teasure once you dock as you could dig up some ${KORONA}.\n\n\n<pre>Note from the developers</pre>\n\nThis game is in active development and is frequently updated. If you discover a bug, would like to suggest a feature, or just want to have a chat with the developers. please go to the 'Maintenance' menu.`;
 const LOWESTHIGHEST = `Play Lowest-Highest - ${KORONA}5`;
 const BITCOINADDRESS = "15t1A5qEwSKNtEWNpANdivZeeXp7SGDvqB";
 
@@ -510,9 +509,10 @@ router.post("/", ({ body }, res, next) => {
                       ];
                     }),
                   });
-                }, 5000), console.error
+                }, 5000),
+                  console.error;
               } else if (portsInShipSector === ports.length) {
-                console.log('ports.length =>',ports.length);
+                console.log("ports.length =>", ports.length);
                 globalFunctions.sendAvailablePorts(body.message.chat.id, ports, ship);
               } else {
                 b.sendKeyboard(
@@ -529,9 +529,9 @@ router.post("/", ({ body }, res, next) => {
                 $ne: ship.location.port,
               },
             }).then((ports) => {
-              console.log('ports =>',ports);
+              console.log("ports =>", ports);
               globalFunctions.sendAvailablePorts(body.message.chat.id, ports, ship);
-            }, console.error).
+            }, console.error);
           } else if (body.message.text === "Change Continent") {
             Port.find({
               "location.sector": {
