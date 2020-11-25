@@ -84,7 +84,7 @@ exports.getBoard = async (player) => {
       await bingo.save();
       message = `Added to the existing game ${bingo.code}`;
     } else {
-      message = `You are already in game ${bingo.code}`;
+      message = `You are already in ${game.status} game ${bingo.code}`;
     }
   } else {
     message = `You are playing game ${bingo.code}`;
@@ -98,11 +98,9 @@ exports.stamp = async (code, player, loc) => {
     x: parseInt(loc[0]),
     y: parseInt(loc[1]),
   };
-  const bingo = await Bingo.findOne({ code });
-  if (!bingo) return `Bingo go boom boom -> ${code}`;
-  else console.log(bingo.status);
-  if (bingo.status === "finished") {
-    return `This Bingo game is ${bingo.status}`;
+  const bingo = await Bingo.findOne({ code, status: { $ne: "finished" } });
+  if (!bingo) {
+    return `This Bingo game is ${bingo.status} or doesn't exist`;
   } else if (bingo.status !== "playing") {
     return `This Bingo game is ${bingo.status}. Starting ${moment(bingo.startTime).fromNow()}!`;
   } else {
