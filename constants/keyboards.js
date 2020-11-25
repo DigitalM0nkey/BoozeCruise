@@ -489,14 +489,16 @@ module.exports = {
     };
     for (const i in board) {
       for (const j in board[i]) {
-        keyboard.inline_keyboard[i].push({
-          text: board[i][j].status ? colors[board[i][j].status] : board[i][j].name,
-          callback_data: JSON.stringify({
-            action: `bingo`,
-            code,
-            loc: `${i}_${j}`,
-          }),
-        });
+        if (j < 5) {
+          keyboard.inline_keyboard[i].push({
+            text: board[i][j].status ? colors[board[i][j].status] : board[i][j].name,
+            callback_data: JSON.stringify({
+              action: `bingo`,
+              code,
+              loc: `${i}_${j}`,
+            }),
+          });
+        }
       }
     }
     console.log(keyboard.inline_keyboard);
