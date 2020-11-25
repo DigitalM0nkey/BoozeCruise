@@ -17,7 +17,7 @@ let amountBet = 0;
 let amountWon = 0;
 let highestPower = 0;
 
-const slots = async (ship, bet, messageId) => {
+const getSlots = async (ship, bet, messageId) => {
   // console.log("Slots message ID -> ", messageId);
   let slots = await Slots.findOne({ id: ship.id });
   if (!slots) {
@@ -274,4 +274,4 @@ const instructions = `<pre>Slot Instructions</pre>\nAny 🍒 is equal to 50% of 
 
 exports.instructions = instructions;
 exports.stats = stats;
-exports.get = slots;
+exports.get = getSlots;

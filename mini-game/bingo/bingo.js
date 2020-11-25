@@ -75,19 +75,19 @@ exports.getBoard = async (player) => {
     bingo = await Bingo.findOne({ status: ["queued", "next"] });
     if (!bingo) {
       bingo = await createGame(player);
-      message = `Joined newly created game ${bingo.code}`
+      message = `Joined newly created game ${bingo.code}`;
     } else if (!_.some(bingo.ships, (ship) => ship._id == player._id)) {
       bingo.ships.push({
         _id: player._id,
         board: createBoard(),
       });
       await bingo.save();
-      message = `Added to the existing game ${bingo.code}`
+      message = `Added to the existing game ${bingo.code}`;
     } else {
-      message = `You are already in game ${bingo.code}`
+      message = `You are already in game ${bingo.code}`;
     }
   } else {
-    message = `You are playing game ${bingo.code}`
+    message = `You are playing game ${bingo.code}`;
   }
   const ship = _.find(bingo.ships, (ship) => ship._id == player._id);
   return { code: bingo.code, board: ship.board, message };
