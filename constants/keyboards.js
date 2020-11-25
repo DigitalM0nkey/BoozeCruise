@@ -493,8 +493,7 @@ module.exports = {
           keyboard.inline_keyboard[i].push({
             text: board[i][j].status ? colors[board[i][j].status] : board[i][j].name,
             callback_data: JSON.stringify({
-              action: `bingo`,
-              code,
+              action: `bingo_${code}`,
               loc: `${i}_${j}`,
             }),
           });
