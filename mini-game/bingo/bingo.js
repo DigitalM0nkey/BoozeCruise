@@ -98,25 +98,25 @@ exports.stamp = async (code, player, loc) => {
       let square = bingo.ships[shipIndex].board[location.x][location.y];
       let newStatus = square.status;
       let message = "";
-      if (square.status === GREEN) {
+      if (square.status === "GREEN") {
         return `${square.letter}${square.number} was already stamped!`;
       } else if (location.x === 2 && location.y === 2) {
-        newStatus = GREEN;
+        newStatus = "GREEN";
         message = "Free stamp WOOT";
       } else if (
-        square.status !== RED &&
+        square.status !== "RED" &&
         _.some(bingo.balls, (ball) => ball.letter === square.letter && ball.number === square.number)
       ) {
-        newStatus = GREEN;
+        newStatus = "GREEN";
         message = `${square.letter}${square.number} stamped!`;
       } else if (!square.status) {
-        newStatus = YELLOW;
+        newStatus = "YELLOW";
         message = "Cheater! Now, you'll have to remember the number!";
-      } else if (square.status === YELLOW) {
-        newStatus = RED;
+      } else if (square.status === "YELLOW") {
+        newStatus = "RED";
         message = "You've gone and mucked this one up now, it don't count no more";
       }
-      bingo.ships[shipIndex].board[location.x][location.y] = newStatus;
+      bingo.ships[shipIndex].board[location.x][location.y].status = newStatus;
       await bingo.save();
       return message;
     } else {

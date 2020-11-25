@@ -683,10 +683,15 @@ router.post("/", ({ body }, res, next) => {
           if (body.message.text == "/start") {
             //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
             b.sendKeyboard(body.message.chat.id, WELCOME, keyboards.welcome);
-          } else if (body.message.text == "/return") {
+          } else if (body.message.text == "/mixology") {
             if (body.message.chat.id === MIXOLOGYPORT) {
-              b.sendKeyboard(body.message.chat.id, "Click Here => @BoozeCruise_bot", keyboards.mixology);
+              b.sendKeyboard(body.message.chat.id, "Guess the ingredients in this cocktail", keyboards.mixology);
             }
+            b.sendMessage(
+              body.message.chat.id,
+              "Mixology is a game that is played in the Port of Caspian - Travel there and try this command again."
+            );
+          } else if (body.message.text == "/return") {
             b.sendKeyboard(body.message.chat.id, "Click Here => @BoozeCruise_bot", keyboards.port);
           } else if (body.message.text == "Return to Ship") {
             b.sendMessage(body.message.chat.id, "Click Here => @BoozeCruise_bot");
