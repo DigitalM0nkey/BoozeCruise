@@ -479,8 +479,7 @@ module.exports = {
           {
             text: "\nB I N G O\n",
             callback_data: JSON.stringify({
-              action: `bingo`,
-              code,
+              action: `bingo_${code}`,
               loc: `bingo`,
             }),
           },
