@@ -487,6 +487,8 @@ module.exports = {
         ],
       ],
     };
+    console.log(board);
+
     for (const i in board) {
       for (const j in board[i]) {
         keyboard.inline_keyboard[i].push({
@@ -499,6 +501,7 @@ module.exports = {
         });
       }
     }
+    console.log(keyboard);
     return keyboard;
   },
   numbers: function (gameId, type) {

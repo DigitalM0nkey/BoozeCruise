@@ -683,7 +683,7 @@ router.post("/", ({ body }, res, next) => {
           if (body.message.text == "/start") {
             //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
             b.sendKeyboard(body.message.chat.id, WELCOME, keyboards.welcome);
-          } else if (body.message.text == "/mixology") {
+          } else if (body.message.text == "/mixology" || body.message.text == "/mixology@BoozeCruise_bot") {
             if (body.message.chat.id === MIXOLOGYPORT) {
               b.sendKeyboard(body.message.chat.id, "Guess the ingredients in this cocktail", keyboards.mixology);
             } else {
