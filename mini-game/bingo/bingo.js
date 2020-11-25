@@ -84,7 +84,7 @@ exports.getBoard = async (player) => {
       await bingo.save();
       message = `Added to the existing game ${bingo.code}`;
     } else {
-      message = `You are already in ${game.status} game ${bingo.code}`;
+      message = `You are already in ${bingo.status} game ${bingo.code}`;
     }
   } else {
     message = `You are playing game ${bingo.code}`;
