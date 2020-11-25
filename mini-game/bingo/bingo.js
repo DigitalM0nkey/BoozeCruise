@@ -127,10 +127,14 @@ exports.stamp = async (code, player, loc) => {
         newStatus = "RED";
         message = "You've gone and mucked this one up now, it don't count no more";
       }
-      bingo.ships[shipIndex].board[location.x][location.y].status = newStatus;
-      console.log(bingo.ships[shipIndex].board[location.x][location.y]);
-      const savedBingo = await bingo.save();
-      savedBingo.ships.map((ship) => console.log(ship.board));
+      square.status = newStatus;
+      console.log("square => ", square);
+      try {
+        const savedBingo = await bingo.save();
+        savedBingo.ships.map((ship) => console.log("ship.board => ", ship.board));
+      } catch (e) {
+        console.error(e);
+      }
       return message;
     } else {
       return "Ship not found in the current game";
