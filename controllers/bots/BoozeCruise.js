@@ -304,6 +304,7 @@ router.post("/", ({ body }, res, next) => {
             log(player, "Playing bingo");
             bingo.getBoard(ship).then((game) => {
               b.sendKeyboard(ship.id, `BINGO - ${game.code}`, keyboards.bingo(game.code, game.board));
+              b.sendMessage(ship.id, game.message);
             }, console.error);
           } else if (body.message.text == `${emoji.slots} Slots ${emoji.slots}`) {
             log(player, "Playing the slots");
