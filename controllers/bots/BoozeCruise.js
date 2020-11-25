@@ -303,7 +303,6 @@ router.post("/", ({ body }, res, next) => {
           } else if (body.message.text == `${emoji.radio} BINGO ${emoji.radio}`) {
             log(player, "Playing bingo");
             bingo.getBoard(ship).then((game) => {
-              console.log(game);
               b.sendKeyboard(ship.id, `BINGO - ${game.code}`, keyboards.bingo(game.code, game.board));
             }, console.error);
           } else if (body.message.text == `${emoji.slots} Slots ${emoji.slots}`) {
@@ -686,11 +685,12 @@ router.post("/", ({ body }, res, next) => {
           } else if (body.message.text == "/mixology") {
             if (body.message.chat.id === MIXOLOGYPORT) {
               b.sendKeyboard(body.message.chat.id, "Guess the ingredients in this cocktail", keyboards.mixology);
+            } else {
+              b.sendMessage(
+                body.message.chat.id,
+                "Mixology is a game that is played in the Port of Caspian - Travel there and try this command again."
+              );
             }
-            b.sendMessage(
-              body.message.chat.id,
-              "Mixology is a game that is played in the Port of Caspian - Travel there and try this command again."
-            );
           } else if (body.message.text == "/return") {
             b.sendKeyboard(body.message.chat.id, "Click Here => @BoozeCruise_bot", keyboards.port);
           } else if (body.message.text == "Return to Ship") {

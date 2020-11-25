@@ -10,10 +10,6 @@ const b = TelegramBot.boozecruiseBot;
 const Bingo = require("../../models/mini-games/bingo/bingo");
 const Ship = require("../../models/ship");
 
-const RED = "🔴";
-const YELLOW = "🟡";
-const GREEN = "🟢";
-
 /*
 Every 10 seconds a new number is pulled
 All Ships participating will get the number
@@ -58,8 +54,21 @@ const createGame = async (ship) => {
   return await bingo.save();
 };
 
+exports.joinGame = async (code, player) => {
+  let bingo = await Bingo.findOne({ code: code });
+  if (["queued", "next"].includes(bingo.status)) {
+    bingo.ships.push({
+      _id: player._id,
+      board: createBoard(),
+    });
+    await bingo.save();
+    return `Joined ${code}`;
+  } else {
+    return `Game ${code} is finshed`;
+  }
+};
+
 exports.getBoard = async (player) => {
-  console.log(player);
   let bingo = await Bingo.findOne({ status: "playing", "ships._id": player._id });
   if (!bingo) {
     bingo = await Bingo.findOne({ status: "next" });
@@ -73,7 +82,6 @@ exports.getBoard = async (player) => {
       await bingo.save();
     }
   }
-  console.log(bingo.ships);
   const ship = _.find(bingo.ships, (ship) => ship._id == player._id);
   return { code: bingo.code, board: ship.board };
 };
