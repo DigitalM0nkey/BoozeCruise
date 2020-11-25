@@ -98,8 +98,6 @@ exports.stamp = async (code, player, loc) => {
     x: parseInt(loc[0]),
     y: parseInt(loc[1]),
   };
-  console.log(loc);
-  console.log(location);
   const bingo = await Bingo.findOne({ code });
   if (!bingo) return `Bingo go boom boom -> ${code}`;
   else console.log(bingo.status);
@@ -133,7 +131,8 @@ exports.stamp = async (code, player, loc) => {
       }
       square.status = newStatus;
       console.log(square);
-      await bingo.save();
+      const savedBingo = await bingo.save();
+      console.log(savedBingo.ships);
       return message;
     } else {
       return "Ship not found in the current game";
