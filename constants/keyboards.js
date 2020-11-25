@@ -499,7 +499,6 @@ module.exports = {
         }
       }
     }
-    console.log(keyboard.inline_keyboard);
     return keyboard;
   },
   numbers: function (gameId, type) {
