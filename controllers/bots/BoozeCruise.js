@@ -680,19 +680,20 @@ router.post("/", ({ body }, res, next) => {
             });
           }
         } else {
+          const player = body.message.from.first_name;
           if (body.message.text == "/start") {
             //    b.sendMessage(req.body.message.chat.id, welcomeMessage);
             b.sendKeyboard(body.message.chat.id, WELCOME, keyboards.welcome);
           } else if (body.message.text == "/mixology" || body.message.text == "/mixology@BoozeCruise_bot") {
             if (body.message.chat.id === MIXOLOGYPORT) {
               b.sendKeyboard(body.message.chat.id, "Guess the ingredients in this cocktail", keyboards.mixology);
-              log(body.message.from.first_name, "Wants to play Mixology");
+              log(player, "Wants to play Mixology");
             } else {
               b.sendMessage(
                 body.message.chat.id,
                 "Mixology is a game that is played in the Port of Caspian - Travel there and try this command again."
               );
-              log("somebody", "Wants to play Mixology, but they are in they wrong port");
+              log(player, "Wants to play Mixology, but they are in they wrong port");
             }
           } else if (body.message.text == "/return") {
             b.sendKeyboard(body.message.chat.id, "Click Here => @BoozeCruise_bot", keyboards.port);

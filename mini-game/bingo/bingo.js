@@ -131,7 +131,8 @@ exports.stamp = async (code, player, loc) => {
         newStatus = "RED";
         message = "You've gone and mucked this one up now, it don't count no more";
       }
-      bingo.ships[shipIndex].board[location.x][location.y].status = newStatus;
+      square.status = newStatus;
+      console.log(square);
       await bingo.save();
       return message;
     } else {
