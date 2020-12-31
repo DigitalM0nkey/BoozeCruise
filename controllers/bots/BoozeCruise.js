@@ -284,20 +284,20 @@ router.post("/", ({ body }, res, next) => {
               ],
             });
 
-            scrapers.cleanData().then((article) => {
-              //article = await scrapers.cleanData();
-              //console.log("------", article);
+            // scrapers.cleanData().then((article) => {
+            //   //article = await scrapers.cleanData();
+            //   //console.log("------", article);
 
-              b.sendPhoto(
-                ship.id,
-                article.image,
-                `${article.date}\n<pre>${article.title}</pre>\n<i>Source: <b>${article.source}</b></i>`
-              );
-              setTimeout(function () {
-                b.sendMessage(ship.id, article.body);
-              }, 2000);
-              //return article;
-            }, console.error);
+            //   b.sendPhoto(
+            //     ship.id,
+            //     article.image,
+            //     `${article.date}\n<pre>${article.title}</pre>\n<i>Source: <b>${article.source}</b></i>`
+            //   );
+            //   setTimeout(function () {
+            //     b.sendMessage(ship.id, article.body);
+            //   }, 2000);
+            //   //return article;
+            // }, console.error);
 
             //getArticle();
           } else if (body.message.text == `${emoji.radio} BINGO ${emoji.radio}`) {
