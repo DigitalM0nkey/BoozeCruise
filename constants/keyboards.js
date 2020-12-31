@@ -19,6 +19,7 @@ module.exports = {
               },
 
               { text: emoji.joker + "Casino" + emoji.joker },
+              { text: `${emoji.books} Library ${emoji.books}` },
               // { text: emoji.gift + "Shop" + emoji.gift },
             ]
           : [
