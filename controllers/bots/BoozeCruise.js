@@ -199,9 +199,9 @@ router.post("/", ({ body }, res, next) => {
           } else if (body.message.text == "\ud83d\udc81 Crew Manifest \ud83d\udc81") {
             log(player, `making the rounds, checking in on the crew.`);
             b.sendMessage(ship.id, "There are plenty of crew on your ship. You'll meet them when the time is right.");
-          } else if (body.message.text == "\u2630 Main Menu \u2630") {
-            log(player, `Just requested the main menu`);
-            b.sendKeyboard(body.message.chat.id, "\u2630 Main Menu \u2630", keyboards.home(ship.nextLocation.port));
+          } else if (body.message.text == "\u2630 Deck Plan \u2630") {
+            log(player, `Just requested the Deck Plan`);
+            b.sendKeyboard(body.message.chat.id, "\u2630 Deck Plan \u2630", keyboards.home(ship.nextLocation.port));
           } else if (
             body.message.text == "\ud83d\uddfa Navigation \ud83d\uddfa" ||
             body.message.text == "\ud83d\udccd Current Location \ud83d\udccd"

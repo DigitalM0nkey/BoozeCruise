@@ -30,7 +30,7 @@ module.exports = {
 
 //   Traveling occers in real time, that means when it says it is going to take 48 hours for you to reach your destination, it really will take you 2 days to sail there. Just like on a real cruise ship, once you are sailing, the real fun begins.
 
-//   You will notice that while you are sailing, your main menu will have different options that were not previously available to you. For example, The 'casino' is only available while you are sailing`,
+//   You will notice that while you are sailing, your Deck Plan will have different options that were not previously available to you. For example, The 'casino' is only available while you are sailing`,
 
 //   casino: `The casino is a great place to win some ${KORONA}, play against other players in a game of Lowest-Highest or try your luck on the emoji slots.`,
 // };

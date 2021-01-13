@@ -46,7 +46,7 @@ module.exports = {
       [{ text: `${emoji.world} Global Logs ${emoji.world}` }, { text: `${emoji.helm} Capt's Log ${emoji.helm}` }],
       [
         {
-          text: "\u2630 Main Menu \u2630",
+          text: "\u2630 Deck Plan \u2630",
         },
       ],
     ],
@@ -61,7 +61,7 @@ module.exports = {
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630",
+          text: "\u2630 Deck Plan \u2630",
         },
       ],
     ],
@@ -85,7 +85,7 @@ module.exports = {
           text: `${emoji.slots} Slots ${emoji.slots}`,
         },
         {
-          text: "\u2630 Main Menu \u2630",
+          text: "\u2630 Deck Plan \u2630",
         },
       ],
       [
@@ -110,7 +110,7 @@ module.exports = {
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630",
+          text: "\u2630 Deck Plan \u2630",
         },
       ],
     ],
@@ -125,7 +125,7 @@ module.exports = {
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630",
+          text: "\u2630 Deck Plan \u2630",
         },
       ],
     ],
@@ -140,7 +140,7 @@ module.exports = {
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630",
+          text: "\u2630 Deck Plan \u2630",
         },
       ],
     ],
@@ -160,7 +160,7 @@ module.exports = {
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630",
+          text: "\u2630 Deck Plan \u2630",
         },
       ],
     ],
@@ -180,7 +180,7 @@ module.exports = {
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630",
+          text: "\u2630 Deck Plan \u2630",
         },
       ],
     ],
@@ -201,7 +201,7 @@ module.exports = {
         ],
         [
           {
-            text: "\u2630 Main Menu \u2630",
+            text: "\u2630 Deck Plan \u2630",
           },
         ],
       ],
@@ -217,7 +217,7 @@ module.exports = {
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630",
+          text: "\u2630 Deck Plan \u2630",
         },
       ],
     ],
@@ -232,7 +232,7 @@ module.exports = {
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630",
+          text: "\u2630 Deck Plan \u2630",
         },
       ],
     ],
@@ -257,7 +257,7 @@ module.exports = {
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630",
+          text: "\u2630 Deck Plan \u2630",
         },
       ],
     ],
@@ -285,7 +285,7 @@ module.exports = {
       // ],
       [
         {
-          text: "\u2630 Main Menu \u2630",
+          text: "\u2630 Deck Plan \u2630",
         },
       ],
     ],
@@ -306,7 +306,7 @@ module.exports = {
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630",
+          text: "\u2630 Deck Plan \u2630",
         },
       ],
     ],
@@ -327,7 +327,7 @@ module.exports = {
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630",
+          text: "\u2630 Deck Plan \u2630",
         },
       ],
     ],
@@ -348,7 +348,7 @@ module.exports = {
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630",
+          text: "\u2630 Deck Plan \u2630",
         },
       ],
     ],
@@ -369,7 +369,7 @@ module.exports = {
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630",
+          text: "\u2630 Deck Plan \u2630",
         },
       ],
     ],
@@ -379,7 +379,7 @@ module.exports = {
     keyboard: [
       [
         {
-          text: "\u2630 Main Menu \u2630",
+          text: "\u2630 Deck Plan \u2630",
         },
       ],
       [
@@ -412,7 +412,7 @@ module.exports = {
       ],
       [
         {
-          text: "\u2630 Main Menu \u2630",
+          text: "\u2630 Deck Plan \u2630",
         },
       ],
     ],
