@@ -121,16 +121,16 @@ exports.getBoard = async (player) => {
       ██    ██    ██   ██ ██  ██  ██ ██      
  ███████    ██    ██   ██ ██      ██ ██      
 */
-exports.stamp = async (code, player, loc) => {
+exports.stamp = (code, player, loc) => new Promise(async (resolve, reject) => 
   const location = {
     x: parseInt(loc[0]),
     y: parseInt(loc[1]),
   };
   const bingo = await Bingo.findOne({ code, status: { $ne: "finished" } });
   if (!bingo) {
-    return `This Bingo game is ${bingo.status} or doesn't exist`;
+    resolve( `This Bingo game is ${bingo.status} or doesn't exist`);
   } else if (bingo.status !== "playing") {
-    return `This Bingo game is ${bingo.status}. Starting ${moment(bingo.startTime).fromNow()}!`;
+    resolve( `This Bingo game is ${bingo.status}. Starting ${moment(bingo.startTime).fromNow()}!`);
   } else {
     let shipIndex = _.findIndex(bingo.ships, (ship) => ship._id == player._id);
     if (shipIndex >= 0) {
@@ -157,14 +157,14 @@ exports.stamp = async (code, player, loc) => {
       }
       bingo.ships[shipIndex].board[location.x][location.y].status = newStatus;
       console.log("square => ", square);
-      const savedBingo = await bingo.save();
-      console.log(message);
-      return message;
+      bingo.save((err, savedBingo) => {
+        resolve(message);
+      });
     } else {
-      return "Ship not found in the current game";
+      resolve("Ship not found in the current game")
     }
   }
-};
+);
 /*
  ██████  ██████   █████  ██     ██ 
  ██   ██ ██   ██ ██   ██ ██     ██ 
