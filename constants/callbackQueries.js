@@ -317,8 +317,9 @@ module.exports = async (callback_query, ship, data) => {
   } else if (data.action === "mix_guess") {
     mixology.checkGuess(ship, data, callback_query.from);
   } else if (data.action.substring(0, 5) === "bingo") {
-    b.sendMessage(ship.id, await bingo.stamp(data.action.split("_")[1], ship, data.loc.split("_")));
+    const message = await bingo.stamp(data.action.split("_")[1], ship, data.loc.split("_"));
     const game = await bingo.getBoard(ship);
+    b.sendMessage(ship.id, message);
     b.editKeyboard(ship.id, callback_query.message.message_id, keyboards.bingo(game.code, game.board));
   }
 };
