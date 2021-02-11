@@ -47,7 +47,8 @@ const createGame = async (ship) => {
     gameType: gameTypes[Math.floor(Math.random() * gameTypes.length)],
     status: "next",
     balls: [],
-    startTime: moment(startTime).add(15, "minutes"),
+    //15 minutes is a long ass time, while testing
+    startTime: moment(startTime).add(1, "minutes"),
     ships: ship
       ? [
           {
