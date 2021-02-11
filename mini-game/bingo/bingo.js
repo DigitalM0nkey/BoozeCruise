@@ -127,7 +127,7 @@ exports.stamp = (code, player, loc) =>
       x: parseInt(loc[0]),
       y: parseInt(loc[1]),
     };
-    Bingo.findOne({ code, status: { $ne: "finished" } }).then((err, bingo) => {
+    Bingo.findOne({ code, status: { $ne: "finished" } }, (err, bingo) => {
       console.error(err);
       if (err) reject(err);
       if (!bingo) {
