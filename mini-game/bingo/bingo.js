@@ -28,7 +28,13 @@ const balls = {
   G: [46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60],
   O: [61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75],
 };
-
+/*
+  ██████ ██████  ███████  █████  ████████ ███████      ██████   █████  ███    ███ ███████ 
+ ██      ██   ██ ██      ██   ██    ██    ██          ██       ██   ██ ████  ████ ██      
+ ██      ██████  █████   ███████    ██    █████       ██   ███ ███████ ██ ████ ██ █████   
+ ██      ██   ██ ██      ██   ██    ██    ██          ██    ██ ██   ██ ██  ██  ██ ██      
+  ██████ ██   ██ ███████ ██   ██    ██    ███████      ██████  ██   ██ ██      ██ ███████ 
+*/
 const createGame = async (ship) => {
   let code = "";
   for (let i = 0; i < 5; i++) {
@@ -53,7 +59,13 @@ const createGame = async (ship) => {
   });
   return await bingo.save();
 };
-
+/*
+      ██  ██████  ██ ███    ██      ██████   █████  ███    ███ ███████ 
+      ██ ██    ██ ██ ████   ██     ██       ██   ██ ████  ████ ██      
+      ██ ██    ██ ██ ██ ██  ██     ██   ███ ███████ ██ ████ ██ █████   
+ ██   ██ ██    ██ ██ ██  ██ ██     ██    ██ ██   ██ ██  ██  ██ ██      
+  █████   ██████  ██ ██   ████      ██████  ██   ██ ██      ██ ███████ 
+*/
 exports.joinGame = async (code, player) => {
   let bingo = await Bingo.findOne({ code: code });
   if (["queued", "next"].includes(bingo.status)) {
@@ -67,7 +79,13 @@ exports.joinGame = async (code, player) => {
     return `Game ${code} is finshed`;
   }
 };
-
+/*
+  ██████  ███████ ████████     ██████   ██████   █████  ██████  ██████  
+ ██       ██         ██        ██   ██ ██    ██ ██   ██ ██   ██ ██   ██ 
+ ██   ███ █████      ██        ██████  ██    ██ ███████ ██████  ██   ██ 
+ ██    ██ ██         ██        ██   ██ ██    ██ ██   ██ ██   ██ ██   ██ 
+  ██████  ███████    ██        ██████   ██████  ██   ██ ██   ██ ██████  
+*/
 exports.getBoard = async (player) => {
   let message;
   let bingo = await Bingo.findOne({ status: "playing", "ships._id": player._id });
@@ -92,7 +110,13 @@ exports.getBoard = async (player) => {
   const ship = _.find(bingo.ships, (ship) => ship._id == player._id);
   return { code: bingo.code, board: ship.board, message };
 };
-
+/*
+ ███████ ████████  █████  ███    ███ ██████  
+ ██         ██    ██   ██ ████  ████ ██   ██ 
+ ███████    ██    ███████ ██ ████ ██ ██████  
+      ██    ██    ██   ██ ██  ██  ██ ██      
+ ███████    ██    ██   ██ ██      ██ ██      
+*/
 exports.stamp = async (code, player, loc) => {
   const location = {
     x: parseInt(loc[0]),
@@ -141,7 +165,13 @@ exports.stamp = async (code, player, loc) => {
     }
   }
 };
-
+/*
+ ██████  ██████   █████  ██     ██ 
+ ██   ██ ██   ██ ██   ██ ██     ██ 
+ ██   ██ ██████  ███████ ██  █  ██ 
+ ██   ██ ██   ██ ██   ██ ██ ███ ██ 
+ ██████  ██   ██ ██   ██  ███ ███  
+*/
 exports.draw = async () => {
   const game = await Bingo.findOne({ status: "playing" });
   if (game) {
@@ -209,7 +239,13 @@ const draw = async (bingo) => {
   await bingo.save();
   return ball;
 };
-
+/*
+ ██████  ██  ██████ ██   ██     ██████   █████  ██      ██      
+ ██   ██ ██ ██      ██  ██      ██   ██ ██   ██ ██      ██      
+ ██████  ██ ██      █████       ██████  ███████ ██      ██      
+ ██      ██ ██      ██  ██      ██   ██ ██   ██ ██      ██      
+ ██      ██  ██████ ██   ██     ██████  ██   ██ ███████ ███████ 
+*/
 const pickBall = () => {
   const letter = Object.keys(balls).getRandom(1)[0];
   const number = balls[letter].getRandom(1)[0];
@@ -218,7 +254,13 @@ const pickBall = () => {
     number,
   };
 };
-
+/*
+  █████  ██████  ██████      ███████ ██   ██ ██ ██████  
+ ██   ██ ██   ██ ██   ██     ██      ██   ██ ██ ██   ██ 
+ ███████ ██   ██ ██   ██     ███████ ███████ ██ ██████  
+ ██   ██ ██   ██ ██   ██          ██ ██   ██ ██ ██      
+ ██   ██ ██████  ██████      ███████ ██   ██ ██ ██      
+*/
 exports.addShip = async (ship) => {
   let bingo = await Bingo.findOne({ status: "next" });
   if (!bingo) {
@@ -232,7 +274,13 @@ exports.addShip = async (ship) => {
   }
   return true;
 };
-
+/*
+  ██████ ██   ██ ███████  ██████ ██   ██     ██████   ██████   █████  ██████  ██████  
+ ██      ██   ██ ██      ██      ██  ██      ██   ██ ██    ██ ██   ██ ██   ██ ██   ██ 
+ ██      ███████ █████   ██      █████       ██████  ██    ██ ███████ ██████  ██   ██ 
+ ██      ██   ██ ██      ██      ██  ██      ██   ██ ██    ██ ██   ██ ██   ██ ██   ██ 
+  ██████ ██   ██ ███████  ██████ ██   ██     ██████   ██████  ██   ██ ██   ██ ██████  
+*/
 const checkBoard = (gameType, playerBoard) => {
   let bingo;
   for (const board of gameTypes[gameType].boards) {
@@ -250,7 +298,13 @@ const checkBoard = (gameType, playerBoard) => {
   }
   return bingo;
 };
-
+/*
+  ██████ ██████  ███████  █████  ████████ ███████     ██████   ██████   █████  ██████  ██████  
+ ██      ██   ██ ██      ██   ██    ██    ██          ██   ██ ██    ██ ██   ██ ██   ██ ██   ██ 
+ ██      ██████  █████   ███████    ██    █████       ██████  ██    ██ ███████ ██████  ██   ██ 
+ ██      ██   ██ ██      ██   ██    ██    ██          ██   ██ ██    ██ ██   ██ ██   ██ ██   ██ 
+  ██████ ██   ██ ███████ ██   ██    ██    ███████     ██████   ██████  ██   ██ ██   ██ ██████  
+*/
 const createBoard = () => {
   let board = [[], [], [], [], []];
   let i = 0;
