@@ -9,7 +9,7 @@ const scrapers = require("../scrapers/allScrapers");
 const Port = require("../models/port");
 const Ship = require("../models/ship");
 
-const bingoEvent = schedule.scheduleJob("*/10 * * * * *", async () => {
+const bingoEvent = schedule.scheduleJob("*/5 * * * * *", async () => {
   bingo.draw();
 });
 

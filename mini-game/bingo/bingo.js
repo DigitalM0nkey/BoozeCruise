@@ -108,6 +108,9 @@ exports.getBoard = async (player) => {
   } else {
     message = `You are playing game ${bingo.code}`;
   }
+  console.log(bingo.ships);
+  console.log(`message => ${message}`);
+
   const ship = _.find(bingo.ships, (ship) => ship._id == player._id);
   return { code: bingo.code, board: ship.board, message };
 };
@@ -155,8 +158,8 @@ exports.stamp = async (code, player, loc) => {
       bingo.ships[shipIndex].board[location.x][location.y].status = newStatus;
       console.log("square => ", square);
       const savedBingo = await bingo.save();
-      savedBingo.ships.map((ship) => console.log("ship.board => ", ship.board));
-      return { message, board: bingo.ships[shipIndex].board };
+      console.log(message);
+      return message;
     } else {
       return "Ship not found in the current game";
     }
