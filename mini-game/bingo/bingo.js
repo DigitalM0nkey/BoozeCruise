@@ -128,6 +128,8 @@ exports.stamp = (code, player, loc) =>
       y: parseInt(loc[1]),
     };
     Bingo.findOne({ code, status: { $ne: "finished" } }).then((err, bingo) => {
+      console.error(err);
+      if (err) reject(err);
       if (!bingo) {
         resolve(`This Bingo game is ${bingo.status} or doesn't exist`);
       } else if (bingo.status !== "playing") {
