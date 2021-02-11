@@ -121,50 +121,52 @@ exports.getBoard = async (player) => {
       ██    ██    ██   ██ ██  ██  ██ ██      
  ███████    ██    ██   ██ ██      ██ ██      
 */
-exports.stamp = (code, player, loc) => new Promise(async (resolve, reject) => 
-  const location = {
-    x: parseInt(loc[0]),
-    y: parseInt(loc[1]),
-  };
-  const bingo = await Bingo.findOne({ code, status: { $ne: "finished" } });
-  if (!bingo) {
-    resolve( `This Bingo game is ${bingo.status} or doesn't exist`);
-  } else if (bingo.status !== "playing") {
-    resolve( `This Bingo game is ${bingo.status}. Starting ${moment(bingo.startTime).fromNow()}!`);
-  } else {
-    let shipIndex = _.findIndex(bingo.ships, (ship) => ship._id == player._id);
-    if (shipIndex >= 0) {
-      let square = bingo.ships[shipIndex].board[location.x][location.y];
-      let newStatus = square.status;
-      let message = "";
-      if (square.status === "GREEN") {
-        return `${square.letter}${square.number} was already stamped!`;
-      } else if (location.x === 2 && location.y === 2) {
-        newStatus = "GREEN";
-        message = "Free stamp WOOT";
-      } else if (
-        square.status !== "RED" &&
-        _.some(bingo.balls, (ball) => ball.letter === square.letter && ball.number === square.number)
-      ) {
-        newStatus = "GREEN";
-        message = `${square.letter}${square.number} stamped!`;
-      } else if (!square.status) {
-        newStatus = "YELLOW";
-        message = "Cheater! Now, you'll have to remember the number!";
-      } else if (square.status === "YELLOW") {
-        newStatus = "RED";
-        message = "You've gone and mucked this one up now, it don't count no more";
+exports.stamp = (code, player, loc) =>
+  new Promise((resolve, reject) => {
+    const location = {
+      x: parseInt(loc[0]),
+      y: parseInt(loc[1]),
+    };
+    Bingo.findOne({ code, status: { $ne: "finished" } }).then((err, bingo) => {
+      if (!bingo) {
+        resolve(`This Bingo game is ${bingo.status} or doesn't exist`);
+      } else if (bingo.status !== "playing") {
+        resolve(`This Bingo game is ${bingo.status}. Starting ${moment(bingo.startTime).fromNow()}!`);
+      } else {
+        let shipIndex = _.findIndex(bingo.ships, (ship) => ship._id == player._id);
+        if (shipIndex >= 0) {
+          let square = bingo.ships[shipIndex].board[location.x][location.y];
+          let newStatus = square.status;
+          let message = "";
+          if (square.status === "GREEN") {
+            return `${square.letter}${square.number} was already stamped!`;
+          } else if (location.x === 2 && location.y === 2) {
+            newStatus = "GREEN";
+            message = "Free stamp WOOT";
+          } else if (
+            square.status !== "RED" &&
+            _.some(bingo.balls, (ball) => ball.letter === square.letter && ball.number === square.number)
+          ) {
+            newStatus = "GREEN";
+            message = `${square.letter}${square.number} stamped!`;
+          } else if (!square.status) {
+            newStatus = "YELLOW";
+            message = "Cheater! Now, you'll have to remember the number!";
+          } else if (square.status === "YELLOW") {
+            newStatus = "RED";
+            message = "You've gone and mucked this one up now, it don't count no more";
+          }
+          bingo.ships[shipIndex].board[location.x][location.y].status = newStatus;
+          console.log("square => ", square);
+          bingo.save((err, savedBingo) => {
+            resolve(message);
+          });
+        } else {
+          resolve("Ship not found in the current game");
+        }
       }
-      bingo.ships[shipIndex].board[location.x][location.y].status = newStatus;
-      console.log("square => ", square);
-      bingo.save((err, savedBingo) => {
-        resolve(message);
-      });
-    } else {
-      resolve("Ship not found in the current game")
-    }
-  }
-);
+    });
+  });
 /*
  ██████  ██████   █████  ██     ██ 
  ██   ██ ██   ██ ██   ██ ██     ██ 
