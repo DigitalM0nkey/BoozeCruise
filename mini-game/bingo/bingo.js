@@ -185,6 +185,8 @@ exports.draw = async () => {
       }
     } else {
       //Game is finished, all balls pulled
+      const ships = await Ship.find({ _id: { $in: game.ships.map((ship) => ship._id) } });
+      ships.forEach((ship) => b.sendMessage(ship.id, `<b>Bingo Game Over</b>`));
       game.status = "finished";
       await game.save();
       let nextGame = await Bingo.findOne({ status: "next" });
@@ -274,7 +276,7 @@ exports.addShip = async (ship) => {
   }
   return true;
 };
-/*
+/*i
   ██████ ██   ██ ███████  ██████ ██   ██     ██████   ██████   █████  ██████  ██████  
  ██      ██   ██ ██      ██      ██  ██      ██   ██ ██    ██ ██   ██ ██   ██ ██   ██ 
  ██      ███████ █████   ██      █████       ██████  ██    ██ ███████ ██████  ██   ██ 
