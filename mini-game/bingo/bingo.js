@@ -154,13 +154,9 @@ exports.stamp = async (code, player, loc) => {
       }
       bingo.ships[shipIndex].board[location.x][location.y].status = newStatus;
       console.log("square => ", square);
-      try {
-        const savedBingo = await bingo.save();
-        savedBingo.ships.map((ship) => console.log("ship.board => ", ship.board));
-      } catch (e) {
-        console.error(e);
-      }
-      return message;
+      const savedBingo = await bingo.save();
+      savedBingo.ships.map((ship) => console.log("ship.board => ", ship.board));
+      return { message, board: bingo.ships[shipIndex].board };
     } else {
       return "Ship not found in the current game";
     }
