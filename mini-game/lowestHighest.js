@@ -5,7 +5,7 @@ module.exports = function (house, player1, player2) {
   let message = "House picked: " + house + "\n" + player1.name + " guessed: " + player1.guess + "\n" + player2.name + " guessed: " + player2.guess;
 
   let title = "<pre>Lowest-Highest Results</pre>\n\n";
-  const winStatment = ` Wins 10${KORONA}!</b>\n` ;
+  const winStatment = ` Wins ${KORONA}10!</b>\n` ;
   if (player1.guess === player2.guess) {
     return { message: title + "<b>House Wins!</b>\nPLAYER DRAW\n" + message };
   } else if (house < player1.guess && house < player2.guess) {
