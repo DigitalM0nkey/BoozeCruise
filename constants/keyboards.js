@@ -214,6 +214,7 @@ module.exports = {
         {
           text: "\ud83d\udccd Current Location \ud83d\udccd",
         },
+        { text: `${emoji.books} Library ${emoji.books}` },
       ],
       [
         {
