@@ -178,6 +178,10 @@ module.exports = {
           text: `${emoji.slots} Slots ${emoji.slots}`,
         },
       ],
+        {
+          text: `${emoji.cocktail} Mixology ${emoji.cocktail}`,ß
+        },
+      ],
       [
         {
           text: "\u2630 Deck Plan \u2630",

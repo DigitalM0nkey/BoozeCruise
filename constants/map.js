@@ -7,3 +7,4 @@ const map = {
   Shop: ["products"],
 };
 // console.log(map.Shop);
+export default map;
