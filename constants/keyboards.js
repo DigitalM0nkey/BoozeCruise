@@ -178,8 +178,9 @@ module.exports = {
           text: `${emoji.slots} Slots ${emoji.slots}`,
         },
       ],
+      [
         {
-          text: `${emoji.cocktail} Mixology ${emoji.cocktail}`,ß
+          text: `${emoji.cocktail} Mixology ${emoji.cocktail}`,
         },
       ],
       [
