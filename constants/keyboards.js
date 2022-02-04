@@ -180,7 +180,7 @@ module.exports = {
       ],
       [
         {
-          text: `${emoji.cocktail} Mixology ${emoji.cocktail}`,
+          text: `${emoji.cocktail} Mixology... ${emoji.cocktail}`,
         },
       ],
       [

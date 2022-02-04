@@ -289,6 +289,10 @@ router.post("/", ({ body }, res, next) => {
               b.sendKeyboard(ship.id, `BINGO - ${game.code}`, keyboards.bingo(game.code, game.board));
               b.sendMessage(ship.id, game.message);
             }, console.error);
+          } else if (body.message.text == `${emoji.cocktail} Mixology... ${emoji.cocktail}`) {
+            log(player, "Wants to play Mixology");
+            // console.log(keyboards.numbers("", "SL"));
+            b.sendKeyboard(ship.id, `Mixology is a multiplayer game that is played in the Port of Caspian - Travel there and type /mixology to start the game.`, keyboards.ports);
           } else if (body.message.text == `${emoji.slots} Slots ${emoji.slots}`) {
             log(player, "Playing the slots");
             // console.log(keyboards.numbers("", "SL"));
