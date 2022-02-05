@@ -5,6 +5,8 @@ module.exports = {
     else if (input.checkString("bingo")) return `Go to the lounge to play BINGO`;
     else if (input.checkString("slots"))
       return `You can play the slots in the casino, which is only open while you are sailing`;
+    else if (input.checkString("what can you do"))
+      return `You can ask me to help you with the following: \n- Pool \n- BINGO \n- Slots \n- My name`;
     else if (input.checkString("hello") || input.checkString("hi")) return `👋`;
     else if (input.checkString("name") && input.checkString("your")) return `My name is Jared Burns`;
     // else if (input.checkString("you") && input.checkString("are") && input.checkString("there"))

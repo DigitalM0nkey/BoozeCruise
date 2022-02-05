@@ -1,12 +1,16 @@
 const moment = require("moment");
 const guest = require("../types/guest");
 const keyboards = require("./keyboards");
+const globalFunctions = require('/constants/globalFunctions');
+
 
 var HSECTORS = 4;
 var VSECTORS = 3;
 var TelegramBot = require("../bots/telegram");
 var b = TelegramBot.boozecruiseBot;
 const TREASURE = 500;
+const log = globalFunctions.log;
+
 
 const Port = require("../models/port");
 
@@ -108,6 +112,7 @@ exports.partitionMessage = (input) => {
 exports.lookForTreasure = (ship) => {
   b.getChatMember(ship.location.port, ship.id).then(
     (chatMember) => {
+      log(chatMember, `Looking for treasure.`);
       Port.findOne({
         id: ship.location.port,
         treasure: {
