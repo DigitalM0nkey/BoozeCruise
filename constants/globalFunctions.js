@@ -111,8 +111,8 @@ exports.partitionMessage = (input) => {
 
 exports.lookForTreasure = (ship) => {
   b.getChatMember(ship.location.port, ship.id).then(
-    (chatMember) => {
-      log(chatMember, `Looking for treasure.`);
+    () => {
+      log(ship.user.first_name, `Looking for treasure.`);
       Port.findOne({
         id: ship.location.port,
         treasure: {
