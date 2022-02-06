@@ -1,7 +1,7 @@
 const moment = require("moment");
 const guest = require("../types/guest");
 const keyboards = require("./keyboards");
-const globalFunctions = require('/constants/globalFunctions');
+const globalFunctions = require('./globalFunctions');
 
 
 var HSECTORS = 4;
